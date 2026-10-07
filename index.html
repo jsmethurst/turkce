@@ -48,6 +48,10 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .sync-status{display:flex;align-items:center;gap:6px;margin-top:6px;padding:5px 11px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:var(--ink-soft);white-space:nowrap;}
 .sync-status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--good);}
 .sync-status.local::before{background:var(--bad);}
+.export-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:-8px 0 20px;font-size:13px;color:var(--ink-soft);}
+.export-row .btn{padding:8px 14px;font-size:0.85rem;}
+.export-msg.good{color:var(--good);}
+.export-msg.bad{color:var(--bad);}
 .sync-note{margin:-8px 0 20px;padding:10px 14px;border-radius:10px;background:#FBEAE5;color:var(--bad);font-size:13px;line-height:1.5;}
 .brand{display:flex;align-items:center;gap:12px;}
 .brand-mark{
@@ -239,6 +243,11 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     <div class="sync-status" id="syncStatus" hidden></div>
   </header>
   <p class="sync-note" id="syncNote" hidden></p>
+  <div class="export-row" id="exportRow" hidden>
+    <span>Moving to the new site?</span>
+    <button class="btn btn-ghost" id="exportBtn" type="button">Send my progress to the new site</button>
+    <span class="export-msg" id="exportMsg" role="status"></span>
+  </div>
 
   <div class="tabs">
     <div class="tab active" data-tab="verbs">Forms</div>
@@ -3647,6 +3656,36 @@ function accountName(){ return window.turkceBackend ? window.turkceBackend.accou
 function syncLost(){
   setSyncStatus(false, `Couldn't save to ${accountName()} just now. Your changes are kept in this browser. Reload the page to try again.`);
 }
+// Claude site only: copies this person's data to exports/<uid>, which the owner can read and
+// move into their account on the GitHub Pages site. Delete the export doc once it's imported.
+function setupExport(db, uid){
+  const row = document.getElementById("exportRow"), btn = document.getElementById("exportBtn"), msg = document.getElementById("exportMsg");
+  row.hidden = false;
+  btn.onclick = async ()=>{
+    btn.disabled = true;
+    msg.className = "export-msg";
+    msg.textContent = "Sending…";
+    try{
+      const [s, p, w] = await Promise.all(["settings","progress","wordstats"].map(n=>db.doc(`data/users/${uid}/${n}`).get()));
+      const qs = await db.doc(`data/users/${uid}/tests`).collection("lists").get();
+      const tests = {};
+      qs.docs.forEach(d=>{ tests[d.id] = d.data(); });
+      await db.doc(`exports/${uid}`).set({
+        at: new Date().toISOString(),
+        settings: s.exists ? s.data() : null,
+        progress: p.exists ? p.data() : null,
+        wordstats: w.exists ? w.data() : null,
+        tests,
+      });
+      msg.className = "export-msg good";
+      msg.textContent = "Sent. Tell Jacob, and he'll move it into your account on the new site.";
+    }catch(e){
+      btn.disabled = false;
+      msg.className = "export-msg bad";
+      msg.textContent = "Couldn't send it. Check your connection and try again.";
+    }
+  };
+}
 async function initRemote(){
   if(!window.claude || typeof window.claude.use!=="function") return;
   const [db, user] = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
@@ -3745,6 +3784,7 @@ async function initRemote(){
         qs.docs.forEach(d=>{ testResults[d.id] = d.data(); });
       }catch(e){}
       if(remoteProgress) setSyncStatus(true);
+      if(!window.turkceBackend) setupExport(db, uid);
       document.getElementById("testTitle").hidden = false;
       document.getElementById("testGroup").hidden = false;
       refreshTestDisplays();
