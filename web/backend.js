@@ -101,6 +101,7 @@ header{flex-wrap:wrap;}
 .sync-status.clickable::before{display:inline-block;margin-right:6px;vertical-align:1px;}
 .account-wrap{position:relative;min-width:0;max-width:100%;}
 .account-menu{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:250px;max-width:calc(100vw - 32px);padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow);}
+.account-email{margin:0 0 8px;padding-bottom:8px;border-bottom:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink);overflow-wrap:anywhere;}
 .account-menu p{margin:0 0 10px;font-size:12.5px;line-height:1.45;color:var(--ink-soft);}
 .account-menu .btn{width:100%;padding:9px 14px;font-size:0.85rem;}
 @media (max-width:560px){.account-menu{right:auto;left:0;}}
@@ -199,6 +200,7 @@ header{flex-wrap:wrap;}
   var menu;
   function buildMenu(){
     menu = el(`<div class="account-menu" id="accountMenu" role="menu" hidden>
+      <div class="account-email" id="accountEmail"></div>
       <p>Your settings and progress are saved to your account and stay in sync on every device you sign in on.</p>
       <button class="btn btn-ghost" id="authSignOut" role="menuitem" type="button">Sign out</button>
     </div>`);
@@ -215,6 +217,9 @@ header{flex-wrap:wrap;}
   function toggleMenu(force){
     var open = typeof force === "boolean" ? force : menu.hidden;
     menu.hidden = !open;
+    var emailEl = menu.querySelector("#accountEmail");
+    emailEl.textContent = signedInEmail || "";
+    emailEl.hidden = !signedInEmail;
     document.getElementById("syncStatus").setAttribute("aria-expanded", open ? "true" : "false");
     if(open) menu.querySelector("button").focus();
   }
