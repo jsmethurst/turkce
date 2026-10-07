@@ -226,8 +226,14 @@
     pill.addEventListener("keydown", function(ev){
       if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); ev.stopPropagation(); togglePanel(); }
     });
+    // Show the status straight away rather than after all the data has loaded:
+    // a saved sign-in in this browser means "signed in" (the page corrects it if saving fails).
+    var hasSavedSession = false;
+    try{ hasSavedSession = !!localStorage.getItem("sb-ktlnputpwbpwsvsuqnie-auth-token"); }catch(e){}
+    if(hasSavedSession && !pill.textContent){ pill.textContent = "Saved to your account"; pill.classList.remove("local"); pill.hidden = false; }
     sessionReady.then(function(session){
       if(!session) window.turkceBackend.signedOut();
+      else if(!pill.textContent){ pill.textContent = "Saved to your account"; pill.classList.remove("local"); pill.hidden = false; }
     });
   }
 
