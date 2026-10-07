@@ -1,0 +1,48 @@
+name: Nightly backup
+
+# Exports everyone's saved data (with the email it belongs to), encrypts it with
+# Jacob's passphrase, and keeps it as a downloadable file for 30 days.
+# Uses a read-only database login that can only call public.backup_export().
+# Restore instructions: tools/RESTORE.md
+on:
+  schedule:
+    - cron: "17 2 * * *"   # 02:17 UTC every night
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    environment: backup
+    env:
+      BACKUP_DB_URL: ${{ secrets.BACKUP_DB_URL }}
+      BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+    steps:
+      - name: Export
+        run: |
+          set -euo pipefail
+          psql "$BACKUP_DB_URL" -At -v ON_ERROR_STOP=1 -c "select public.backup_export()" > backup.json
+          python3 - <<'PY'
+          import json, os
+          d = json.load(open("backup.json"))
+          users = d["users"]
+          with_data = sum(1 for u in users if u["docs"])
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+              f.write(f"Backed up {len(users)} accounts ({with_data} with saved data) at {d['exported_at']}.\n")
+          PY
+      - name: Encrypt
+        run: |
+          set -euo pipefail
+          test -n "$BACKUP_PASSPHRASE"
+          name="turkce-backup-$(date -u +%Y-%m-%d).json.enc"
+          openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -salt -pass env:BACKUP_PASSPHRASE -in backup.json -out "$name"
+          shred -u backup.json
+          echo "FILE=$name" >> "$GITHUB_ENV"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.FILE }}
+          path: ${{ env.FILE }}
+          retention-days: 30
+          if-no-files-found: error

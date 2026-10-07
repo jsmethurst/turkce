@@ -23,6 +23,7 @@ Every push to `main` triggers `.github/workflows/pages.yml`. It runs `build_site
 | `build_site.py` | Builds `_site/`: adds the title, icons and Supabase scripts to the app, then copies `web/`. Never edit `_site/`. |
 | `tools/make_sozluk.py` | Regenerates `sozluk.txt` from the DICTIONARY. Run it after every word change. |
 | `sozluk.txt` | Plain-text copy of the Sözlük, kept in sync and committed. |
+| `tools/RESTORE.md`, `tools/restore_backup.py` | Disaster recovery: the *Nightly backup* workflow (`.github/workflows/backup.yml`) saves an encrypted copy of everyone's data every night. The restore steps are in RESTORE.md. |
 | `supabase/migrations/` | Database changes as numbered SQL files. They're applied by `.github/workflows/database.yml` after Jacob approves (see below). `20261007000000_user_docs.sql` is the original setup, already applied. |
 
 ## Adding words (Jacob's standing rules)
