@@ -3189,10 +3189,12 @@ function nextQuestion(){
   const personIdxs = [...state.persons];
   const verbIdxs = [...state.verbs];
   if(tenseKeys.length===0 || personIdxs.length===0 || verbIdxs.length===0){
-    document.getElementById("promptWord").textContent = "Pick at least one tense, person, and verb.";
+    // Verbs come from the Sözlük tab; tenses and persons are chosen on this tab.
+    document.getElementById("promptWord").textContent = verbIdxs.length===0
+      ? "Make a selection on the Sözlük tab."
+      : "Pick at least one tense and person below.";
     document.getElementById("promptSub").textContent = "";
-    document.getElementById("promptEyebrow").style.display = "";
-    document.getElementById("promptEyebrow").textContent = "Nothing selected";
+    document.getElementById("promptEyebrow").style.display = "none";
     document.getElementById("hintBtn").style.display = "none";
     document.getElementById("hintReveal").style.display = "none";
     state.current = null;
