@@ -216,18 +216,18 @@
     note.parentNode.insertBefore(panel, note.nextSibling);
     // Keep typing in the sign-in form from triggering the drill's keyboard shortcuts.
     panel.addEventListener("keydown", function(ev){ ev.stopPropagation(); });
+    // Make the existing status pill clickable rather than swapping in a <button>:
+    // Safari didn't repaint a <button>'s new text until it was hovered.
     var pill = document.getElementById("syncStatus");
-    var btn = document.createElement("button");
-    btn.id = pill.id; btn.className = pill.className + " clickable"; btn.hidden = pill.hidden; btn.type = "button";
-    btn.textContent = pill.textContent;
-    pill.replaceWith(btn);
-    btn.onclick = function(){ togglePanel(); };
+    pill.classList.add("clickable");
+    pill.setAttribute("role", "button");
+    pill.tabIndex = 0;
+    pill.onclick = function(){ togglePanel(); };
+    pill.addEventListener("keydown", function(ev){
+      if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); ev.stopPropagation(); togglePanel(); }
+    });
     sessionReady.then(function(session){
-      if(!session){
-        btn.textContent = "Sign in to sync";
-        btn.classList.add("local");
-        btn.hidden = false;
-      }
+      if(!session) window.turkceBackend.signedOut();
     });
   }
 
