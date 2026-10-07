@@ -99,6 +99,11 @@
 header{flex-wrap:wrap;}
 .sync-status.clickable{display:block;cursor:pointer;font:inherit;font-size:12px;background:transparent;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;}
 .sync-status.clickable::before{display:inline-block;margin-right:6px;vertical-align:1px;}
+.account-wrap{position:relative;min-width:0;max-width:100%;}
+.account-menu{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:250px;max-width:calc(100vw - 32px);padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow);}
+.account-menu p{margin:0 0 10px;font-size:12.5px;line-height:1.45;color:var(--ink-soft);}
+.account-menu .btn{width:100%;padding:9px 14px;font-size:0.85rem;}
+@media (max-width:560px){.account-menu{right:auto;left:0;}}
 .sync-status.clickable:hover{background:var(--paper-2);}
 .sync-status.clickable:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
 .auth-panel{margin:-8px 0 22px;padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);}
@@ -147,21 +152,6 @@ header{flex-wrap:wrap;}
       };
       return;
     }
-    if(session){
-      panel.innerHTML = `
-        <h2>Your account</h2>
-        <p>Signed in as <strong>${esc(session.user.email || "")}</strong>. Your settings and progress are saved to your account and stay in sync on every device you sign in on.</p>
-        <div class="auth-actions"><button class="btn btn-ghost" id="authSignOut">Sign out</button></div>
-        <p class="auth-msg" hidden></p>`;
-      panel.querySelector("#authSignOut").onclick = async function(){
-        busy(true);
-        await client.auth.signOut();
-        // Don't leave this person's progress behind for the next person on this device.
-        try{ Object.keys(localStorage).filter(function(k){ return k.indexOf("fiil_") === 0; }).forEach(function(k){ localStorage.removeItem(k); }); }catch(e){}
-        location.reload();
-      };
-      return;
-    }
     var creating = mode === "signup";
     panel.innerHTML = `
       <h2>${creating ? "Create an account" : "Sign in"}</h2>
@@ -205,6 +195,33 @@ header{flex-wrap:wrap;}
     };
   }
 
+  // Signed in: a small dropdown under the status pill with Sign out.
+  var menu;
+  function buildMenu(){
+    menu = el(`<div class="account-menu" id="accountMenu" role="menu" hidden>
+      <p>Your settings and progress are saved to your account and stay in sync on every device you sign in on.</p>
+      <button class="btn btn-ghost" id="authSignOut" role="menuitem" type="button">Sign out</button>
+    </div>`);
+    menu.querySelector("#authSignOut").onclick = async function(){
+      this.disabled = true;
+      await client.auth.signOut();
+      // Don't leave this person's progress behind for the next person on this device.
+      try{ Object.keys(localStorage).filter(function(k){ return k.indexOf("fiil_") === 0; }).forEach(function(k){ localStorage.removeItem(k); }); }catch(e){}
+      location.reload();
+    };
+    menu.addEventListener("keydown", function(ev){ ev.stopPropagation(); if(ev.key === "Escape") toggleMenu(false); });
+    return menu;
+  }
+  function toggleMenu(force){
+    var open = typeof force === "boolean" ? force : menu.hidden;
+    menu.hidden = !open;
+    document.getElementById("syncStatus").setAttribute("aria-expanded", open ? "true" : "false");
+    if(open) menu.querySelector("button").focus();
+  }
+  document.addEventListener("click", function(ev){
+    if(menu && !menu.hidden && !ev.target.closest(".account-wrap")) toggleMenu(false);
+  });
+
   function togglePanel(force){
     var open = typeof force === "boolean" ? force : panel.hidden;
     panel.hidden = !open;
@@ -224,9 +241,18 @@ header{flex-wrap:wrap;}
     pill.classList.add("clickable");
     pill.setAttribute("role", "button");
     pill.tabIndex = 0;
-    pill.onclick = function(){ togglePanel(); };
+    // Wrap the pill so the dropdown can hang from it.
+    var wrap = document.createElement("div");
+    wrap.className = "account-wrap";
+    pill.parentNode.insertBefore(wrap, pill);
+    wrap.appendChild(pill);
+    wrap.appendChild(buildMenu());
+    pill.setAttribute("aria-haspopup", "true");
+    pill.setAttribute("aria-expanded", "false");
+    pill.onclick = function(){ if(signedInEmail !== null && !recovering){ panel.hidden = true; toggleMenu(); } else togglePanel(); };
     pill.addEventListener("keydown", function(ev){
-      if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); ev.stopPropagation(); togglePanel(); }
+      if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); ev.stopPropagation(); pill.onclick(); }
+      else if(ev.key === "Escape" && menu && !menu.hidden){ ev.stopPropagation(); toggleMenu(false); }
     });
     // Show the status straight away rather than after all the data has loaded:
     // a saved sign-in in this browser means "signed in" (the page corrects it if saving fails).
