@@ -23,7 +23,7 @@ Every push to `main` triggers `.github/workflows/pages.yml`. It runs `build_site
 | `build_site.py` | Builds `_site/`: adds the title, icons and Supabase scripts to the app, then copies `web/`. Never edit `_site/`. |
 | `tools/make_sozluk.py` | Regenerates `sozluk.txt` from the DICTIONARY. Run it after every word change. |
 | `sozluk.txt` | Plain-text copy of the Sözlük, kept in sync and committed. |
-| `supabase_setup.sql` | Database schema, already applied. Changing the database needs the Supabase CLI on Jacob's Mac; you can't do it from a cloud session. |
+| `supabase/migrations/` | Database changes as numbered SQL files. They're applied by `.github/workflows/database.yml` after Jacob approves (see below). `20261007000000_user_docs.sql` is the original setup, already applied. |
 
 ## Adding words (Jacob's standing rules)
 When Jacob says "add <turkish> - <english>":
@@ -63,6 +63,21 @@ Each row is `{"key":"people","label":"People & Professions","terms":[...],"order
 - colors, clothes, winterwear, jewelry, nature, directions, feelings, routine
 - health, communication, movement, actions, thinking, describing, littlewords, cities
 - weather, films, tastes, character, opposites, faith, salvation, worship
+
+## Database changes (Supabase)
+The database holds only per-person data: one table, `public.user_docs (user_id, doc, data jsonb, writer, updated_at)`, with row-level security so each signed-in person sees only their own rows. The `doc` values are `settings`, `progress`, `wordstats`, `meta` and `tests/lists/<key>`. The function `merge_doc(p_doc, p_patch, p_writer)` deep-merges a patch, and realtime is on for the table.
+
+To change the database:
+1. Add a **new** file `supabase/migrations/<YYYYMMDDHHMMSS>_<short_name>.sql`, using the current UTC time. Never edit or rename a migration that's already on `main`.
+2. Write plain Postgres SQL. Make it safe to re-run where possible (`if not exists`, `create or replace`).
+3. Never drop or delete learners' data unless Jacob explicitly asked for exactly that.
+4. Push to `main`. The *Apply database changes* workflow then waits for Jacob's approval.
+5. Tell him: *"Approve it in GitHub → Actions → Apply database changes → Review deployments."*
+6. Nothing touches the database until he approves. If the SQL fails, the workflow fails and nothing is half-applied, because each migration runs in a transaction.
+
+**Not possible from here:**
+- **Sign-in settings** (Authentication config). Those need the Supabase CLI on Jacob's Mac.
+- **Moving a learner's progress from the old Claude site.** That needs a Claude session with access to that site.
 
 ## Other notes
 - **Learners' saved data** is keyed by the Turkish word, e.g. `"nonverb:usta"` or `"verb:yormak"`. Renaming a word's Turkish spelling orphans learners' history for it. Changing the English gloss is safe.

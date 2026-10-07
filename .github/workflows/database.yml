@@ -1,0 +1,41 @@
+name: Apply database changes
+
+# Runs when a new SQL migration lands on main. The "database" environment
+# requires Jacob's approval before this job starts, and holds the Supabase
+# access token as an environment secret, so nothing touches the database
+# until he has read the SQL and tapped Approve.
+on:
+  push:
+    branches: [main]
+    paths: ["supabase/migrations/**"]
+  workflow_dispatch:
+
+concurrency:
+  group: database
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    environment: database
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      PROJECT_REF: ktlnputpwbpwsvsuqnie
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.120.0
+      - name: Link project
+        run: supabase link --project-ref "$PROJECT_REF"
+      - name: Show pending migrations
+        run: |
+          supabase db push --linked --dry-run
+          {
+            echo "## Pending migrations"
+            echo '```'
+            supabase migration list --linked
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Apply
+        run: supabase db push --linked --yes
