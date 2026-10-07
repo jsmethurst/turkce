@@ -13,6 +13,7 @@ The SQL contains learners' data: never commit it. Apply it from Jacob's Mac:
 See tools/RESTORE.md.
 """
 import json
+import os
 import subprocess
 import sys
 
@@ -20,9 +21,10 @@ import sys
 def main():
     if len(sys.argv) != 2:
         sys.exit(__doc__)
-    plain = subprocess.run(
-        ["openssl", "enc", "-d", "-aes-256-cbc", "-pbkdf2", "-iter", "200000", "-in", sys.argv[1]],
-        check=True, stdout=subprocess.PIPE).stdout
+    cmd = ["openssl", "enc", "-d", "-aes-256-cbc", "-pbkdf2", "-iter", "200000", "-in", sys.argv[1]]
+    if os.environ.get("BACKUP_PASSPHRASE"):   # otherwise openssl asks for it
+        cmd += ["-pass", "env:BACKUP_PASSPHRASE"]
+    plain = subprocess.run(cmd, check=True, stdout=subprocess.PIPE).stdout
     backup = json.loads(plain)
     out = [f"-- Restore from backup exported at {backup['exported_at']}", "begin;"]
     for user in backup["users"]:
