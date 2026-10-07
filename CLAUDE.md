@@ -12,6 +12,8 @@ Every push to `main` triggers `.github/workflows/pages.yml`. It runs `build_site
 
 **Always `git pull` before you start.** Jacob works on this repo both from his Mac and from cloud sessions.
 
+**Always commit and push directly to `main`.** Don't create a feature branch or a pull request; this is Jacob's standing instruction, and it's how his changes go live. If the session started on another branch, switch to `main` (`git checkout main && git pull`), make the change there, then `git push origin main`. If the push is rejected because `main` moved, run `git pull --rebase` and push again.
+
 ## Files
 | Path | What it is |
 |---|---|
