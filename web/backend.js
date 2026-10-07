@@ -269,7 +269,7 @@ header{flex-wrap:wrap;}
   }
 
   var signedInEmail = null;   // null = not signed in
-  function signedInLabel(){ return signedInEmail === null ? "" : signedInEmail ? "Logged in as " + signedInEmail : "Logged in"; }
+  function signedInLabel(){ return signedInEmail === null ? "" : "Signed in"; }
 
   window.turkceBackend = {
     accountName: "your account",
