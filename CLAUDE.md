@@ -1,0 +1,68 @@
+# Türkçe — Turkish verb & vocabulary drill
+
+Live site: https://jsmethurst.github.io/turkce/ (owner: Jacob, jsmethurst). It's a single-page app with three tabs:
+- **Forms:** conjugation drills.
+- **Vocab:** flashcards and tests.
+- **Sözlük:** the word list, with group and topic chips.
+
+Learners sign in with email and password through Supabase so their progress syncs between devices.
+
+## How publishing works
+Every push to `main` triggers `.github/workflows/pages.yml`. It runs `build_site.py`, checks the JavaScript parses, and deploys `_site/` to GitHub Pages. The site is live about a minute after the push.
+
+**Always `git pull` before you start.** Jacob works on this repo both from his Mac and from cloud sessions.
+
+## Files
+| Path | What it is |
+|---|---|
+| `app/turkish-verb-drill.html` | **The app.** The whole UI and logic, plus the built-in word list (`const DICTIONARY = {verbs:[...], nonverbs:[...], topics:[...]}`, one JSON row per line). Edit this file. |
+| `web/backend.js` | Supabase sign-in, the account pill and dropdown, and saving each person's data to the `user_docs` table. |
+| `web/favicon.svg`, `favicon-32.png`, `apple-touch-icon.jpg` | Logo and icons (a smiling çay glass). The same SVG is inlined in the app header. |
+| `build_site.py` | Builds `_site/`: adds the title, icons and Supabase scripts to the app, then copies `web/`. Never edit `_site/`. |
+| `tools/make_sozluk.py` | Regenerates `sozluk.txt` from the DICTIONARY. Run it after every word change. |
+| `sozluk.txt` | Plain-text copy of the Sözlük, kept in sync and committed. |
+| `supabase_setup.sql` | Database schema, already applied. Changing the database needs the Supabase CLI on Jacob's Mac; you can't do it from a cloud session. |
+
+## Adding words (Jacob's standing rules)
+When Jacob says "add <turkish> - <english>":
+1. **Use his gloss exactly as written.** Don't correct or extend it.
+2. **Skip words that are already present.** Search the DICTIONARY for `"tr":"<word>"` (non-verbs) and `"inf":"<word>"` (verbs). If the word is already there in any list, don't add it, and tell him where it is.
+3. **Collisions:** if the word is new but its English gloss is the same as, or nearly the same as, another word's, or the Turkish clashes with another sense, **don't decide alone**. Suggest how to resolve it and wait for his answer.
+4. **Default list:** unless he names a list, add the word to the **Other** lists.
+5. **Topic:** also put every new word into one fitting topic (see below).
+6. **Glosses of existing words** only change when he asks.
+7. After the edits:
+   1. Run `python3 tools/make_sozluk.py`.
+   2. Run `python3 build_site.py` to check that it builds.
+   3. Commit and push.
+
+### Non-verb rows (`nonverbs` array)
+`{"tr":"usta","en":"expert","unit":"other","order":771}`
+- `unit` is one of `1`, `2` (Ünite sheets), `"other"`, `"sifatlar"` or `"bible"`.
+- New Other words: set `order` to one more than the highest `order` in the whole `nonverbs` array, and put the row at the end of the array (just before `],` / `topics: [`).
+- Groups of 25 ("Other 151-175") are made automatically from the order. A part-filled last group is fine.
+
+### Verb rows (`verbs` array)
+`{"inf":"yormak","base":"tire","ing":"tiring","past":"tired","pp":"tired","gloss":"to tire","num":null,"page":"other","order":204.1,"cases":[{"c":"akuzatif","en":"The long walk is tiring the children.","ex":"Uzun yürüyüş çocuk<b>ları</b> yoruyor."}]}`
+- **English forms:**
+  - `base`, `ing`, `past` and `pp` are the English forms the Forms tab uses to build prompts ("He tires", "They were tiring", …).
+  - For several senses, separate them with ` / ` in every field, e.g. `"base":"save / deliver"`, `"gloss":"to save / to deliver"`.
+- **Case example:** `cases` holds one example sentence.
+  - `c` is the case label: `akuzatif`, `datif`, `lokatif`, `ablatif`, `ile`, or `örnek` for a plain example.
+  - Wrap the case suffix in `<b>…</b>`.
+  - Use the present continuous where natural.
+- **New Other verbs:** `"page":"other"`, with an `order` greater than the last `page:"other"` verb's and below 205 (the Bible verbs start at 205), e.g. 204.3, then 204.4. Put the row right after the last `page:"other"` row.
+- **Check the conjugation:** load the page and run `conjugateFull(verb, tenseKey, personIdx, false, false, false)` for each key in `TENSES`. This catches Turkish verbs with unusual stems.
+
+### Topics (`topics` array)
+Each row is `{"key":"people","label":"People & Professions","terms":[...],"order":5}`. To place a word, append its Turkish form to that topic's `terms`. Available keys:
+- question, numbers, time, politeness, people, places, furniture, kitchen
+- transport, media, personality, school, shopping, hobbies, common, startfinish
+- colors, clothes, winterwear, jewelry, nature, directions, feelings, routine
+- health, communication, movement, actions, thinking, describing, littlewords, cities
+- weather, films, tastes, character, opposites, faith, salvation, worship
+
+## Other notes
+- **Learners' saved data** is keyed by the Turkish word, e.g. `"nonverb:usta"` or `"verb:yormak"`. Renaming a word's Turkish spelling orphans learners' history for it. Changing the English gloss is safe.
+- **Before pushing a UI change,** preview `_site/` in a browser if you can, and keep it working at phone width.
+- **The old Claude-artifact version** of the app is frozen. It's used only for its "Send my progress to the new site" button, and it isn't in this repo.
