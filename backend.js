@@ -96,7 +96,9 @@
 
   // ---------- sign in / sign out ----------
   var css = `
-.sync-status.clickable{cursor:pointer;font:inherit;font-size:12px;background:transparent;}
+header{flex-wrap:wrap;}
+.sync-status.clickable{display:block;cursor:pointer;font:inherit;font-size:12px;background:transparent;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;}
+.sync-status.clickable::before{display:inline-block;margin-right:6px;vertical-align:1px;}
 .sync-status.clickable:hover{background:var(--paper-2);}
 .sync-status.clickable:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
 .auth-panel{margin:-8px 0 22px;padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);}
@@ -228,17 +230,25 @@
     });
     // Show the status straight away rather than after all the data has loaded:
     // a saved sign-in in this browser means "signed in" (the page corrects it if saving fails).
-    var hasSavedSession = false;
-    try{ hasSavedSession = !!localStorage.getItem("sb-ktlnputpwbpwsvsuqnie-auth-token"); }catch(e){}
-    if(hasSavedSession && !pill.textContent){ pill.textContent = "Saved to your account"; pill.classList.remove("local"); pill.hidden = false; }
+    try{
+      var saved = JSON.parse(localStorage.getItem("sb-ktlnputpwbpwsvsuqnie-auth-token") || "null");
+      if(saved && saved.user) signedInEmail = saved.user.email || "";
+    }catch(e){}
+    if(signedInEmail !== null && !pill.textContent){ pill.textContent = signedInLabel(); pill.classList.remove("local"); pill.hidden = false; }
     sessionReady.then(function(session){
-      if(!session) window.turkceBackend.signedOut();
-      else if(!pill.textContent){ pill.textContent = "Saved to your account"; pill.classList.remove("local"); pill.hidden = false; }
+      if(!session){ signedInEmail = null; window.turkceBackend.signedOut(); return; }
+      signedInEmail = session.user.email || "";
+      if(!pill.classList.contains("local") || !pill.textContent){ pill.textContent = signedInLabel(); pill.classList.remove("local"); pill.hidden = false; }
     });
   }
 
+  var signedInEmail = null;   // null = not signed in
+  function signedInLabel(){ return signedInEmail === null ? "" : signedInEmail ? "Logged in as " + signedInEmail : "Logged in"; }
+
   window.turkceBackend = {
     accountName: "your account",
+    // The page shows this in the status pill once saving to the account works.
+    signedInLabel: signedInLabel,
     // The page calls this when nobody is signed in.
     signedOut: function(){
       var b = document.getElementById("syncStatus");

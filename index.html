@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.jpg">
 <meta name="theme-color" content="#12414D">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
-<script src="backend.js?v=d26a5323"></script>
+<script src="backend.js?v=c4f8ea4d"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -3681,7 +3681,8 @@ if(SpeechRec && micAllowedHere()){
 
 function setSyncStatus(synced, note){
   const el = document.getElementById("syncStatus"), noteEl = document.getElementById("syncNote");
-  el.textContent = synced ? "Saved to your account" : "Saved on this device only";
+  const signedIn = window.turkceBackend && window.turkceBackend.signedInLabel && window.turkceBackend.signedInLabel();
+  el.textContent = synced ? (signedIn || "Saved to your account") : "Saved on this device only";
   el.classList.toggle("local", !synced);
   el.hidden = false;
   noteEl.textContent = note || "";
