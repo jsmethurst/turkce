@@ -220,8 +220,14 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 /* Sözlük key for the row tints above. */
 .form-key{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;}
 .form-key-title{font-size:13px;font-weight:600;color:var(--ink);margin-right:4px;}
-.form-swatch{display:inline-block;padding:3px 9px;border-radius:4px;font-size:12.5px;color:var(--ink);font-variant-numeric:tabular-nums;}
-.form-swatch.none{border:1px dashed var(--line);color:var(--ink-soft);}
+.form-swatch{display:inline-block;padding:3px 9px;border-radius:4px;border:1.5px solid transparent;font:inherit;font-size:12.5px;color:var(--ink);font-variant-numeric:tabular-nums;cursor:pointer;transition:opacity .15s;}
+.form-swatch:hover{border-color:rgba(33,50,58,0.25);}
+.form-swatch[aria-pressed="true"]{border-color:var(--ink);}
+.form-swatch.dim{opacity:.4;}
+.form-swatch:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
+.form-key-hint{flex-basis:100%;font-size:12px;color:var(--ink-soft);}
+.form-swatch.none{background:transparent;border:1.5px dashed var(--line);color:var(--ink-soft);}
+.form-swatch.none[aria-pressed="true"]{border-style:solid;border-color:var(--ink);}
 .form-swatch b{font-weight:700;margin-left:3px;}
 .form-swatch b::before{content:"· ";font-weight:400;opacity:.6;}
 .form-swatch b:empty{display:none;}
@@ -465,12 +471,13 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     <div class="section-title">Sözlük progress</div>
     <div class="settings-group form-key" aria-label="Highlight key">
       <span class="form-key-title">Form on last 5 reviews:</span>
-      <span class="form-swatch form-5">5/5 <b data-level="5"></b></span>
-      <span class="form-swatch form-4">4/5 <b data-level="4"></b></span>
-      <span class="form-swatch form-3">3/5 <b data-level="3"></b></span>
-      <span class="form-swatch form-2">2/5 <b data-level="2"></b></span>
-      <span class="form-swatch form-0">1/5 or 0/5 <b data-level="0"></b></span>
-      <span class="form-swatch none">never reviewed <b data-level="none"></b></span>
+      <button type="button" class="form-swatch form-5" data-level="5" aria-pressed="false">5/5 <b></b></button>
+      <button type="button" class="form-swatch form-4" data-level="4" aria-pressed="false">4/5 <b></b></button>
+      <button type="button" class="form-swatch form-3" data-level="3" aria-pressed="false">3/5 <b></b></button>
+      <button type="button" class="form-swatch form-2" data-level="2" aria-pressed="false">2/5 <b></b></button>
+      <button type="button" class="form-swatch form-0" data-level="0" aria-pressed="false">1/5 or 0/5 <b></b></button>
+      <button type="button" class="form-swatch none" data-level="none" aria-pressed="false">never reviewed <b></b></button>
+      <span class="form-key-hint" id="formKeyHint">Tap colours to show only those words below.</span>
     </div>
 
     <div class="section-title">All verbs</div>
@@ -2513,6 +2520,7 @@ function renderReferencePanel(){
       const row = document.createElement("div");
       const key = `verb:${v.inf}`;
       row.className = "ref-row" + wordFormClass(key);
+      row.dataset.level = wordFormLevelName(key);
       row.title = wordFormLabel(key);
       row.innerHTML = `<span class="ref-tr">${v.inf}</span><span class="ref-en">${v.vocabGloss}</span>`;
       list.appendChild(row);
@@ -2534,6 +2542,7 @@ function renderNonverbReferencePanel(){
       const row = document.createElement("div");
       const key = `nonverb:${nv.tr}`;
       row.className = "ref-row" + wordFormClass(key);
+      row.dataset.level = wordFormLevelName(key);
       row.title = wordFormLabel(key);
       row.innerHTML = `<span class="ref-tr">${nv.tr}</span><span class="ref-en">${nv.en}</span>`;
       list.appendChild(row);
@@ -2554,12 +2563,62 @@ function updateFormKey(){
   };
   VERBS.forEach(v=>add(`verb:${v.inf}`));
   NONVERBS.forEach(nv=>add(`nonverb:${nv.tr}`));
-  document.querySelectorAll(".form-key b[data-level]").forEach(b=>{
-    const n = counts[b.dataset.level];
-    b.textContent = n.toLocaleString();
-    b.parentNode.title = `${n} word${n===1?"":"s"}`;
+  document.querySelectorAll(".form-swatch[data-level]").forEach(btn=>{
+    const n = counts[btn.dataset.level];
+    btn.querySelector("b").textContent = n.toLocaleString();
+    btn.title = `${n} word${n===1?"":"s"}`;
+  });
+  applyFormFilter();
+}
+function wordFormLevelName(key){
+  const level = wordFormLevel(key);
+  return level===null ? "none" : String(level);
+}
+// Tapping colours in the key shows only words with those colours in All verbs / All non-verbs.
+var formFilter = new Set();
+function applyFormFilter(){
+  const active = formFilter.size > 0;
+  document.querySelectorAll(".form-swatch[data-level]").forEach(btn=>{
+    const on = formFilter.has(btn.dataset.level);
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.classList.toggle("dim", active && !on);
+  });
+  const hint = document.getElementById("formKeyHint");
+  hint.innerHTML = active
+    ? `Showing only the selected colours. <span class="link-btn" id="formFilterClear" role="button" tabindex="0">Show all</span>`
+    : "Tap colours to show only those words below.";
+  const clear = document.getElementById("formFilterClear");
+  if(clear){
+    clear.onclick = ()=>{ formFilter.clear(); applyFormFilter(); };
+    clear.onkeydown = e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); clear.onclick(); } };
+  }
+  ["refPanel","nonverbRefPanel"].forEach(id=>{
+    const box = document.getElementById(id);
+    let shown = 0;
+    box.querySelectorAll(".ref-list").forEach(list=>{
+      let n = 0;
+      list.querySelectorAll(".ref-row").forEach(row=>{
+        const hide = active && !formFilter.has(row.dataset.level);
+        row.hidden = hide;
+        if(!hide) n++;
+      });
+      list.hidden = n===0;
+      const title = list.previousElementSibling;
+      if(title && title.classList.contains("ref-page-title")) title.hidden = n===0;
+      shown += n;
+    });
+    let empty = box.querySelector(".ref-empty");
+    if(!empty){ empty = document.createElement("p"); empty.className = "hint ref-empty"; empty.textContent = "No words with these colours."; box.appendChild(empty); }
+    empty.hidden = shown > 0;
   });
 }
+document.querySelectorAll(".form-swatch[data-level]").forEach(btn=>{
+  btn.onclick = ()=>{
+    const level = btn.dataset.level;
+    if(formFilter.has(level)) formFilter.delete(level); else formFilter.add(level);
+    applyFormFilter();
+  };
+});
 
 renderReferencePanel();
 renderNonverbReferencePanel();
