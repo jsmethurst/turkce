@@ -406,7 +406,7 @@ header{flex-wrap:wrap;}
   var lastCheck = 0, updateShown = false;
   async function checkForUpdate(){
     var meta = document.querySelector('meta[name="app-version"]');
-    if(!meta || updateShown || Date.now() - lastCheck < 60 * 1000) return;
+    if(!meta || updateShown || Date.now() - lastCheck < 15 * 1000) return;
     lastCheck = Date.now();
     try{
       var r = await fetch("version.json", {cache: "no-store"});
@@ -428,7 +428,7 @@ header{flex-wrap:wrap;}
   }
   document.addEventListener("visibilitychange", checkForUpdate);
   window.addEventListener("focus", checkForUpdate);
-  setInterval(checkForUpdate, 5 * 60 * 1000);
+  setInterval(checkForUpdate, 60 * 1000);
 
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", setup);
   else setup();
