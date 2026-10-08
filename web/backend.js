@@ -124,12 +124,11 @@ header{flex-wrap:wrap;}
 .feedback-msg{margin:8px 0 0;font-size:12.5px;}
 .feedback-msg.good{color:var(--good);}
 .feedback-msg.bad{color:var(--bad);}
-@media (max-width:560px){.feedback-pop{right:auto;left:0;}}
+
 .account-menu{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:250px;max-width:calc(100vw - 32px);padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow);}
 .account-email{margin:0 0 8px;padding-bottom:8px;border-bottom:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink);overflow-wrap:anywhere;}
 .account-menu p{margin:0 0 10px;font-size:12.5px;line-height:1.45;color:var(--ink-soft);}
 .account-menu .btn{width:100%;padding:9px 14px;font-size:0.85rem;}
-@media (max-width:560px){.account-menu{right:auto;left:0;}}
 .sync-status.clickable:hover{background:var(--paper-2);}
 .sync-status.clickable:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
 .auth-panel{margin:-8px 0 22px;padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);}
@@ -242,6 +241,7 @@ header{flex-wrap:wrap;}
   function toggleMenu(force){
     var open = typeof force === "boolean" ? force : menu.hidden;
     menu.hidden = !open;
+    if(open) placePopover(menu);
     var emailEl = menu.querySelector("#accountEmail");
     emailEl.textContent = signedInEmail || "";
     emailEl.hidden = !signedInEmail;
@@ -251,6 +251,21 @@ header{flex-wrap:wrap;}
   document.addEventListener("click", function(ev){
     if(menu && !menu.hidden && !ev.target.closest(".account-wrap")) toggleMenu(false);
     if(fb && !fb.pop.hidden && !ev.target.closest(".feedback-wrap")) toggleFeedback(false);
+  });
+
+  // Keep a popover on screen: line its right edge up with its button's, then
+  // nudge it so it stays at least 16px from both sides of the window.
+  function placePopover(pop){
+    var anchor = pop.parentNode.getBoundingClientRect();
+    var vw = document.documentElement.clientWidth;
+    pop.style.left = "0px"; pop.style.right = "auto";
+    var w = pop.getBoundingClientRect().width;
+    var left = Math.min(Math.max(anchor.right - w, 16), vw - 16 - w);
+    pop.style.left = (left - anchor.left) + "px";
+  }
+  window.addEventListener("resize", function(){
+    if(menu && !menu.hidden) placePopover(menu);
+    if(fb && !fb.pop.hidden) placePopover(fb.pop);
   });
 
   // ---------- bug reports & feedback ----------
@@ -312,6 +327,7 @@ header{flex-wrap:wrap;}
   function toggleFeedback(force){
     var open = typeof force === "boolean" ? force : fb.pop.hidden;
     fb.pop.hidden = !open;
+    if(open) placePopover(fb.pop);
     fb.btn.setAttribute("aria-expanded", open ? "true" : "false");
     if(open){ showFb(""); fb.text.focus(); }
   }
