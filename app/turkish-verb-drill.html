@@ -1030,7 +1030,7 @@ const VERBS = [];
 
 function buildVerbBonusChunks(){
   const chunks = [];
-  [["bonus","bonusg","Other"],["bible","biblevg","Bible"]].forEach(([page, prefix, name])=>{
+  [["bonus","bonusg","Derste"],["bible","biblevg","Bible"]].forEach(([page, prefix, name])=>{
     const items = VERBS.filter(v=>v.page===page);
     for(let i=0;i<items.length;i+=25){
       const key = `${prefix}${Math.floor(i/25)+1}`;
@@ -1046,7 +1046,7 @@ const VERB_BONUS_CHUNKS = buildVerbBonusChunks();
 // ---- Non-verb vocabulary (from Turkish Now Ünite 1 & 2 word sheets) ----
 const NONVERBS = [];
 // Non-verb groups beyond the Ünite sheets: [unit, chunk key prefix, label]
-const NONVERB_EXTRA_UNITS = [["other","otherg","Other"],["sifatlar","sifatg","Sıfatlar"],["bible","biblenvg","Bible"]];
+const NONVERB_EXTRA_UNITS = [["other","otherg","Derste"],["sifatlar","sifatg","Sıfatlar"],["bible","biblenvg","Bible"]];
 function buildNonverbChunks(){
   const chunks = [];
   [1,2].forEach(unit=>{
@@ -2887,7 +2887,7 @@ function vocabItemDetail(item){
   if(item.kind==="verb"){
     const v = VERBS[item.idx];
     const chunk = v.bonusChunkKey && VERB_BONUS_CHUNKS.find(c=>c.key===v.bonusChunkKey);
-    return {inf:v.inf, gloss:v.vocabGloss, tag: chunk ? chunk.label : VERB_PAGE_TAG[v.page] || "Other", caseNotes: caseTagsHTML(v.inf)};
+    return {inf:v.inf, gloss:v.vocabGloss, tag: chunk ? chunk.label : VERB_PAGE_TAG[v.page] || "Derste", caseNotes: caseTagsHTML(v.inf)};
   }
   const nv = NONVERBS[item.idx];
   // Tag with the 25-word group, e.g. "Sıfatlar 26-50".

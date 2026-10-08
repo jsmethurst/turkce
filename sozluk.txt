@@ -324,8 +324,8 @@ değişmek                  to change (become different)
 artmak                    to increase
     örnek: Fiyatlar artıyor.  (Prices are increasing.)
 
-OTHER 1-25
-----------
+DERSTE 1-25
+-----------
 belirlemek                to determine
     akuzatif: Tarihi belirliyorum.  (I'm determining the date.)
 yayınlamak                to broadcast / to publish
@@ -378,8 +378,8 @@ demlemek                  to brew
 yakmak                    to burn
     akuzatif: Mumu yakıyorum.  (I'm lighting the candle.)
 
-OTHER 26-50
------------
+DERSTE 26-50
+------------
 ateşi yakmak              to light a fire
     örnek: Kampta ateşi yakıyorum.  (I'm lighting the fire at camp.)
 söndürmek                 to extinguish
@@ -431,8 +431,8 @@ geri dönmek               to come back / to go back
 keşfetmek                 to discover / to explore
     akuzatif: Şehri keşfediyorum.  (I'm exploring the city.)
 
-OTHER 51-56
------------
+DERSTE 51-56
+------------
 sağlıklı olmak            to be healthy
     örnek: Sağlıklı olmak istiyorum.  (I want to be healthy.)
 biriktirmek               to save (money)
@@ -906,8 +906,8 @@ tatil planı               holiday plan
 sinema salonu             movie theater
 televizyon programı       television program
 
-OTHER 1-25
-----------
+DERSTE 1-25
+-----------
 bazı                      some
 bütün                     all / whole
 boş                       empty
@@ -934,8 +934,8 @@ doğu                      east
 batı                      west
 memleket                  hometown
 
-OTHER 26-50
------------
+DERSTE 26-50
+------------
 yorucu                    exhausting
 cümle                     sentence
 arası                     between
@@ -962,8 +962,8 @@ açık mavi                 light blue
 koyu mavi                 dark blue
 açık yeşil                light green
 
-OTHER 51-75
------------
+DERSTE 51-75
+------------
 koyu yeşil                dark green
 koyu kırmızı              dark red
 kıyafetler                clothes
@@ -990,8 +990,8 @@ alt giyim                 bottoms (clothes)
 tayt                      leggings
 pantolon                  pants
 
-OTHER 76-100
-------------
+DERSTE 76-100
+-------------
 kot pantolon              jeans
 şort                      shorts
 etek                      skirt
@@ -1018,8 +1018,8 @@ pijama                    pajamas
 bornoz                    bathrobe
 şapka                     hat
 
-OTHER 101-125
--------------
+DERSTE 101-125
+--------------
 takılar                   jewelry
 alyans                    wedding ring
 kolye                     necklace
@@ -1046,8 +1046,8 @@ geçen ay                  last month
 vardı                     there was
 yoktu                     there was not
 
-OTHER 126-150
--------------
+DERSTE 126-150
+--------------
 ilaç                      medicine
 ertesi gün                the next day
 neyse ki                  fortunately
@@ -1074,8 +1074,8 @@ sulu yemekler             stews
 tuzlu                     salty
 özgün                     original
 
-OTHER 151-171
--------------
+DERSTE 151-171
+--------------
 çok çeşitli               a wide variety of
 hafif yemek               light meal
 yağlı yemek               fatty / heavy meal

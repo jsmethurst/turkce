@@ -62,7 +62,7 @@ def main():
         if items:
             groups.append((f"{page}. SAYFA {n + 1}-{n + len(items)}", items))
             n += len(items)
-    for page, name in (("other", "OTHER"), ("bible", "BIBLE")):
+    for page, name in (("other", "DERSTE"), ("bible", "BIBLE")):
         items = [v for v in verbs if v["page"] == page]
         for a, b, chunk in chunks(items):
             groups.append((f"{name} {a}-{b}", chunk))
@@ -72,7 +72,7 @@ def main():
             out += verb_lines(v)
         out.append("")
     out += ["", RULE, "NON-VERBS", RULE, ""]
-    units = [(1, "1. ünite"), (2, "2. ünite"), ("other", "Other"), ("sifatlar", "Sıfatlar"), ("bible", "Bible")]
+    units = [(1, "1. ünite"), (2, "2. ünite"), ("other", "Derste"), ("sifatlar", "Sıfatlar"), ("bible", "Bible")]
     for unit, name in units:
         items = [x for x in nonverbs if x["unit"] == unit]
         for a, b, chunk in chunks(items):

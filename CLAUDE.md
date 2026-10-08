@@ -33,7 +33,7 @@ When Jacob says "add <turkish> - <english>":
 1. **Use his gloss exactly as written.** Don't correct or extend it.
 2. **Skip words that are already present.** Search the DICTIONARY for `"tr":"<word>"` (non-verbs) and `"inf":"<word>"` (verbs). If the word is already there in any list, don't add it, and tell him where it is.
 3. **Collisions:** if the word is new but its English gloss is the same as, or nearly the same as, another word's, or the Turkish clashes with another sense, **don't decide alone**. Suggest how to resolve it and wait for his answer.
-4. **Default list:** unless he names a list, add the word to the **Other** lists.
+4. **Default list:** unless he names a list, add the word to the **Derste** lists. They're shown as "Derste" but stored as `"unit":"other"` for non-verbs and `"page":"other"` for verbs; the stored keys stayed the same so learners' saved data still matches.
 5. **Topic:** also put every new word into one fitting topic (see below).
 6. **Glosses of existing words** only change when he asks.
 7. After the edits:
@@ -44,8 +44,8 @@ When Jacob says "add <turkish> - <english>":
 ### Non-verb rows (`nonverbs` array)
 `{"tr":"usta","en":"expert","unit":"other","order":771}`
 - `unit` is one of `1`, `2` (Ünite sheets), `"other"`, `"sifatlar"` or `"bible"`.
-- New Other words: set `order` to one more than the highest `order` in the whole `nonverbs` array, and put the row at the end of the array (just before `],` / `topics: [`).
-- Groups of 25 ("Other 151-175") are made automatically from the order. A part-filled last group is fine.
+- New Derste words: set `order` to one more than the highest `order` in the whole `nonverbs` array, and put the row at the end of the array (just before `],` / `topics: [`).
+- Groups of 25 ("Derste 151-175") are made automatically from the order. A part-filled last group is fine.
 
 ### Verb rows (`verbs` array)
 `{"inf":"yormak","base":"tire","ing":"tiring","past":"tired","pp":"tired","gloss":"to tire","num":null,"page":"other","order":204.1,"cases":[{"c":"akuzatif","en":"The long walk is tiring the children.","ex":"Uzun yürüyüş çocuk<b>ları</b> yoruyor."}]}`
@@ -56,7 +56,7 @@ When Jacob says "add <turkish> - <english>":
   - `c` is the case label: `akuzatif`, `datif`, `lokatif`, `ablatif`, `ile`, or `örnek` for a plain example.
   - Wrap the case suffix in `<b>…</b>`.
   - Use the present continuous where natural.
-- **New Other verbs:** `"page":"other"`, with an `order` greater than the last `page:"other"` verb's and below 205 (the Bible verbs start at 205), e.g. 204.3, then 204.4. Put the row right after the last `page:"other"` row.
+- **New Derste verbs:** `"page":"other"`, with an `order` greater than the last `page:"other"` verb's and below 205 (the Bible verbs start at 205), e.g. 204.3, then 204.4. Put the row right after the last `page:"other"` row.
 - **Check the conjugation:** load the page and run `conjugateFull(verb, tenseKey, personIdx, false, false, false)` for each key in `TENSES`. This catches Turkish verbs with unusual stems.
 
 ### Topics (`topics` array)
