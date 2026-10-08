@@ -623,7 +623,7 @@ harita                    map
 metre                     meter
 ileride                   ahead / further ahead
 müdür                     manager / principal
-yaşlı                     elderly (people)
+yaşlı                     old / elderly (people)
 kafe                      cafe
 bekar                     single
 açık                      open
@@ -708,13 +708,13 @@ televizyon                television / TV
 kapalı                    closed / turned off
 sıra                      queue / line
 üçüncü                    third
-sonuncu                   last
+sonuncu                   the last one
 
 2. ÜNİTE 26-50
 --------------
 kısa saçlı                short-haired
 erkek                     man
-doğru                     correct
+doğru                     correct / true
 yanlış                    wrong
 cüzdan                    wallet
 mendil                    tissue
@@ -1192,7 +1192,7 @@ küçük                     small
 erken                     early
 geç                       late
 genç                      young
-yaşlı                     old (people)
+yaşlı                     old / elderly (people)
 uzak                      far
 yakın                     near / close
 uzun                      long / tall (people)
@@ -1247,7 +1247,7 @@ yaratıcı                  creative
 diğer                     other
 yalnız                    alone / lonely
 gürültülü                 noisy
-ilk                       first
+ilk                       first / earliest
 son                       last
 yüksek                    high
 alçak                     low
@@ -1306,7 +1306,7 @@ yargı                     judgment
 görkem                    splendor / magnificence
 lanet                     curse
 gazap                     wrath
-duyunç                    conscience
+duyunç                    conscience (biblical)
 kurtuluş                  salvation / deliverance
 itaat                     obedience
 umut                      hope
