@@ -121,7 +121,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .mic-btn.mic-on{background:var(--mic);border-color:var(--mic);color:#fff;}
 .mic-btn.mic-on:hover{background:var(--mic);}
 .mic-btn::before{content:"";position:absolute;left:0;right:0;bottom:0;height:0;background:var(--mic-fill);}
-.mic-btn.filling::before{animation:micfill 2s linear forwards;}
+.mic-btn.filling::before{animation:micfill 1.5s linear forwards;}
 @keyframes micfill{from{height:0;}to{height:100%;}}
 .mic-btn:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
 #vocabAnswerInput:disabled{opacity:0.6;}
@@ -3747,7 +3747,7 @@ function showHeard(inputId, heard, matchIndex){
   const ordinal = ["", "2nd", "3rd", "4th", "5th"][matchIndex] || "";
   document.getElementById(inputId).value = `Heard: “${heard}”` + (ordinal ? ` (${ordinal} guess)` : "");
 }
-// After a spoken answer, move on in 2 s unless the viewer clicks, taps, scrolls or presses a key.
+// After a spoken answer, move on in 1.5 s unless the viewer clicks, taps, scrolls or presses a key.
 function startAutoAdvance(btn, advance){
   cancelAutoAdvance();
   voice.btn = btn;
@@ -3758,7 +3758,7 @@ function startAutoAdvance(btn, advance){
     voice.timer = null;
     cancelAutoAdvance();
     advance();
-  }, 2000);
+  }, 1500);
   ["pointerdown","keydown","wheel","touchstart"].forEach(t=>document.addEventListener(t, cancelAutoAdvance, {capture:true, passive:true}));
 }
 function cancelAutoAdvance(){
