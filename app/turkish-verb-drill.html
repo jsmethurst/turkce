@@ -3463,6 +3463,8 @@ function setPrimaryButtonMode(mode){
 function normalizeTR(s, lenient){
   let x = s.trim().toLowerCase().replace(/\s+/g," ");
   x = x.replace(/i̇/g,"i");
+  // Şapka (circumflex) is optional: â/î/û count the same as a/i/u, e.g. "kahin" for "kâhin".
+  x = x.normalize("NFC").replace(/â/g,"a").replace(/î/g,"i").replace(/û/g,"u");
   x = x.replace(/["“”']/g,"").replace(/[?.!¿¡]+$/,"").trim();
   if(lenient){
     x = x.replace(/ı/g,"i").replace(/ş/g,"s").replace(/ç/g,"c").replace(/ğ/g,"g").replace(/ö/g,"o").replace(/ü/g,"u");
