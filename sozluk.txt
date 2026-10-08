@@ -42,7 +42,7 @@ sevmek                    to love / to like
 bakmak                    to look
     datif: Duvara bakıyorum.  (I'm looking at the wall.)
 bulmak                    to find
-    akuzatif: Anahtarı buluyorum.  (I'm finding the key.)
+    akuzatif: Anahtarı buldum.  (I found the key.)
 anlamak                   to understand
     akuzatif: Soruyu anlıyorum.  (I understand the question.)
 sormak                    to ask
@@ -85,7 +85,7 @@ aramak                    to call / to search
 --------------
 anlatmak                  to tell / to narrate
     akuzatif: Hikâyeyi anlatıyorum.  (I'm telling the story.)
-    datif: Ona anlatıyorum.  (I'm explaining to him/her.)
+    datif: Ona anlatıyorum.  (I'm telling him/her.)
 göstermek                 to show
     datif: Arkadaşıma fotoğrafı gösteriyorum.  (I'm showing the photo to my friend.)
 kullanmak                 to use
@@ -118,7 +118,7 @@ sürmek                    to drive / to last
 durmak                    to stop / to stand
     lokatif: Kapıda duruyorum.  (I'm standing at the door.)
 oturmak                   to sit / to live
-    lokatif: Evde oturuyorum.  (I live at home.)
+    lokatif: Evde oturuyorum.  (I'm sitting at home.)
 kalkmak                   to get up
     ablatif: Sandalyeden kalkıyorum.  (I'm getting up from the chair.)
 yatmak                    to lie down / to go to bed
@@ -201,7 +201,7 @@ tercih etmek              to prefer
 katılmak                  to join / to attend
     datif: Toplantıya katılıyorum.  (I'm joining the meeting.)
 ayrılmak                  to leave / to separate
-    ablatif: İşten ayrılıyorum.  (I'm quitting the job.)
+    ablatif: İşten ayrılıyorum.  (I'm leaving my job.)
 seyahat etmek             to travel
     ile: Trenle seyahat ediyorum.  (I travel by train.)
 ziyaret etmek             to visit
@@ -237,7 +237,7 @@ hoşlanmak                 to enjoy / to be fond of
 kazanmak                  to earn / to win
     akuzatif: Maçı kazanıyoruz.  (We're winning the match.)
 kaybetmek                 to lose
-    akuzatif: Anahtarı kaybediyorum.  (I'm losing the key.)
+    akuzatif: Cüzdanı kaybettim.  (I lost the wallet.)
 harcamak                  to spend (money)
     akuzatif: Parayı harcıyorum.  (I'm spending the money.)
 taşımak                   to carry
@@ -274,7 +274,7 @@ açılmak                   to open (by itself)
 kapanmak                  to close (by itself)
     örnek: Market saat onda kapanıyor.  (The market closes at ten.)
 kırmak                    to break (something)
-    akuzatif: Bardağı kırıyorum.  (I'm breaking the glass.)
+    akuzatif: Bardağı kırdım.  (I broke the glass.)
 kırılmak                  to be broken
     örnek: Bardak kırıldı.  (The glass broke.)
 düşmek                    to fall
@@ -335,7 +335,7 @@ seyretmek                 to watch / to observe
 çekmek                    to pull
     akuzatif: İpi çekiyorum.  (I'm pulling the rope.)
 çalmak                    to steal
-    akuzatif: Parayı çalıyorum.  (I'm stealing the money.)
+    akuzatif: Hırsız parayı çalıyor.  (The thief is stealing the money.)
 fırçalamak                to brush
     akuzatif: Atı fırçalıyorum.  (I'm brushing the horse.)
 tırmanmak                 to climb
@@ -349,7 +349,7 @@ uğramak                   to stop by
 koklamak                  to smell
     akuzatif: Çiçeği kokluyorum.  (I'm smelling the flower.)
 toplamak                  to collect
-    akuzatif: Pulu topluyorum.  (I'm collecting the stamp.)
+    akuzatif: Kâğıtları topluyorum.  (I'm collecting the papers.)
 gülümsemek                to smile slightly
     datif: Bana gülümsüyor.  (He/she is smiling at me.)
 bahsetmek                 to talk about
