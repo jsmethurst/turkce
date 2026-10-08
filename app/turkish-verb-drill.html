@@ -163,7 +163,6 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 @keyframes rainbow-glow{from{box-shadow:0 0 0 0 rgba(123,79,214,0);}to{box-shadow:0 0 10px 1px rgba(123,79,214,0.35);}}
 @media (prefers-reduced-motion: reduce){.btn-rainbow{animation:none;}}
 
-.voice-heard{display:block;margin-top:8px;font-size:0.85rem;opacity:0.85;}
 .feedback{margin-top:16px;padding:14px 16px;border-radius:11px;font-size:0.95rem;display:none;}
 .feedback.show{display:block;}
 .feedback.good{background:#EAF6EF;color:var(--good);}
@@ -3728,7 +3727,7 @@ function onVoiceResult(e){
     const heard = match>=0 ? alts[match] : alts[0];
     document.getElementById("answerInput").value = heard;
     showFeedback(match>=0);
-    showHeard("feedback", heard, match);
+    showHeard("answerInput", heard, match);
     document.getElementById("answerInput").blur();
     startAutoAdvance(document.getElementById("micBtn"), nextQuestion);
   } else {
@@ -3737,19 +3736,16 @@ function onVoiceResult(e){
     const heard = match>=0 ? alts[match] : alts[0];
     document.getElementById("vocabAnswerInput").value = heard;
     checkVocabAnswer();
-    showHeard("vocabFeedback", heard, match);
+    showHeard("vocabAnswerInput", heard, match);
     startAutoAdvance(document.getElementById("vocabMicBtn"), ()=>{ if(vocabState.test) advanceTypingTest(); else nextVocabCard(); });
   }
 }
-// Shows what the recognizer heard. A correct answer from a lower-ranked guess says which
-// guess it was (2nd–5th); a wrong answer shows the top guess.
-function showHeard(feedbackId, heard, matchIndex){
-  const fb = document.getElementById(feedbackId);
-  const note = document.createElement("span");
-  note.className = "voice-heard";
+// After a spoken answer has been checked, the answer box shows what the recognizer heard.
+// A correct answer from a lower-ranked guess says which guess it was (2nd–5th);
+// a wrong answer shows the top guess.
+function showHeard(inputId, heard, matchIndex){
   const ordinal = ["", "2nd", "3rd", "4th", "5th"][matchIndex] || "";
-  note.textContent = `Heard: “${heard}”` + (ordinal ? ` (${ordinal} guess)` : "");
-  fb.appendChild(note);
+  document.getElementById(inputId).value = `Heard: “${heard}”` + (ordinal ? ` (${ordinal} guess)` : "");
 }
 // After a spoken answer, move on in 2 s unless the viewer clicks, taps, scrolls or presses a key.
 function startAutoAdvance(btn, advance){
