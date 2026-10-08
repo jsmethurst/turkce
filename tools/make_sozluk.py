@@ -29,8 +29,8 @@ def load_dictionary():
 
 
 def upper_tr(label):
-    # "1. ünite 26-50" -> "1. ÜNİTE 26-50"; plain .upper() would give "ÜNITE".
-    return label.replace("i", "İ").upper() if "ünite" in label else label.upper()
+    # "1. Ünite 26-50" -> "1. ÜNİTE 26-50"; plain .upper() would give "ÜNITE".
+    return label.replace("i", "İ").upper() if "Ünite" in label else label.upper()
 
 
 def section(title):
@@ -72,7 +72,7 @@ def main():
             out += verb_lines(v)
         out.append("")
     out += ["", RULE, "NON-VERBS", RULE, ""]
-    units = [(1, "1. ünite"), (2, "2. ünite"), ("other", "Derste"), ("sifatlar", "Sıfatlar"), ("bible", "Bible")]
+    units = [(1, "1. Ünite"), (2, "2. Ünite"), ("other", "Derste"), ("sifatlar", "Sıfatlar"), ("bible", "Bible")]
     for unit, name in units:
         items = [x for x in nonverbs if x["unit"] == unit]
         for a, b, chunk in chunks(items):
