@@ -212,11 +212,16 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 .ref-row .ref-en{color:var(--ink-soft);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 /* Sözlük rows tinted by the last 1–5 answers (see wordFormClass); no answers = no tint. */
 .ref-row[class*="form-"]{margin-inline:-6px;padding-inline:6px;border-radius:4px;}
-.ref-row.form-5{background:#C9E4CC;}
-.ref-row.form-4{background:#E6F2DB;}
-.ref-row.form-3{background:#FBF6DE;}
-.ref-row.form-2{background:#FAE4DE;}
-.ref-row.form-0{background:#F1C6BD;}
+.ref-row.form-5,.form-swatch.form-5{background:#C9E4CC;}
+.ref-row.form-4,.form-swatch.form-4{background:#E6F2DB;}
+.ref-row.form-3,.form-swatch.form-3{background:#FBF6DE;}
+.ref-row.form-2,.form-swatch.form-2{background:#FAE4DE;}
+.ref-row.form-0,.form-swatch.form-0{background:#F1C6BD;}
+/* Sözlük key for the row tints above. */
+.form-key{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;}
+.form-key-title{font-size:13px;font-weight:600;color:var(--ink);margin-right:4px;}
+.form-swatch{display:inline-block;padding:3px 9px;border-radius:4px;font-size:12.5px;color:var(--ink);font-variant-numeric:tabular-nums;}
+.form-swatch.none{border:1px dashed var(--line);color:var(--ink-soft);}
 .form-box{width:14px;height:14px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;line-height:1;color:#fff;}
 .form-box.w{background:var(--good);}
 .form-box.l{background:var(--bad);}
@@ -452,6 +457,16 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <p class="hint" style="margin-top:10px;">
         <span class="link-btn" style="cursor:pointer;" id="topicsNone">Clear topics</span>
       </p>
+    </div>
+
+    <div class="settings-group form-key" aria-label="Highlight key">
+      <span class="form-key-title">Form on last 5 reviews:</span>
+      <span class="form-swatch form-5">100%</span>
+      <span class="form-swatch form-4">80%</span>
+      <span class="form-swatch form-3">60%</span>
+      <span class="form-swatch form-2">40%</span>
+      <span class="form-swatch form-0">20% or less</span>
+      <span class="form-swatch none">never reviewed</span>
     </div>
 
     <div class="section-title">All verbs</div>
