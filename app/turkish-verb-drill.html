@@ -222,6 +222,9 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 .form-key-title{font-size:13px;font-weight:600;color:var(--ink);margin-right:4px;}
 .form-swatch{display:inline-block;padding:3px 9px;border-radius:4px;font-size:12.5px;color:var(--ink);font-variant-numeric:tabular-nums;}
 .form-swatch.none{border:1px dashed var(--line);color:var(--ink-soft);}
+.form-swatch b{font-weight:700;margin-left:3px;}
+.form-swatch b::before{content:"· ";font-weight:400;opacity:.6;}
+.form-swatch b:empty{display:none;}
 .form-box{width:14px;height:14px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;line-height:1;color:#fff;}
 .form-box.w{background:var(--good);}
 .form-box.l{background:var(--bad);}
@@ -461,12 +464,12 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 
     <div class="settings-group form-key" aria-label="Highlight key">
       <span class="form-key-title">Form on last 5 reviews:</span>
-      <span class="form-swatch form-5">100%</span>
-      <span class="form-swatch form-4">80%</span>
-      <span class="form-swatch form-3">60%</span>
-      <span class="form-swatch form-2">40%</span>
-      <span class="form-swatch form-0">20% or less</span>
-      <span class="form-swatch none">never reviewed</span>
+      <span class="form-swatch form-5">5/5 <b data-level="5"></b></span>
+      <span class="form-swatch form-4">4/5 <b data-level="4"></b></span>
+      <span class="form-swatch form-3">3/5 <b data-level="3"></b></span>
+      <span class="form-swatch form-2">2/5 <b data-level="2"></b></span>
+      <span class="form-swatch form-0">1/5 or 0/5 <b data-level="0"></b></span>
+      <span class="form-swatch none">never reviewed <b data-level="none"></b></span>
     </div>
 
     <div class="section-title">All verbs</div>
@@ -2535,6 +2538,25 @@ function renderNonverbReferencePanel(){
       list.appendChild(row);
     });
     box.appendChild(list);
+  });
+  updateFormKey();
+}
+// Counts every word in the Sözlük by its highlight colour, for the key above the lists.
+function updateFormKey(){
+  const counts = {5:0, 4:0, 3:0, 2:0, 0:0, none:0};
+  const seen = new Set();
+  const add = key=>{
+    if(seen.has(key)) return;
+    seen.add(key);
+    const level = wordFormLevel(key);
+    counts[level===null ? "none" : level]++;
+  };
+  VERBS.forEach(v=>add(`verb:${v.inf}`));
+  NONVERBS.forEach(nv=>add(`nonverb:${nv.tr}`));
+  document.querySelectorAll(".form-key b[data-level]").forEach(b=>{
+    const n = counts[b.dataset.level];
+    b.textContent = n.toLocaleString();
+    b.parentNode.title = `${n} word${n===1?"":"s"}`;
   });
 }
 
