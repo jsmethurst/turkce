@@ -80,6 +80,19 @@ To change the database:
 - **Sign-in settings** (Authentication config). Those need the Supabase CLI on Jacob's Mac.
 - **Moving a learner's progress from the old Claude site.** That needs a Claude session with access to that site.
 
+## Feedback queue (GitHub Issues)
+The bug button in the header saves a report into the Supabase `feedback` table. People can send reports whether or not they're signed in, and the public can't read them back. Every 15 minutes, `.github/workflows/feedback.yml` turns new reports into **GitHub Issues** labelled `feedback` plus `bug` or `idea`. Each issue shows:
+- the message,
+- which tab the person was on and what was on screen,
+- their device.
+
+The reporter's email is never copied into the issue; it stays in Supabase.
+
+When Jacob asks you to work through feedback:
+1. List the open issues with `gh issue list --label feedback`, or by browsing the repo's Issues.
+2. Fix them one at a time, and put `Fixes #N` in each commit message so pushing to `main` closes the issue.
+3. If one needs his decision, or isn't a real problem, comment on it and leave it open for him.
+
 ## Other notes
 - **Learners' saved data** is keyed by the Turkish word, e.g. `"nonverb:usta"` or `"verb:yormak"`. Renaming a word's Turkish spelling orphans learners' history for it. Changing the English gloss is safe.
 - **Before pushing a UI change,** preview `_site/` in a browser if you can, and keep it working at phone width.

@@ -100,6 +100,26 @@ header{flex-wrap:wrap;}
 .sync-status.clickable{display:block;cursor:pointer;font:inherit;font-size:12px;background:transparent;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;}
 .sync-status.clickable::before{display:inline-block;margin-right:6px;vertical-align:1px;}
 .account-wrap{position:relative;min-width:0;max-width:100%;}
+.header-actions{display:flex;align-items:flex-start;gap:8px;min-width:0;max-width:100%;}
+.feedback-wrap{position:relative;flex:none;}
+.feedback-btn{display:flex;align-items:center;justify-content:center;width:28px;height:28px;margin-top:6px;padding:0;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink-soft);cursor:pointer;}
+.feedback-btn:hover,.feedback-btn[aria-expanded="true"]{background:var(--paper-2);color:var(--ink);}
+.feedback-btn:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
+.feedback-btn svg{width:15px;height:15px;}
+.feedback-pop{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:300px;max-width:calc(100vw - 32px);padding:14px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow);}
+.feedback-title{font-family:'Fraunces',serif;font-weight:600;font-size:1rem;color:var(--ink);margin-bottom:10px;}
+.feedback-kinds{display:flex;gap:6px;margin-bottom:10px;}
+.feedback-kind{font:inherit;font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink-soft);cursor:pointer;}
+.feedback-kind.on{background:var(--tile-blue-deep);border-color:var(--tile-blue-deep);color:#fff;}
+.feedback-label{display:block;font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:4px;}
+#feedbackText{width:100%;box-sizing:border-box;font:inherit;font-size:14px;line-height:1.45;padding:9px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);resize:vertical;outline:none;}
+#feedbackText:focus{border-color:var(--tile-turquoise);background:#fff;}
+.feedback-note{margin:8px 0 10px;font-size:11.5px;line-height:1.45;color:var(--ink-soft);}
+.feedback-pop .btn{width:100%;padding:9px 14px;font-size:0.85rem;}
+.feedback-msg{margin:8px 0 0;font-size:12.5px;}
+.feedback-msg.good{color:var(--good);}
+.feedback-msg.bad{color:var(--bad);}
+@media (max-width:560px){.feedback-pop{right:auto;left:0;}}
 .account-menu{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:250px;max-width:calc(100vw - 32px);padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow);}
 .account-email{margin:0 0 8px;padding-bottom:8px;border-bottom:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink);overflow-wrap:anywhere;}
 .account-menu p{margin:0 0 10px;font-size:12.5px;line-height:1.45;color:var(--ink-soft);}
@@ -225,7 +245,71 @@ header{flex-wrap:wrap;}
   }
   document.addEventListener("click", function(ev){
     if(menu && !menu.hidden && !ev.target.closest(".account-wrap")) toggleMenu(false);
+    if(fb && !fb.pop.hidden && !ev.target.closest(".feedback-wrap")) toggleFeedback(false);
   });
+
+  // ---------- bug reports & feedback ----------
+  // Rows go to public.feedback (insert-only for the public); the "Sync feedback"
+  // workflow turns them into GitHub Issues for Jacob to work through.
+  var BUG_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 2 1.88 1.88"/><path d="M14.12 3.88 16 2"/><path d="M9 7.13v-1a3 3 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6"/><path d="M12 20v-9"/><path d="M6.53 9C4.6 8.8 3 7.1 3 5"/><path d="M6 13H2"/><path d="M3 21c0-2.1 1.7-3.9 3.8-4"/><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"/><path d="M22 13h-4"/><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"/></svg>';
+  var fb = null;
+  function screenContext(){
+    var tab = document.querySelector(".tab.active");
+    var name = tab ? tab.textContent.trim() : "?";
+    var shown = "";
+    var id = tab && tab.dataset.tab === "verbs" ? "promptWord" : tab && tab.dataset.tab === "vocab" ? "vocabFront" : "";
+    if(id){ var e = document.getElementById(id); if(e) shown = e.textContent.trim(); }
+    return (name + (shown ? ' — "' + shown + '"' : "")).slice(0, 1000);
+  }
+  function buildFeedback(){
+    var w = el(`<div class="feedback-wrap">
+      <button class="feedback-btn" id="feedbackBtn" type="button" title="Report a bug or send feedback" aria-label="Report a bug or send feedback" aria-haspopup="true" aria-expanded="false">${BUG_ICON}</button>
+      <div class="feedback-pop" id="feedbackPop" role="dialog" aria-label="Send feedback" hidden>
+        <div class="feedback-title">Report a bug or suggest something</div>
+        <div class="feedback-kinds" role="radiogroup" aria-label="Type">
+          <button type="button" class="feedback-kind on" data-kind="bug" role="radio" aria-checked="true">Bug</button>
+          <button type="button" class="feedback-kind" data-kind="idea" role="radio" aria-checked="false">Idea</button>
+        </div>
+        <label class="feedback-label" for="feedbackText">What happened, or what would you like?</label>
+        <textarea id="feedbackText" rows="4" maxlength="4000"></textarea>
+        <p class="feedback-note">This goes to Jacob's to-do list on GitHub, which is public. Your name and email aren't included.</p>
+        <button class="btn btn-primary" id="feedbackSend" type="button">Send</button>
+        <p class="feedback-msg" id="feedbackMsg" role="status" hidden></p>
+      </div>
+    </div>`);
+    fb = {wrap: w, btn: w.querySelector("#feedbackBtn"), pop: w.querySelector("#feedbackPop"),
+          text: w.querySelector("#feedbackText"), send: w.querySelector("#feedbackSend"), msg: w.querySelector("#feedbackMsg"), kind: "bug"};
+    fb.btn.onclick = function(){ if(menu) toggleMenu(false); toggleFeedback(); };
+    w.querySelectorAll(".feedback-kind").forEach(function(k){
+      k.onclick = function(){
+        fb.kind = k.dataset.kind;
+        w.querySelectorAll(".feedback-kind").forEach(function(x){ var on = x === k; x.classList.toggle("on", on); x.setAttribute("aria-checked", on ? "true" : "false"); });
+      };
+    });
+    fb.pop.addEventListener("keydown", function(ev){ ev.stopPropagation(); if(ev.key === "Escape"){ toggleFeedback(false); fb.btn.focus(); } });
+    fb.send.onclick = async function(){
+      var message = fb.text.value.trim();
+      if(!message){ return showFb("Type a message first.", "bad"); }
+      fb.send.disabled = true;
+      showFb("Sending…");
+      var r = await client.from("feedback").insert({
+        kind: fb.kind, message: message, context: screenContext(), user_agent: navigator.userAgent.slice(0, 400)
+      });
+      fb.send.disabled = false;
+      if(r.error) return showFb("Couldn't send it. Check your connection and try again.", "bad");
+      fb.text.value = "";
+      showFb("Thanks! Sent to Jacob.", "good");
+      setTimeout(function(){ toggleFeedback(false); }, 1600);
+    };
+    return w;
+  }
+  function showFb(text, kind){ fb.msg.textContent = text; fb.msg.className = "feedback-msg" + (kind ? " " + kind : ""); fb.msg.hidden = !text; }
+  function toggleFeedback(force){
+    var open = typeof force === "boolean" ? force : fb.pop.hidden;
+    fb.pop.hidden = !open;
+    fb.btn.setAttribute("aria-expanded", open ? "true" : "false");
+    if(open){ showFb(""); fb.text.focus(); }
+  }
 
   function togglePanel(force){
     var open = typeof force === "boolean" ? force : panel.hidden;
@@ -246,10 +330,14 @@ header{flex-wrap:wrap;}
     pill.classList.add("clickable");
     pill.setAttribute("role", "button");
     pill.tabIndex = 0;
-    // Wrap the pill so the dropdown can hang from it.
+    // Header right side: [bug button] [status pill]. Each wrap anchors its own popover.
+    var actions = document.createElement("div");
+    actions.className = "header-actions";
+    pill.parentNode.insertBefore(actions, pill);
+    actions.appendChild(buildFeedback());
     var wrap = document.createElement("div");
     wrap.className = "account-wrap";
-    pill.parentNode.insertBefore(wrap, pill);
+    actions.appendChild(wrap);
     wrap.appendChild(pill);
     wrap.appendChild(buildMenu());
     pill.setAttribute("aria-haspopup", "true");
