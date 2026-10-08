@@ -100,6 +100,11 @@ header{flex-wrap:wrap;}
 .sync-status.clickable{display:block;cursor:pointer;font:inherit;font-size:12px;background:transparent;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;}
 .sync-status.clickable::before{display:inline-block;margin-right:6px;vertical-align:1px;}
 .account-wrap{position:relative;min-width:0;max-width:100%;}
+.update-bar{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:12px;max-width:calc(100vw - 32px);padding:10px 10px 10px 16px;border-radius:12px;background:var(--tile-blue-deep);color:#fff;font-size:14px;box-shadow:0 8px 24px -8px rgba(18,65,77,.5);}
+.update-bar .btn{padding:8px 14px;font-size:0.85rem;background:#fff;color:var(--tile-blue-deep);}
+.update-bar .btn:hover{background:var(--paper);}
+.update-close{background:none;border:none;color:#fff;opacity:.7;font-size:20px;line-height:1;padding:2px 6px;cursor:pointer;}
+.update-close:hover{opacity:1;}
 .header-actions{display:flex;align-items:flex-start;gap:8px;min-width:0;max-width:100%;}
 .feedback-wrap{position:relative;flex:none;}
 .feedback-btn{display:flex;align-items:center;justify-content:center;width:28px;height:28px;margin-top:6px;padding:0;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink-soft);cursor:pointer;}
@@ -378,6 +383,36 @@ header{flex-wrap:wrap;}
   client.auth.onAuthStateChange(function(event){
     if(event === "PASSWORD_RECOVERY"){ recovering = true; if(panel) togglePanel(true); }
   });
+
+  // ---------- "new version available" bar ----------
+  // Each build has a version (meta app-version + version.json). Pages left open
+  // check now and then and offer a reload rather than reloading mid-answer.
+  var lastCheck = 0, updateShown = false;
+  async function checkForUpdate(){
+    var meta = document.querySelector('meta[name="app-version"]');
+    if(!meta || updateShown || Date.now() - lastCheck < 60 * 1000) return;
+    lastCheck = Date.now();
+    try{
+      var r = await fetch("version.json", {cache: "no-store"});
+      if(!r.ok) return;
+      var live = (await r.json()).version;
+      if(live && live !== meta.content) showUpdateBar();
+    }catch(e){}
+  }
+  function showUpdateBar(){
+    updateShown = true;
+    var bar = el(`<div class="update-bar" role="status">
+      <span>Türkçe has been updated.</span>
+      <button type="button" class="btn btn-primary" id="updateReload">Reload</button>
+      <button type="button" class="update-close" aria-label="Dismiss">×</button>
+    </div>`);
+    bar.querySelector("#updateReload").onclick = function(){ location.reload(); };
+    bar.querySelector(".update-close").onclick = function(){ bar.remove(); };
+    document.body.appendChild(bar);
+  }
+  document.addEventListener("visibilitychange", checkForUpdate);
+  window.addEventListener("focus", checkForUpdate);
+  setInterval(checkForUpdate, 5 * 60 * 1000);
 
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", setup);
   else setup();

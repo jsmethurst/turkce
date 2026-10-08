@@ -10,6 +10,8 @@ Learners sign in with email and password through Supabase so their progress sync
 ## How publishing works
 Every push to `main` triggers `.github/workflows/pages.yml`. It runs `build_site.py`, checks the JavaScript parses, and deploys `_site/` to GitHub Pages. The site is live about a minute after the push.
 
+Browsers may reuse the page for up to 10 minutes. Pages that are already open notice the new build through `version.json`, which `build_site.py` writes, and show a "Türkçe has been updated. Reload" bar. Nobody needs to be told to refresh.
+
 **Always `git pull` before you start.** Jacob works on this repo both from his Mac and from cloud sessions.
 
 **Always commit and push directly to `main`.** Don't create a feature branch or a pull request; this is Jacob's standing instruction, and it's how his changes go live. If the session started on another branch, switch to `main` (`git checkout main && git pull`), make the change there, then `git push origin main`. If the push is rejected because `main` moved, run `git pull --rebase` and push again.

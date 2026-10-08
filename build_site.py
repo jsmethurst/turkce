@@ -7,6 +7,7 @@ Run it locally to preview:  python3 build_site.py  then open _site/index.html
 through a local web server (e.g. python3 -m http.server -d _site).
 """
 import hashlib
+import json
 import re
 import shutil
 from pathlib import Path
@@ -35,9 +36,15 @@ assert n == 1
 if not src.lstrip().lower().startswith("<!doctype"):
     src = "<!DOCTYPE html>\n" + src
 
+# A version for this build: open pages compare it with version.json to offer a reload
+# when a newer build is live (see web/backend.js).
+APP_VERSION = hashlib.sha1(src.encode("utf-8")).hexdigest()[:12]
+src = src.replace("<title>Türkçe</title>\n", f'<title>Türkçe</title>\n<meta name="app-version" content="{APP_VERSION}">\n', 1)
+
 if OUT.exists():
     shutil.rmtree(OUT)
 shutil.copytree(ROOT / "web", OUT)
 (OUT / "index.html").write_text(src, encoding="utf-8")
 (OUT / ".nojekyll").touch()
+(OUT / "version.json").write_text(json.dumps({"version": APP_VERSION}) + "\n", encoding="utf-8")
 print(f"built {OUT.name}/ (index.html {len(src.encode('utf-8')):,} bytes)")
