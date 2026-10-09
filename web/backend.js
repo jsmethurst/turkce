@@ -327,7 +327,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
           <img alt="Your screenshot">
           <button class="feedback-shot-remove" type="button" title="Remove the screenshot" aria-label="Remove the screenshot">×</button>
         </div>
-        <p class="feedback-note">This goes to Jacob's to-do list on GitHub, which is public. Your name and email aren't included.</p>
+        <p class="feedback-note">This goes straight to Jacob.</p>
         <button class="btn btn-primary" id="feedbackSend" type="button">Send</button>
         <p class="feedback-msg" id="feedbackMsg" role="status" hidden></p>
       </div>

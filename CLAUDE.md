@@ -83,21 +83,10 @@ To change the database:
 - **Sign-in settings** (Authentication config). Those need the Supabase CLI on Jacob's Mac.
 - **Moving a learner's progress from the old Claude site.** That needs a Claude session with access to that site.
 
-## Feedback queue (GitHub Issues)
-The "Suggest a change" button in the header (a speech bubble) saves a suggestion into the Supabase `feedback` table. Bugs and ideas aren't distinguished. People can send suggestions whether or not they're signed in, and the public can't read them back. They can attach a screenshot: the camera button dims the page, they drag over an area (or tap for the whole screen), and html2canvas (loaded from jsDelivr only when needed) renders it into a PNG or JPEG stored in the row's `screenshot` column.
+## Feedback ("Suggest a change")
+The "Suggest a change" button in the header (a speech bubble) saves a suggestion into the Supabase `feedback` table. People can send suggestions whether or not they're signed in, and the public can't read them back. They can attach a screenshot: the camera button dims the page, they drag over an area (or tap for the whole screen), and html2canvas (loaded from jsDelivr only when needed) renders it into a PNG or JPEG stored in the row's `screenshot` column. A signed-in sender's email is stored too.
 
-Every 15 minutes, `.github/workflows/feedback.yml` turns new suggestions into **GitHub Issues** labelled `feedback`. Each issue shows:
-- the message,
-- the screenshot, if any (the workflow commits it to the orphan branch `feedback-screenshots`, which never touches `main` or the site),
-- which tab the person was on and what was on screen,
-- their device.
-
-The reporter's email is never copied into the issue; it stays in Supabase.
-
-When Jacob asks you to work through feedback:
-1. List the open issues with `gh issue list --label feedback`, or by browsing the repo's Issues.
-2. Fix them one at a time, and put `Fixes #N` in each commit message so pushing to `main` closes the issue.
-3. If one needs his decision, or isn't a real problem, comment on it and leave it open for him.
+Feedback is **private** and isn't copied anywhere else. Jacob reviews it through his Mac session, which reads the table with the Supabase CLI. A row whose `synced_at` is set has been handled. Cloud sessions have no database access, so they can't see feedback. (Issues #1 and #2 on GitHub are from an earlier setup that copied feedback there.)
 
 ## Other notes
 - **Learners' saved data** is keyed by the Turkish word, e.g. `"nonverb:usta"` or `"verb:yormak"`. Renaming a word's Turkish spelling orphans learners' history for it. Changing the English gloss is safe.
