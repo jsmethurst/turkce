@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-231 verbs · 773 non-verbs · 40 topics
+232 verbs · 786 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -431,7 +431,7 @@ geri dönmek               to come back / to go back
 keşfetmek                 to discover / to explore
     akuzatif: Şehri keşfediyorum.  (I'm exploring the city.)
 
-DERSTE 51-56
+DERSTE 51-57
 ------------
 sağlıklı olmak            to be healthy
     örnek: Sağlıklı olmak istiyorum.  (I want to be healthy.)
@@ -445,6 +445,8 @@ yormak                    to tire
     akuzatif: Uzun yürüyüş çocukları yoruyor.  (The long walk is tiring the children.)
 yaşlanmak                 to grow old
     örnek: Herkes yaşlanır.  (Everyone grows old.)
+uğurlamak                 to see off
+    akuzatif: Arkadaşımı havaalanında uğurluyorum.  (I'm seeing my friend off at the airport.)
 
 BIBLE 1-25
 ----------
@@ -1074,7 +1076,7 @@ sulu yemekler             stews
 tuzlu                     salty
 özgün                     original
 
-DERSTE 151-171
+DERSTE 151-175
 --------------
 çok çeşitli               a wide variety of
 hafif yemek               light meal
@@ -1097,6 +1099,22 @@ sıkışık                   cramped
 emekli                    retired
 usta                      expert
 acemi                     novice
+emin                      certain / sure
+bütün gün                 all day
+buhar                     steam
+ücretsiz                  free
+
+DERSTE 176-184
+--------------
+bedava                    free (informal / possibly rude)
+uyku                      sleep
+şimdilik                  for now
+indirim                   discount
+zam                       price increase
+mum                       candle
+fikir                     idea
+ağabey                    older brother (formal)
+abi                       older brother (informal)
 
 SIFATLAR 1-25
 -------------
@@ -1388,7 +1406,7 @@ birinci, ikinci, üçüncü, dördüncü, altıncı, yedinci, dokuzuncu, sonuncu
 
 Time & Schedule
 ---------------
-şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen
+şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik
 
 Politeness & Fillers
 --------------------
@@ -1396,7 +1414,7 @@ buyurun, geçmiş olsun, affedersiniz, rica ederim, teşekkürler, lütfen, afiy
 
 People & Professions
 --------------------
-insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi
+insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi
 
 Places & Buildings
 ------------------
@@ -1404,7 +1422,7 @@ okul, sınıf, kütüphane, hastane, cami, banka, sinema, kafe, kafeterya, kanti
 
 House & Furniture
 -----------------
-masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitaplık, vazo, şamdan, avize, ayna, evde, odada, masada, kitaplıkta, eşya, piyano, anahtar, kilitlemek, temizlemek, taşınmak, kiralamak, zemin kat, bodrum kat
+masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitaplık, vazo, şamdan, avize, ayna, evde, odada, masada, kitaplıkta, eşya, piyano, anahtar, kilitlemek, temizlemek, taşınmak, kiralamak, zemin kat, bodrum kat, mum
 
 Kitchen & Food
 --------------
@@ -1428,7 +1446,7 @@ sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, k
 
 Shopping & Money
 ----------------
-para çekmek, alışveriş, alışveriş yapmak, ucuz, pahalı, bilet almak, kilo, numara, manav, müşteri, almak, satmak, ödemek, harcamak, biriktirmek, kumbara, cüzdan, beden, pazar, seçmek, denemek, fakir, zengin, kıymetli
+para çekmek, alışveriş, alışveriş yapmak, ucuz, pahalı, bilet almak, kilo, numara, manav, müşteri, almak, satmak, ödemek, harcamak, biriktirmek, kumbara, cüzdan, beden, pazar, seçmek, denemek, fakir, zengin, kıymetli, ücretsiz, bedava, indirim, zam
 
 Hobbies & Free Time
 -------------------
@@ -1460,7 +1478,7 @@ takılar, özel takılar, küpe, yüzük, alyans, kolye, bileklik, bilezik, halh
 
 Nature & Outdoors
 -----------------
-hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, çiçekler, bitki, toprak, kum, hayvan, boğa, yakmak, ateşi yakmak, söndürmek, beslemek, koklamak, ıslanmak, üşümek
+hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, çiçekler, bitki, toprak, kum, hayvan, boğa, yakmak, ateşi yakmak, söndürmek, beslemek, koklamak, ıslanmak, üşümek, buhar
 
 Here, There & Directions
 ------------------------
@@ -1472,7 +1490,7 @@ sevmek, beğenmek, hoşlanmak, korkmak, üzülmek, sevinmek, kızmak, şaşırma
 
 Daily Routine
 -------------
-fırçalamak, uyanmak, kalkmak, yıkamak, diş fırçalamak, taramak, kurulanmak, giymek, hazırlanmak, çalışmak, ders çalışmak, dinlenmek, yatmak, uyumak, sabah, öğlen, akşam, gece, genellikle, sık sık
+fırçalamak, uyanmak, kalkmak, yıkamak, diş fırçalamak, taramak, kurulanmak, giymek, hazırlanmak, çalışmak, ders çalışmak, dinlenmek, yatmak, uyumak, sabah, öğlen, akşam, gece, genellikle, sık sık, uyku
 
 Health & Body
 -------------
@@ -1484,7 +1502,7 @@ konuşmak, söylemek, demek, sormak, soru sormak, cevaplamak, anlatmak, açıkla
 
 Coming & Going
 --------------
-gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, geçmek, yürümek, koşmak, binmek, inmek, durmak, oturmak, kalkmak, uğramak, tırmanmak, düşmek, taşınmak, ayrılmak, katılmak, gecikmek, yetişmek
+gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, geçmek, yürümek, koşmak, binmek, inmek, durmak, oturmak, kalkmak, uğramak, tırmanmak, düşmek, taşınmak, ayrılmak, katılmak, gecikmek, yetişmek, uğurlamak
 
 Everyday Actions
 ----------------
@@ -1492,7 +1510,7 @@ açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, 
 
 Thinking & Deciding
 -------------------
-bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan
+bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir
 
 Describing Things
 -----------------
