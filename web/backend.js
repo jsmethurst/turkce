@@ -107,6 +107,8 @@ header{flex-wrap:wrap;}
 .update-bar .btn:hover{background:var(--paper);}
 .update-close{background:none;border:none;color:#fff;opacity:.7;font-size:20px;line-height:1;padding:2px 6px;cursor:pointer;}
 .update-close:hover{opacity:1;}
+.auth-testmode{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:12.5px;line-height:1.5;color:var(--ink-soft);}
+.auth-testmode .auth-link{margin:0;padding:0;font-size:12.5px;}
 .testmode-badge{margin-top:6px;padding:5px 10px;border-radius:999px;background:#FBE3CF;color:#8A3D0E;font-size:11.5px;font-weight:700;white-space:nowrap;}
 .header-actions{display:flex;align-items:flex-start;gap:8px;min-width:0;max-width:100%;}
 .feedback-wrap{position:relative;flex:none;}
@@ -203,7 +205,13 @@ header{flex-wrap:wrap;}
         <button class="btn btn-ghost" id="authSwitch">${creating ? "I have an account" : "Create an account"}</button>
         ${creating ? "" : '<button class="auth-link" id="authForgot">Forgot password?</button>'}
       </div>
-      <p class="auth-msg" hidden></p>`;
+      <p class="auth-msg" hidden></p>
+      ${TEST ? "" : '<p class="auth-testmode">Just looking? <button type="button" class="auth-link" id="authTestMode">Use test mode</button>: a pretend account kept in this browser only. Nothing is saved to a real account.</p>'}`;
+    var testBtn = panel.querySelector("#authTestMode");
+    if(testBtn) testBtn.onclick = function(){
+      try{ localStorage.setItem("turkce_testmode_on", "1"); }catch(e){}
+      location.reload();
+    };
     var email = panel.querySelector("#authEmail"), pw = panel.querySelector("#authPassword");
     async function submit(){
       var e = email.value.trim(), p = pw.value;
@@ -237,8 +245,10 @@ header{flex-wrap:wrap;}
   function buildMenu(){
     menu = el(`<div class="account-menu" id="accountMenu" role="menu" hidden>
       <div class="account-email" id="accountEmail"></div>
-      <p>Your settings and progress are saved to your account and stay in sync on every device you sign in on.</p>
-      <button class="btn btn-ghost" id="authSignOut" role="menuitem" type="button">Sign out</button>
+      <p>${TEST && !TEST.local
+        ? "Test mode: a pretend account. Progress is kept in this browser only, and suggestions aren't sent."
+        : "Your settings and progress are saved to your account and stay in sync on every device you sign in on."}</p>
+      <button class="btn btn-ghost" id="authSignOut" role="menuitem" type="button">${TEST && !TEST.local ? "Leave test mode" : "Sign out"}</button>
     </div>`);
     menu.querySelector("#authSignOut").onclick = async function(){
       this.disabled = true;
@@ -493,7 +503,9 @@ header{flex-wrap:wrap;}
     var actions = document.createElement("div");
     actions.className = "header-actions";
     pill.parentNode.insertBefore(actions, pill);
-    if(TEST) actions.appendChild(el('<span class="testmode-badge" title="Local test mode: a pretend database in this browser, signed in as a Test learner. Add ?supabase to the address to use the real one.">Local test mode</span>'));
+    if(TEST) actions.appendChild(el(TEST.local
+      ? '<span class="testmode-badge" title="Local test mode: a pretend database in this browser, signed in as a Test learner. Add ?supabase to the address to use the real one.">Local test mode</span>'
+      : '<span class="testmode-badge" title="Test mode: a pretend account kept in this browser only. Sign out to leave test mode.">Test mode</span>'));
     actions.appendChild(buildFeedback());
     var wrap = document.createElement("div");
     wrap.className = "account-wrap";

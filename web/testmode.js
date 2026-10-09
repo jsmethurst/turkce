@@ -1,14 +1,17 @@
-// Local test mode: when the site is opened from localhost (e.g. a preview of _site/),
-// backend.js uses this pretend Supabase instead of the real one. A "Test learner" is
+// Test mode: a pretend Supabase that backend.js uses instead of the real one. It is on
+// when the site is opened from localhost (e.g. a preview of _site/), or on the live site
+// after "Use test mode" in the sign-in panel (until Sign out). A "Test learner" is
 // signed in by default and everything is saved in this browser's localStorage, so
 // signed-in features (sync, tests, the account menu, feedback) can be tried without a
 // real account and without touching real learners' data.
-// On the live site (any other host) this file does nothing.
-// Add ?supabase to a localhost URL to use the real Supabase instead.
+// Otherwise this file does nothing. Add ?supabase to a localhost URL to use the real Supabase.
 (function(){
+  var FLAG_KEY = "turkce_testmode_on";
   var host = location.hostname;
   var local = host === "localhost" || host === "127.0.0.1" || host === "[::1]" || /\.localhost$/.test(host);
-  if(!local || /[?&]supabase\b/.test(location.search)) return;
+  var chosen = false;
+  try{ chosen = localStorage.getItem(FLAG_KEY) === "1"; }catch(e){}
+  if(!(local || chosen) || (local && /[?&]supabase\b/.test(location.search))) return;
 
   var DB_KEY = "turkce_testmode_db", SESSION_KEY = "turkce_testmode_session", FEEDBACK_KEY = "turkce_testmode_feedback";
   var USER = {id: "00000000-0000-4000-8000-000000000001", email: "test.learner@localhost"};
@@ -91,7 +94,12 @@
       onAuthStateChange: function(){ return {data: {subscription: {unsubscribe: function(){}}}}; },
       signInWithPassword: function(c){ write(SESSION_KEY, {user: {id: USER.id, email: c.email}}); return ok({session: session()}); },
       signUp: function(c){ write(SESSION_KEY, {user: {id: USER.id, email: c.email}}); return ok({session: session()}); },
-      signOut: function(){ write(SESSION_KEY, null); return Promise.resolve({error: null}); },
+      // On the live site, signing out also leaves test mode (back to the real sign-in).
+      signOut: function(){
+        write(SESSION_KEY, null);
+        if(!local){ try{ localStorage.removeItem(FLAG_KEY); }catch(e){} }
+        return Promise.resolve({error: null});
+      },
       resetPasswordForEmail: function(){ return ok(); },
       updateUser: function(){ return ok(); }
     }
@@ -99,6 +107,7 @@
 
   window.turkceTestMode = {
     client: client,
+    local: local,
     user: USER,
     session: session,
     db: db,
