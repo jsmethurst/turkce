@@ -24,7 +24,6 @@ TESTMODE_VERSION = hashlib.sha1((ROOT / "web" / "testmode.js").read_bytes()).hex
 src, n = re.subn(r"<title>.*?</title>", "<title>Türkçe</title>", src, count=1)
 assert n == 1, "no <title> found"
 head_extra = (
-    '<meta name="description" content="Turkish verb forms, vocabulary flashcards and a searchable Sözlük.">\n'
     '<link rel="icon" href="favicon.svg" type="image/svg+xml">\n'
     '<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">\n'
     '<link rel="apple-touch-icon" href="apple-touch-icon.jpg">\n'
