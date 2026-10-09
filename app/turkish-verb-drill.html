@@ -479,7 +479,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <button type="button" class="form-swatch form-2" data-level="2" aria-pressed="false">2/5 <b></b></button>
       <button type="button" class="form-swatch form-0" data-level="0" aria-pressed="false">1/5 or 0/5 <b></b></button>
       <button type="button" class="form-swatch none" data-level="none" aria-pressed="false">never reviewed <b></b></button>
-      <span class="form-key-hint" id="formKeyHint">Tap colours to show only those words below.</span>
+      <span class="form-key-hint" id="formKeyHint">Tap colors to show only those words below.</span>
     </div>
 
     <div class="section-title">All verbs</div>
@@ -2553,7 +2553,7 @@ function renderNonverbReferencePanel(){
   });
   updateFormKey();
 }
-// Counts every word in the Sözlük by its highlight colour, for the key above the lists.
+// Counts every word in the Sözlük by its highlight color, for the key above the lists.
 function updateFormKey(){
   const counts = {5:0, 4:0, 3:0, 2:0, 0:0, none:0};
   const seen = new Set();
@@ -2576,7 +2576,7 @@ function wordFormLevelName(key){
   const level = wordFormLevel(key);
   return level===null ? "none" : String(level);
 }
-// Tapping colours in the key shows only words with those colours in All verbs / All non-verbs.
+// Tapping colors in the key shows only words with those colors in All verbs / All non-verbs.
 var formFilter = new Set();
 function applyFormFilter(){
   const active = formFilter.size > 0;
@@ -2587,8 +2587,8 @@ function applyFormFilter(){
   });
   const hint = document.getElementById("formKeyHint");
   hint.innerHTML = active
-    ? `Showing only the selected colours. <span class="link-btn" id="formFilterClear" role="button" tabindex="0">Show all</span>`
-    : "Tap colours to show only those words below.";
+    ? `Showing only the selected colors. <span class="link-btn" id="formFilterClear" role="button" tabindex="0">Show all</span>`
+    : "Tap colors to show only those words below.";
   const clear = document.getElementById("formFilterClear");
   if(clear){
     clear.onclick = ()=>{ formFilter.clear(); applyFormFilter(); };
@@ -2610,7 +2610,7 @@ function applyFormFilter(){
       shown += n;
     });
     let empty = box.querySelector(".ref-empty");
-    if(!empty){ empty = document.createElement("p"); empty.className = "hint ref-empty"; empty.textContent = "No words with these colours."; box.appendChild(empty); }
+    if(!empty){ empty = document.createElement("p"); empty.className = "hint ref-empty"; empty.textContent = "No words with these colors."; box.appendChild(empty); }
     empty.hidden = shown > 0;
   });
 }
@@ -2798,13 +2798,13 @@ function wordFormClass(key){
   const level = wordFormLevel(key);
   return level===null ? "" : ` form-${level}`;
 }
-// Weak = yellow or red on the Sözlük, or never practised (those rows stay untinted there).
+// Weak = yellow or red on the Sözlük, or never practiced (those rows stay untinted there).
 function isWeakWord(key){
   const level = wordFormLevel(key);
   return level===null || level<=3;
 }
 // "Weak words only" works from a snapshot taken when it was switched on, so words stay in it while
-// being practised (even once they improve, and however long recycling goes on). It is retaken only on
+// being practiced (even once they improve, and however long recycling goes on). It is retaken only on
 // "Reset progress filter" or switching to "All words" and back. Newly weak words still join.
 function weakSnapshot(){
   const keys = new Set();
@@ -2992,7 +2992,7 @@ function nextVocabCard(){
   document.getElementById("vocabResetProgress").classList.toggle("btn-rainbow", allDone);
   if(pool.length===0){
     if(allDone) showVocabMessage("Hepsi doğru!", "Every word in this selection is doğru. Reset the progress filter to go again.");
-    else if(vocabState.masterMode==="weak") showVocabMessage("No weak words to practise right now.", "Weak words are the ones showing yellow or red on the Sözlük tab, plus words you haven't practised yet.");
+    else if(vocabState.masterMode==="weak") showVocabMessage("No weak words to practice right now.", "Weak words are the ones showing yellow or red on the Sözlük tab, plus words you haven't practiced yet.");
     else showVocabMessage("Nothing matches this filter.");
     return;
   }
@@ -3155,7 +3155,7 @@ function refreshTestDisplays(){
 function updateTestUI(){
   const t = vocabState.test;
   document.getElementById("testStartBtn").hidden = !!t;
-  // Greyed out while a finished test's result is on the card, until the learner continues.
+  // Grayed out while a finished test's result is on the card, until the learner continues.
   document.getElementById("testStartBtn").disabled = !!vocabState.testDone;
   const endBtn = document.getElementById("testEndBtn");
   // Once a test finishes, the Test section goes back to how it was before it started;
