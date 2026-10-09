@@ -143,6 +143,10 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
 .feedback-msg{margin:8px 0 0;font-size:12.5px;}
 .feedback-msg.good{color:var(--good);}
 .feedback-msg.bad{color:var(--bad);}
+.help-pop{width:330px;max-height:calc(100vh - 120px);overflow-y:auto;}
+.help-pop ol{margin:0;padding-left:20px;display:grid;gap:9px;font-size:13px;line-height:1.45;color:var(--ink-soft);}
+.help-pop li b{color:var(--ink);}
+.help-pop kbd{font:inherit;font-size:11.5px;padding:0 4px;border:1px solid var(--line);border-radius:4px;background:var(--paper);}
 
 .account-menu{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:250px;max-width:calc(100vw - 32px);padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow);}
 .account-email{margin:0 0 8px;padding-bottom:8px;border-bottom:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink);overflow-wrap:anywhere;}
@@ -281,6 +285,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
   document.addEventListener("click", function(ev){
     if(menu && !menu.hidden && !ev.target.closest(".account-wrap")) toggleMenu(false);
     if(fb && !fb.pop.hidden && !ev.target.closest(".feedback-wrap")) toggleFeedback(false);
+    if(help && !help.pop.hidden && !ev.target.closest(".help-wrap")) toggleHelp(false);
   });
 
   // Keep a popover on screen: line its right edge up with its button's, then
@@ -296,12 +301,12 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
   window.addEventListener("resize", function(){
     if(menu && !menu.hidden) placePopover(menu);
     if(fb && !fb.pop.hidden) placePopover(fb.pop);
+    if(help && !help.pop.hidden) placePopover(help.pop);
   });
 
   // ---------- "Suggest a change" (bug reports and ideas alike) ----------
-  // Rows go to public.feedback (insert-only for the public); the "Sync feedback"
-  // workflow turns them into GitHub Issues for Jacob to work through, with any
-  // screenshot stored on the repo's feedback-screenshots branch.
+  // Rows go to public.feedback (insert-only for the public); Jacob reads them with
+  // tools/feedback_report.py.
   var SUGGEST_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v6"/><path d="M9 10h6"/></svg>';
   var CAMERA_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>';
   var HTML2CANVAS_JS = "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
@@ -334,7 +339,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     fb = {wrap: w, btn: w.querySelector("#feedbackBtn"), pop: w.querySelector("#feedbackPop"),
           text: w.querySelector("#feedbackText"), send: w.querySelector("#feedbackSend"), msg: w.querySelector("#feedbackMsg"),
           shotBtn: w.querySelector("#feedbackShotBtn"), shotBox: w.querySelector("#feedbackShot"), shot: null};
-    fb.btn.onclick = function(){ if(menu) toggleMenu(false); toggleFeedback(); };
+    fb.btn.onclick = function(){ if(menu) toggleMenu(false); if(help) toggleHelp(false); toggleFeedback(); };
     fb.shotBtn.onclick = takeScreenshot;
     fb.shotBox.querySelector("button").onclick = function(){ setShot(null); fb.shotBtn.focus(); };
     fb.pop.addEventListener("keydown", function(ev){ ev.stopPropagation(); if(ev.key === "Escape"){ toggleFeedback(false); fb.btn.focus(); } });
@@ -362,6 +367,35 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     };
     return w;
   }
+  // ---------- "How to use Türkçe": a short guide next to "Suggest a change" ----------
+  var HELP_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>';
+  var help = null;
+  function buildHelp(){
+    var w = el(`<div class="feedback-wrap help-wrap">
+      <button class="feedback-btn" id="helpBtn" type="button" title="How to use Türkçe" aria-label="How to use Türkçe" aria-haspopup="true" aria-expanded="false">${HELP_ICON}</button>
+      <div class="feedback-pop help-pop" id="helpPop" role="dialog" aria-label="How to use Türkçe" hidden>
+        <div class="feedback-title">How to use Türkçe</div>
+        <ol>
+          <li><b>Sözlük: choose your words.</b> Tap the verb groups, word groups or topics you want. Forms and Vocab only use what you select here. Colors show how well you know each word.</li>
+          <li><b>Forms: conjugate verbs.</b> Type the Turkish form for each prompt, then press <kbd>Enter</kbd>. Below the card, pick the tenses and persons, and add negatives or questions.</li>
+          <li><b>Vocab: learn words.</b> <b>Typing</b> checks your answer; with <b>Flashcards</b>, flip the card and mark it Doğru or Yanlış. Choose <b>Weak words only</b> to focus on the ones you miss.</li>
+          <li><b>Sign in</b> to keep your progress on every device and to take tests on a list.</li>
+          <li>Something wrong? Use the speech-bubble button to suggest a change.</li>
+        </ol>
+      </div>
+    </div>`);
+    help = {wrap: w, btn: w.querySelector("#helpBtn"), pop: w.querySelector("#helpPop")};
+    help.btn.onclick = function(){ if(menu) toggleMenu(false); if(fb) toggleFeedback(false); toggleHelp(); };
+    help.pop.addEventListener("keydown", function(ev){ ev.stopPropagation(); if(ev.key === "Escape"){ toggleHelp(false); help.btn.focus(); } });
+    return w;
+  }
+  function toggleHelp(force){
+    var open = typeof force === "boolean" ? force : help.pop.hidden;
+    help.pop.hidden = !open;
+    if(open) placePopover(help.pop);
+    help.btn.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+
   function setShot(dataUrl){
     fb.shot = dataUrl;
     fb.shotBox.hidden = !dataUrl;
@@ -506,7 +540,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     pill.classList.add("clickable");
     pill.setAttribute("role", "button");
     pill.tabIndex = 0;
-    // Header right side: [bug button] [status pill]. Each wrap anchors its own popover.
+    // Header right side: [guide button] [suggest button] [status pill]. Each wrap anchors its own popover.
     var actions = document.createElement("div");
     actions.className = "header-actions";
     pill.parentNode.insertBefore(actions, pill);
@@ -523,6 +557,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
       }catch(e){}
       location.reload();
     };
+    actions.appendChild(buildHelp());
     actions.appendChild(buildFeedback());
     var wrap = document.createElement("div");
     wrap.className = "account-wrap";
@@ -531,7 +566,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     wrap.appendChild(buildMenu());
     pill.setAttribute("aria-haspopup", "true");
     pill.setAttribute("aria-expanded", "false");
-    pill.onclick = function(){ if(signedInEmail !== null && !recovering){ panel.hidden = true; toggleMenu(); } else togglePanel(); };
+    pill.onclick = function(){ if(help) toggleHelp(false); if(signedInEmail !== null && !recovering){ panel.hidden = true; toggleMenu(); } else togglePanel(); };
     pill.addEventListener("keydown", function(ev){
       if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); ev.stopPropagation(); pill.onclick(); }
       else if(ev.key === "Escape" && menu && !menu.hidden){ ev.stopPropagation(); toggleMenu(false); }
