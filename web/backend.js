@@ -379,7 +379,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
         <ol>
           <li><b>Sözlük: choose your words.</b> Select the word lists or topics you want to study. Forms and Vocab only use what you select here. Colors show how well you know each word.</li>
           <li><b>Forms: conjugate verbs.</b> Type the Turkish form that matches the English sentence. Select the grammars you want to practice: tenses, persons, negatives, questions, and more.</li>
-          <li><b>Vocab: learn words.</b> Type your answer, or flip through flashcards.<span class="help-para">Practice as many words as you want at a time, or select one word group and take a test. If you score below 90%, or it's been a week since your last test, that word group will be circled in red on the Sözlük.</span></li>
+          <li><b>Vocab: learn words.</b> Type your answers, or flip through flashcards.<span class="help-para">Or, select one word group and take a test. If you score below 90%, or it's been a week since your last test, that word group will be circled in red on the Sözlük.</span></li>
           <li><b>Sign in</b> to sync across devices and track your progress through tests.</li>
           <li><b>Something wrong?</b> Use the speech-bubble button to suggest a change.</li>
         </ol>
