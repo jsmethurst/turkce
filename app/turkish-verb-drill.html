@@ -3155,6 +3155,8 @@ function refreshTestDisplays(){
 function updateTestUI(){
   const t = vocabState.test;
   document.getElementById("testStartBtn").hidden = !!t;
+  // Greyed out while a finished test's result is on the card, until the learner continues.
+  document.getElementById("testStartBtn").disabled = !!vocabState.testDone;
   const endBtn = document.getElementById("testEndBtn");
   // Once a test finishes, the Test section goes back to how it was before it started;
   // the result stays on the card until any key / tap continues practice.
