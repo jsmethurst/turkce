@@ -319,7 +319,9 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     var w = el(`<div class="feedback-wrap">
       <button class="feedback-btn" id="feedbackBtn" type="button" title="Suggest a change" aria-label="Suggest a change" aria-haspopup="true" aria-expanded="false">${SUGGEST_ICON}</button>
       <div class="feedback-pop" id="feedbackPop" role="dialog" aria-label="Suggest a change" hidden>
-        <textarea id="feedbackText" rows="4" maxlength="4000" aria-label="Suggest a change"></textarea>
+        <div class="feedback-title">Suggest a change</div>
+        <label class="feedback-label" for="feedbackText">Something wrong, or something you'd like?</label>
+        <textarea id="feedbackText" rows="4" maxlength="4000"></textarea>
         <button class="feedback-shot-btn" id="feedbackShotBtn" type="button">${CAMERA_ICON}<span>Add a screenshot</span></button>
         <div class="feedback-shot" id="feedbackShot" hidden>
           <img alt="Your screenshot">
