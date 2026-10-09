@@ -107,8 +107,10 @@ header{flex-wrap:wrap;}
 .update-bar .btn:hover{background:var(--paper);}
 .update-close{background:none;border:none;color:#fff;opacity:.7;font-size:20px;line-height:1;padding:2px 6px;cursor:pointer;}
 .update-close:hover{opacity:1;}
-.auth-testmode{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:12.5px;line-height:1.5;color:var(--ink-soft);}
-.auth-testmode .auth-link{margin:0;padding:0;font-size:12.5px;}
+.auth-panel{position:relative;}
+.auth-testmode{position:absolute;right:8px;bottom:8px;display:flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;border:none;border-radius:6px;background:transparent;color:var(--ink-soft);opacity:.35;cursor:pointer;}
+.auth-testmode:hover,.auth-testmode:focus-visible{opacity:.8;background:var(--paper-2);}
+.auth-testmode svg{width:13px;height:13px;}
 .testmode-badge{margin-top:6px;padding:5px 10px;border-radius:999px;background:#FBE3CF;color:#8A3D0E;font-size:11.5px;font-weight:700;white-space:nowrap;}
 .header-actions{display:flex;align-items:flex-start;gap:8px;min-width:0;max-width:100%;}
 .feedback-wrap{position:relative;flex:none;}
@@ -206,7 +208,7 @@ header{flex-wrap:wrap;}
         ${creating ? "" : '<button class="auth-link" id="authForgot">Forgot password?</button>'}
       </div>
       <p class="auth-msg" hidden></p>
-      ${TEST ? "" : '<p class="auth-testmode">Just looking? <button type="button" class="auth-link" id="authTestMode">Use test mode</button>: a pretend account kept in this browser only. Nothing is saved to a real account.</p>'}`;
+      ${TEST ? "" : '<button type="button" class="auth-testmode" id="authTestMode" title="Test mode" aria-label="Test mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v7.31"/><path d="M14 9.3V2"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.52 16h12.96"/></svg></button>'}`;
     var testBtn = panel.querySelector("#authTestMode");
     if(testBtn) testBtn.onclick = function(){
       try{ localStorage.setItem("turkce_testmode_on", "1"); }catch(e){}
