@@ -2454,6 +2454,7 @@ function updateSelectionCount(){
   tokenSet.forEach(tok=>{ roots.add(stripKnownSuffix(tok, tokenSet)); });
   el.textContent = `${roots.size} unique Turkish words selected  (from ${verbEntries} verb entries, ${nonverbEntries} non-verb entries)`;
   renderSelectionChips();
+  prefillTestList();
 }
 // Vocab tab: the current Sözlük selection as chips; clicking one removes it.
 // A fully selected category shows as one chip ("All verbs" / "All non-verbs").
@@ -3204,6 +3205,16 @@ function renderTestSelect(){
     groups[l.group].appendChild(o);
   });
   if(prev && [...sel.options].some(o=>o.value===prev)) sel.value = prev;
+  else prefillTestList();
+}
+// The test menu starts on the first list in the learner's Sözlük selection.
+function prefillTestList(){
+  const sel = document.getElementById("testListSelect");
+  try{ if(!sel || vocabState.test) return; }catch(e){ return; }   // runs once before vocabState exists during page load
+  const selected = l => l.key.startsWith("page") ? state.pages.has(Number(l.key.slice(4)))
+    : state.bonusVerbChunks.has(l.key) || state.nonverbChunks.has(l.key);
+  const first = testLists().find(selected);
+  if(first && [...sel.options].some(o=>o.value===first.key)) sel.value = first.key;
 }
 function refreshTestDisplays(){
   renderPageChips();
