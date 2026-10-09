@@ -6,8 +6,9 @@ Runs on Jacob's Mac (needs the Supabase CLI, logged in and linked; run from the 
     python3 tools/feedback_report.py --new     # only items not shown by an earlier --new run
     python3 tools/feedback_report.py --done 4 5   # mark #4 and #5 handled
 
-Screenshots are saved to /tmp/turkce-feedback/feedback-<id>.png|jpg and printed as Markdown
-image lines, so the output can be shown to Jacob as is.
+Output is in Jacob's format: a count line, then per suggestion "#N · time", "From:", "Where:",
+"Feedback: \"…\"" and, only if there is one, "Screenshot: [path]". When posting to Jacob, print
+"Screenshot:" and then send that image file right there (not the path); a blank line separates suggestions.
 """
 import base64
 import json
@@ -59,20 +60,22 @@ def main(args):
         print("No new feedback." if new_only else "No feedback waiting.")
         return
     SHOT_DIR.mkdir(exist_ok=True)
-    print(f"{len(rows)} suggestion{'s' if len(rows) != 1 else ''}:\n")
+    print(f"{len(rows)} suggestion{'s' if len(rows) != 1 else ''}\n")
     for r in rows:
-        who = r["email"] or "someone not signed in"
-        print(f"### #{r['id']} · {when(r['created_at'])}")
-        print(f"**From:** {who} · {device(r['user_agent'])}  ")
-        print(f"**Where:** {r['context'] or '—'}\n")
-        print("\n".join("> " + line for line in (r["message"] or "").strip().splitlines()) + "\n")
+        who = r["email"] or "not signed in"
+        msg = " ".join((r["message"] or "").split())
+        print(f"#{r['id']} · {when(r['created_at'])}")
+        print(f"From: {who} · {device(r['user_agent'])}")
+        print(f"Where: {r['context'] or '—'}")
+        print(f'Feedback: "{msg}"')
         if r["shot"]:
             data = sql(f"select screenshot from public.feedback where id = {int(r['id'])}")[0]["screenshot"]
             m = re.match(r"data:image/(png|jpeg);base64,(.+)", data, re.S)
             if m:
                 path = SHOT_DIR / f"feedback-{r['id']}.{'jpg' if m[1] == 'jpeg' else 'png'}"
                 path.write_bytes(base64.b64decode(m[2]))
-                print(f"![Screenshot #{r['id']}]({path})\n")
+                print(f"Screenshot: [{path}]")
+        print()
     if new_only:
         STATE.write_text(str(max(r["id"] for r in rows)))
 
