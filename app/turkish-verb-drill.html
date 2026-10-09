@@ -2495,6 +2495,8 @@ function renderSelectionChips(){
       refreshVocabCard();
       updateSelectionCount();
       window.scrollTo(0, y);   // stay where you were
+      const input = document.getElementById("vocabAnswerInput");
+      if(document.activeElement===input) input.blur();   // no phone keyboard popping up
     };
     box.appendChild(b);
   });
