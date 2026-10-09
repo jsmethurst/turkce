@@ -5,7 +5,9 @@
 (function(){
   var SUPABASE_URL = "https://ktlnputpwbpwsvsuqnie.supabase.co";
   var SUPABASE_KEY = "sb_publishable_xTvijQLingPhZnygIl3dnA_2KOrV3_i";
-  var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  // On localhost, web/testmode.js provides a pretend Supabase with a signed-in Test learner.
+  var TEST = window.turkceTestMode || null;
+  var client = TEST ? TEST.client : window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   var CLIENT_ID = Math.random().toString(36).slice(2) + Date.now().toString(36);
   var sessionReady = client.auth.getSession().then(function(r){ return r.data.session; });
 
@@ -105,6 +107,7 @@ header{flex-wrap:wrap;}
 .update-bar .btn:hover{background:var(--paper);}
 .update-close{background:none;border:none;color:#fff;opacity:.7;font-size:20px;line-height:1;padding:2px 6px;cursor:pointer;}
 .update-close:hover{opacity:1;}
+.testmode-badge{margin-top:6px;padding:5px 10px;border-radius:999px;background:#FBE3CF;color:#8A3D0E;font-size:11.5px;font-weight:700;white-space:nowrap;}
 .header-actions{display:flex;align-items:flex-start;gap:8px;min-width:0;max-width:100%;}
 .feedback-wrap{position:relative;flex:none;}
 .feedback-btn{display:flex;align-items:center;justify-content:center;width:28px;height:28px;margin-top:6px;padding:0;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink-soft);cursor:pointer;}
@@ -355,6 +358,7 @@ header{flex-wrap:wrap;}
     var actions = document.createElement("div");
     actions.className = "header-actions";
     pill.parentNode.insertBefore(actions, pill);
+    if(TEST) actions.appendChild(el('<span class="testmode-badge" title="Local test mode: a pretend database in this browser, signed in as a Test learner. Add ?supabase to the address to use the real one.">Local test mode</span>'));
     actions.appendChild(buildFeedback());
     var wrap = document.createElement("div");
     wrap.className = "account-wrap";
@@ -371,7 +375,7 @@ header{flex-wrap:wrap;}
     // Show the status straight away rather than after all the data has loaded:
     // a saved sign-in in this browser means "signed in" (the page corrects it if saving fails).
     try{
-      var saved = JSON.parse(localStorage.getItem("sb-ktlnputpwbpwsvsuqnie-auth-token") || "null");
+      var saved = TEST ? TEST.session() : JSON.parse(localStorage.getItem("sb-ktlnputpwbpwsvsuqnie-auth-token") || "null");
       if(saved && saved.user) signedInEmail = saved.user.email || "";
     }catch(e){}
     if(signedInEmail !== null && !pill.textContent){ pill.textContent = signedInLabel(); pill.classList.remove("local"); pill.hidden = false; }

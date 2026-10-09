@@ -22,6 +22,7 @@ Browsers may reuse the page for up to 10 minutes. Pages that are already open no
 | `app/turkish-verb-drill.html` | **The app.** The whole UI and logic, plus the built-in word list (`const DICTIONARY = {verbs:[...], nonverbs:[...], topics:[...]}`, one JSON row per line). Edit this file. |
 | `web/backend.js` | Supabase sign-in, the account pill and dropdown, and saving each person's data to the `user_docs` table. |
 | `web/favicon.svg`, `favicon-32.png`, `apple-touch-icon.jpg` | Logo and icons (a smiling çay glass). The same SVG is inlined in the app header. |
+| `web/testmode.js` | **Local test mode.** When the built site is opened from `localhost`, the app uses a pretend Supabase that saves to localStorage, with a "Test learner" (test.learner@localhost) signed in. Any email and password sign in. That lets you test sync, tests, the account menu and feedback without a real account. A "Local test mode" badge shows in the header. `turkceTestMode.reset()` starts over; `.db()` and `.feedback()` show what was saved. Add `?supabase` to the URL to use the real backend. It does nothing on the live site. |
 | `build_site.py` | Builds `_site/`: adds the title, icons and Supabase scripts to the app, then copies `web/`. Never edit `_site/`. |
 | `tools/make_sozluk.py` | Regenerates `sozluk.txt` from the DICTIONARY. Run it after every word change. |
 | `sozluk.txt` | Plain-text copy of the Sözlük, kept in sync and committed. |

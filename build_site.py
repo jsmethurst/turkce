@@ -19,6 +19,7 @@ SUPABASE_JS = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/u
 src = (ROOT / "app" / "turkish-verb-drill.html").read_text(encoding="utf-8")
 # Changes whenever backend.js changes, so browsers don't keep a stale cached copy.
 BACKEND_VERSION = hashlib.sha1((ROOT / "web" / "backend.js").read_bytes()).hexdigest()[:8]
+TESTMODE_VERSION = hashlib.sha1((ROOT / "web" / "testmode.js").read_bytes()).hexdigest()[:8]
 
 src, n = re.subn(r"<title>.*?</title>", "<title>Türkçe</title>", src, count=1)
 assert n == 1, "no <title> found"
@@ -29,6 +30,7 @@ head_extra = (
     '<link rel="apple-touch-icon" href="apple-touch-icon.jpg">\n'
     '<meta name="theme-color" content="#12414D">\n'
     f'<script src="{SUPABASE_JS}"></script>\n'
+    f'<script src="testmode.js?v={TESTMODE_VERSION}"></script>\n'
     f'<script src="backend.js?v={BACKEND_VERSION}"></script>\n'
 )
 src, n = re.subn(r"(<title>Türkçe</title>\n)", lambda m: m.group(1) + head_extra, src, count=1)
