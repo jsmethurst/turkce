@@ -143,6 +143,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
 .feedback-msg{margin:8px 0 0;font-size:12.5px;}
 .feedback-msg.good{color:var(--good);}
 .feedback-msg.bad{color:var(--bad);}
+.help-wrap .feedback-btn svg{width:16px;height:16px;}
 .help-pop{width:330px;max-height:calc(100vh - 120px);overflow-y:auto;}
 .help-pop ol{margin:0;padding-left:20px;display:grid;gap:9px;font-size:13px;line-height:1.45;color:var(--ink-soft);}
 .help-pop li b{color:var(--ink);}
@@ -369,7 +370,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     return w;
   }
   // ---------- "How to use Türkçe": a short guide next to "Suggest a change" ----------
-  var HELP_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>';
+  var HELP_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>';
   var help = null;
   function buildHelp(){
     var w = el(`<div class="feedback-wrap help-wrap">
