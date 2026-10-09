@@ -77,6 +77,12 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .prompt-tags{display:flex;gap:6px;flex-wrap:wrap;}
 .tag:empty{display:none;}
 .chip.locked{opacity:.55;cursor:not-allowed;}
+.sel-chips{gap:6px;margin:4px 0 12px;}
+.sel-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 8px 4px 11px;border-radius:999px;border:1.5px solid var(--tile-blue-deep);background:var(--tile-blue-deep);color:#fff;font:inherit;font-size:12px;font-weight:600;cursor:pointer;}
+.sel-chip:hover{background:var(--tile-blue);border-color:var(--tile-blue);}
+.sel-chip:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
+.sel-x{font-size:14px;line-height:1;opacity:.75;}
+.sel-chip:hover .sel-x{opacity:1;}
 .vocab-continue{display:block;margin-top:14px;font-size:0.85rem;font-weight:500;color:var(--ink-soft);opacity:0.8;}
 #vocabBack.vocab-note{font-family:'Inter',system-ui,sans-serif;font-size:1rem;font-weight:500;line-height:1.5;}
 .tag{
@@ -395,7 +401,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     <div class="section-title">Flashcards</div>
     <div class="settings-group">
       <h3>Selection filter</h3>
-      <p class="hint">From what's selected on the Sözlük tab, practice:</p>
+      <div class="chip-row sel-chips" id="vocabSelectionChips"></div>
       <div class="chip-row" id="vocabMasterChips" style="margin-top:6px;">
         <div class="chip on" data-master="both">All words</div>
         <div class="chip" data-master="weak">Weak words only</div>
@@ -2447,6 +2453,49 @@ function updateSelectionCount(){
   const roots = new Set();
   tokenSet.forEach(tok=>{ roots.add(stripKnownSuffix(tok, tokenSet)); });
   el.textContent = `${roots.size} unique Turkish words selected  (from ${verbEntries} verb entries, ${nonverbEntries} non-verb entries)`;
+  renderSelectionChips();
+}
+// Vocab tab: the current Sözlük selection as chips; clicking one removes it.
+// A fully selected category shows as one chip ("All verbs" / "All non-verbs").
+function renderSelectionChips(){
+  const box = document.getElementById("vocabSelectionChips");
+  if(!box) return;
+  box.innerHTML = "";
+  const chips = [];
+  const allVerbs = VERB_PAGES.every(p=>state.pages.has(p.key)) && VERB_BONUS_CHUNKS.every(c=>state.bonusVerbChunks.has(c.key));
+  if(allVerbs) chips.push({label:"All verbs", remove(){ state.pages.clear(); state.bonusVerbChunks.clear(); }});
+  else {
+    VERB_PAGES.filter(p=>state.pages.has(p.key)).forEach(p=>chips.push({label:p.label, remove(){ state.pages.delete(p.key); }}));
+    VERB_BONUS_CHUNKS.filter(c=>state.bonusVerbChunks.has(c.key)).forEach(c=>chips.push({label:c.label + " (verbs)", remove(){ state.bonusVerbChunks.delete(c.key); }}));
+  }
+  const allNonverbs = NONVERB_CHUNKS.length && NONVERB_CHUNKS.every(c=>state.nonverbChunks.has(c.key));
+  if(allNonverbs) chips.push({label:"All non-verbs", remove(){ state.nonverbChunks.clear(); }});
+  else NONVERB_CHUNKS.filter(c=>state.nonverbChunks.has(c.key)).forEach(c=>chips.push({label:c.label, remove(){ state.nonverbChunks.delete(c.key); }}));
+  TOPICS.filter(t=>state.topics.has(t.key)).forEach(t=>chips.push({label:t.label, remove(){ state.topics.delete(t.key); }}));
+  if(!chips.length){
+    box.innerHTML = '<span class="hint">Nothing selected. Choose words on the Sözlük tab.</span>';
+    return;
+  }
+  chips.forEach(ch=>{
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "sel-chip";
+    b.title = `Remove ${ch.label}`;
+    b.innerHTML = `<span></span><span class="sel-x" aria-hidden="true">×</span>`;
+    b.firstChild.textContent = ch.label;
+    b.onclick = ()=>{
+      ch.remove();
+      saveSettings();
+      renderPageChips();
+      renderNonverbChunkChips();
+      renderTopicChips();
+      applyPageSelection();
+      refreshCurrentQuestion();
+      refreshVocabCard();
+      updateSelectionCount();
+    };
+    box.appendChild(b);
+  });
 }
 
 const nonverbChunkChips = document.getElementById("nonverbChunkChips");
