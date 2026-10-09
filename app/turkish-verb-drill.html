@@ -430,8 +430,11 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
         <div class="chip" data-vmode="tr2en">Turkish → English</div>
       </div>
       <h3 style="margin-top:14px;">Mode</h3>
-      <div class="chip-row">
-        <div class="chip" id="vocabTypingModeChip">Typing mode (type the answer instead of flipping)</div>
+      <div class="chip-row" id="vocabAnswerModeChips">
+        <div class="chip" id="vocabTypingModeChip" data-typing="true">Typing</div>
+        <div class="chip" id="vocabFlashcardChip" data-typing="false">Flashcards</div>
+      </div>
+      <div class="chip-row" style="margin-top:8px;">
         <div class="chip" id="vocabLenientChip">Lenient spelling (ignore ı/i, ş/s, ç/c, ğ/g, ö/o, ü/u)</div>
       </div>
     </div>
@@ -2709,6 +2712,7 @@ function syncVocabSettingChips(){
   });
   document.querySelectorAll("#vocabFilterChips .chip").forEach(c=>c.classList.toggle("on", (c.dataset.unknownOnly==="true")===vocabState.unknownOnly));
   document.getElementById("vocabTypingModeChip").classList.toggle("on", vocabState.typingMode);
+  document.getElementById("vocabFlashcardChip").classList.toggle("on", !vocabState.typingMode);
   document.getElementById("vocabLenientChip").classList.toggle("on", vocabState.lenientTyping);
   updateVocabHintText();
 }
@@ -3186,10 +3190,12 @@ function startTest(){
   nextVocabCard();
 }
 function syncTypingChip(){
-  const chip = document.getElementById("vocabTypingModeChip");
-  chip.classList.toggle("on", vocabState.typingMode);
-  chip.classList.toggle("locked", vocabState.typingBeforeTest!=null);
-  chip.title = vocabState.typingBeforeTest!=null ? "Tests are always typed" : "";
+  const locked = vocabState.typingBeforeTest!=null;
+  document.querySelectorAll("#vocabAnswerModeChips .chip").forEach(chip=>{
+    chip.classList.toggle("on", (chip.dataset.typing==="true")===vocabState.typingMode);
+    chip.classList.toggle("locked", locked);
+    chip.title = locked ? "Tests are always typed" : "";
+  });
   updateVocabHintText();
 }
 function endTest(){
@@ -3295,14 +3301,18 @@ document.querySelectorAll("#vocabFilterChips .chip").forEach(c=>{
     saveSettings();
   };
 });
-document.getElementById("vocabTypingModeChip").onclick = (e)=>{
-  if(vocabState.typingBeforeTest!=null) return;   // locked to typing during a test
-  vocabState.typingMode = !vocabState.typingMode;
-  e.target.classList.toggle("on", vocabState.typingMode);
-  updateVocabHintText();
-  refreshVocabCard();
-  saveSettings();
-};
+// Typing / Flashcards: pick one.
+document.querySelectorAll("#vocabAnswerModeChips .chip").forEach(chip=>{
+  chip.onclick = ()=>{
+    if(vocabState.typingBeforeTest!=null) return;   // locked to typing during a test
+    const typing = chip.dataset.typing==="true";
+    if(typing===vocabState.typingMode) return;
+    vocabState.typingMode = typing;
+    syncTypingChip();
+    refreshVocabCard();
+    saveSettings();
+  };
+});
 document.getElementById("vocabLenientChip").onclick = (e)=>{
   vocabState.lenientTyping = !vocabState.lenientTyping;
   e.target.classList.toggle("on", vocabState.lenientTyping);
