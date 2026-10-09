@@ -385,12 +385,12 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       </div>
       <div class="feedback" id="vocabFeedback"></div>
       <div class="bottom-actions">
-        <button class="btn btn-ghost" id="vocabDontKnowBtn">← Previous</button>
-        <button class="btn btn-ghost" id="vocabKnowBtn" style="margin-left:auto;">Skip →</button>
+        <button class="btn btn-ghost" id="vocabDontKnowBtn">← Yanlış</button>
+        <button class="btn btn-primary" id="vocabKnowBtn">Doğru →</button>
         <button class="btn btn-primary" id="vocabTestNextBtn" style="margin-left:auto;" hidden>Next →</button>
       </div>
     </div>
-    <p class="hint" style="text-align:center;margin-top:14px;margin-bottom:22px;" id="vocabHintText"></p>
+    <p class="hint" style="text-align:center;margin-top:14px;margin-bottom:22px;" id="vocabHintText"><kbd>Space</kbd>: Flip &nbsp; <kbd>Enter</kbd>: Advance &nbsp; <kbd>Left arrow</kbd>: Yanlış &nbsp; <kbd>Right arrow</kbd>: Doğru &nbsp; <kbd>P</kbd>: Play audio</p>
 
     <div class="section-title">Flashcards</div>
     <div class="settings-group">
@@ -2926,7 +2926,7 @@ function updateVocabTypingUI(){
   const fb = document.getElementById("vocabFeedback");
   const front = document.getElementById("vocabFront");
   const back = document.getElementById("vocabBack");
-  // Typing mode is scored by the typed answer (Enter), so the flashcard Previous / Skip buttons are hidden.
+  // Typing mode is scored by the typed answer (Enter), so there are no Yanlış / Doğru buttons.
   document.getElementById("vocabDontKnowBtn").hidden = vocabState.typingMode;
   document.getElementById("vocabKnowBtn").hidden = vocabState.typingMode;
   document.getElementById("vocabTestNextBtn").hidden = !(vocabState.typingMode && vocabState.current && vocabState.flipped);
@@ -2957,7 +2957,7 @@ function updateVocabHintText(){
   if(vocabState.typingMode){
     hint.innerHTML = `<kbd>Enter</kbd>: Check/next &nbsp; <kbd>P</kbd>: Play audio`;
   } else {
-    hint.innerHTML = `Tap the card or <kbd>Space</kbd>: Flip &nbsp; <kbd>Left arrow</kbd>: Previous &nbsp; <kbd>Right arrow</kbd> / <kbd>Enter</kbd>: Skip &nbsp; <kbd>P</kbd>: Play audio`;
+    hint.innerHTML = `Tap the card or <kbd>Space</kbd>: Flip &nbsp; <kbd>Enter</kbd>: Advance &nbsp; <kbd>Left arrow</kbd>: Yanlış &nbsp; <kbd>Right arrow</kbd>: Doğru &nbsp; <kbd>P</kbd>: Play audio`;
   }
 }
 
@@ -3116,23 +3116,16 @@ function updateVocabProgress(){
 
 document.getElementById("vocabFront").onclick = flipVocabCard;
 document.getElementById("vocabBack").onclick = flipVocabCard;
-// Flashcards are for flipping through a set quickly, ungraded: tap the card to flip,
-// Skip for the next card, Previous to go back. Nothing is recorded.
-var flashHistory = [];
-function updatePrevButton(){ document.getElementById("vocabDontKnowBtn").disabled = !flashHistory.length; }
-function flashcardSkip(){
-  if(vocabState.current){ flashHistory.push(vocabState.current); if(flashHistory.length > 100) flashHistory.shift(); }
+// Flashcard answers (Doğru / Yanlış) are for flipping through a set quickly: they move the
+// progress filter but don't count toward a word's form (only typed or spoken answers do).
+document.getElementById("vocabKnowBtn").onclick = ()=>{
+  if(vocabState.current && updatesProgressFilter()) setKnown(vocabKnownKey(vocabState.current), true);
   nextVocabCard();
-  updatePrevButton();
-}
-function flashcardPrevious(){
-  if(!flashHistory.length) return;
-  showVocabItem(flashHistory.pop());
-  updatePrevButton();
-}
-document.getElementById("vocabKnowBtn").onclick = flashcardSkip;
-document.getElementById("vocabDontKnowBtn").onclick = flashcardPrevious;
-updatePrevButton();
+};
+document.getElementById("vocabDontKnowBtn").onclick = ()=>{
+  if(vocabState.current && updatesProgressFilter()) setKnown(vocabKnownKey(vocabState.current), false);
+  nextVocabCard();
+};
 function testLists(){
   const verbItem = v=>({kind:"verb", idx:VERBS.indexOf(v), tr:v.inf, en:v.vocabGloss});
   return [
@@ -3342,7 +3335,7 @@ document.addEventListener("keydown", e=>{
   } else if(e.key==="Enter"){
     e.preventDefault();
     if(vocabState.typingMode){ if(vocabState.flipped) nextVocabCard(); }
-    else flashcardSkip();
+    else nextVocabCard(); // just advance: not counted as right or wrong
   } else if(e.key==="ArrowLeft" && !vocabState.typingMode){
     e.preventDefault();
     document.getElementById("vocabDontKnowBtn").click();
