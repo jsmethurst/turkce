@@ -76,6 +76,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 }
 .prompt-tags{display:flex;gap:6px;flex-wrap:wrap;}
 .tag:empty{display:none;}
+.vocab-continue{display:block;margin-top:14px;font-size:0.85rem;font-weight:500;color:var(--ink-soft);opacity:0.8;}
 #vocabBack.vocab-note{font-family:'Inter',system-ui,sans-serif;font-size:1rem;font-weight:500;line-height:1.5;}
 .tag{
   font-size:0.68rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
@@ -2978,6 +2979,10 @@ function nextVocabCard(){
   if(vocabState.testDone){
     const d = vocabState.testDone;
     showVocabMessage("Test complete", `${d.label}: ${d.correct} / ${d.total} correct (${d.pct}%)`);
+    const more = document.createElement("span");
+    more.className = "vocab-continue";
+    more.textContent = window.matchMedia("(hover: none)").matches ? "Tap to continue" : "Press any key to continue";
+    document.getElementById("vocabBack").appendChild(more);
     return;
   }
   const pool = vocabPool();
@@ -3151,8 +3156,10 @@ function updateTestUI(){
   const t = vocabState.test;
   document.getElementById("testStartBtn").hidden = !!t;
   const endBtn = document.getElementById("testEndBtn");
-  endBtn.hidden = !t && !vocabState.testDone;
-  endBtn.textContent = t ? "End test" : "Back to practice";
+  // Once a test finishes, the Test section goes back to how it was before it started;
+  // the result stays on the card until any key / tap continues practice.
+  endBtn.hidden = !t;
+  endBtn.textContent = "End test";
   document.getElementById("testListSelect").disabled = !!t;
   updateVocabHintText();
   const tag = document.getElementById("vocabTestTag");
@@ -3199,12 +3206,25 @@ async function finishTest(){
   status.textContent = "Saving result…";
   try{
     await testStore.doc(t.key).set(doc);
-    status.textContent = "Result saved.";
+    status.textContent = "";
   }catch(e){
     status.textContent = "Couldn't save this result. It will be lost when you close the page.";
   }
 }
 document.getElementById("testStartBtn").onclick = startTest;
+// After "Test complete", any key or a tap on the card goes back to practice.
+function continueAfterTest(){
+  if(!vocabState.testDone || document.getElementById("tab-vocab").style.display==="none") return false;
+  endTest();
+  return true;
+}
+document.addEventListener("keydown", e=>{
+  if(["Shift","Control","Alt","Meta","CapsLock","Tab"].includes(e.key) || e.metaKey || e.ctrlKey || e.altKey) return;
+  const tag = document.activeElement && document.activeElement.tagName;
+  if(tag==="SELECT" || tag==="TEXTAREA") return;
+  if(continueAfterTest()){ e.preventDefault(); e.stopPropagation(); }
+}, true);
+document.querySelector("#tab-vocab .card").addEventListener("click", continueAfterTest);
 document.getElementById("testEndBtn").onclick = endTest;
 
 document.getElementById("vocabResetProgress").onclick = ()=>{
