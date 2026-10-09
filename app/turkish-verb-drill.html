@@ -2484,6 +2484,7 @@ function renderSelectionChips(){
     b.innerHTML = `<span></span><span class="sel-x" aria-hidden="true">×</span>`;
     b.firstChild.textContent = ch.label;
     b.onclick = ()=>{
+      const y = window.scrollY;
       ch.remove();
       saveSettings();
       renderPageChips();
@@ -2493,6 +2494,7 @@ function renderSelectionChips(){
       refreshCurrentQuestion();
       refreshVocabCard();
       updateSelectionCount();
+      window.scrollTo(0, y);   // stay where you were
     };
     box.appendChild(b);
   });
@@ -2989,7 +2991,7 @@ function updateVocabTypingUI(){
     if(!vocabState.flipped){
       fb.className = "feedback";
       fb.innerHTML = "";
-      input.focus();
+      input.focus({preventScroll:true});   // don't scroll the page up when the card refreshes
     }
   } else {
     front.style.cursor = "pointer";
@@ -3541,7 +3543,7 @@ function renderQuestion(){
   document.getElementById("answerInput").placeholder = (state.mode==="tr2en") ? "Type the English meaning…" : "Type the Turkish form…";
   document.getElementById("answerInput").value = "";
   document.getElementById("feedback").className = "feedback";
-  document.getElementById("answerInput").focus();
+  document.getElementById("answerInput").focus({preventScroll:true});
   setPrimaryButtonMode("check");
 }
 
