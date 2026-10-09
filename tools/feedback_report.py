@@ -6,8 +6,8 @@ Runs on Jacob's Mac (needs the Supabase CLI, logged in and linked; run from the 
     python3 tools/feedback_report.py --new     # only items not shown by an earlier --new run
     python3 tools/feedback_report.py --done 4 5   # mark #4 and #5 handled
 
-Screenshots are saved to /tmp/turkce-feedback/feedback-<id>.png|jpg; their paths are printed so
-they can be shown to Jacob.
+Screenshots are saved to /tmp/turkce-feedback/feedback-<id>.png|jpg and printed as Markdown
+image lines, so the output can be shown to Jacob as is.
 """
 import base64
 import json
@@ -72,7 +72,7 @@ def main(args):
             if m:
                 path = SHOT_DIR / f"feedback-{r['id']}.{'jpg' if m[1] == 'jpeg' else 'png'}"
                 path.write_bytes(base64.b64decode(m[2]))
-                print(f"Screenshot: {path}\n")
+                print(f"![Screenshot #{r['id']}]({path})\n")
     if new_only:
         STATE.write_text(str(max(r["id"] for r in rows)))
 
