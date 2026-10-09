@@ -214,7 +214,10 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
       ${TEST ? "" : '<button type="button" class="auth-testmode" id="authTestMode" title="Test mode" aria-label="Test mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v7.31"/><path d="M14 9.3V2"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.52 16h12.96"/></svg></button>'}`;
     var testBtn = panel.querySelector("#authTestMode");
     if(testBtn) testBtn.onclick = function(){
-      try{ localStorage.setItem("turkce_testmode_on", "1"); }catch(e){}
+      try{
+        localStorage.setItem("turkce_testmode_on", "1");
+        localStorage.removeItem("turkce_testmode_session");   // always start signed in as the Test learner
+      }catch(e){}
       location.reload();
     };
     var email = panel.querySelector("#authEmail"), pw = panel.querySelector("#authPassword");
