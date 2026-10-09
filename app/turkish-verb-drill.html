@@ -3109,14 +3109,14 @@ function updateVocabProgress(){
 
 document.getElementById("vocabFront").onclick = flipVocabCard;
 document.getElementById("vocabBack").onclick = flipVocabCard;
+// Flashcard answers (Doğru / Yanlış) are for flipping through a set quickly: they move the
+// progress filter and test scores, but don't count toward a word's form (only typed or spoken answers do).
 document.getElementById("vocabKnowBtn").onclick = ()=>{
-  if(!vocabState.typingMode) recordWordResult(vocabState.current, true);
   if(vocabState.test){ if(vocabState.current) recordTestAnswer(true); nextVocabCard(); return; }
   if(vocabState.current && updatesProgressFilter()) setKnown(vocabKnownKey(vocabState.current), true);
   nextVocabCard();
 };
 document.getElementById("vocabDontKnowBtn").onclick = ()=>{
-  if(!vocabState.typingMode) recordWordResult(vocabState.current, false);
   if(vocabState.test){ if(vocabState.current) recordTestAnswer(false); nextVocabCard(); return; }
   if(vocabState.current && updatesProgressFilter()) setKnown(vocabKnownKey(vocabState.current), false);
   nextVocabCard();
