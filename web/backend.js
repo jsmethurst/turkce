@@ -138,7 +138,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
 .shot-rect{position:absolute;border:2px solid #fff;border-radius:2px;box-shadow:0 0 0 1px var(--tile-blue-deep),0 0 0 9999px rgba(18,65,77,.35);}
 .shot-hint{position:fixed;top:calc(16px + env(safe-area-inset-top, 0px));left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100vw - 32px);padding:9px 14px;border-radius:10px;background:var(--tile-blue-deep);color:#fff;font-size:13.5px;line-height:1.4;text-align:center;box-shadow:0 8px 24px -8px rgba(18,65,77,.5);pointer-events:none;}
 .shot-overlay.dragging .shot-hint{display:none;}
-.feedback-note{margin:8px 0 10px;font-size:11.5px;line-height:1.45;color:var(--ink-soft);}
+#feedbackSend{margin-top:12px;}
 .feedback-pop .btn{width:100%;padding:9px 14px;font-size:0.85rem;}
 .feedback-msg{margin:8px 0 0;font-size:12.5px;}
 .feedback-msg.good{color:var(--good);}
