@@ -146,6 +146,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
 .help-pop{width:330px;max-height:calc(100vh - 120px);overflow-y:auto;}
 .help-pop ol{margin:0;padding-left:20px;display:grid;gap:9px;font-size:13px;line-height:1.45;color:var(--ink-soft);}
 .help-pop li b{color:var(--ink);}
+.help-para{display:block;margin-top:6px;}
 .help-pop kbd{font:inherit;font-size:11.5px;padding:0 4px;border:1px solid var(--line);border-radius:4px;background:var(--paper);}
 
 .account-menu{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:250px;max-width:calc(100vw - 32px);padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow);}
@@ -376,10 +377,10 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
       <div class="feedback-pop help-pop" id="helpPop" role="dialog" aria-label="How to use Türkçe" hidden>
         <div class="feedback-title">How to use Türkçe</div>
         <ol>
-          <li><b>Sözlük: choose your words.</b> Tap the verb groups, word groups or topics you want. Forms and Vocab only use what you select here. Colors show how well you know each word.</li>
+          <li><b>Sözlük: choose your words.</b> Select the word lists or topics you want to study. Forms and Vocab only use what you select here. Colors show how well you know each word.</li>
           <li><b>Forms: conjugate verbs.</b> Type the Turkish form for each prompt, then press <kbd>Enter</kbd>. Below the card, pick the tenses and persons, and add negatives or questions.</li>
-          <li><b>Vocab: learn words.</b> <b>Typing</b> checks your answer; with <b>Flashcards</b>, flip the card and mark it Doğru or Yanlış. Choose <b>Weak words only</b> to focus on the ones you miss.</li>
-          <li><b>Sign in</b> to keep your progress on every device and to take tests on a list.</li>
+          <li><b>Vocab: learn words.</b> Type your answer, or flip through flashcards.<span class="help-para">Select a word group to take a test. If you score below 90%, or it's been a week since your last test, that word group will be circled in red on the Sözlük.</span></li>
+          <li><b>Sign in</b> to sync across devices and track your progress through tests.</li>
           <li>Something wrong? Use the speech-bubble button to suggest a change.</li>
         </ol>
       </div>
