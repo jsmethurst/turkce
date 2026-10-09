@@ -3,7 +3,6 @@
 
 Runs on Jacob's Mac (needs the Supabase CLI, logged in and linked; run from the repo root):
     python3 tools/feedback_report.py           # everything not yet marked handled
-    python3 tools/feedback_report.py --new     # only items not shown by an earlier --new run
     python3 tools/feedback_report.py --done 4 5   # mark #4 and #5 handled
 
 Output is in Jacob's format: a count line, then per suggestion "#N · time", "From:", "Where:",
@@ -21,7 +20,6 @@ from zoneinfo import ZoneInfo
 
 SUPABASE = "/opt/homebrew/bin/supabase"
 SHOT_DIR = Path("/tmp/turkce-feedback")
-STATE = Path.home() / ".turkce-feedback-notified"   # highest id already reported by --new
 TZ = ZoneInfo("Europe/Istanbul")
 
 
@@ -52,12 +50,10 @@ def main(args):
             sql(f"update public.feedback set synced_at = now() where id in ({','.join(map(str, ids))})")
             print("Marked handled: " + ", ".join(f"#{i}" for i in ids))
         return
-    new_only = "--new" in args
-    last = int(STATE.read_text().strip()) if new_only and STATE.exists() else 0
     rows = sql("select id, created_at, email, context, message, user_agent, screenshot is not null as shot "
-               f"from public.feedback where synced_at is null and id > {last} order by id")
+               f"from public.feedback where synced_at is null order by id")
     if not rows:
-        print("No new feedback." if new_only else "No feedback waiting.")
+        print("No feedback waiting.")
         return
     SHOT_DIR.mkdir(exist_ok=True)
     print(f"{len(rows)} suggestion{'s' if len(rows) != 1 else ''}\n")
@@ -76,8 +72,6 @@ def main(args):
                 path.write_bytes(base64.b64decode(m[2]))
                 print(f"Screenshot: [{path}]")
         print()
-    if new_only:
-        STATE.write_text(str(max(r["id"] for r in rows)))
 
 
 if __name__ == "__main__":
