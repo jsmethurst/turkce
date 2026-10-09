@@ -83,10 +83,13 @@ To change the database:
 - **Sign-in settings** (Authentication config). Those need the Supabase CLI on Jacob's Mac.
 - **Moving a learner's progress from the old Claude site.** That needs a Claude session with access to that site.
 
+## Guide and feedback buttons
+The "?" button in the header opens "How to use Türkçe", a short guide written by Jacob (`buildHelp` in `web/backend.js`). Keep its wording as he wrote it.
+
 ## Feedback ("Suggest a change")
 The "Suggest a change" button in the header (a speech bubble) saves a suggestion into the Supabase `feedback` table. People can send suggestions whether or not they're signed in, and the public can't read them back. They can attach a screenshot: the camera button dims the page, they drag over an area (or tap for the whole screen), and html2canvas (loaded from jsDelivr only when needed) renders it into a PNG or JPEG stored in the row's `screenshot` column. A signed-in sender's email is stored too.
 
-Feedback is **private** and isn't copied anywhere else. Jacob reviews it through his Mac session, which reads the table with the Supabase CLI. `tools/feedback_report.py` prints it readably (`--new` for items not yet reported, `--done N` to mark handled); a scheduled task on the Mac runs it at 12:00 and 20:00. A row whose `synced_at` is set has been handled. Cloud sessions have no database access, so they can't see feedback. (Issues #1 and #2 on GitHub are from an earlier setup that copied feedback there.)
+Feedback is **private** and isn't copied anywhere else. Jacob reviews it through his Mac session, which reads the table with the Supabase CLI. `tools/feedback_report.py` prints it readably when Jacob asks (`--done N` marks items handled). A row whose `synced_at` is set has been handled. Cloud sessions have no database access, so they can't see feedback.
 
 ## Other notes
 - **Learners' saved data** is keyed by the Turkish word, e.g. `"nonverb:usta"` or `"verb:yormak"`. Renaming a word's Turkish spelling orphans learners' history for it. Changing the English gloss is safe.
