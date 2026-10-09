@@ -76,6 +76,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 }
 .prompt-tags{display:flex;gap:6px;flex-wrap:wrap;}
 .tag:empty{display:none;}
+.chip.locked{opacity:.55;cursor:not-allowed;}
 .vocab-continue{display:block;margin-top:14px;font-size:0.85rem;font-weight:500;color:var(--ink-soft);opacity:0.8;}
 #vocabBack.vocab-note{font-family:'Inter',system-ui,sans-serif;font-size:1rem;font-weight:500;line-height:1.5;}
 .tag{
@@ -412,7 +413,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 
     <div class="section-title" id="testTitle" hidden>Test</div>
     <div class="settings-group" id="testGroup" hidden>
-      <p class="hint">Go through one list once, in random order. Your score is saved when you finish.</p>
+      <p class="hint">Go through one list once, in random order, typing each answer. Your score is saved when you finish.</p>
       <div class="test-row">
         <select id="testListSelect" class="select" aria-label="List to test"></select>
         <button class="btn btn-primary" id="testStartBtn">Start test</button>
@@ -2226,7 +2227,7 @@ function collectSettings(){
       autoSpeak: state.autoSpeak,
       vocabMode: vocabState.mode,
       vocabUnknownOnly: vocabState.unknownOnly,
-      vocabTypingMode: vocabState.typingMode,
+      vocabTypingMode: vocabState.typingBeforeTest ?? vocabState.typingMode,
       vocabLenientTyping: vocabState.lenientTyping,
       vocabMasterMode: vocabState.masterMode,
       vocabWeakSet: vocabState.masterMode==="weak" && vocabState.weakSet ? [...vocabState.weakSet] : null,
@@ -2678,6 +2679,7 @@ const vocabState = {
   weakSet: null,
   unknownOnly: true,
   typingMode: false,
+  typingBeforeTest: null,   // the learner's own typing setting while a test forces typing
   lenientTyping: false,
   flipped: false,
   known: new Set(),
@@ -2691,7 +2693,10 @@ function applyVocabSettings(S){
   vocabState.masterMode = S.vocabMasterMode==="weak" ? "weak" : "both"; // verbs-only / non-verbs-only choices were removed
   vocabState.weakSet = vocabState.masterMode==="weak" && Array.isArray(S.vocabWeakSet) ? new Set(S.vocabWeakSet) : null;
   if(typeof S.vocabUnknownOnly==="boolean") vocabState.unknownOnly = S.vocabUnknownOnly;
-  if(typeof S.vocabTypingMode==="boolean") vocabState.typingMode = S.vocabTypingMode;
+  if(typeof S.vocabTypingMode==="boolean"){
+    if(vocabState.typingBeforeTest!=null) vocabState.typingBeforeTest = S.vocabTypingMode;   // a test is forcing typing
+    else vocabState.typingMode = S.vocabTypingMode;
+  }
   if(typeof S.vocabLenientTyping==="boolean") vocabState.lenientTyping = S.vocabLenientTyping;
 }
 if(SAVED_SETTINGS) applyVocabSettings(SAVED_SETTINGS);
@@ -2947,8 +2952,6 @@ function updateVocabHintText(){
   const hint = document.getElementById("vocabHintText");
   if(vocabState.typingMode){
     hint.innerHTML = `<kbd>Enter</kbd>: Check/next &nbsp; <kbd>P</kbd>: Play audio`;
-  } else if(vocabState.test){
-    hint.innerHTML = `<kbd>Space</kbd>: Flip &nbsp; <kbd>Left arrow</kbd>: Yanlış &nbsp; <kbd>Right arrow</kbd>: Doğru &nbsp; <kbd>P</kbd>: Play audio`;
   } else {
     hint.innerHTML = `<kbd>Space</kbd>: Flip &nbsp; <kbd>Enter</kbd>: Advance &nbsp; <kbd>Left arrow</kbd>: Yanlış &nbsp; <kbd>Right arrow</kbd>: Doğru &nbsp; <kbd>P</kbd>: Play audio`;
   }
@@ -3110,14 +3113,12 @@ function updateVocabProgress(){
 document.getElementById("vocabFront").onclick = flipVocabCard;
 document.getElementById("vocabBack").onclick = flipVocabCard;
 // Flashcard answers (Doğru / Yanlış) are for flipping through a set quickly: they move the
-// progress filter and test scores, but don't count toward a word's form (only typed or spoken answers do).
+// progress filter but don't count toward a word's form (only typed or spoken answers do).
 document.getElementById("vocabKnowBtn").onclick = ()=>{
-  if(vocabState.test){ if(vocabState.current) recordTestAnswer(true); nextVocabCard(); return; }
   if(vocabState.current && updatesProgressFilter()) setKnown(vocabKnownKey(vocabState.current), true);
   nextVocabCard();
 };
 document.getElementById("vocabDontKnowBtn").onclick = ()=>{
-  if(vocabState.test){ if(vocabState.current) recordTestAnswer(false); nextVocabCard(); return; }
   if(vocabState.current && updatesProgressFilter()) setKnown(vocabKnownKey(vocabState.current), false);
   nextVocabCard();
 };
@@ -3178,11 +3179,24 @@ function startTest(){
   for(let i=items.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [items[i], items[j]] = [items[j], items[i]]; }
   vocabState.test = {key:list.key, label:list.label, items, i:0, correct:0};
   vocabState.testDone = null;
+  // Tests are always typed. The learner's own mode comes back when they continue after the result.
+  if(vocabState.typingBeforeTest==null) vocabState.typingBeforeTest = vocabState.typingMode;
+  vocabState.typingMode = true;
+  syncTypingChip();
   nextVocabCard();
+}
+function syncTypingChip(){
+  const chip = document.getElementById("vocabTypingModeChip");
+  chip.classList.toggle("on", vocabState.typingMode);
+  chip.classList.toggle("locked", vocabState.typingBeforeTest!=null);
+  chip.title = vocabState.typingBeforeTest!=null ? "Tests are always typed" : "";
+  updateVocabHintText();
 }
 function endTest(){
   vocabState.test = null;
   vocabState.testDone = null;
+  if(vocabState.typingBeforeTest!=null){ vocabState.typingMode = vocabState.typingBeforeTest; vocabState.typingBeforeTest = null; }
+  syncTypingChip();
   document.getElementById("testStatus").textContent = "";
   updateTestUI();
   nextVocabCard();
@@ -3282,6 +3296,7 @@ document.querySelectorAll("#vocabFilterChips .chip").forEach(c=>{
   };
 });
 document.getElementById("vocabTypingModeChip").onclick = (e)=>{
+  if(vocabState.typingBeforeTest!=null) return;   // locked to typing during a test
   vocabState.typingMode = !vocabState.typingMode;
   e.target.classList.toggle("on", vocabState.typingMode);
   updateVocabHintText();
@@ -3299,7 +3314,7 @@ document.addEventListener("keydown", e=>{
   if(!vocabState.current) return;
   const tag = document.activeElement.tagName;
   if(tag==="INPUT" || tag==="TEXTAREA") return;
-  if(vocabState.test && vocabState.typingMode){
+  if(vocabState.test){
     if(e.key==="Enter"){ e.preventDefault(); advanceTypingTest(); }
     else if(e.key==="p" || e.key==="P"){ e.preventDefault(); if(vocabState.flipped) document.getElementById("vocabSpeakBtn").click(); }
     return;
@@ -3310,7 +3325,7 @@ document.addEventListener("keydown", e=>{
   } else if(e.key==="Enter"){
     e.preventDefault();
     if(vocabState.typingMode){ if(vocabState.flipped) nextVocabCard(); }
-    else if(!vocabState.test) nextVocabCard(); // just advance: not counted as right or wrong
+    else nextVocabCard(); // just advance: not counted as right or wrong
   } else if(e.key==="ArrowLeft" && !vocabState.typingMode){
     e.preventDefault();
     document.getElementById("vocabDontKnowBtn").click();
