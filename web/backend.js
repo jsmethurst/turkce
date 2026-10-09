@@ -116,12 +116,21 @@ header{flex-wrap:wrap;}
 .feedback-btn svg{width:15px;height:15px;}
 .feedback-pop{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:300px;max-width:calc(100vw - 32px);padding:14px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow);}
 .feedback-title{font-family:'Fraunces',serif;font-weight:600;font-size:1rem;color:var(--ink);margin-bottom:10px;}
-.feedback-kinds{display:flex;gap:6px;margin-bottom:10px;}
-.feedback-kind{font:inherit;font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink-soft);cursor:pointer;}
-.feedback-kind.on{background:var(--tile-blue-deep);border-color:var(--tile-blue-deep);color:#fff;}
 .feedback-label{display:block;font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:4px;}
 #feedbackText{width:100%;box-sizing:border-box;font:inherit;font-size:14px;line-height:1.45;padding:9px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);resize:vertical;outline:none;}
 #feedbackText:focus{border-color:var(--tile-turquoise);background:#fff;}
+.feedback-shot-btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font:inherit;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink-soft);cursor:pointer;}
+.feedback-shot-btn:hover{background:var(--paper-2);color:var(--ink);}
+.feedback-shot-btn:disabled{opacity:.6;cursor:default;}
+.feedback-shot-btn svg{width:14px;height:14px;}
+.feedback-shot{position:relative;display:block;width:fit-content;max-width:100%;margin-top:8px;}
+.feedback-shot img{display:block;max-width:100%;max-height:150px;border:1px solid var(--line);border-radius:8px;}
+.feedback-shot-remove{position:absolute;top:-8px;right:-8px;width:22px;height:22px;padding:0;border:none;border-radius:50%;background:var(--ink);color:#fff;font-size:15px;line-height:22px;text-align:center;cursor:pointer;}
+.shot-overlay{position:fixed;inset:0;z-index:100;cursor:crosshair;touch-action:none;user-select:none;-webkit-user-select:none;background:rgba(18,65,77,.28);}
+.shot-overlay.dragging{background:transparent;}
+.shot-rect{position:absolute;border:2px solid #fff;border-radius:2px;box-shadow:0 0 0 1px var(--tile-blue-deep),0 0 0 9999px rgba(18,65,77,.35);}
+.shot-hint{position:fixed;top:calc(16px + env(safe-area-inset-top, 0px));left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100vw - 32px);padding:9px 14px;border-radius:10px;background:var(--tile-blue-deep);color:#fff;font-size:13.5px;line-height:1.4;text-align:center;box-shadow:0 8px 24px -8px rgba(18,65,77,.5);pointer-events:none;}
+.shot-overlay.dragging .shot-hint{display:none;}
 .feedback-note{margin:8px 0 10px;font-size:11.5px;line-height:1.45;color:var(--ink-soft);}
 .feedback-pop .btn{width:100%;padding:9px 14px;font-size:0.85rem;}
 .feedback-msg{margin:8px 0 0;font-size:12.5px;}
@@ -271,10 +280,14 @@ header{flex-wrap:wrap;}
     if(fb && !fb.pop.hidden) placePopover(fb.pop);
   });
 
-  // ---------- bug reports & feedback ----------
+  // ---------- "Suggest a change" (bug reports and ideas alike) ----------
   // Rows go to public.feedback (insert-only for the public); the "Sync feedback"
-  // workflow turns them into GitHub Issues for Jacob to work through.
-  var BUG_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 2 1.88 1.88"/><path d="M14.12 3.88 16 2"/><path d="M9 7.13v-1a3 3 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6"/><path d="M12 20v-9"/><path d="M6.53 9C4.6 8.8 3 7.1 3 5"/><path d="M6 13H2"/><path d="M3 21c0-2.1 1.7-3.9 3.8-4"/><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"/><path d="M22 13h-4"/><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"/></svg>';
+  // workflow turns them into GitHub Issues for Jacob to work through, with any
+  // screenshot stored on the repo's feedback-screenshots branch.
+  var SUGGEST_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v6"/><path d="M9 10h6"/></svg>';
+  var CAMERA_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>';
+  var HTML2CANVAS_JS = "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
+  var SHOT_MAX_CHARS = 700000;   // the database accepts up to 1,000,000
   var fb = null;
   function screenContext(){
     var tab = document.querySelector(".tab.active");
@@ -286,45 +299,167 @@ header{flex-wrap:wrap;}
   }
   function buildFeedback(){
     var w = el(`<div class="feedback-wrap">
-      <button class="feedback-btn" id="feedbackBtn" type="button" title="Report a bug or send feedback" aria-label="Report a bug or send feedback" aria-haspopup="true" aria-expanded="false">${BUG_ICON}</button>
-      <div class="feedback-pop" id="feedbackPop" role="dialog" aria-label="Send feedback" hidden>
-        <div class="feedback-title">Report a bug or suggest something</div>
-        <div class="feedback-kinds" role="radiogroup" aria-label="Type">
-          <button type="button" class="feedback-kind on" data-kind="bug" role="radio" aria-checked="true">Bug</button>
-          <button type="button" class="feedback-kind" data-kind="idea" role="radio" aria-checked="false">Idea</button>
-        </div>
-        <label class="feedback-label" for="feedbackText">What happened, or what would you like?</label>
+      <button class="feedback-btn" id="feedbackBtn" type="button" title="Suggest a change" aria-label="Suggest a change" aria-haspopup="true" aria-expanded="false">${SUGGEST_ICON}</button>
+      <div class="feedback-pop" id="feedbackPop" role="dialog" aria-label="Suggest a change" hidden>
+        <div class="feedback-title">Suggest a change</div>
+        <label class="feedback-label" for="feedbackText">Something wrong, or something you'd like?</label>
         <textarea id="feedbackText" rows="4" maxlength="4000"></textarea>
-        <p class="feedback-note">This goes to Jacob's to-do list on GitHub, which is public. Your name and email aren't included.</p>
+        <button class="feedback-shot-btn" id="feedbackShotBtn" type="button">${CAMERA_ICON}<span>Add a screenshot</span></button>
+        <div class="feedback-shot" id="feedbackShot" hidden>
+          <img alt="Your screenshot">
+          <button class="feedback-shot-remove" type="button" title="Remove the screenshot" aria-label="Remove the screenshot">×</button>
+        </div>
+        <p class="feedback-note">This goes to Jacob's to-do list on GitHub, which is public, screenshot included. Your name and email aren't included.</p>
         <button class="btn btn-primary" id="feedbackSend" type="button">Send</button>
         <p class="feedback-msg" id="feedbackMsg" role="status" hidden></p>
       </div>
     </div>`);
     fb = {wrap: w, btn: w.querySelector("#feedbackBtn"), pop: w.querySelector("#feedbackPop"),
-          text: w.querySelector("#feedbackText"), send: w.querySelector("#feedbackSend"), msg: w.querySelector("#feedbackMsg"), kind: "bug"};
+          text: w.querySelector("#feedbackText"), send: w.querySelector("#feedbackSend"), msg: w.querySelector("#feedbackMsg"),
+          shotBtn: w.querySelector("#feedbackShotBtn"), shotBox: w.querySelector("#feedbackShot"), shot: null};
     fb.btn.onclick = function(){ if(menu) toggleMenu(false); toggleFeedback(); };
-    w.querySelectorAll(".feedback-kind").forEach(function(k){
-      k.onclick = function(){
-        fb.kind = k.dataset.kind;
-        w.querySelectorAll(".feedback-kind").forEach(function(x){ var on = x === k; x.classList.toggle("on", on); x.setAttribute("aria-checked", on ? "true" : "false"); });
-      };
-    });
+    fb.shotBtn.onclick = takeScreenshot;
+    fb.shotBox.querySelector("button").onclick = function(){ setShot(null); fb.shotBtn.focus(); };
     fb.pop.addEventListener("keydown", function(ev){ ev.stopPropagation(); if(ev.key === "Escape"){ toggleFeedback(false); fb.btn.focus(); } });
     fb.send.onclick = async function(){
       var message = fb.text.value.trim();
       if(!message){ return showFb("Type a message first.", "bad"); }
       fb.send.disabled = true;
       showFb("Sending…");
-      var r = await client.from("feedback").insert({
-        kind: fb.kind, message: message, context: screenContext(), user_agent: navigator.userAgent.slice(0, 400)
-      });
+      var row = {message: message, context: screenContext(), user_agent: navigator.userAgent.slice(0, 400)};
+      if(fb.shot) row.screenshot = fb.shot;
+      var r = await client.from("feedback").insert(row);
+      var lostShot = false;
+      if(r.error && row.screenshot){
+        // e.g. a screenshot too big for the connection: still send the words
+        delete row.screenshot;
+        r = await client.from("feedback").insert(row);
+        lostShot = !r.error;
+      }
       fb.send.disabled = false;
       if(r.error) return showFb("Couldn't send it. Check your connection and try again.", "bad");
       fb.text.value = "";
-      showFb("Thanks! Sent to Jacob.", "good");
+      setShot(null);
+      showFb(lostShot ? "Sent to Jacob, but the screenshot couldn't go with it." : "Thanks! Sent to Jacob.", lostShot ? "" : "good");
       setTimeout(function(){ toggleFeedback(false); }, 1600);
     };
     return w;
+  }
+  function setShot(dataUrl){
+    fb.shot = dataUrl;
+    fb.shotBox.hidden = !dataUrl;
+    fb.shotBox.querySelector("img").src = dataUrl || "";
+    fb.shotBtn.querySelector("span").textContent = dataUrl ? "Retake the screenshot" : "Add a screenshot";
+    if(!fb.pop.hidden) placePopover(fb.pop);
+  }
+  var shotLib = null;
+  function loadShotLib(){
+    if(!shotLib) shotLib = new Promise(function(resolve, reject){
+      var s = document.createElement("script");
+      s.src = HTML2CANVAS_JS;
+      s.onload = function(){ resolve(window.html2canvas); };
+      s.onerror = function(){ shotLib = null; reject(new Error("Couldn't load the screenshot tool")); };
+      document.head.appendChild(s);
+    });
+    return shotLib;
+  }
+  // Dims the page and lets the person drag out a rectangle (a tap takes the whole
+  // screen). Resolves with the rectangle in page pixels, or null if cancelled.
+  function pickArea(){
+    return new Promise(function(resolve){
+      var ov = el(`<div class="shot-overlay" role="dialog" aria-label="Choose what to capture">
+        <div class="shot-hint">Drag over the part to capture, or tap for the whole screen. Esc cancels.</div>
+        <div class="shot-rect" hidden></div></div>`);
+      var box = ov.querySelector(".shot-rect"), start = null, done = false;
+      function area(ev){
+        return {x: Math.min(start.x, ev.clientX), y: Math.min(start.y, ev.clientY),
+                w: Math.abs(ev.clientX - start.x), h: Math.abs(ev.clientY - start.y)};
+      }
+      function finish(r){
+        if(done) return;
+        done = true;
+        document.removeEventListener("keydown", onKey, true);
+        resolve(r);
+        // Let the click that follows the pointerup land on the overlay, not the page under it
+        setTimeout(function(){ ov.remove(); }, 400);
+        ov.style.opacity = "0";
+        if(!r) ov.style.pointerEvents = "none";
+      }
+      function onKey(ev){ ev.stopPropagation(); if(ev.key === "Escape"){ ev.preventDefault(); finish(null); } }
+      ov.addEventListener("pointerdown", function(ev){
+        if(done) return;
+        start = {x: ev.clientX, y: ev.clientY};
+        ov.setPointerCapture(ev.pointerId);
+        ov.classList.add("dragging");
+      });
+      ov.addEventListener("pointermove", function(ev){
+        if(!start || done) return;
+        var r = area(ev);
+        box.hidden = false;
+        box.style.left = r.x + "px"; box.style.top = r.y + "px";
+        box.style.width = r.w + "px"; box.style.height = r.h + "px";
+      });
+      ov.addEventListener("pointerup", function(ev){
+        if(!start || done) return;
+        var r = area(ev);
+        if(r.w < 12 || r.h < 12) r = {x: 0, y: 0, w: document.documentElement.clientWidth, h: window.innerHeight};
+        // Page coordinates, since reopening the popover scrolls back up to it
+        r.x += window.scrollX; r.y += window.scrollY;
+        r.scrollX = window.scrollX; r.scrollY = window.scrollY;
+        finish(r);
+      });
+      ov.addEventListener("pointercancel", function(){ finish(null); });
+      ov.addEventListener("click", function(ev){ ev.stopPropagation(); ov.remove(); });
+      document.addEventListener("keydown", onKey, true);
+      document.body.appendChild(ov);
+    });
+  }
+  // Shrinks the image until it fits comfortably in one database row.
+  function encodeShot(canvas){
+    var scale = Math.min(1, 1600 / Math.max(canvas.width, canvas.height));
+    for(var i = 0; i < 6; i++){
+      var c = canvas;
+      if(scale < 1){
+        c = document.createElement("canvas");
+        c.width = Math.max(1, Math.round(canvas.width * scale));
+        c.height = Math.max(1, Math.round(canvas.height * scale));
+        c.getContext("2d").drawImage(canvas, 0, 0, c.width, c.height);
+      }
+      var url = c.toDataURL("image/png");
+      if(url.length > SHOT_MAX_CHARS) url = c.toDataURL("image/jpeg", 0.85);
+      if(url.length <= SHOT_MAX_CHARS) return url;
+      scale *= 0.7;
+    }
+    return null;
+  }
+  async function takeScreenshot(){
+    var lib = loadShotLib();
+    lib.catch(function(){});
+    toggleFeedback(false);
+    var r = await pickArea();
+    toggleFeedback(true);
+    if(!r){ fb.shotBtn.focus(); return; }
+    fb.shotBtn.disabled = fb.send.disabled = true;
+    showFb("Taking the screenshot…");
+    try{
+      var html2canvas = await lib;
+      var canvas = await html2canvas(document.body, {
+        x: r.x, y: r.y, width: r.w, height: r.h, scrollX: r.scrollX, scrollY: r.scrollY,
+        windowWidth: document.documentElement.clientWidth, windowHeight: window.innerHeight,
+        scale: Math.min(window.devicePixelRatio || 1, 2), logging: false, useCORS: true,
+        backgroundColor: getComputedStyle(document.body).backgroundColor,
+        ignoreElements: function(n){
+          return n.id === "feedbackPop" || n.id === "accountMenu" || (n.classList && n.classList.contains("shot-overlay"));
+        }
+      });
+      var url = encodeShot(canvas);
+      if(!url) throw new Error("too big");
+      setShot(url);
+      showFb("");
+    }catch(e){
+      showFb("Couldn't take the screenshot. You can still send your message.", "bad");
+    }
+    fb.shotBtn.disabled = fb.send.disabled = false;
   }
   function showFb(text, kind){ fb.msg.textContent = text; fb.msg.className = "feedback-msg" + (kind ? " " + kind : ""); fb.msg.hidden = !text; }
   function toggleFeedback(force){

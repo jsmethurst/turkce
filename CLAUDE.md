@@ -84,8 +84,11 @@ To change the database:
 - **Moving a learner's progress from the old Claude site.** That needs a Claude session with access to that site.
 
 ## Feedback queue (GitHub Issues)
-The bug button in the header saves a report into the Supabase `feedback` table. People can send reports whether or not they're signed in, and the public can't read them back. Every 15 minutes, `.github/workflows/feedback.yml` turns new reports into **GitHub Issues** labelled `feedback` plus `bug` or `idea`. Each issue shows:
+The "Suggest a change" button in the header (a speech bubble) saves a suggestion into the Supabase `feedback` table. Bugs and ideas aren't distinguished. People can send suggestions whether or not they're signed in, and the public can't read them back. They can attach a screenshot: the camera button dims the page, they drag over an area (or tap for the whole screen), and html2canvas (loaded from jsDelivr only when needed) renders it into a PNG or JPEG stored in the row's `screenshot` column.
+
+Every 15 minutes, `.github/workflows/feedback.yml` turns new suggestions into **GitHub Issues** labelled `feedback`. Each issue shows:
 - the message,
+- the screenshot, if any (the workflow commits it to the orphan branch `feedback-screenshots`, which never touches `main` or the site),
 - which tab the person was on and what was on screen,
 - their device.
 
