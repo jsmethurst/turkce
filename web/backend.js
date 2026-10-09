@@ -108,7 +108,7 @@ header{flex-wrap:wrap;}
 .update-close{background:none;border:none;color:#fff;opacity:.7;font-size:20px;line-height:1;padding:2px 6px;cursor:pointer;}
 .update-close:hover{opacity:1;}
 .auth-panel{position:relative;}
-.auth-testmode{position:absolute;right:8px;bottom:8px;display:flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;border:none;border-radius:6px;background:transparent;color:var(--ink-soft);opacity:.35;cursor:pointer;}
+.auth-testmode{position:absolute;right:8px;top:8px;display:flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;border:none;border-radius:6px;background:transparent;color:var(--ink-soft);opacity:.35;cursor:pointer;}
 .auth-testmode:hover,.auth-testmode:focus-visible{opacity:.8;background:var(--paper-2);}
 .auth-testmode svg{width:13px;height:13px;}
 .testmode-badge{margin-top:6px;padding:5px 10px;border-radius:999px;background:#FBE3CF;color:#8A3D0E;font-size:11.5px;font-weight:700;white-space:nowrap;}
