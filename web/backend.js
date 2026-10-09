@@ -111,7 +111,10 @@ header{flex-wrap:wrap;}
 .auth-testmode{position:absolute;right:8px;top:8px;display:flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;border:none;border-radius:6px;background:transparent;color:var(--ink-soft);opacity:.35;cursor:pointer;}
 .auth-testmode:hover,.auth-testmode:focus-visible{opacity:.8;background:var(--paper-2);}
 .auth-testmode svg{width:13px;height:13px;}
-.testmode-badge{margin-top:6px;padding:5px 10px;border-radius:999px;background:#FBE3CF;color:#8A3D0E;font-size:11.5px;font-weight:700;white-space:nowrap;}
+.testmode-badge{margin-top:6px;padding:5px 10px;border:none;border-radius:999px;background:#FBE3CF;color:#8A3D0E;font:inherit;font-size:11.5px;font-weight:700;white-space:nowrap;}
+button.testmode-badge{cursor:pointer;}
+button.testmode-badge:hover{background:#F7D2B4;}
+button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
 .header-actions{display:flex;align-items:flex-start;gap:8px;min-width:0;max-width:100%;}
 .feedback-wrap{position:relative;flex:none;}
 .feedback-btn{display:flex;align-items:center;justify-content:center;width:28px;height:28px;margin-top:6px;padding:0;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink-soft);cursor:pointer;}
@@ -248,9 +251,9 @@ header{flex-wrap:wrap;}
     menu = el(`<div class="account-menu" id="accountMenu" role="menu" hidden>
       <div class="account-email" id="accountEmail"></div>
       <p>${TEST && !TEST.local
-        ? "Test mode: a pretend account. Progress is kept in this browser only, and suggestions aren't sent."
+        ? "Test mode: a pretend account. Progress is kept in this browser only, and suggestions aren't sent. Click Test mode to leave."
         : "Your settings and progress are saved to your account and stay in sync on every device you sign in on."}</p>
-      <button class="btn btn-ghost" id="authSignOut" role="menuitem" type="button">${TEST && !TEST.local ? "Leave test mode" : "Sign out"}</button>
+      <button class="btn btn-ghost" id="authSignOut" role="menuitem" type="button"${TEST && !TEST.local ? " hidden" : ""}>Sign out</button>
     </div>`);
     menu.querySelector("#authSignOut").onclick = async function(){
       this.disabled = true;
@@ -507,7 +510,17 @@ header{flex-wrap:wrap;}
     pill.parentNode.insertBefore(actions, pill);
     if(TEST) actions.appendChild(el(TEST.local
       ? '<span class="testmode-badge" title="Local test mode: a pretend database in this browser, signed in as a Test learner. Add ?supabase to the address to use the real one.">Local test mode</span>'
-      : '<span class="testmode-badge" title="Test mode: a pretend account kept in this browser only. Sign out to leave test mode.">Test mode</span>'));
+      : '<button type="button" class="testmode-badge" id="leaveTestMode" title="Leave test mode">Test mode</button>'));
+    // On the live site, clicking the badge is how you leave test mode.
+    var leave = document.getElementById("leaveTestMode");
+    if(leave) leave.onclick = function(){
+      try{
+        localStorage.removeItem("turkce_testmode_on");
+        // Don't carry the pretend account's progress into the real, signed-out site.
+        Object.keys(localStorage).filter(function(k){ return k.indexOf("fiil_") === 0; }).forEach(function(k){ localStorage.removeItem(k); });
+      }catch(e){}
+      location.reload();
+    };
     actions.appendChild(buildFeedback());
     var wrap = document.createElement("div");
     wrap.className = "account-wrap";
