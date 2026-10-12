@@ -590,7 +590,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <ol class="how-list">
         <li><b>Translate with the case:</b> you get an English sentence, with the verb and the case it needs shown above it. Type the whole sentence in Turkish.</li>
         <li><b>What counts:</b> the exact sentence is Doğru. If your sentence differs but the word with the right case ending is in it, that counts as the ending right. Otherwise the correct sentence is shown with the ending in bold.</li>
-        <li><b>Sentences:</b> they come from the example sentences on the verbs (plus a few for the genitive, which verbs don't govern), in random order, each one once before any repeats.</li>
+        <li><b>Sentences:</b> they come from the example sentences on the verbs (plus a few for the genitive and the possessive, which verbs don't govern), in random order, each one once before any repeats.</li>
         <li>Nothing from this tab is saved yet. The score is for this visit only.</li>
       </ol>
     </div>
@@ -3695,8 +3695,8 @@ document.addEventListener("keydown", e=>{
 
 // ---- Cases (experimental): translate an English sentence into Turkish with the right case ending ----
 const CASES_KEY = "fiil_cases_v1";
-const CASE_LABELS = ["akuzatif","datif","lokatif","ablatif","ile","genitif"];
-// Verbs don't govern the genitive, so these sentences live here rather than on the verb rows.
+const CASE_LABELS = ["akuzatif","datif","lokatif","ablatif","ile","genitif","iyelik"];
+// Verbs don't govern the genitive or the possessive, so their sentences live here rather than on the verb rows.
 const GENITIVE_SENTENCES = [
   {inf:"okumak", en:"I'm reading the teacher's book.", ex:"Öğretmen<b>in</b> kitabını okuyorum."},
   {inf:"temizlemek", en:"I'm cleaning my friend's room.", ex:"Arkadaşım<b>ın</b> odasını temizliyorum."},
@@ -3711,6 +3711,21 @@ const GENITIVE_SENTENCES = [
   {inf:"yazmak", en:"I'm writing the teacher's name.", ex:"Öğretmen<b>in</b> adını yazıyorum."},
   {inf:"boyamak", en:"They're painting the house's walls.", ex:"Ev<b>in</b> duvarlarını boyuyorlar."},
 ].map(x=>({...x, c:"genitif"}));
+// Possessive suffixes (iyelik ekleri): nouns, not verbs, mark these too.
+const POSSESSIVE_SENTENCES = [
+  {inf:"olmak", en:"My house is big.", ex:"Ev<b>im</b> büyük."},
+  {inf:"olmak", en:"Your name is nice.", ex:"Ad<b>ın</b> güzel."},
+  {inf:"olmak", en:"His mother is a teacher.", ex:"Anne<b>si</b> öğretmen."},
+  {inf:"olmak", en:"Our teacher is here.", ex:"Öğretmen<b>imiz</b> burada."},
+  {inf:"olmak", en:"Your (plural) car is new.", ex:"Araba<b>nız</b> yeni."},
+  {inf:"olmak", en:"Their house is far.", ex:"Ev<b>leri</b> uzak."},
+  {inf:"gelmek", en:"My brother is coming.", ex:"Kardeş<b>im</b> geliyor."},
+  {inf:"uyumak", en:"Her dog is sleeping.", ex:"Köpeğ<b>i</b> uyuyor."},
+  {inf:"oynamak", en:"Our children are playing.", ex:"Çocuk<b>larımız</b> oynuyor."},
+  {inf:"aramak", en:"Your sister is calling.", ex:"Kız kardeş<b>in</b> arıyor."},
+  {inf:"olmak", en:"My phone is on the table.", ex:"Telefon<b>um</b> masada."},
+  {inf:"olmak", en:"Her room is clean.", ex:"Oda<b>sı</b> temiz."},
+].map(x=>({...x, c:"iyelik"}));
 const cases = {filter:"all", hint:false, deck:[], current:null, flipped:false, right:0, total:0};
 try{
   const t = JSON.parse(localStorage.getItem(CASES_KEY) || "{}");
@@ -3729,6 +3744,7 @@ function caseSentences(){
     out.push({inf:v.inf, c:c.c, en:c.en, ex:c.ex});
   }));
   GENITIVE_SENTENCES.forEach(g=>{ if(cases.filter==="all" || cases.filter==="genitif") out.push(g); });
+  POSSESSIVE_SENTENCES.forEach(g=>{ if(cases.filter==="all" || cases.filter==="iyelik") out.push(g); });
   return out;
 }
 function casePlain(html){ return html.replace(/<\/?b>/g,""); }
