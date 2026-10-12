@@ -3656,7 +3656,7 @@ function nextTekrarCard(){
   tekrar.mode = tekrar.dir==="mixed" ? (Math.random()<0.5 ? "en2tr" : "tr2en") : tekrar.dir;
   const detail = vocabItemDetail(item);
   document.getElementById("tekrarPrompt").textContent = tekrar.mode==="tr2en" ? detail.inf : detail.gloss;
-  document.getElementById("tekrarSub").textContent = tekrar.mode==="tr2en" ? "Type the English" : "Type the Turkish";
+  document.getElementById("tekrarSub").textContent = "";
   document.getElementById("tekrarTag").textContent = detail.tag;
   const form = document.getElementById("tekrarForm");
   form.innerHTML = wordFormHTML(pickWord.key);
@@ -3779,7 +3779,7 @@ function nextCasesCard(){
   cases.current = item;
   cases.flipped = false;
   document.getElementById("casesPrompt").textContent = item.en;
-  document.getElementById("casesSub").textContent = "Translate into Turkish";
+  document.getElementById("casesSub").textContent = "";
   document.getElementById("casesTag").textContent = item.inf;
   const cs = document.getElementById("casesCase");
   cs.textContent = item.c;
