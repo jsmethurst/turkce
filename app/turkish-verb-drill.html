@@ -590,7 +590,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <ol class="how-list">
         <li><b>Translate with the case:</b> you get an English sentence, with the verb and the case it needs shown above it. Type the whole sentence in Turkish.</li>
         <li><b>What counts:</b> the exact sentence is Doğru. If your sentence differs but the word with the right case ending is in it, that counts as the ending right. Otherwise the correct sentence is shown with the ending in bold.</li>
-        <li><b>Sentences:</b> they come from the example sentences on the verbs (plus a few for the genitive and the possessive, which verbs don't govern), in random order, each one once before any repeats.</li>
+        <li><b>Sentences:</b> they come from the example sentences on the verbs (plus extra ones written for this tab, including the genitive and the possessive, which verbs don't govern), in random order, each one once before any repeats.</li>
         <li>Nothing from this tab is saved yet. The score is for this visit only.</li>
       </ol>
     </div>
@@ -3710,6 +3710,13 @@ const GENITIVE_SENTENCES = [
   {inf:"açmak", en:"We're opening the school's door.", ex:"Okul<b>un</b> kapısını açıyoruz."},
   {inf:"yazmak", en:"I'm writing the teacher's name.", ex:"Öğretmen<b>in</b> adını yazıyorum."},
   {inf:"boyamak", en:"They're painting the house's walls.", ex:"Ev<b>in</b> duvarlarını boyuyorlar."},
+  {inf:"yıkamak", en:"I'm washing my sister's dress.", ex:"Kız kardeşim<b>in</b> elbisesini yıkıyorum."},
+  {inf:"bakmak", en:"We're looking at the city's old streets.", ex:"Şehr<b>in</b> eski sokaklarına bakıyoruz."},
+  {inf:"tamir etmek", en:"He's fixing his friend's phone.", ex:"Arkadaşı<b>nın</b> telefonunu tamir ediyor."},
+  {inf:"bulmak", en:"She's finding her mother's keys.", ex:"Annesi<b>nin</b> anahtarlarını buluyor."},
+  {inf:"okumak", en:"We're reading the writer's new book.", ex:"Yazar<b>ın</b> yeni kitabını okuyoruz."},
+  {inf:"boyamak", en:"I'm painting the room's ceiling.", ex:"Oda<b>nın</b> tavanını boyuyorum."},
+  {inf:"temizlemek", en:"They're cleaning the hotel's pool.", ex:"Otel<b>in</b> havuzunu temizliyorlar."},
 ].map(x=>({...x, c:"genitif"}));
 // Possessive suffixes (iyelik ekleri): nouns, not verbs, mark these too.
 const POSSESSIVE_SENTENCES = [
@@ -3725,7 +3732,78 @@ const POSSESSIVE_SENTENCES = [
   {inf:"aramak", en:"Your sister is calling.", ex:"Kız kardeş<b>in</b> arıyor."},
   {inf:"olmak", en:"My phone is on the table.", ex:"Telefon<b>um</b> masada."},
   {inf:"olmak", en:"Her room is clean.", ex:"Oda<b>sı</b> temiz."},
+  {inf:"olmak", en:"My bag is on the chair.", ex:"Çanta<b>m</b> sandalyede."},
+  {inf:"olmak", en:"Your book is interesting.", ex:"Kitab<b>ın</b> ilginç."},
+  {inf:"olmak", en:"His sister is very kind.", ex:"Kız kardeş<b>i</b> çok nazik."},
+  {inf:"gelmek", en:"Our friends are coming.", ex:"Arkadaş<b>larımız</b> geliyor."},
+  {inf:"olmak", en:"Your (plural) house is beautiful.", ex:"Ev<b>iniz</b> çok güzel."},
+  {inf:"beklemek", en:"Their teacher is waiting.", ex:"Öğretmen<b>leri</b> bekliyor."},
+  {inf:"çalışmak", en:"My father is working.", ex:"Baba<b>m</b> çalışıyor."},
+  {inf:"olmak", en:"Her car is red.", ex:"Araba<b>sı</b> kırmızı."},
 ].map(x=>({...x, c:"iyelik"}));
+
+// More sentences for the cases verbs do govern, written for this tab (the verb rows keep one example each).
+const MORE_CASE_SENTENCES = {
+  akuzatif: [
+    {inf:"açmak", en:"I'm opening the window.", ex:"Pencere<b>yi</b> açıyorum."},
+    {inf:"içmek", en:"She's drinking the tea.", ex:"Çay<b>ı</b> içiyor."},
+    {inf:"izlemek", en:"We're watching the film.", ex:"Film<b>i</b> izliyoruz."},
+    {inf:"almak", en:"I'm buying the car.", ex:"Araba<b>yı</b> alıyorum."},
+    {inf:"kapatmak", en:"He's closing the door.", ex:"Kapı<b>yı</b> kapatıyor."},
+    {inf:"aramak", en:"I'm calling my mother.", ex:"Annem<b>i</b> arıyorum."},
+    {inf:"boyamak", en:"They're painting the wall.", ex:"Duvar<b>ı</b> boyuyorlar."},
+    {inf:"okumak", en:"I'm reading the letter.", ex:"Mektub<b>u</b> okuyorum."},
+    {inf:"yıkamak", en:"She's washing the dishes.", ex:"Bulaşıklar<b>ı</b> yıkıyor."},
+    {inf:"yemek", en:"We're eating the cake.", ex:"Kek<b>i</b> yiyoruz."},
+  ],
+  datif: [
+    {inf:"gitmek", en:"I'm going to the market.", ex:"Market<b>e</b> gidiyorum."},
+    {inf:"vermek", en:"She's giving the book to her friend.", ex:"Kitabı arkadaşın<b>a</b> veriyor."},
+    {inf:"gelmek", en:"We're coming to the party.", ex:"Parti<b>ye</b> geliyoruz."},
+    {inf:"yazmak", en:"I'm writing to my teacher.", ex:"Öğretmenim<b>e</b> yazıyorum."},
+    {inf:"bakmak", en:"He's looking at the picture.", ex:"Resim<b>e</b> bakıyor."},
+    {inf:"yardım etmek", en:"I'm helping my brother.", ex:"Kardeşim<b>e</b> yardım ediyorum."},
+    {inf:"seyahat etmek", en:"They're traveling to Izmir.", ex:"İzmir'<b>e</b> seyahat ediyorlar."},
+    {inf:"anlatmak", en:"I'm telling the story to the children.", ex:"Hikâyeyi çocuklar<b>a</b> anlatıyorum."},
+    {inf:"binmek", en:"She's getting on the bus.", ex:"Otobüs<b>e</b> biniyor."},
+    {inf:"göndermek", en:"I'm sending a message to my sister.", ex:"Kız kardeşim<b>e</b> mesaj gönderiyorum."},
+  ],
+  lokatif: [
+    {inf:"çalışmak", en:"I'm studying at the library.", ex:"Kütüphane<b>de</b> ders çalışıyorum."},
+    {inf:"çalışmak", en:"She's working in the office.", ex:"Ofis<b>te</b> çalışıyor."},
+    {inf:"beklemek", en:"We're waiting at the bus stop.", ex:"Durak<b>ta</b> bekliyoruz."},
+    {inf:"oynamak", en:"The children are playing in the garden.", ex:"Çocuklar bahçe<b>de</b> oynuyor."},
+    {inf:"yemek", en:"I'm eating at home.", ex:"Ev<b>de</b> yemek yiyorum."},
+    {inf:"uyumak", en:"He's sleeping in his room.", ex:"Odasın<b>da</b> uyuyor."},
+    {inf:"yaşamak", en:"I'm living in Istanbul.", ex:"İstanbul'<b>da</b> yaşıyorum."},
+    {inf:"yemek", en:"We're having lunch at the restaurant.", ex:"Restoran<b>da</b> öğle yemeği yiyoruz."},
+    {inf:"okumak", en:"I'm reading a book on the bus.", ex:"Otobüs<b>te</b> kitap okuyorum."},
+    {inf:"almak", en:"She's buying bread at the market.", ex:"Market<b>te</b> ekmek alıyor."},
+  ],
+  ablatif: [
+    {inf:"gelmek", en:"She's coming from work.", ex:"İş<b>ten</b> geliyor."},
+    {inf:"inmek", en:"She's getting off the train.", ex:"Tren<b>den</b> iniyor."},
+    {inf:"almak", en:"He's taking the book from the table.", ex:"Kitabı masa<b>dan</b> alıyor."},
+    {inf:"çıkmak", en:"We're leaving the house.", ex:"Ev<b>den</b> çıkıyoruz."},
+    {inf:"korkmak", en:"I'm afraid of dogs.", ex:"Köpekler<b>den</b> korkuyorum."},
+    {inf:"gelmek", en:"They're coming from Ankara.", ex:"Ankara'<b>dan</b> geliyorlar."},
+    {inf:"başlamak", en:"I'm starting from the beginning.", ex:"Baş<b>tan</b> başlıyorum."},
+    {inf:"öğrenmek", en:"She's learning from her mother.", ex:"Annesi<b>nden</b> öğreniyor."},
+    {inf:"sıkılmak", en:"I'm tired of the noise.", ex:"Gürültü<b>den</b> sıkılıyorum."},
+    {inf:"aramak", en:"He's calling from the airport.", ex:"Havaalanı<b>ndan</b> arıyor."},
+  ],
+  ile: [
+    {inf:"gitmek", en:"I'm going to school with my friend.", ex:"Arkadaşım<b>la</b> okula gidiyorum."},
+    {inf:"gitmek", en:"I'm going to work by bus.", ex:"İşe otobüs<b>le</b> gidiyorum."},
+    {inf:"konuşmak", en:"She's talking with her teacher.", ex:"Öğretmeni<b>yle</b> konuşuyor."},
+    {inf:"yemek", en:"We're eating with a fork.", ex:"Çatal<b>la</b> yemek yiyoruz."},
+    {inf:"yazmak", en:"I'm writing with a pen.", ex:"Kalem<b>le</b> yazıyorum."},
+    {inf:"seyahat etmek", en:"They're traveling by plane.", ex:"Uçak<b>la</b> seyahat ediyorlar."},
+    {inf:"kesmek", en:"I'm cutting the bread with a knife.", ex:"Ekmeği bıçak<b>la</b> kesiyorum."},
+    {inf:"oynamak", en:"He's playing with the children.", ex:"Çocuklar<b>la</b> oynuyor."},
+    {inf:"gelmek", en:"We're coming by train.", ex:"Tren<b>le</b> geliyoruz."},
+  ],
+};
 const cases = {filter:"all", hint:false, deck:[], current:null, flipped:false, right:0, total:0};
 try{
   const t = JSON.parse(localStorage.getItem(CASES_KEY) || "{}");
@@ -3745,6 +3823,9 @@ function caseSentences(){
   }));
   GENITIVE_SENTENCES.forEach(g=>{ if(cases.filter==="all" || cases.filter==="genitif") out.push(g); });
   POSSESSIVE_SENTENCES.forEach(g=>{ if(cases.filter==="all" || cases.filter==="iyelik") out.push(g); });
+  Object.keys(MORE_CASE_SENTENCES).forEach(c=>{
+    if(cases.filter==="all" || cases.filter===c) MORE_CASE_SENTENCES[c].forEach(x=>out.push({...x, c}));
+  });
   return out;
 }
 function casePlain(html){ return html.replace(/<\/?b>/g,""); }
