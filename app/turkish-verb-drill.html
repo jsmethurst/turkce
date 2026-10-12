@@ -549,7 +549,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     <div class="section-title">How Tekrar works</div>
     <div class="settings-group">
       <p class="hint" style="margin:0 0 10px;">Tekrar uses spaced repetition to put the words you're weakest on in front of you most often.</p>
-      <p class="hint" style="margin:0;">Each word's wait before it returns comes from its last 50 answers: a long run of right answers pushes it further away (up to 30 days), a miss pulls it back closer, and words you often get wrong keep coming back.</p>
+      <p class="hint" style="margin:0;">Each word's frequency is derived from your last 25 answers: a long run of right answers pushes it further away (up to 30 days), a miss pulls it back closer, and words you often get wrong keep coming back.</p>
     </div>
   </div>
 
@@ -2968,9 +2968,9 @@ function onRemoteProgress(snap){
 }
 function vocabKnownKey(item){ return `${item.kind}:${item.tr}`; }
 
-// ---- Per-word answer history: the last 50 results are kept, the last 5 are shown ("1" right, "0" wrong, newest last) and when last seen ----
+// ---- Per-word answer history: the last 25 results are kept, the last 5 are shown ("1" right, "0" wrong, newest last) and when last seen ----
 var FORM_LENGTH = 5;      // how many results are shown as the form guide
-var HISTORY_LENGTH = 50;  // how many are remembered (only Tekrar uses the older ones)
+var HISTORY_LENGTH = 25;  // how many are remembered (only Tekrar uses the older ones)
 const WORD_STATS_KEY = "fiil_word_stats_v1";
 var wordStats = {};
 try{ wordStats = JSON.parse(localStorage.getItem(WORD_STATS_KEY) || "{}") || {}; }catch(e){ wordStats = {}; }
@@ -3559,12 +3559,12 @@ const TEKRAR_MAX_DAYS = 30;   // the longest wait: a month
 const TEKRAR_RETRY_MS = 10*60*1000;              // wait after a miss
 const TEKRAR_AGAIN_AFTER = 3;                    // a missed word returns after this many other cards
 const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null};
-// The wait is worked out from the whole saved history (up to 50 answers), not just the 5 shown.
+// The wait is worked out from the whole saved history (up to 25 answers), not just the 5 shown.
 // Replay it oldest to newest: each right answer earns a day, each miss halves the days earned so far
 // (a slip after a long run costs little; a long run of misses earns nothing). Then scale by the share
 // of right answers over the history, so a word you've mostly missed still comes back often.
 function tekrarWaitMs(key){
-  const r = (wordStats[key] && wordStats[key].r) || "";
+  const r = ((wordStats[key] && wordStats[key].r) || "").slice(-HISTORY_LENGTH);
   if(!r) return TEKRAR_RETRY_MS;
   let days = 0, right = 0;
   for(const c of r){
