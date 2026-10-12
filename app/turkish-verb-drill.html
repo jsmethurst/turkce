@@ -550,31 +550,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 
     <div class="section-title">How Tekrar works</div>
     <div class="settings-group">
-      <ol class="how-list">
-        <li><b>Which words:</b> every word you've answered at least once by typing, in Vocab, in a test, or here. The Doğru / Yanlış flashcard buttons don't count, only typed or spoken answers do.</li>
-        <li><b>When a word comes back:</b> its wait is worked out from its last 50 answers, replayed from oldest to newest:
-          <ul class="how-sub">
-            <li>every right answer adds a day to the wait;</li>
-            <li>every miss halves the days earned so far. It doesn't wipe them, so one slip after a long run costs little, while a long run of misses earns nothing;</li>
-            <li>the result is then scaled by how often you've got the word right across those 50: nearly always right keeps nearly all of it, mostly wrong keeps about a third;</li>
-            <li>the longest wait is 30 days, and a word with nothing earned (for example one you just missed on its first try) comes back in about 10 minutes.</li>
-          </ul>
-          Some examples:
-          <table class="how-table">
-            <tr><th>History</th><th>Comes back after</th></tr>
-            <tr><td>New word, 3 right in a row</td><td>3 days</td></tr>
-            <tr><td>30 or more right in a row</td><td>30 days</td></tr>
-            <tr><td>48 right, then 2 misses</td><td>about 12 days</td></tr>
-            <tr><td>48 right, then 1 miss</td><td>about 24 days</td></tr>
-            <tr><td>45 misses, then 5 right</td><td>under 2 days</td></tr>
-          </table>
-        </li>
-        <li><b>Order:</b> words that are most overdue for their wait come first, so you aren't shown words you know really well too often.</li>
-        <li><b>Misses:</b> a word you miss comes back after about 3 other cards, not a day later. If nothing else is due, it comes straight back.</li>
-        <li><b>Form:</b> answers here count toward each word's form, like typed answers in Vocab, so the colours on the Sözlük update too.</li>
-        <li><b>History:</b> each word remembers its last 50 answers. You only see the last 5 in the form boxes; the rest are used just to schedule it. Words answered before this was added start with the few answers they already had, and build up from there.</li>
-        <li><b>Nothing to set up:</b> it works out what's due from your answers. When nothing is due it says "All caught up" and when the next word is due.</li>
-      </ol>
+      <p class="hint" style="margin:0;">Tekrar uses spaced repetition to put the words you're weakest on in front of you most often. It covers every word you've answered by typing at least once. Each word's wait before it returns comes from its last 50 answers: a long run of right answers pushes it further away (up to 30 days), a miss pulls it back closer, and words you often get wrong keep coming back. Nothing to set up. Your answers here count toward each word's form, like typed answers in Vocab.</p>
     </div>
 
     <div class="section-title">Settings</div>
