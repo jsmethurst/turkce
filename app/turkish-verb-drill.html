@@ -540,6 +540,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
         <button class="btn btn-primary" id="tekrarCheck">Check</button>
       </div>
       <div class="feedback" id="tekrarFeedback"></div>
+      <p class="hint" id="tekrarBack" style="margin:10px 0 0;text-align:center;" hidden></p>
       <div class="bottom-actions">
         <button class="btn btn-primary" id="tekrarNext" style="margin-left:auto;" hidden>Next →</button>
       </div>
@@ -3591,7 +3592,9 @@ function tekrarWaitText(ms){
   const m = Math.max(1, Math.round(ms/60000));
   if(m<60) return `${m} min`;
   const h = Math.round(m/60);
-  return h<48 ? `${h} h` : `${Math.round(h/24)} days`;
+  if(h<24) return `${h} h`;
+  const d = Math.round(h/24);
+  return d===1 ? "1 day" : `${d} days`;
 }
 function showTekrarMessage(title, detail){
   tekrar.current = null;
@@ -3604,6 +3607,7 @@ function showTekrarMessage(title, detail){
   document.getElementById("tekrarNext").hidden = true;
   const fb = document.getElementById("tekrarFeedback");
   fb.className = "feedback"; fb.innerHTML = "";
+  document.getElementById("tekrarBack").hidden = true;
 }
 function nextTekrarCard(){
   const words = tekrarWords();
@@ -3644,6 +3648,7 @@ function nextTekrarCard(){
   document.getElementById("tekrarNext").hidden = true;
   const fb = document.getElementById("tekrarFeedback");
   fb.className = "feedback"; fb.innerHTML = "";
+  document.getElementById("tekrarBack").hidden = true;
   const input = document.getElementById("tekrarInput");
   input.value = "";
   if(window.matchMedia("(hover: hover)").matches) input.focus();
@@ -3663,8 +3668,10 @@ function checkTekrar(){
   const answerText = tekrar.mode==="tr2en" ? detail.gloss : detail.inf;
   const fb = document.getElementById("tekrarFeedback");
   fb.className = "feedback show " + (correct ? "good" : "bad");
-  fb.innerHTML = (correct ? "Doğru! Nice work." : "Not quite. Correct answer:") + `<span class="correct-answer">${answerText}</span>${detail.caseNotes}` +
-    (correct ? `<span class="hint">Back in ${tekrarWaitText(tekrarWaitMs(key))}</span>` : "");
+  fb.innerHTML = (correct ? "Doğru! Nice work." : "Not quite. Correct answer:") + `<span class="correct-answer">${answerText}</span>${detail.caseNotes}`;
+  const back = document.getElementById("tekrarBack");
+  back.textContent = `Back in ${tekrarWaitText(tekrarWaitMs(key))}`;
+  back.hidden = false;
   document.getElementById("tekrarForm").innerHTML = wordFormHTML(key);
   document.getElementById("tekrarForm").hidden = false;
   document.getElementById("tekrarSpeak").style.visibility = "visible";
