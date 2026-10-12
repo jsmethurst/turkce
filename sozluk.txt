@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-232 verbs · 786 non-verbs · 40 topics
+233 verbs · 796 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -113,7 +113,7 @@ binmek                    to get on
     datif: Otobüse biniyorum.  (I'm getting on the bus.)
 inmek                     to get off
     ablatif: Otobüsten iniyorum.  (I'm getting off the bus.)
-sürmek                    to drive / to last
+sürmek                    to drive / to last / to apply
     akuzatif: Arabayı sürüyorum.  (I'm driving the car.)
 durmak                    to stop / to stand
     lokatif: Kapıda duruyorum.  (I'm standing at the door.)
@@ -178,7 +178,7 @@ yardım etmek              to help
     datif: Sana yardım ediyorum.  (I'm helping you.)
 denemek                   to try
     akuzatif: Yeni restoranı deniyorum.  (I'm trying the new restaurant.)
-bırakmak                  to leave / to let go
+bırakmak                  to leave / to let go / to drop off
     akuzatif: İşi bırakıyorum.  (I'm quitting the job.)
 düşünmek                  to think
     akuzatif: Seni düşünüyorum.  (I'm thinking of you.)
@@ -431,7 +431,7 @@ geri dönmek               to come back / to go back
 keşfetmek                 to discover / to explore
     akuzatif: Şehri keşfediyorum.  (I'm exploring the city.)
 
-DERSTE 51-57
+DERSTE 51-58
 ------------
 sağlıklı olmak            to be healthy
     örnek: Sağlıklı olmak istiyorum.  (I want to be healthy.)
@@ -447,6 +447,8 @@ yaşlanmak                 to grow old
     örnek: Herkes yaşlanır.  (Everyone grows old.)
 uğurlamak                 to see off
     akuzatif: Arkadaşımı havaalanında uğurluyorum.  (I'm seeing my friend off at the airport.)
+uzanmak                   to stretch out
+    örnek: Çocuklar çimenlerde uzanıyor.  (The children are stretching out on the grass.)
 
 BIBLE 1-25
 ----------
@@ -1104,7 +1106,7 @@ bütün gün                 all day
 buhar                     steam
 ücretsiz                  free
 
-DERSTE 176-184
+DERSTE 176-194
 --------------
 bedava                    free (informal / possibly rude)
 uyku                      sleep
@@ -1115,6 +1117,16 @@ mum                       candle
 fikir                     idea
 ağabey                    older brother (formal)
 abi                       older brother (informal)
+yamuk                     skewed
+düz                       straight / aligned
+alın                      forehead
+karın                     stomach
+oğul                      son
+burun                     nose
+ağız                      mouth
+metre kare                square meter
+uslu                      well-behaved
+elektrikçi                electrician
 
 SIFATLAR 1-25
 -------------
@@ -1414,7 +1426,7 @@ buyurun, geçmiş olsun, affedersiniz, rica ederim, teşekkürler, lütfen, afiy
 
 People & Professions
 --------------------
-insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi
+insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi
 
 Places & Buildings
 ------------------
@@ -1494,7 +1506,7 @@ fırçalamak, uyanmak, kalkmak, yıkamak, diş fırçalamak, taramak, kurulanmak
 
 Health & Body
 -------------
-hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş olsun, beyin, kan, beden, sağlıklı olmak, spor yapmak, yorulmak, doğmak, büyümek, ölmek, ilaç, yaralı, sağlıklı, sağlıksız, yaşlanmak
+hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş olsun, beyin, kan, beden, sağlıklı olmak, spor yapmak, yorulmak, doğmak, büyümek, ölmek, ilaç, yaralı, sağlıklı, sağlıksız, yaşlanmak, alın, karın, burun, ağız
 
 Talking & Communicating
 -----------------------
@@ -1502,7 +1514,7 @@ konuşmak, söylemek, demek, sormak, soru sormak, cevaplamak, anlatmak, açıkla
 
 Coming & Going
 --------------
-gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, geçmek, yürümek, koşmak, binmek, inmek, durmak, oturmak, kalkmak, uğramak, tırmanmak, düşmek, taşınmak, ayrılmak, katılmak, gecikmek, yetişmek, uğurlamak
+gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, geçmek, yürümek, koşmak, binmek, inmek, durmak, oturmak, kalkmak, uğramak, tırmanmak, düşmek, taşınmak, ayrılmak, katılmak, gecikmek, yetişmek, uğurlamak, uzanmak
 
 Everyday Actions
 ----------------
@@ -1514,7 +1526,7 @@ bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, pl
 
 Describing Things
 -----------------
-eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık
+eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare
 
 Little Words
 ------------
@@ -1538,7 +1550,7 @@ tuzlu, tatlı, acı, ekşi, lezzetli, kuru yemekler, sulu yemekler, hafif yemek,
 
 Character Traits
 ----------------
-nazik, kaba, kibar, akıllı, akılsız, sabırlı, sabırsız, dürüst, neşeli, eğlenceli, sakin, arkadaş canlısı, cömert, cimri, düzenli, dağınık, güleryüzlü, hayalperest, merhametli, hırslı, karizmatik, güvenilir, kararlı, kararsız, mütevazı, enerjik, özgüvenli, becerikli, yetenekli, meraklı, esprili, zeki, bencil, sosyal, asosyal, utangaç, düşünceli, düşüncesiz, inatçı, çok yönlü, anlayışlı, anlayışsız, hoşgörülü, maceracı, cesur, korkak, çılgın, yaratıcı, misafirperver, yaramaz, çalışkan, tembel, yardımsever, davranmak, eli açık
+nazik, kaba, kibar, akıllı, akılsız, sabırlı, sabırsız, dürüst, neşeli, eğlenceli, sakin, arkadaş canlısı, cömert, cimri, düzenli, dağınık, güleryüzlü, hayalperest, merhametli, hırslı, karizmatik, güvenilir, kararlı, kararsız, mütevazı, enerjik, özgüvenli, becerikli, yetenekli, meraklı, esprili, zeki, bencil, sosyal, asosyal, utangaç, düşünceli, düşüncesiz, inatçı, çok yönlü, anlayışlı, anlayışsız, hoşgörülü, maceracı, cesur, korkak, çılgın, yaratıcı, misafirperver, yaramaz, çalışkan, tembel, yardımsever, davranmak, eli açık, uslu
 
 Opposites
 ---------
