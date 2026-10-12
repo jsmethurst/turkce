@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-233 verbs · 796 non-verbs · 40 topics
+233 verbs · 799 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1106,7 +1106,7 @@ bütün gün                 all day
 buhar                     steam
 ücretsiz                  free
 
-DERSTE 176-194
+DERSTE 176-197
 --------------
 bedava                    free (informal / possibly rude)
 uyku                      sleep
@@ -1127,6 +1127,9 @@ ağız                      mouth
 metre kare                square meter
 uslu                      well-behaved
 elektrikçi                electrician
+çoğunlukla                mostly / for the most part
+hala                      aunt
+hâlâ                      still (continuing)
 
 SIFATLAR 1-25
 -------------
@@ -1426,7 +1429,7 @@ buyurun, geçmiş olsun, affedersiniz, rica ederim, teşekkürler, lütfen, afiy
 
 People & Professions
 --------------------
-insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi
+insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi, hala
 
 Places & Buildings
 ------------------
@@ -1530,7 +1533,7 @@ eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geni�
 
 Little Words
 ------------
-bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek
+bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ
 
 Cities & Countries
 ------------------
