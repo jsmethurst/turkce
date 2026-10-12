@@ -558,9 +558,20 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <p class="hint" style="margin:0;">Each word's frequency is derived from your last 25 answers: a long run of right answers pushes it further away (up to 30 days), a miss pulls it back closer, and words you often get wrong keep coming back.</p>
     </div>
 
-    <div class="section-title">Coming up</div>
-    <div class="settings-group">
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <span>Coming up</span>
+      <button class="btn btn-ghost" id="tekrarUpcomingToggle" type="button" style="padding:5px 12px;font-size:0.8rem;">Hide</button>
+    </div>
+    <div class="settings-group" id="tekrarUpcomingBox">
       <div class="upnext" id="tekrarUpcoming"></div>
+    </div>
+
+    <div class="section-title">Settings</div>
+    <div class="settings-group">
+      <div class="chip-row">
+        <div class="chip" id="tekrarEarlyChip">Keep going when nothing is due (take the next words early)</div>
+      </div>
+      <p class="hint" style="margin:8px 0 0;">When it's on and no word is due, Tekrar keeps giving you the words that are due soonest, so you can carry on practising. Answers still count as normal.</p>
     </div>
   </div>
 
@@ -3569,7 +3580,21 @@ document.addEventListener("keydown", e=>{
 const TEKRAR_MAX_DAYS = 30;   // the longest wait: a month
 const TEKRAR_RETRY_MS = 10*60*1000;              // wait after a miss
 const TEKRAR_AGAIN_MIN = 3, TEKRAR_AGAIN_MAX = 9;  // a missed word returns after a random number of other cards in this range
-const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null};
+const TEKRAR_KEY = "fiil_tekrar_v1";
+const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null, early:false, showUpcoming:true};
+try{
+  const t = JSON.parse(localStorage.getItem(TEKRAR_KEY) || "{}");
+  if(typeof t.early==="boolean") tekrar.early = t.early;
+  if(typeof t.showUpcoming==="boolean") tekrar.showUpcoming = t.showUpcoming;
+}catch(e){}
+function saveTekrarSettings(){
+  try{ localStorage.setItem(TEKRAR_KEY, JSON.stringify({early:tekrar.early, showUpcoming:tekrar.showUpcoming})); }catch(e){}
+}
+function syncTekrarControls(){
+  document.getElementById("tekrarEarlyChip").classList.toggle("on", tekrar.early);
+  document.getElementById("tekrarUpcomingBox").hidden = !tekrar.showUpcoming;
+  document.getElementById("tekrarUpcomingToggle").textContent = tekrar.showUpcoming ? "Hide" : "Show";
+}
 // The wait is worked out from the whole saved history (up to 25 answers), not just the 5 shown.
 // Replay it oldest to newest: each right answer earns a day, each miss halves the days earned so far
 // (a slip after a long run costs little; a long run of misses earns nothing). Then scale by the share
@@ -3650,12 +3675,19 @@ function nextTekrarCard(){
   // A word you just missed comes back after a few other cards, or straight away if nothing else is due.
   let pickWord = null;
   const retry = tekrar.again.findIndex(a=>a.wait<=0);
-  if(retry>=0 || (!due.length && tekrar.again.length)){
+  if(retry>=0 || (!due.length && tekrar.again.length && !(tekrar.early && words.length>1))){
     const i = retry>=0 ? retry : 0;
     const a = tekrar.again.splice(i,1)[0];
     pickWord = words.find(w=>w.key===a.key) || null;
   }
   if(!pickWord) pickWord = due[0] || null;
+  // "Keep going": with nothing due, take whichever words are due soonest.
+  let early = false;
+  if(!pickWord && tekrar.early && words.length){
+    const ahead = words.filter(w=>w.key!==tekrar.last).sort((a,b)=>a.dueAt-b.dueAt);
+    pickWord = ahead[0] || words[0];
+    early = true;
+  }
   const dueCount = words.filter(w=>w.dueAt<=now).length;
   const stats = document.getElementById("tekrarStats");
   if(!pickWord){
@@ -3686,7 +3718,7 @@ function nextTekrarCard(){
   const input = document.getElementById("tekrarInput");
   input.value = "";
   if(window.matchMedia("(hover: hover)").matches) input.focus();
-  stats.textContent = `${dueCount} due now · ${words.length} words in rotation`;
+  stats.textContent = `${dueCount} due now · ${words.length} words in rotation` + (early ? " · practising ahead" : "");
 }
 function checkTekrar(){
   if(!tekrar.current || tekrar.flipped) return;
@@ -3714,6 +3746,16 @@ function checkTekrar(){
   document.getElementById("tekrarNext").hidden = false;
   input.blur();
 }
+syncTekrarControls();
+document.getElementById("tekrarEarlyChip").onclick = ()=>{
+  tekrar.early = !tekrar.early;
+  syncTekrarControls(); saveTekrarSettings();
+  if(!tekrar.current) nextTekrarCard();   // e.g. from the "All caught up" message
+};
+document.getElementById("tekrarUpcomingToggle").onclick = ()=>{
+  tekrar.showUpcoming = !tekrar.showUpcoming;
+  syncTekrarControls(); saveTekrarSettings();
+};
 document.getElementById("tekrarCheck").onclick = checkTekrar;
 document.getElementById("tekrarNext").onclick = nextTekrarCard;
 document.getElementById("tekrarSpeak").onclick = ()=>{ if(tekrar.current) speak(tekrar.current.tr, "tr-TR"); };
