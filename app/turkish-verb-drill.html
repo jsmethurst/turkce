@@ -551,7 +551,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     <div class="settings-group">
       <ol class="how-list">
         <li><b>Which words:</b> every word you've answered at least once by typing, in Vocab, in a test, or here. The Doğru / Yanlış flashcard buttons don't count, only typed or spoken answers do.</li>
-        <li><b>When a word comes back:</b> it depends on how many answers in a row you've got right at the end of the word's form (the ✓ ✗ boxes). The longer the streak, the longer the wait.
+        <li><b>When a word comes back:</b> it depends on how many answers in a row you've got right at the end of the word's history. The longer the streak, the longer the wait.
           <table class="how-table">
             <tr><th>Streak</th><th>Comes back after</th></tr>
             <tr><td>Just missed</td><td>about 10 minutes</td></tr>
@@ -560,12 +560,15 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
             <tr><td>3 in a row</td><td>7 days</td></tr>
             <tr><td>4 in a row</td><td>14 days</td></tr>
             <tr><td>5 in a row</td><td>30 days</td></tr>
+            <tr><td>6, 7, 8 …</td><td>45, 70, 100 … days, up to a year</td></tr>
           </table>
+          A word you've missed a lot comes back sooner: the wait is shortened (by up to half) the lower your share of right answers is across its history.
         </li>
         <li><b>Order:</b> words that are most overdue for their wait come first, so you aren't shown words you know really well too often.</li>
         <li><b>Misses:</b> a word you miss comes back after about 3 other cards, not a day later. If nothing else is due, it comes straight back.</li>
         <li><b>Form:</b> answers here count toward each word's form, like typed answers in Vocab, so the colours on the Sözlük update too.</li>
-        <li><b>Nothing to set up:</b> it works out what's due from the answers you've already given, and saves nothing extra. When nothing is due it says "All caught up" and when the next word is due. The form keeps only the last 5 answers, so 30 days is the longest wait.</li>
+        <li><b>History:</b> each word remembers its last 25 answers. You only see the last 5 in the form boxes; the rest are used just to schedule it. Words answered before this was added start with the few answers they already had.</li>
+        <li><b>Nothing to set up:</b> it works out what's due from your answers. When nothing is due it says "All caught up" and when the next word is due.</li>
       </ol>
     </div>
 
@@ -2995,8 +2998,9 @@ function onRemoteProgress(snap){
 }
 function vocabKnownKey(item){ return `${item.kind}:${item.tr}`; }
 
-// ---- Per-word answer history: the last 5 results ("1" right, "0" wrong, newest last) and when last seen ----
-var FORM_LENGTH = 5;
+// ---- Per-word answer history: the last 25 results are kept, the last 5 are shown ("1" right, "0" wrong, newest last) and when last seen ----
+var FORM_LENGTH = 5;      // how many results are shown as the form guide
+var HISTORY_LENGTH = 25;  // how many are remembered (only Tekrar uses the older ones)
 const WORD_STATS_KEY = "fiil_word_stats_v1";
 var wordStats = {};
 try{ wordStats = JSON.parse(localStorage.getItem(WORD_STATS_KEY) || "{}") || {}; }catch(e){ wordStats = {}; }
@@ -3053,7 +3057,7 @@ function recordWordResult(item, correct){
   vocabState.recordedItem = item;
   const key = vocabKnownKey(item);
   const prev = (wordStats[key] && wordStats[key].r) || "";
-  wordStats[key] = {r: (prev + (correct ? "1" : "0")).slice(-FORM_LENGTH), at: new Date().toISOString()};
+  wordStats[key] = {r: (prev + (correct ? "1" : "0")).slice(-HISTORY_LENGTH), at: new Date().toISOString()};
   try{ localStorage.setItem(WORD_STATS_KEY, JSON.stringify(wordStats)); }catch(e){}
   statsDirty.add(key);
   if(remoteStats){ clearTimeout(statsTimer); statsTimer = setTimeout(flushStats, 800); }
@@ -3582,7 +3586,7 @@ document.addEventListener("keydown", e=>{
 // No extra data is saved: when a word is due comes from its last answer's time (wordStats.at) and
 // how many right answers it has in a row at the end of its form (a miss resets the streak).
 const TEKRAR_KEY = "fiil_tekrar_v1";
-const TEKRAR_WAIT_DAYS = [0, 1, 3, 7, 14, 30];   // wait after a streak of 0..5 right answers
+const TEKRAR_WAIT_DAYS = [0, 1, 3, 7, 14, 30, 45, 70, 100, 150, 220, 300, 365];   // wait after a streak of 0, 1, 2… right answers in a row
 const TEKRAR_RETRY_MS = 10*60*1000;              // wait after a miss
 const TEKRAR_AGAIN_AFTER = 3;                    // a missed word returns after this many other cards
 const tekrar = {dir:"mixed", mode:"en2tr", current:null, flipped:false, again:[], last:null};
@@ -3590,11 +3594,16 @@ try{
   const t = JSON.parse(localStorage.getItem(TEKRAR_KEY) || "{}");
   if(["mixed","en2tr","tr2en"].includes(t.dir)) tekrar.dir = t.dir;
 }catch(e){}
+// Uses the whole saved history (up to 25 answers), not just the 5 shown: the streak sets the wait,
+// and a word that has been missed a lot comes back sooner than its streak alone would say.
 function tekrarWaitMs(key){
-  const r = wordForm(key);
+  const r = (wordStats[key] && wordStats[key].r) || "";
   let streak = 0;
   for(let i=r.length-1; i>=0 && r[i]==="1"; i--) streak++;
-  return streak===0 ? TEKRAR_RETRY_MS : TEKRAR_WAIT_DAYS[streak]*864e5;
+  if(streak===0) return TEKRAR_RETRY_MS;
+  const accuracy = [...r].filter(c=>c==="1").length / r.length;
+  const days = TEKRAR_WAIT_DAYS[Math.min(streak, TEKRAR_WAIT_DAYS.length-1)] * (0.5 + 0.5*accuracy);
+  return Math.max(0.5, days) * 864e5;
 }
 function tekrarWords(){
   const now = Date.now();
