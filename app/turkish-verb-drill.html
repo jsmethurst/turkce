@@ -64,6 +64,15 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 }
 .tab.active{background:#fff;color:var(--tile-blue-deep);box-shadow:var(--shadow);}
 
+.construction{margin:0 0 16px;text-align:center;}
+.construction .tape{height:16px;border-radius:8px;background:repeating-linear-gradient(-45deg,#f6c500 0 14px,#26231f 14px 28px);}
+.construction .label{margin:10px 0 2px;font-weight:800;font-size:0.95rem;letter-spacing:0.14em;text-transform:uppercase;color:#26231f;}
+.construction .note{margin:0;font-size:0.82rem;color:var(--ink-soft);}
+.how-list{margin:0;padding-left:20px;display:grid;gap:8px;font-size:0.9rem;line-height:1.45;color:var(--ink-soft);}
+.how-list b{color:var(--ink);}
+.how-table{border-collapse:collapse;margin:6px 0 2px;font-size:0.85rem;}
+.how-table td,.how-table th{padding:3px 14px 3px 0;text-align:left;font-weight:400;color:var(--ink-soft);}
+.how-table th{font-weight:600;color:var(--ink);}
 .card{
   background:#fff;border:1px solid var(--line);border-radius:var(--radius);
   padding:26px 22px;box-shadow:var(--shadow);position:relative;overflow:hidden;
@@ -302,6 +311,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     <div class="tab" data-tab="vocab">Vocab</div>
     <div class="tab" data-tab="sozluk">Sözlük</div>
     <div class="tab" data-tab="tekrar" title="Experimental">Tekrar</div>
+    <div class="tab" data-tab="cases" title="Experimental">Cases</div>
   </div>
 
   <!-- ============ VERBS ============ -->
@@ -506,6 +516,11 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 
   <!-- ============ TEKRAR (experimental: spaced repetition) ============ -->
   <div id="tab-tekrar" style="display:none;">
+    <div class="construction">
+      <div class="tape" aria-hidden="true"></div>
+      <div class="label">Under construction</div>
+      <p class="note">Experimental: it may change, reset or break while it's being built.</p>
+    </div>
     <div class="card">
       <div class="prompt-header">
         <div class="prompt-tags"><span class="tag" id="tekrarTag"></span><span class="tag tag-score" id="tekrarForm" hidden></span></div>
@@ -530,14 +545,86 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     </div>
     <p class="hint" style="text-align:center;margin-top:14px;" id="tekrarStats"></p>
 
-    <div class="section-title">Tekrar <span class="hint" style="font-weight:400;">(experimental)</span></div>
+    <div class="section-title">How Tekrar works</div>
     <div class="settings-group">
-      <p class="hint" style="margin:0 0 12px;">Spaced repetition across every word you've answered at least once in Vocab or Tekrar. Words you get right come back less and less often (1, 3, 7, 14, then 30 days); a miss brings a word back within minutes. Nothing to set up: just keep going. Answers here count toward each word's form, like typed answers in Vocab.</p>
+      <ol class="how-list">
+        <li><b>Which words:</b> every word you've answered at least once by typing, in Vocab, in a test, or here. The Doğru / Yanlış flashcard buttons don't count, only typed or spoken answers do.</li>
+        <li><b>When a word comes back:</b> it depends on how many answers in a row you've got right at the end of the word's form (the ✓ ✗ boxes). The longer the streak, the longer the wait.
+          <table class="how-table">
+            <tr><th>Streak</th><th>Comes back after</th></tr>
+            <tr><td>Just missed</td><td>about 10 minutes</td></tr>
+            <tr><td>1 right in a row</td><td>1 day</td></tr>
+            <tr><td>2 in a row</td><td>3 days</td></tr>
+            <tr><td>3 in a row</td><td>7 days</td></tr>
+            <tr><td>4 in a row</td><td>14 days</td></tr>
+            <tr><td>5 in a row</td><td>30 days</td></tr>
+          </table>
+        </li>
+        <li><b>Order:</b> words that are most overdue for their wait come first, so you aren't shown words you know really well too often.</li>
+        <li><b>Misses:</b> a word you miss comes back after about 3 other cards, not a day later. If nothing else is due, it comes straight back.</li>
+        <li><b>Form:</b> answers here count toward each word's form, like typed answers in Vocab, so the colours on the Sözlük update too.</li>
+        <li><b>Nothing to set up:</b> it works out what's due from the answers you've already given, and saves nothing extra. When nothing is due it says "All caught up" and when the next word is due. The form keeps only the last 5 answers, so 30 days is the longest wait.</li>
+      </ol>
+    </div>
+
+    <div class="section-title">Settings</div>
+    <div class="settings-group">
       <h3>Direction</h3>
       <div class="chip-row" id="tekrarDirChips">
         <div class="chip on" data-tdir="mixed">Mixed</div>
         <div class="chip" data-tdir="en2tr">English → Turkish</div>
         <div class="chip" data-tdir="tr2en">Turkish → English</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CASES (experimental) ============ -->
+  <div id="tab-cases" style="display:none;">
+    <div class="construction">
+      <div class="tape" aria-hidden="true"></div>
+      <div class="label">Under construction</div>
+      <p class="note">Experimental: it may change, reset or break while it's being built.</p>
+    </div>
+    <div class="card">
+      <div class="prompt-header">
+        <div class="prompt-tags"><span class="tag" id="casesTag"></span><span class="tag" id="casesCase"></span></div>
+        <div class="card-top-actions">
+          <button class="icon-btn" id="casesSpeak" title="Hear it" style="visibility:hidden;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+          </button>
+        </div>
+      </div>
+      <div class="prompt-main" style="text-align:center;">
+        <div class="prompt-word" id="casesPrompt" style="font-size:1.5rem;line-height:1.3;"></div>
+        <div class="prompt-sub" id="casesSub" style="margin-top:8px;"></div>
+      </div>
+      <div class="answer-row" id="casesAnswerRow">
+        <input id="casesInput" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type the Turkish sentence…">
+        <button class="btn btn-primary" id="casesCheck">Check</button>
+      </div>
+      <div class="feedback" id="casesFeedback"></div>
+      <div class="bottom-actions">
+        <button class="btn btn-primary" id="casesNext" style="margin-left:auto;" hidden>Next →</button>
+      </div>
+    </div>
+    <p class="hint" style="text-align:center;margin-top:14px;" id="casesStats"></p>
+
+    <div class="section-title">How Cases works</div>
+    <div class="settings-group">
+      <ol class="how-list">
+        <li><b>Translate with the case:</b> you get an English sentence, with the verb and the case it needs shown above it. Type the whole sentence in Turkish.</li>
+        <li><b>What counts:</b> the exact sentence is Doğru. If your sentence differs but the word with the right case ending is in it, that counts as the ending right. Otherwise the correct sentence is shown with the ending in bold.</li>
+        <li><b>Sentences:</b> they come from the example sentences on the verbs, in random order, each one once before any repeats.</li>
+        <li>Nothing from this tab is saved yet. The score is for this visit only.</li>
+      </ol>
+    </div>
+
+    <div class="section-title">Settings</div>
+    <div class="settings-group">
+      <h3>Case</h3>
+      <div class="chip-row" id="casesFilterChips"></div>
+      <div class="chip-row" style="margin-top:8px;">
+        <div class="chip on" id="casesHintChip">Show the case name</div>
       </div>
     </div>
   </div>
@@ -2791,9 +2878,11 @@ document.querySelectorAll(".tab").forEach(t=>{
     document.getElementById("tab-vocab").style.display = t.dataset.tab==="vocab" ? "block":"none";
     document.getElementById("tab-sozluk").style.display = t.dataset.tab==="sozluk" ? "block":"none";
     document.getElementById("tab-tekrar").style.display = t.dataset.tab==="tekrar" ? "block":"none";
+    document.getElementById("tab-cases").style.display = t.dataset.tab==="cases" ? "block":"none";
     cancelAutoAdvance();
     if(t.dataset.tab==="vocab") nextVocabCard();
     if(t.dataset.tab==="tekrar") nextTekrarCard();
+    if(t.dataset.tab==="cases") nextCasesCard();
     if(t.dataset.tab==="sozluk"){ renderReferencePanel(); renderNonverbReferencePanel(); }
     voiceSync();
   };
@@ -3627,6 +3716,139 @@ document.addEventListener("keydown", e=>{
   if(tag==="INPUT" || tag==="TEXTAREA" || e.metaKey || e.ctrlKey || e.altKey) return;
   if(e.key==="Enter" && tekrar.current && tekrar.flipped){ e.preventDefault(); nextTekrarCard(); }
   else if((e.key==="p" || e.key==="P") && tekrar.current && (tekrar.flipped || tekrar.mode==="tr2en")){ e.preventDefault(); document.getElementById("tekrarSpeak").click(); }
+});
+
+// ---- Cases (experimental): translate an English sentence into Turkish with the right case ending ----
+const CASES_KEY = "fiil_cases_v1";
+const CASE_LABELS = ["akuzatif","datif","lokatif","ablatif","ile"];
+const cases = {filter:"all", hint:true, deck:[], current:null, flipped:false, right:0, total:0};
+try{
+  const t = JSON.parse(localStorage.getItem(CASES_KEY) || "{}");
+  if(t.filter==="all" || CASE_LABELS.includes(t.filter)) cases.filter = t.filter;
+  if(typeof t.hint==="boolean") cases.hint = t.hint;
+}catch(e){}
+function saveCasesSettings(){
+  try{ localStorage.setItem(CASES_KEY, JSON.stringify({filter:cases.filter, hint:cases.hint})); }catch(e){}
+}
+// Every verb example that marks a case with <b>…</b> (the plain "örnek" ones have no case to practise).
+function caseSentences(){
+  const out = [];
+  VERBS.forEach(v=>(CASE_INFO[v.inf]||[]).forEach(c=>{
+    if(!c.ex || c.ex.indexOf("<b>")===-1) return;
+    if(cases.filter!=="all" && c.c!==cases.filter) return;
+    out.push({inf:v.inf, c:c.c, en:c.en, ex:c.ex});
+  }));
+  return out;
+}
+function casePlain(html){ return html.replace(/<\/?b>/g,""); }
+function caseWords(text){
+  return normalizeTR(text.replace(/[,;:.!?"“”]/g," "), vocabState.lenientTyping).split(" ").filter(Boolean);
+}
+// The word carrying the case ending, e.g. "Okul<b>a</b>" → "okula".
+function caseMarkedWord(ex){
+  const m = ex.match(/(\S*)<b>[^<]*<\/b>(\S*)/);
+  if(!m) return "";
+  const w = casePlain(m[0]).replace(/[,;:.!?"“”]/g,"");
+  return normalizeTR(w, vocabState.lenientTyping);
+}
+function showCasesMessage(title, detail){
+  cases.current = null;
+  document.getElementById("casesPrompt").textContent = title;
+  document.getElementById("casesSub").textContent = detail || "";
+  document.getElementById("casesTag").textContent = "";
+  document.getElementById("casesCase").textContent = "";
+  document.getElementById("casesSpeak").style.visibility = "hidden";
+  document.getElementById("casesAnswerRow").style.display = "none";
+  document.getElementById("casesNext").hidden = true;
+  const fb = document.getElementById("casesFeedback");
+  fb.className = "feedback"; fb.innerHTML = "";
+}
+function updateCasesStats(){
+  document.getElementById("casesStats").textContent = cases.total ? `${cases.right} / ${cases.total} endings right this visit · ${cases.deck.length} left in this round` : `${cases.deck.length} sentences in this round`;
+}
+function nextCasesCard(){
+  if(!cases.deck.length){
+    const all = caseSentences();
+    if(!all.length){ showCasesMessage("No sentences for this case yet."); return; }
+    for(let i=all.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [all[i],all[j]]=[all[j],all[i]]; }
+    if(cases.current && all.length>1 && all[all.length-1].en===cases.current.en) all.unshift(all.pop());   // not the same one twice running
+    cases.deck = all;
+  }
+  const item = cases.deck.pop();
+  cases.current = item;
+  cases.flipped = false;
+  document.getElementById("casesPrompt").textContent = item.en;
+  document.getElementById("casesSub").textContent = "Translate into Turkish";
+  document.getElementById("casesTag").textContent = item.inf;
+  const cs = document.getElementById("casesCase");
+  cs.textContent = item.c;
+  cs.hidden = !cases.hint;
+  document.getElementById("casesSpeak").style.visibility = "hidden";
+  document.getElementById("casesAnswerRow").style.display = "";
+  document.getElementById("casesCheck").disabled = false;
+  document.getElementById("casesNext").hidden = true;
+  const fb = document.getElementById("casesFeedback");
+  fb.className = "feedback"; fb.innerHTML = "";
+  const input = document.getElementById("casesInput");
+  input.value = "";
+  if(window.matchMedia("(hover: hover)").matches) input.focus();
+  updateCasesStats();
+}
+function checkCases(){
+  const item = cases.current;
+  if(!item || cases.flipped) return;
+  const input = document.getElementById("casesInput");
+  const given = caseWords(input.value), target = caseWords(casePlain(item.ex));
+  const exact = given.length>0 && given.join(" ")===target.join(" ");
+  const marked = caseMarkedWord(item.ex);
+  const ending = exact || (marked && given.includes(marked));
+  cases.flipped = true;
+  cases.total++;
+  if(ending) cases.right++;
+  const fb = document.getElementById("casesFeedback");
+  fb.className = "feedback show " + (ending ? "good" : "bad");
+  const head = exact ? "Doğru! Nice work." : ending ? "Right ending! The sentence in the list reads:" : "Not quite. Correct sentence:";
+  fb.innerHTML = `${head}<span class="correct-answer">${item.ex}</span>`;
+  document.getElementById("casesSpeak").style.visibility = "visible";
+  document.getElementById("casesCheck").disabled = true;
+  document.getElementById("casesNext").hidden = false;
+  updateCasesStats();
+  input.blur();
+}
+function renderCasesFilter(){
+  const box = document.getElementById("casesFilterChips");
+  box.innerHTML = "";
+  ["all", ...CASE_LABELS].forEach(k=>{
+    const c = document.createElement("div");
+    c.className = "chip" + (cases.filter===k ? " on" : "");
+    c.textContent = k==="all" ? "All cases" : k;
+    c.onclick = ()=>{
+      cases.filter = k; cases.deck = []; cases.current = null;
+      saveCasesSettings(); renderCasesFilter(); nextCasesCard();
+    };
+    box.appendChild(c);
+  });
+}
+renderCasesFilter();
+document.getElementById("casesHintChip").classList.toggle("on", cases.hint);
+document.getElementById("casesHintChip").onclick = e=>{
+  cases.hint = !cases.hint;
+  e.target.classList.toggle("on", cases.hint);
+  document.getElementById("casesCase").hidden = !cases.hint;
+  saveCasesSettings();
+};
+document.getElementById("casesCheck").onclick = checkCases;
+document.getElementById("casesNext").onclick = nextCasesCard;
+document.getElementById("casesSpeak").onclick = ()=>{ if(cases.current) speak(casePlain(cases.current.ex), "tr-TR"); };
+document.getElementById("casesInput").addEventListener("keydown", e=>{
+  if(e.key==="Enter"){ e.preventDefault(); e.stopPropagation(); if(cases.flipped) nextCasesCard(); else checkCases(); }
+});
+document.addEventListener("keydown", e=>{
+  if(document.getElementById("tab-cases").style.display==="none") return;
+  const tag = document.activeElement.tagName;
+  if(tag==="INPUT" || tag==="TEXTAREA" || e.metaKey || e.ctrlKey || e.altKey) return;
+  if(e.key==="Enter" && cases.current && cases.flipped){ e.preventDefault(); nextCasesCard(); }
+  else if((e.key==="p" || e.key==="P") && cases.current && cases.flipped){ e.preventDefault(); document.getElementById("casesSpeak").click(); }
 });
 
 function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
