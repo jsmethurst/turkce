@@ -619,7 +619,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <ol class="how-list">
         <li><b>Translate with the case:</b> you get an English sentence, with the verb and the case it needs shown above it. Type the whole sentence in Turkish.</li>
         <li><b>What counts:</b> the exact sentence is Doğru. If your sentence differs but the word with the right case ending is in it, that counts as the ending right. Otherwise the correct sentence is shown with the ending in bold.</li>
-        <li><b>Sentences:</b> they come from the example sentences on the verbs, in random order, each one once before any repeats.</li>
+        <li><b>Sentences:</b> they come from the example sentences on the verbs (plus a few for the genitive, which verbs don't govern), in random order, each one once before any repeats.</li>
         <li>Nothing from this tab is saved yet. The score is for this visit only.</li>
       </ol>
     </div>
@@ -3732,7 +3732,22 @@ document.addEventListener("keydown", e=>{
 
 // ---- Cases (experimental): translate an English sentence into Turkish with the right case ending ----
 const CASES_KEY = "fiil_cases_v1";
-const CASE_LABELS = ["akuzatif","datif","lokatif","ablatif","ile"];
+const CASE_LABELS = ["akuzatif","datif","lokatif","ablatif","ile","genitif"];
+// Verbs don't govern the genitive, so these sentences live here rather than on the verb rows.
+const GENITIVE_SENTENCES = [
+  {inf:"okumak", en:"I'm reading the teacher's book.", ex:"Öğretmen<b>in</b> kitabını okuyorum."},
+  {inf:"temizlemek", en:"I'm cleaning my friend's room.", ex:"Arkadaşım<b>ın</b> odasını temizliyorum."},
+  {inf:"aramak", en:"I'm calling Ayşe's mother.", ex:"Ayşe'<b>nin</b> annesini arıyorum."},
+  {inf:"ziyaret etmek", en:"We're visiting the neighbor's house.", ex:"Komşu<b>nun</b> evini ziyaret ediyoruz."},
+  {inf:"kullanmak", en:"I'm driving my father's car.", ex:"Babam<b>ın</b> arabasını kullanıyorum."},
+  {inf:"izlemek", en:"She's watching the children's film.", ex:"Çocuklar<b>ın</b> filmini izliyor."},
+  {inf:"kapatmak", en:"He's closing the shop's door.", ex:"Dükkân<b>ın</b> kapısını kapatıyor."},
+  {inf:"yıkamak", en:"I'm washing the car's windows.", ex:"Araba<b>nın</b> camlarını yıkıyorum."},
+  {inf:"dinlemek", en:"I'm listening to my sister's voice.", ex:"Kız kardeşim<b>in</b> sesini dinliyorum."},
+  {inf:"açmak", en:"We're opening the school's door.", ex:"Okul<b>un</b> kapısını açıyoruz."},
+  {inf:"yazmak", en:"I'm writing the teacher's name.", ex:"Öğretmen<b>in</b> adını yazıyorum."},
+  {inf:"boyamak", en:"They're painting the house's walls.", ex:"Ev<b>in</b> duvarlarını boyuyorlar."},
+].map(x=>({...x, c:"genitif"}));
 const cases = {filter:"all", hint:true, deck:[], current:null, flipped:false, right:0, total:0};
 try{
   const t = JSON.parse(localStorage.getItem(CASES_KEY) || "{}");
@@ -3750,6 +3765,7 @@ function caseSentences(){
     if(cases.filter!=="all" && c.c!==cases.filter) return;
     out.push({inf:v.inf, c:c.c, en:c.en, ex:c.ex});
   }));
+  GENITIVE_SENTENCES.forEach(g=>{ if(cases.filter==="all" || cases.filter==="genitif") out.push(g); });
   return out;
 }
 function casePlain(html){ return html.replace(/<\/?b>/g,""); }
