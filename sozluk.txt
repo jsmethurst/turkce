@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-234 verbs · 799 non-verbs · 40 topics
+234 verbs · 800 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1108,7 +1108,7 @@ bütün gün                 all day
 buhar                     steam
 ücretsiz                  free
 
-DERSTE 176-197
+DERSTE 176-198
 --------------
 bedava                    free (informal / possibly rude)
 uyku                      sleep
@@ -1132,6 +1132,7 @@ elektrikçi                electrician
 çoğunlukla                mostly / for the most part
 hala                      aunt
 hâlâ                      still (continuing)
+pist                      runway
 
 SIFATLAR 1-25
 -------------
@@ -1447,7 +1448,7 @@ mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, z
 
 Transportation & Travel
 -----------------------
-araba, uçak, dolmuş, vapur, motosiklet, trafik, yolculuk, tur, sahil, havaalanı, havalimanı, bilet almak, seyahat etmek, sürmek, binmek, indirmek, arabada, tatil planı, gezmek, keşfetmek, ziyaret etmek, bavul hazırlamak, harita, geri dönmek, inmek, yat, uzak, gezgin, köy
+araba, uçak, dolmuş, vapur, motosiklet, trafik, yolculuk, tur, sahil, havaalanı, havalimanı, bilet almak, seyahat etmek, sürmek, binmek, indirmek, arabada, tatil planı, gezmek, keşfetmek, ziyaret etmek, bavul hazırlamak, harita, geri dönmek, inmek, yat, uzak, gezgin, köy, pist
 
 Electronics & Media
 -------------------
