@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-233 verbs · 799 non-verbs · 40 topics
+234 verbs · 799 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -431,7 +431,7 @@ geri dönmek               to come back / to go back
 keşfetmek                 to discover / to explore
     akuzatif: Şehri keşfediyorum.  (I'm exploring the city.)
 
-DERSTE 51-58
+DERSTE 51-59
 ------------
 sağlıklı olmak            to be healthy
     örnek: Sağlıklı olmak istiyorum.  (I want to be healthy.)
@@ -449,6 +449,8 @@ uğurlamak                 to see off
     akuzatif: Arkadaşımı havaalanında uğurluyorum.  (I'm seeing my friend off at the airport.)
 uzanmak                   to stretch out
     örnek: Çocuklar çimenlerde uzanıyor.  (The children are stretching out on the grass.)
+hapşırmak                 to sneeze
+    örnek: Çocuk çok hapşırıyor.  (The child is sneezing a lot.)
 
 BIBLE 1-25
 ----------
@@ -1509,7 +1511,7 @@ fırçalamak, uyanmak, kalkmak, yıkamak, diş fırçalamak, taramak, kurulanmak
 
 Health & Body
 -------------
-hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş olsun, beyin, kan, beden, sağlıklı olmak, spor yapmak, yorulmak, doğmak, büyümek, ölmek, ilaç, yaralı, sağlıklı, sağlıksız, yaşlanmak, alın, karın, burun, ağız
+hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş olsun, beyin, kan, beden, sağlıklı olmak, spor yapmak, yorulmak, doğmak, büyümek, ölmek, ilaç, yaralı, sağlıklı, sağlıksız, yaşlanmak, alın, karın, burun, ağız, hapşırmak
 
 Talking & Communicating
 -----------------------
