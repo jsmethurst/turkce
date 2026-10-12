@@ -447,12 +447,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 
     <div class="section-title">Settings</div>
     <div class="settings-group">
-      <h3>Direction</h3>
-      <div class="chip-row" id="vocabModeChips">
-        <div class="chip on" data-vmode="en2tr">English → Turkish</div>
-        <div class="chip" data-vmode="tr2en">Turkish → English</div>
-      </div>
-      <h3 style="margin-top:14px;">Mode</h3>
+      <h3>Mode</h3>
       <div class="chip-row" id="vocabAnswerModeChips">
         <div class="chip" id="vocabTypingModeChip" data-typing="true">Typing</div>
         <div class="chip" id="vocabFlashcardChip" data-typing="false">Flashcards</div>
@@ -2897,7 +2892,7 @@ const vocabState = {
   lastCheck: false,
 };
 function applyVocabSettings(S){
-  if(S.vocabMode) vocabState.mode = S.vocabMode;
+  vocabState.mode = "en2tr";   // Vocab is English → Turkish only; an older saved Turkish → English choice is ignored
   vocabState.masterMode = S.vocabMasterMode==="weak" ? "weak" : "both"; // verbs-only / non-verbs-only choices were removed
   vocabState.weakSet = vocabState.masterMode==="weak" && Array.isArray(S.vocabWeakSet) ? new Set(S.vocabWeakSet) : null;
   if(typeof S.vocabUnknownOnly==="boolean") vocabState.unknownOnly = S.vocabUnknownOnly;
@@ -2909,9 +2904,6 @@ function applyVocabSettings(S){
 }
 if(SAVED_SETTINGS) applyVocabSettings(SAVED_SETTINGS);
 function syncVocabSettingChips(){
-  document.querySelectorAll(".chip[data-vmode]").forEach(c=>{
-    c.classList.toggle("on", c.dataset.vmode===vocabState.mode);
-  });
   document.querySelectorAll(".chip[data-master]").forEach(c=>{
     c.classList.toggle("on", c.dataset.master===vocabState.masterMode);
   });
@@ -3493,15 +3485,6 @@ function advanceTypingTest(){
   nextVocabCard();
 }
 document.getElementById("vocabTestNextBtn").onclick = ()=>{ if(vocabState.test) advanceTypingTest(); else nextVocabCard(); };
-document.querySelectorAll("#vocabModeChips .chip").forEach(c=>{
-  c.onclick = ()=>{
-    document.querySelectorAll("#vocabModeChips .chip").forEach(x=>x.classList.remove("on"));
-    c.classList.add("on");
-    vocabState.mode = c.dataset.vmode;
-    refreshVocabCard();
-    saveSettings();
-  };
-});
 document.querySelectorAll("#vocabMasterChips .chip").forEach(c=>{
   c.onclick = ()=>{
     document.querySelectorAll("#vocabMasterChips .chip").forEach(x=>x.classList.remove("on"));
