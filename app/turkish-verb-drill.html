@@ -556,10 +556,10 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
             <tr><th>Streak</th><th>Comes back after</th></tr>
             <tr><td>Just missed</td><td>about 10 minutes</td></tr>
             <tr><td>1 right in a row</td><td>1 day</td></tr>
-            <tr><td>2 in a row</td><td>3 days</td></tr>
-            <tr><td>3 in a row</td><td>7 days</td></tr>
-            <tr><td>4 in a row</td><td>14 days</td></tr>
-            <tr><td>5 or more in a row</td><td>30 days (the longest wait)</td></tr>
+            <tr><td>2 in a row</td><td>2 days</td></tr>
+            <tr><td>3 in a row</td><td>3 days</td></tr>
+            <tr><td>… and so on</td><td>one more day per right answer</td></tr>
+            <tr><td>30 or more in a row</td><td>30 days (the longest wait)</td></tr>
           </table>
           A word you've missed a lot comes back sooner: the wait is shortened (by up to half) the lower your share of right answers is across its history.
         </li>
@@ -3585,7 +3585,7 @@ document.addEventListener("keydown", e=>{
 // No extra data is saved: when a word is due comes from its last answer's time (wordStats.at) and
 // how many right answers it has in a row at the end of its form (a miss resets the streak).
 const TEKRAR_KEY = "fiil_tekrar_v1";
-const TEKRAR_WAIT_DAYS = [0, 1, 3, 7, 14, 30];   // wait after a streak of 0, 1, 2… right answers in a row; a month is the longest
+const TEKRAR_MAX_DAYS = 30;   // one day of waiting per right answer in a row, up to a month
 const TEKRAR_RETRY_MS = 10*60*1000;              // wait after a miss
 const TEKRAR_AGAIN_AFTER = 3;                    // a missed word returns after this many other cards
 const tekrar = {dir:"mixed", mode:"en2tr", current:null, flipped:false, again:[], last:null};
@@ -3601,7 +3601,7 @@ function tekrarWaitMs(key){
   for(let i=r.length-1; i>=0 && r[i]==="1"; i--) streak++;
   if(streak===0) return TEKRAR_RETRY_MS;
   const accuracy = [...r].filter(c=>c==="1").length / r.length;
-  const days = TEKRAR_WAIT_DAYS[Math.min(streak, TEKRAR_WAIT_DAYS.length-1)] * (0.5 + 0.5*accuracy);
+  const days = Math.min(streak, TEKRAR_MAX_DAYS) * (0.5 + 0.5*accuracy);
   return Math.max(0.5, days) * 864e5;
 }
 function tekrarWords(){
