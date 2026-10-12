@@ -72,6 +72,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .construction .note{margin:0;font-size:0.82rem;color:var(--ink-soft);}
 .how-list{margin:0;padding-left:20px;display:grid;gap:8px;font-size:0.9rem;line-height:1.45;color:var(--ink-soft);}
 .how-list b{color:var(--ink);}
+.how-sub{margin:6px 0;padding-left:18px;display:grid;gap:4px;}
 .how-table{border-collapse:collapse;margin:6px 0 2px;font-size:0.85rem;}
 .how-table td,.how-table th{padding:3px 14px 3px 0;text-align:left;font-weight:400;color:var(--ink-soft);}
 .how-table th{font-weight:600;color:var(--ink);}
@@ -551,22 +552,27 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     <div class="settings-group">
       <ol class="how-list">
         <li><b>Which words:</b> every word you've answered at least once by typing, in Vocab, in a test, or here. The Doğru / Yanlış flashcard buttons don't count, only typed or spoken answers do.</li>
-        <li><b>When a word comes back:</b> it depends on how many answers in a row you've got right at the end of the word's history. The longer the streak, the longer the wait.
+        <li><b>When a word comes back:</b> its wait is worked out from its last 50 answers, replayed from oldest to newest:
+          <ul class="how-sub">
+            <li>every right answer adds a day to the wait;</li>
+            <li>every miss halves the days earned so far. It doesn't wipe them, so one slip after a long run costs little, while a long run of misses earns nothing;</li>
+            <li>the result is then scaled by how often you've got the word right across those 50: nearly always right keeps nearly all of it, mostly wrong keeps about a third;</li>
+            <li>the longest wait is 30 days, and a word with nothing earned (for example one you just missed on its first try) comes back in about 10 minutes.</li>
+          </ul>
+          Some examples:
           <table class="how-table">
-            <tr><th>Streak</th><th>Comes back after</th></tr>
-            <tr><td>Just missed</td><td>about 10 minutes</td></tr>
-            <tr><td>1 right in a row</td><td>1 day</td></tr>
-            <tr><td>2 in a row</td><td>2 days</td></tr>
-            <tr><td>3 in a row</td><td>3 days</td></tr>
-            <tr><td>… and so on</td><td>one more day per right answer</td></tr>
-            <tr><td>30 or more in a row</td><td>30 days (the longest wait)</td></tr>
+            <tr><th>History</th><th>Comes back after</th></tr>
+            <tr><td>New word, 3 right in a row</td><td>3 days</td></tr>
+            <tr><td>30 or more right in a row</td><td>30 days</td></tr>
+            <tr><td>48 right, then 2 misses</td><td>about 12 days</td></tr>
+            <tr><td>48 right, then 1 miss</td><td>about 24 days</td></tr>
+            <tr><td>45 misses, then 5 right</td><td>under 2 days</td></tr>
           </table>
-          A word you've missed a lot comes back sooner: the wait is shortened (by up to half) the lower your share of right answers is across its history.
         </li>
         <li><b>Order:</b> words that are most overdue for their wait come first, so you aren't shown words you know really well too often.</li>
         <li><b>Misses:</b> a word you miss comes back after about 3 other cards, not a day later. If nothing else is due, it comes straight back.</li>
         <li><b>Form:</b> answers here count toward each word's form, like typed answers in Vocab, so the colours on the Sözlük update too.</li>
-        <li><b>History:</b> each word remembers its last 25 answers. You only see the last 5 in the form boxes; the rest are used just to schedule it. Words answered before this was added start with the few answers they already had.</li>
+        <li><b>History:</b> each word remembers its last 50 answers. You only see the last 5 in the form boxes; the rest are used just to schedule it. Words answered before this was added start with the few answers they already had, and build up from there.</li>
         <li><b>Nothing to set up:</b> it works out what's due from your answers. When nothing is due it says "All caught up" and when the next word is due.</li>
       </ol>
     </div>
@@ -2997,9 +3003,9 @@ function onRemoteProgress(snap){
 }
 function vocabKnownKey(item){ return `${item.kind}:${item.tr}`; }
 
-// ---- Per-word answer history: the last 25 results are kept, the last 5 are shown ("1" right, "0" wrong, newest last) and when last seen ----
+// ---- Per-word answer history: the last 50 results are kept, the last 5 are shown ("1" right, "0" wrong, newest last) and when last seen ----
 var FORM_LENGTH = 5;      // how many results are shown as the form guide
-var HISTORY_LENGTH = 25;  // how many are remembered (only Tekrar uses the older ones)
+var HISTORY_LENGTH = 50;  // how many are remembered (only Tekrar uses the older ones)
 const WORD_STATS_KEY = "fiil_word_stats_v1";
 var wordStats = {};
 try{ wordStats = JSON.parse(localStorage.getItem(WORD_STATS_KEY) || "{}") || {}; }catch(e){ wordStats = {}; }
@@ -3585,7 +3591,7 @@ document.addEventListener("keydown", e=>{
 // No extra data is saved: when a word is due comes from its last answer's time (wordStats.at) and
 // how many right answers it has in a row at the end of its form (a miss resets the streak).
 const TEKRAR_KEY = "fiil_tekrar_v1";
-const TEKRAR_MAX_DAYS = 30;   // one day of waiting per right answer in a row, up to a month
+const TEKRAR_MAX_DAYS = 30;   // the longest wait: a month
 const TEKRAR_RETRY_MS = 10*60*1000;              // wait after a miss
 const TEKRAR_AGAIN_AFTER = 3;                    // a missed word returns after this many other cards
 const tekrar = {dir:"mixed", mode:"en2tr", current:null, flipped:false, again:[], last:null};
@@ -3593,16 +3599,20 @@ try{
   const t = JSON.parse(localStorage.getItem(TEKRAR_KEY) || "{}");
   if(["mixed","en2tr","tr2en"].includes(t.dir)) tekrar.dir = t.dir;
 }catch(e){}
-// Uses the whole saved history (up to 25 answers), not just the 5 shown: the streak sets the wait,
-// and a word that has been missed a lot comes back sooner than its streak alone would say.
+// The wait is worked out from the whole saved history (up to 50 answers), not just the 5 shown.
+// Replay it oldest to newest: each right answer earns a day, each miss halves the days earned so far
+// (a slip after a long run costs little; a long run of misses earns nothing). Then scale by the share
+// of right answers over the history, so a word you've mostly missed still comes back often.
 function tekrarWaitMs(key){
   const r = (wordStats[key] && wordStats[key].r) || "";
-  let streak = 0;
-  for(let i=r.length-1; i>=0 && r[i]==="1"; i--) streak++;
-  if(streak===0) return TEKRAR_RETRY_MS;
-  const accuracy = [...r].filter(c=>c==="1").length / r.length;
-  const days = Math.min(streak, TEKRAR_MAX_DAYS) * (0.5 + 0.5*accuracy);
-  return Math.max(0.5, days) * 864e5;
+  if(!r) return TEKRAR_RETRY_MS;
+  let days = 0, right = 0;
+  for(const c of r){
+    if(c==="1"){ days += 1; right++; } else days /= 2;
+  }
+  const accuracy = right / r.length;
+  days *= 0.25 + 0.75*accuracy;
+  return Math.max(TEKRAR_RETRY_MS, Math.min(days, TEKRAR_MAX_DAYS) * 864e5);
 }
 function tekrarWords(){
   const now = Date.now();
