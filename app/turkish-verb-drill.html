@@ -3558,7 +3558,7 @@ document.addEventListener("keydown", e=>{
 // how many right answers it has in a row at the end of its form (a miss resets the streak).
 const TEKRAR_MAX_DAYS = 30;   // the longest wait: a month
 const TEKRAR_RETRY_MS = 10*60*1000;              // wait after a miss
-const TEKRAR_AGAIN_AFTER = 3;                    // a missed word returns after this many other cards
+const TEKRAR_AGAIN_MIN = 3, TEKRAR_AGAIN_MAX = 9;  // a missed word returns after a random number of other cards in this range
 const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null};
 // The wait is worked out from the whole saved history (up to 25 answers), not just the 5 shown.
 // Replay it oldest to newest: each right answer earns a day, each miss halves the days earned so far
@@ -3664,7 +3664,7 @@ function checkTekrar(){
   tekrar.flipped = true;
   tekrar.last = key;
   tekrar.again.forEach(a=>a.wait--);
-  if(!correct) tekrar.again.push({key, wait:TEKRAR_AGAIN_AFTER});
+  if(!correct) tekrar.again.push({key, wait:TEKRAR_AGAIN_MIN + Math.floor(Math.random()*(TEKRAR_AGAIN_MAX-TEKRAR_AGAIN_MIN+1))});
   const answerText = tekrar.mode==="tr2en" ? detail.gloss : detail.inf;
   const fb = document.getElementById("tekrarFeedback");
   fb.className = "feedback show " + (correct ? "good" : "bad");
