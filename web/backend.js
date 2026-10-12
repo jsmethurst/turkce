@@ -611,7 +611,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
   var lastCheck = 0, updateShown = false;
   async function checkForUpdate(){
     var meta = document.querySelector('meta[name="app-version"]');
-    if(!meta || updateShown || Date.now() - lastCheck < 15 * 1000) return;
+    if(!meta || updateShown || Date.now() - lastCheck < 10 * 1000) return;
     lastCheck = Date.now();
     try{
       var r = await fetch("version.json", {cache: "no-store"});
@@ -633,7 +633,10 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
   }
   document.addEventListener("visibilitychange", checkForUpdate);
   window.addEventListener("focus", checkForUpdate);
-  setInterval(checkForUpdate, 60 * 1000);
+  window.addEventListener("online", checkForUpdate);
+  setInterval(checkForUpdate, 20 * 1000);
+  // Also check as soon as the page opens: a copy the browser kept can already be out of date.
+  checkForUpdate();
 
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", setup);
   else setup();
