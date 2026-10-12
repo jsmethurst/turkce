@@ -663,7 +663,7 @@ rica ederim               you're welcome
 teşekkürler               thanks
 lütfen                    please
 afiyet olsun              enjoy your meal
-sağ ol                    thanks / be well
+sağol                     thanks / be well
 bir şey değil             it's nothing
 soyadı                    surname (form label)
 cadde                     avenue
@@ -1428,7 +1428,7 @@ Time & Schedule
 
 Politeness & Fillers
 --------------------
-buyurun, geçmiş olsun, affedersiniz, rica ederim, teşekkürler, lütfen, afiyet olsun, sağ ol, bir şey değil, hoş geldiniz, hoş bulduk, güle güle, iyi günler, maalesef, acaba, görüşürüz, ne haber, teşekkür ederim, sıhhatler olsun
+buyurun, geçmiş olsun, affedersiniz, rica ederim, teşekkürler, lütfen, afiyet olsun, sağol, bir şey değil, hoş geldiniz, hoş bulduk, güle güle, iyi günler, maalesef, acaba, görüşürüz, ne haber, teşekkür ederim, sıhhatler olsun
 
 People & Professions
 --------------------
