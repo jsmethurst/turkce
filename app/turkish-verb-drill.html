@@ -556,9 +556,8 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     <div class="section-title">Settings</div>
     <div class="settings-group">
       <div class="chip-row">
-        <div class="chip" id="tekrarEarlyChip">Keep going when nothing is due (take the next words early)</div>
+        <div class="chip" id="tekrarEarlyChip">Practice ahead when nothing is due</div>
       </div>
-      <p class="hint" style="margin:8px 0 0;">When it's on and no word is due, Tekrar keeps giving you the words that are due soonest, so you can carry on practising. Answers still count as normal.</p>
     </div>
 
     <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
@@ -3713,7 +3712,7 @@ function nextTekrarCard(){
   const input = document.getElementById("tekrarInput");
   input.value = "";
   if(window.matchMedia("(hover: hover)").matches) input.focus();
-  stats.textContent = `${dueCount} due now · ${words.length} words in rotation` + (early ? " · practising ahead" : "");
+  stats.textContent = `${dueCount} due now · ${words.length} words in rotation` + (early ? " · practicing ahead" : "");
 }
 function checkTekrar(){
   if(!tekrar.current || tekrar.flipped) return;
