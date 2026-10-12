@@ -552,16 +552,6 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     <div class="settings-group">
       <p class="hint" style="margin:0;">Tekrar uses spaced repetition to put the words you're weakest on in front of you most often. It covers every word you've answered by typing at least once. Each word's wait before it returns comes from its last 50 answers: a long run of right answers pushes it further away (up to 30 days), a miss pulls it back closer, and words you often get wrong keep coming back. Nothing to set up. Your answers here count toward each word's form, like typed answers in Vocab.</p>
     </div>
-
-    <div class="section-title">Settings</div>
-    <div class="settings-group">
-      <h3>Direction</h3>
-      <div class="chip-row" id="tekrarDirChips">
-        <div class="chip on" data-tdir="mixed">Mixed</div>
-        <div class="chip" data-tdir="en2tr">English → Turkish</div>
-        <div class="chip" data-tdir="tr2en">Turkish → English</div>
-      </div>
-    </div>
   </div>
 
   <!-- ============ CASES (experimental) ============ -->
@@ -3566,15 +3556,10 @@ document.addEventListener("keydown", e=>{
 // ---- Tekrar (experimental): spaced repetition over every word answered at least once ----
 // No extra data is saved: when a word is due comes from its last answer's time (wordStats.at) and
 // how many right answers it has in a row at the end of its form (a miss resets the streak).
-const TEKRAR_KEY = "fiil_tekrar_v1";
 const TEKRAR_MAX_DAYS = 30;   // the longest wait: a month
 const TEKRAR_RETRY_MS = 10*60*1000;              // wait after a miss
 const TEKRAR_AGAIN_AFTER = 3;                    // a missed word returns after this many other cards
-const tekrar = {dir:"mixed", mode:"en2tr", current:null, flipped:false, again:[], last:null};
-try{
-  const t = JSON.parse(localStorage.getItem(TEKRAR_KEY) || "{}");
-  if(["mixed","en2tr","tr2en"].includes(t.dir)) tekrar.dir = t.dir;
-}catch(e){}
+const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null};
 // The wait is worked out from the whole saved history (up to 50 answers), not just the 5 shown.
 // Replay it oldest to newest: each right answer earns a day, each miss halves the days earned so far
 // (a slip after a long run costs little; a long run of misses earns nothing). Then scale by the share
@@ -3609,8 +3594,6 @@ function tekrarWaitText(ms){
   const h = Math.round(m/60);
   return h<48 ? `${h} h` : `${Math.round(h/24)} days`;
 }
-function saveTekrarSettings(){
-  try{ localStorage.setItem(TEKRAR_KEY, JSON.stringify({dir:tekrar.dir})); }catch(e){}
 }
 function showTekrarMessage(title, detail){
   tekrar.current = null;
@@ -3649,7 +3632,6 @@ function nextTekrarCard(){
   const item = {...pickWord.item};   // fresh object, so a repeat is recorded again
   tekrar.current = item;
   tekrar.flipped = false;
-  tekrar.mode = tekrar.dir==="mixed" ? (Math.random()<0.5 ? "en2tr" : "tr2en") : tekrar.dir;
   const detail = vocabItemDetail(item);
   document.getElementById("tekrarPrompt").textContent = tekrar.mode==="tr2en" ? detail.inf : detail.gloss;
   document.getElementById("tekrarSub").textContent = "";
@@ -3697,15 +3679,6 @@ document.getElementById("tekrarNext").onclick = nextTekrarCard;
 document.getElementById("tekrarSpeak").onclick = ()=>{ if(tekrar.current) speak(tekrar.current.tr, "tr-TR"); };
 document.getElementById("tekrarInput").addEventListener("keydown", e=>{
   if(e.key==="Enter"){ e.preventDefault(); e.stopPropagation(); if(tekrar.flipped) nextTekrarCard(); else checkTekrar(); }
-});
-document.querySelectorAll("#tekrarDirChips .chip").forEach(c=>{
-  c.classList.toggle("on", c.dataset.tdir===tekrar.dir);
-  c.onclick = ()=>{
-    tekrar.dir = c.dataset.tdir;
-    document.querySelectorAll("#tekrarDirChips .chip").forEach(x=>x.classList.toggle("on", x===c));
-    saveTekrarSettings();
-    nextTekrarCard();
-  };
 });
 document.addEventListener("keydown", e=>{
   if(document.getElementById("tab-tekrar").style.display==="none") return;
