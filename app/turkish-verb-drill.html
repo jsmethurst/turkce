@@ -3594,7 +3594,6 @@ function tekrarWaitText(ms){
   const h = Math.round(m/60);
   return h<48 ? `${h} h` : `${Math.round(h/24)} days`;
 }
-}
 function showTekrarMessage(title, detail){
   tekrar.current = null;
   document.getElementById("tekrarPrompt").textContent = title;
