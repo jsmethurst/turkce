@@ -3575,7 +3575,7 @@ const TEKRAR_MAX_DAYS = 30;   // the longest wait: a month
 const TEKRAR_RETRY_MS = 10*60*1000;              // wait after a miss
 const TEKRAR_AGAIN_MIN = 3, TEKRAR_AGAIN_MAX = 9;  // a missed word returns after a random number of other cards in this range
 const TEKRAR_KEY = "fiil_tekrar_v1";
-const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null, early:false, showUpcoming:true};
+const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null, early:false, showUpcoming:true, currentEarly:false};
 try{
   const t = JSON.parse(localStorage.getItem(TEKRAR_KEY) || "{}");
   if(typeof t.early==="boolean") tekrar.early = t.early;
@@ -3682,9 +3682,11 @@ function nextTekrarCard(){
     pickWord = ahead[0] || words[0];
     early = true;
   }
+  tekrar.currentEarly = early;
   const dueCount = words.filter(w=>w.dueAt<=now).length;
   const stats = document.getElementById("tekrarStats");
   if(!pickWord){
+    tekrar.currentEarly = false;
     const next = words.filter(w=>w.dueAt>now).sort((a,b)=>a.dueAt-b.dueAt)[0];
     if(!words.length) showTekrarMessage("Nothing to review yet", "Answer a few words in Vocab first (typing or a test). Every word you've answered at least once shows up here.");
     else showTekrarMessage("All caught up!", next ? `Next word is due in ${tekrarWaitText(next.dueAt-now)}.` : "");
@@ -3744,7 +3746,11 @@ syncTekrarControls();
 document.getElementById("tekrarEarlyChip").onclick = ()=>{
   tekrar.early = !tekrar.early;
   syncTekrarControls(); saveTekrarSettings();
-  if(!tekrar.current) nextTekrarCard();   // e.g. from the "All caught up" message
+  if(!tekrar.early && tekrar.currentEarly){
+    // Turned off while practicing ahead: drop that word and go back to what is actually due.
+    tekrar.again = [];
+    nextTekrarCard();
+  } else if(!tekrar.current) nextTekrarCard();   // e.g. from the "All caught up" message
 };
 document.getElementById("tekrarUpcomingToggle").onclick = ()=>{
   tekrar.showUpcoming = !tekrar.showUpcoming;
