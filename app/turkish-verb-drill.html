@@ -62,8 +62,6 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
   flex:1;text-align:center;padding:9px 6px;border-radius:9px;font-size:0.86rem;font-weight:600;
   cursor:pointer;color:var(--ink-soft);transition:all .15s ease;user-select:none;
 }
-.tab.wip{position:relative;overflow:hidden;isolation:isolate;}
-.tab.wip::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:repeating-linear-gradient(-45deg,rgba(246,197,0,.6) 0 8px,rgba(38,35,31,.07) 8px 16px);}
 .tab.active{background:#fff;color:var(--tile-blue-deep);box-shadow:var(--shadow);}
 
 .construction{margin:0 0 16px;text-align:center;}
@@ -313,8 +311,8 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     <div class="tab active" data-tab="verbs">Forms</div>
     <div class="tab" data-tab="vocab">Vocab</div>
     <div class="tab" data-tab="sozluk">Sözlük</div>
-    <div class="tab wip" data-tab="tekrar" title="Under construction">Tekrar</div>
-    <div class="tab wip" data-tab="cases" title="Under construction">Cases</div>
+    <div class="tab" data-tab="tekrar" title="Under construction">Tekrar</div>
+    <div class="tab" data-tab="cases" title="Under construction">Cases</div>
   </div>
 
   <!-- ============ VERBS ============ -->
