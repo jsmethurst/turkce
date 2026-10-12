@@ -522,11 +522,6 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 
   <!-- ============ TEKRAR (experimental: spaced repetition) ============ -->
   <div id="tab-tekrar" style="display:none;">
-    <div class="construction">
-      <div class="tape" aria-hidden="true"></div>
-      <div class="label">Under construction</div>
-      <p class="note">Experimental: it may change, reset or break while it's being built.</p>
-    </div>
     <div class="card">
       <div class="prompt-header">
         <div class="prompt-tags"><span class="tag" id="tekrarTag"></span><span class="tag tag-score" id="tekrarForm" hidden></span></div>
@@ -558,20 +553,20 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <p class="hint" style="margin:0;">Each word's frequency is derived from your last 25 answers: a long run of right answers pushes it further away (up to 30 days), a miss pulls it back closer, and words you often get wrong keep coming back.</p>
     </div>
 
-    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-      <span>Coming up</span>
-      <button class="btn btn-ghost" id="tekrarUpcomingToggle" type="button" style="padding:5px 12px;font-size:0.8rem;">Hide</button>
-    </div>
-    <div class="settings-group" id="tekrarUpcomingBox">
-      <div class="upnext" id="tekrarUpcoming"></div>
-    </div>
-
     <div class="section-title">Settings</div>
     <div class="settings-group">
       <div class="chip-row">
         <div class="chip" id="tekrarEarlyChip">Keep going when nothing is due (take the next words early)</div>
       </div>
       <p class="hint" style="margin:8px 0 0;">When it's on and no word is due, Tekrar keeps giving you the words that are due soonest, so you can carry on practising. Answers still count as normal.</p>
+    </div>
+
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <span>Coming up</span>
+      <button class="btn btn-ghost" id="tekrarUpcomingToggle" type="button" style="padding:5px 12px;font-size:0.8rem;">Hide</button>
+    </div>
+    <div class="settings-group" id="tekrarUpcomingBox">
+      <div class="upnext" id="tekrarUpcoming"></div>
     </div>
   </div>
 
