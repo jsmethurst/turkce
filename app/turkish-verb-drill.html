@@ -3704,7 +3704,7 @@ const GENITIVE_SENTENCES = [
   {inf:"yazmak", en:"I'm writing the teacher's name.", ex:"Öğretmen<b>in</b> adını yazıyorum."},
   {inf:"boyamak", en:"They're painting the house's walls.", ex:"Ev<b>in</b> duvarlarını boyuyorlar."},
 ].map(x=>({...x, c:"genitif"}));
-const cases = {filter:"all", hint:true, deck:[], current:null, flipped:false, right:0, total:0};
+const cases = {filter:"all", hint:false, deck:[], current:null, flipped:false, right:0, total:0};
 try{
   const t = JSON.parse(localStorage.getItem(CASES_KEY) || "{}");
   if(t.filter==="all" || CASE_LABELS.includes(t.filter)) cases.filter = t.filter;
