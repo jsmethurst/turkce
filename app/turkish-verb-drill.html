@@ -3393,13 +3393,15 @@ function updateVocabProgress(){
 
 document.getElementById("vocabFront").onclick = flipVocabCard;
 document.getElementById("vocabBack").onclick = flipVocabCard;
-// Flashcard answers (Doğru / Yanlış) are for flipping through a set quickly: they move the
-// progress filter but don't count toward a word's form (only typed or spoken answers do).
+// Flashcard answers (Doğru / Yanlış) move the progress filter and count toward a word's form,
+// the same as typed or spoken answers.
 document.getElementById("vocabKnowBtn").onclick = ()=>{
+  if(vocabState.current) recordWordResult(vocabState.current, true);
   if(vocabState.current && updatesProgressFilter()) setKnown(vocabKnownKey(vocabState.current), true);
   nextVocabCard();
 };
 document.getElementById("vocabDontKnowBtn").onclick = ()=>{
+  if(vocabState.current) recordWordResult(vocabState.current, false);
   if(vocabState.current && updatesProgressFilter()) setKnown(vocabKnownKey(vocabState.current), false);
   nextVocabCard();
 };
