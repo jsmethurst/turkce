@@ -83,6 +83,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .modal-group{font-size:0.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin:8px 4px 4px;}
 .modal-row{display:flex;align-items:center;justify-content:space-between;gap:6px;width:100%;text-align:left;font:inherit;font-size:0.83rem;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:7px 9px;margin-bottom:5px;cursor:pointer;}
 .modal-row:hover{border-color:var(--tile-turquoise);}
+.modal-row.chip-due{border-color:var(--tile-red);box-shadow:0 0 0 1.5px var(--tile-red);}
 .modal-row .meta{display:block;font-size:0.7rem;color:var(--ink-soft);}
 .modal-row .arrow{flex:none;font-weight:800;color:var(--tile-blue);}
 .modal-empty{font-size:0.8rem;color:var(--ink-soft);padding:10px 6px;}
@@ -459,7 +460,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     <div class="settings-group" id="testGroup" hidden>
       <p class="hint">Test yourself on one or more lists at once, typing each answer, with all the words mixed. Each list gets its own saved score.</p>
       <div class="test-row">
-        <button class="btn btn-primary" id="testStartBtn">Start test</button>
+        <button class="btn btn-primary" id="testStartBtn">Select lists and start test</button>
         <button class="btn btn-ghost" id="testEndBtn" hidden>End test</button>
       </div>
       <p class="hint" id="testStatus"></p>
@@ -643,11 +644,11 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       </div>
       <div class="modal-cols">
         <div class="modal-col">
-          <div class="modal-col-head"><span>Other lists</span></div>
+          <div class="modal-col-head"><span>Other lists</span><button type="button" id="testModalAddDue">Add all needing review</button></div>
           <div class="modal-list" id="testModalLeft"></div>
         </div>
         <div class="modal-col">
-          <div class="modal-col-head"><span>In this test</span><button type="button" id="testModalClear">← Remove all</button></div>
+          <div class="modal-col-head"><span>In this test</span><button type="button" id="testModalClear">Clear</button></div>
           <div class="modal-list" id="testModalRight"></div>
         </div>
       </div>
@@ -3419,7 +3420,7 @@ function renderTestModal(){
       }
       const row = document.createElement("button");
       row.type = "button";
-      row.className = "modal-row";
+      row.className = "modal-row" + (testIsDue(l.key) ? " chip-due" : "");
       const text = document.createElement("span");
       text.textContent = l.label;
       const meta = document.createElement("span");
@@ -3461,6 +3462,7 @@ function openTestModal(){
 function closeTestModal(){ document.getElementById("testModal").hidden = true; }
 document.getElementById("testModalCancel").onclick = closeTestModal;
 document.getElementById("testModal").addEventListener("click", e=>{ if(e.target.id==="testModal") closeTestModal(); });
+document.getElementById("testModalAddDue").onclick = ()=>{ testLists().forEach(l=>{ if(l.items.length && testIsDue(l.key)) testPick.chosen.add(l.key); }); renderTestModal(); };
 document.getElementById("testModalClear").onclick = ()=>{ testPick.chosen.clear(); renderTestModal(); };
 document.getElementById("testModalStart").onclick = ()=>{ startTest([...testPick.chosen]); };
 document.addEventListener("keydown", e=>{
