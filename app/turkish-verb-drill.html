@@ -91,6 +91,8 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .modal-foot .btn{padding:10px 16px;}
 .test-results{display:grid;gap:6px;margin-top:6px;text-align:left;font-size:0.95rem;color:var(--ink);}
 .test-results .row{display:flex;justify-content:space-between;gap:12px;}
+.test-pass{color:var(--good);font-weight:800;}
+.test-review{color:var(--bad);font-size:0.8rem;font-weight:600;}
 .test-results .row.total{border-top:1px solid var(--line);padding-top:6px;font-weight:700;}
 .upnext{display:grid;gap:6px;font-size:0.85rem;}
 .upnext-row{display:flex;gap:10px;align-items:baseline;}
@@ -3239,6 +3241,18 @@ function nextVocabCard(){
       row.className = "row" + (total ? " total" : "");
       const a = document.createElement("span"); a.textContent = label;
       const b = document.createElement("span"); b.textContent = `${r.correct} / ${r.total} (${r.pct}%)`;
+      if(!total){
+        // 90% or more is a pass (matches the red outline on lists that need review).
+        if(r.pct>=90){
+          const ok = document.createElement("span");
+          ok.className = "test-pass"; ok.textContent = " ✓"; ok.setAttribute("aria-label", "passed");
+          b.appendChild(ok);
+        } else {
+          const note = document.createElement("div");
+          note.className = "test-review"; note.textContent = "still needs review";
+          a.appendChild(note);
+        }
+      }
       row.append(a, b);
       box.appendChild(row);
     };
