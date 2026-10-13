@@ -3363,11 +3363,21 @@ function prefillTestList(){
   const first = testLists().find(selected);
   if(first && [...sel.options].some(o=>o.value===first.key)) sel.value = first.key;
 }
+let testDaysShownOn = new Date().toDateString();
 function refreshTestDisplays(){
+  testDaysShownOn = new Date().toDateString();
   renderPageChips();
   renderNonverbChunkChips();
   renderTestSelect();
 }
+// "today" / "1 day ago" are worked out when the chips are drawn, so a page left open past midnight
+// would keep saying "today". Redraw once the date changes (checked on return to the tab and each minute).
+function refreshTestDaysIfNewDay(){
+  if(testResults && new Date().toDateString()!==testDaysShownOn) refreshTestDisplays();
+}
+document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) refreshTestDaysIfNewDay(); });
+window.addEventListener("focus", refreshTestDaysIfNewDay);
+setInterval(refreshTestDaysIfNewDay, 60*1000);
 function updateTestUI(){
   const t = vocabState.test;
   document.getElementById("testStartBtn").hidden = !!t;
