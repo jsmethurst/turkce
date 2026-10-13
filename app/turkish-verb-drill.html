@@ -4064,12 +4064,25 @@ function gpGenitive(n){
 }
 function gpJoin(parts){ return parts.map(p=>p[0]+p[1]).join(" "); }
 function gpMarked(parts){ return parts.map(p=>p[1] ? `${p[0]}<b>${p[1]}</b>` : p[0]).join(" "); }
+// About 3 in 5 phrases use a pronoun ("my key"), 2 in 5 are noun + noun, so the endings vary more.
+function gpMix(items, limit){
+  const shuffle = a=>{ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+  const pron = shuffle(items.filter(i=>i.pron)), noun = shuffle(items.filter(i=>!i.pron));
+  let np = pron.length, nn = noun.length;
+  if(np && nn){
+    // largest 3:2 mix the available phrases allow, then trimmed to the limit if there is one
+    const unit = Math.min(Math.floor(np/3), Math.floor(nn/2));
+    np = Math.max(unit*3, 1); nn = Math.max(unit*2, 1);
+    if(limit){ const u = Math.max(1, Math.floor(limit/5)); np = Math.min(np, u*3); nn = Math.min(nn, u*2); }
+  } else if(limit){ np = Math.min(np, limit); nn = Math.min(nn, limit); }
+  return shuffle([...pron.slice(0, np), ...noun.slice(0, nn)]);
+}
 // Every sensible phrase from the nouns the learner knows well (light or dark green on the Sözlük).
 function genitifIyelikItems(){
   const known = tr=>{ const lvl = wordFormLevel(`nonverb:${tr}`); return lvl!==null && lvl>=4; };
   const noun = spec=>{ const [tr, en] = spec.split(":"); const n = GP_NOUNS[tr]; return n ? {...n, en:en||n.en} : null; };
   const out = [];
-  const item = (en, parts, alts)=>out.push({inf:"", c:"genitif+iyelik", en, ex:gpMarked(parts), alts:(alts||[]).map(gpJoin), strict:true});
+  const item = (en, parts, alts, pron)=>out.push({inf:"", c:"genitif+iyelik", en, ex:gpMarked(parts), alts:(alts||[]).map(gpJoin), strict:true, pron:!!pron});
   GP_PAIRS.forEach(([owners, owned])=>owners.forEach(ot=>{
     if(!known(ot)) return;
     const owner = noun(ot);
@@ -4087,7 +4100,7 @@ function genitifIyelikItems(){
       const thing = noun(tr);
       // "their house" is onların evi (or onların evleri, which also counts).
       const main = [[pr, ""], gpPossessive(thing, person===5 ? 2 : person)];
-      item(`${enPr} ${thing.en}`, main, person===5 ? [[[pr, ""], gpPossessive(thing, 5)]] : []);
+      item(`${enPr} ${thing.en}`, main, person===5 ? [[[pr, ""], gpPossessive(thing, 5)]] : [], true);
     });
   });
   return out;
@@ -4113,13 +4126,8 @@ function caseSentences(){
     if(cases.filter==="all" || cases.filter===c) MORE_CASE_SENTENCES[c].forEach(x=>out.push({...x, c}));
   });
   if(cases.filter==="all" || cases.filter==="genitif+iyelik"){
-    let gp = genitifIyelikItems();
-    // In "All cases" they're a small share, not most of the round.
-    if(cases.filter==="all"){
-      for(let i=gp.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [gp[i],gp[j]]=[gp[j],gp[i]]; }
-      gp = gp.slice(0, 25);
-    }
-    out.push(...gp);
+    // In "All cases" they're a small share (25 phrases), not most of the round.
+    out.push(...gpMix(genitifIyelikItems(), cases.filter==="all" ? 25 : 0));
   }
   return out;
 }
