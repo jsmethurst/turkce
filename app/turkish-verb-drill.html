@@ -91,6 +91,13 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .modal-foot .btn{padding:10px 16px;}
 .test-results{display:grid;gap:6px;margin-top:6px;text-align:left;font-size:0.95rem;color:var(--ink);}
 .test-results .row{display:flex;justify-content:space-between;gap:12px;}
+.test-name{font:inherit;background:none;border:none;padding:0;color:var(--ink);cursor:pointer;text-align:left;font-weight:600;}
+.test-name .chev{display:inline-block;width:1em;color:var(--tile-blue);}
+.test-name:hover{text-decoration:underline;}
+.test-missed{margin:2px 0 8px 1em;padding:6px 0 6px 10px;border-left:2px solid var(--line);font-size:0.85rem;color:var(--ink-soft);display:grid;gap:4px;}
+.test-missed[hidden]{display:none;}
+.test-missed .miss{display:flex;justify-content:space-between;gap:12px;}
+.test-missed .miss .tr{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--ink);text-align:right;}
 .test-pass{color:var(--good);font-weight:800;}
 .test-review{color:var(--bad);font-size:0.8rem;font-weight:600;}
 .test-results .row.total{border-top:1px solid var(--line);padding-top:6px;font-weight:700;}
@@ -3237,32 +3244,68 @@ function nextVocabCard(){
     const box = document.createElement("div");
     box.className = "test-results";
     const addRow = (label, r, total)=>{
+      const wrap = document.createElement("div");
+      wrap.className = "test-item";
       const row = document.createElement("div");
       row.className = "row" + (total ? " total" : "");
-      const a = document.createElement("span"); a.textContent = label;
+      const left = document.createElement("div");
       const b = document.createElement("span"); b.textContent = `${r.correct} / ${r.total} (${r.pct}%)`;
-      if(!total){
-        // 90% or more is a pass (matches the red outline on lists that need review).
-        if(r.pct>=90){
-          const ok = document.createElement("span");
-          ok.className = "test-pass"; ok.textContent = " ✓"; ok.setAttribute("aria-label", "passed");
-          b.appendChild(ok);
-        } else {
-          const note = document.createElement("div");
-          note.className = "test-review"; note.textContent = "still needs review";
-          a.appendChild(note);
-        }
+      if(total){
+        left.textContent = label;
+        row.append(left, b);
+        wrap.appendChild(row);
+        box.appendChild(wrap);
+        return;
       }
-      row.append(a, b);
-      box.appendChild(row);
+      // The list name opens a panel with the words missed in this test.
+      const name = document.createElement("button");
+      name.type = "button"; name.className = "test-name"; name.setAttribute("aria-expanded", "false");
+      const chev = document.createElement("span"); chev.className = "chev"; chev.textContent = "▸";
+      name.append(chev, document.createTextNode(label));
+      left.appendChild(name);
+      // 90% or more is a pass (matches the red outline on lists that need review).
+      if(r.pct>=90){
+        const ok = document.createElement("span");
+        ok.className = "test-pass"; ok.textContent = " ✓"; ok.setAttribute("aria-label", "passed");
+        b.appendChild(ok);
+      } else {
+        const note = document.createElement("div");
+        note.className = "test-review"; note.textContent = "still needs review";
+        left.appendChild(note);
+      }
+      const panel = document.createElement("div");
+      panel.className = "test-missed"; panel.hidden = true;
+      if(r.missed && r.missed.length){
+        r.missed.forEach(m=>{
+          const line = document.createElement("div");
+          line.className = "miss";
+          const en = document.createElement("span"); en.textContent = m.en;
+          const tr = document.createElement("span"); tr.className = "tr"; tr.textContent = m.tr;
+          line.append(en, tr);
+          panel.appendChild(line);
+        });
+      } else {
+        panel.textContent = "Nothing missed in this list.";
+      }
+      name.onclick = e=>{
+        e.stopPropagation();
+        panel.hidden = !panel.hidden;
+        name.setAttribute("aria-expanded", String(!panel.hidden));
+        chev.textContent = panel.hidden ? "▸" : "▾";
+      };
+      row.append(left, b);
+      wrap.append(row, panel);
+      box.appendChild(wrap);
     };
+    // Tapping inside the results (to open a list) shouldn't count as "tap to continue".
+    box.addEventListener("click", e=>e.stopPropagation());
     // "Derste 1-25" exists for both verbs and non-verbs: say which when a name repeats.
     d.results.forEach(r=>addRow(d.results.filter(x=>x.label===r.label).length>1 ? `${r.label} (${r.group.toLowerCase()})` : r.label, r, false));
-    if(d.results.length>1) addRow("All together", d, true);
+    addRow("All together", d, true);
     back.appendChild(box);
     const more = document.createElement("span");
     more.className = "vocab-continue";
-    more.textContent = window.matchMedia("(hover: none)").matches ? "Tap to continue" : "Press any key to continue";
+    more.textContent = (window.matchMedia("(hover: none)").matches ? "Tap a list to see what you missed. Tap outside to continue." : "Click a list to see what you missed. Press any key to continue.");
     back.appendChild(more);
     return;
   }
@@ -3524,7 +3567,7 @@ function startTest(keys){
   const items = lists.flatMap(l=>l.items.map(it=>({...it, listKey:l.key})));
   for(let i=items.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [items[i], items[j]] = [items[j], items[i]]; }
   const label = lists.length===1 ? lists[0].label : `${lists.length} lists`;
-  vocabState.test = {label, lists:lists.map(l=>({key:l.key, label:l.label, group:l.group, total:l.items.length, correct:0})), items, i:0, correct:0};
+  vocabState.test = {label, lists:lists.map(l=>({key:l.key, label:l.label, group:l.group, total:l.items.length, correct:0, missed:[]})), items, i:0, correct:0};
   vocabState.testDone = null;
   // Tests are always typed. The learner's own mode comes back when they continue after the result.
   if(vocabState.typingBeforeTest==null) vocabState.typingBeforeTest = vocabState.typingMode;
@@ -3552,10 +3595,13 @@ function endTest(){
 }
 function recordTestAnswer(correct){
   const t = vocabState.test;
+  const item = t.items[t.i];
+  const list = t.lists.find(l=>l.key===item.listKey);
   if(correct){
     t.correct++;
-    const list = t.lists.find(l=>l.key===t.items[t.i].listKey);
     if(list) list.correct++;
+  } else if(list){
+    list.missed.push({tr:item.tr, en:item.en});
   }
   t.i++;
   if(t.i >= t.items.length) finishTest();
@@ -3568,10 +3614,10 @@ async function finishTest(){
   const docs = t.lists.map(l=>{
     const entry = {correct:l.correct, total:l.total, pct:Math.round(l.correct/l.total*100), date, direction:vocabState.mode};
     const prev = testResults[l.key];
-    return {key:l.key, label:l.label, group:l.group, entry, doc:{label:l.label, last:entry, history:[...((prev && prev.history) || []), entry]}};
+    return {key:l.key, label:l.label, group:l.group, missed:l.missed, entry, doc:{label:l.label, last:entry, history:[...((prev && prev.history) || []), entry]}};
   });
   vocabState.test = null;
-  vocabState.testDone = {label:t.label, correct:t.correct, total, pct:Math.round(t.correct/total*100), results:docs.map(d=>({label:d.label, group:d.group, ...d.entry}))};
+  vocabState.testDone = {label:t.label, correct:t.correct, total, pct:Math.round(t.correct/total*100), results:docs.map(d=>({label:d.label, group:d.group, missed:d.missed, ...d.entry}))};
   docs.forEach(d=>{ testResults[d.key] = d.doc; });
   refreshTestDisplays();
   updateTestUI();
@@ -3595,6 +3641,8 @@ document.addEventListener("keydown", e=>{
   if(["Shift","Control","Alt","Meta","CapsLock","Tab"].includes(e.key) || e.metaKey || e.ctrlKey || e.altKey) return;
   const tag = document.activeElement && document.activeElement.tagName;
   if(tag==="SELECT" || tag==="TEXTAREA") return;
+  // Enter / Space on a focused list name opens it instead of leaving the results.
+  if((e.key==="Enter" || e.key===" ") && document.activeElement && document.activeElement.closest && document.activeElement.closest(".test-results")) return;
   if(continueAfterTest()){ e.preventDefault(); e.stopPropagation(); }
 }, true);
 document.querySelector("#tab-vocab .card").addEventListener("click", continueAfterTest);
