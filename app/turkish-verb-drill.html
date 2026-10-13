@@ -626,7 +626,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 
     <div class="section-title">Settings</div>
     <div class="settings-group">
-      <h3>Case</h3>
+      <h3>Cases</h3>
       <div class="chip-row" id="casesFilterChips"></div>
     </div>
   </div>
@@ -4093,24 +4093,28 @@ function genitifIyelikItems(){
   return out;
 }
 
-const cases = {filter:"all", deck:[], current:null, flipped:false, right:0, total:0};
+const cases = {sel:new Set(CASE_LABELS), deck:[], current:null, flipped:false, right:0, total:0};   // sel: the case types being practised
 try{
   const t = JSON.parse(localStorage.getItem(CASES_KEY) || "{}");
-  if(t.filter==="all" || CASE_LABELS.includes(t.filter)) cases.filter = t.filter;
+  // Saved as a list. An older single choice ("all", one case, or the retired genitif / iyelik) is carried over.
+  const saved = Array.isArray(t.sel) ? t.sel : t.filter && t.filter!=="all" ? [t.filter==="genitif" || t.filter==="iyelik" ? "genitif+iyelik" : t.filter] : [];
+  const valid = saved.filter(k=>CASE_LABELS.includes(k));
+  if(valid.length) cases.sel = new Set(valid);
 }catch(e){}
 function saveCasesSettings(){
-  try{ localStorage.setItem(CASES_KEY, JSON.stringify({filter:cases.filter})); }catch(e){}
+  try{ localStorage.setItem(CASES_KEY, JSON.stringify({sel:[...cases.sel]})); }catch(e){}
 }
 // Every verb example that marks a case with <b>…</b> (the plain "örnek" ones have no case to practise).
 function caseSentences(){
   const out = [];
   VERBS.forEach(v=>(CASE_INFO[v.inf]||[]).forEach(c=>{
     if(!c.ex || c.ex.indexOf("<b>")===-1) return;
-    if(cases.filter!=="all" && c.c!==cases.filter) return;
+    // "akuzatif + datif" counts for either of the two.
+    if(!c.c.split(" + ").some(k=>cases.sel.has(k))) return;
     out.push({inf:v.inf, c:c.c, en:c.en, ex:c.ex});
   }));
   Object.keys(MORE_CASE_SENTENCES).forEach(c=>{
-    if(cases.filter==="all" || cases.filter===c) MORE_CASE_SENTENCES[c].forEach(x=>out.push({...x, c}));
+    if(cases.sel.has(c)) MORE_CASE_SENTENCES[c].forEach(x=>out.push({...x, c}));
   });
   return out;
 }
@@ -4171,22 +4175,25 @@ function showCasesMessage(title, detail){
   fb.className = "feedback"; fb.innerHTML = "";
 }
 function updateCasesStats(){
-  document.getElementById("casesStats").textContent = cases.filter==="genitif+iyelik"
+  const onlyGp = cases.sel.size===1 && cases.sel.has("genitif+iyelik");
+  document.getElementById("casesStats").textContent = onlyGp
     ? (cases.total ? `${cases.right} / ${cases.total} right this visit` : "")
     : (cases.total ? `${cases.right} / ${cases.total} right this visit · ${cases.deck.length} left in this round` : `${cases.deck.length} sentences in this round`);
 }
 function nextCasesCard(){
   let item = null;
-  // "All cases" mixes in a genitif + iyelik phrase now and then; on its own it's every question.
-  if(cases.filter==="genitif+iyelik" || (cases.filter==="all" && Math.random()<0.1)) item = gpNext();
+  // Genitif + iyelik counts as one of the chosen case types: on its own it's every question,
+  // alongside others it comes up about once per chosen type.
+  const gpOn = cases.sel.has("genitif+iyelik"), onlyGp = gpOn && cases.sel.size===1;
+  if(onlyGp || (gpOn && Math.random() < 1/cases.sel.size)) item = gpNext();
   if(!item){
-    if(cases.filter==="genitif+iyelik"){
+    if(onlyGp){
       showCasesMessage("Not enough words yet", "This uses nouns that are light or dark green on the Sözlük. Practise more words in Vocab or Tekrar and phrases will appear here.");
       return;
     }
     if(!cases.deck.length){
       const all = caseSentences();
-      if(!all.length){ showCasesMessage("No sentences for this case yet."); return; }
+      if(!all.length){ showCasesMessage("No sentences for these cases yet."); return; }
       for(let i=all.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [all[i],all[j]]=[all[j],all[i]]; }
       if(cases.current && all.length>1 && all[all.length-1].en===cases.current.en) all.unshift(all.pop());   // not the same one twice running
       cases.deck = all;
@@ -4233,12 +4240,14 @@ function checkCases(){
 function renderCasesFilter(){
   const box = document.getElementById("casesFilterChips");
   box.innerHTML = "";
-  ["all", ...CASE_LABELS].forEach(k=>{
+  CASE_LABELS.forEach(k=>{
     const c = document.createElement("div");
-    c.className = "chip" + (cases.filter===k ? " on" : "");
-    c.textContent = k==="all" ? "All cases" : k;
+    c.className = "chip" + (cases.sel.has(k) ? " on" : "");
+    c.textContent = k;
     c.onclick = ()=>{
-      cases.filter = k; cases.deck = []; cases.current = null; gpReset();
+      // Tap to add or remove a case type; at least one stays selected.
+      if(cases.sel.has(k)){ if(cases.sel.size===1) return; cases.sel.delete(k); } else cases.sel.add(k);
+      cases.deck = []; cases.current = null; gpReset();
       saveCasesSettings(); renderCasesFilter(); nextCasesCard();
     };
     box.appendChild(c);
