@@ -603,8 +603,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     </div>
     <div class="card">
       <div class="prompt-header">
-        <div class="prompt-tags"><span class="tag" id="casesTag"></span><span class="tag" id="casesCase"></span></div>
-        <div class="card-top-actions">
+        <div class="card-top-actions" style="margin-left:auto;">
           <button class="icon-btn" id="casesSpeak" title="Hear it" style="visibility:hidden;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
           </button>
@@ -625,23 +624,10 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     </div>
     <p class="hint" style="text-align:center;margin-top:14px;" id="casesStats"></p>
 
-    <div class="section-title">How Cases works</div>
-    <div class="settings-group">
-      <ol class="how-list">
-        <li><b>Translate with the case:</b> you get an English sentence, with the verb and the case it needs shown above it. Type the whole sentence in Turkish.</li>
-        <li><b>What counts:</b> the exact sentence is Doğru. If your sentence differs but the word with the right case ending is in it, that counts as the ending right. Otherwise the correct sentence is shown with the ending in bold.</li>
-        <li><b>Sentences:</b> they come from the example sentences on the verbs (plus extra ones written for this tab, including the genitive and the possessive, which verbs don't govern), in random order, each one once before any repeats.</li>
-        <li>Nothing from this tab is saved yet. The score is for this visit only.</li>
-      </ol>
-    </div>
-
     <div class="section-title">Settings</div>
     <div class="settings-group">
       <h3>Case</h3>
       <div class="chip-row" id="casesFilterChips"></div>
-      <div class="chip-row" style="margin-top:8px;">
-        <div class="chip on" id="casesHintChip">Show the case name</div>
-      </div>
     </div>
   </div>
 
@@ -3943,53 +3929,7 @@ document.addEventListener("keydown", e=>{
 
 // ---- Cases (experimental): translate an English sentence into Turkish with the right case ending ----
 const CASES_KEY = "fiil_cases_v1";
-const CASE_LABELS = ["akuzatif","datif","lokatif","ablatif","ile","genitif","iyelik"];
-// Verbs don't govern the genitive or the possessive, so their sentences live here rather than on the verb rows.
-const GENITIVE_SENTENCES = [
-  {inf:"okumak", en:"I'm reading the teacher's book.", ex:"Öğretmen<b>in</b> kitabını okuyorum."},
-  {inf:"temizlemek", en:"I'm cleaning my friend's room.", ex:"Arkadaşım<b>ın</b> odasını temizliyorum."},
-  {inf:"aramak", en:"I'm calling Ayşe's mother.", ex:"Ayşe'<b>nin</b> annesini arıyorum."},
-  {inf:"ziyaret etmek", en:"We're visiting the neighbor's house.", ex:"Komşu<b>nun</b> evini ziyaret ediyoruz."},
-  {inf:"kullanmak", en:"I'm driving my father's car.", ex:"Babam<b>ın</b> arabasını kullanıyorum."},
-  {inf:"izlemek", en:"She's watching the children's film.", ex:"Çocuklar<b>ın</b> filmini izliyor."},
-  {inf:"kapatmak", en:"He's closing the shop's door.", ex:"Dükkân<b>ın</b> kapısını kapatıyor."},
-  {inf:"yıkamak", en:"I'm washing the car's windows.", ex:"Araba<b>nın</b> camlarını yıkıyorum."},
-  {inf:"dinlemek", en:"I'm listening to my sister's voice.", ex:"Kız kardeşim<b>in</b> sesini dinliyorum."},
-  {inf:"açmak", en:"We're opening the school's door.", ex:"Okul<b>un</b> kapısını açıyoruz."},
-  {inf:"yazmak", en:"I'm writing the teacher's name.", ex:"Öğretmen<b>in</b> adını yazıyorum."},
-  {inf:"boyamak", en:"They're painting the house's walls.", ex:"Ev<b>in</b> duvarlarını boyuyorlar."},
-  {inf:"yıkamak", en:"I'm washing my sister's dress.", ex:"Kız kardeşim<b>in</b> elbisesini yıkıyorum."},
-  {inf:"bakmak", en:"We're looking at the city's old streets.", ex:"Şehr<b>in</b> eski sokaklarına bakıyoruz."},
-  {inf:"tamir etmek", en:"He's fixing his friend's phone.", ex:"Arkadaşı<b>nın</b> telefonunu tamir ediyor."},
-  {inf:"bulmak", en:"She's finding her mother's keys.", ex:"Annesi<b>nin</b> anahtarlarını buluyor."},
-  {inf:"okumak", en:"We're reading the writer's new book.", ex:"Yazar<b>ın</b> yeni kitabını okuyoruz."},
-  {inf:"boyamak", en:"I'm painting the room's ceiling.", ex:"Oda<b>nın</b> tavanını boyuyorum."},
-  {inf:"temizlemek", en:"They're cleaning the hotel's pool.", ex:"Otel<b>in</b> havuzunu temizliyorlar."},
-].map(x=>({...x, c:"genitif"}));
-// Possessive suffixes (iyelik ekleri): nouns, not verbs, mark these too.
-const POSSESSIVE_SENTENCES = [
-  {inf:"olmak", en:"My house is big.", ex:"Ev<b>im</b> büyük."},
-  {inf:"olmak", en:"Your name is nice.", ex:"Ad<b>ın</b> güzel."},
-  {inf:"olmak", en:"His mother is a teacher.", ex:"Anne<b>si</b> öğretmen."},
-  {inf:"olmak", en:"Our teacher is here.", ex:"Öğretmen<b>imiz</b> burada."},
-  {inf:"olmak", en:"Your (plural) car is new.", ex:"Araba<b>nız</b> yeni."},
-  {inf:"olmak", en:"Their house is far.", ex:"Ev<b>leri</b> uzak."},
-  {inf:"gelmek", en:"My brother is coming.", ex:"Kardeş<b>im</b> geliyor."},
-  {inf:"uyumak", en:"Her dog is sleeping.", ex:"Köpeğ<b>i</b> uyuyor."},
-  {inf:"oynamak", en:"Our children are playing.", ex:"Çocuk<b>larımız</b> oynuyor."},
-  {inf:"aramak", en:"Your sister is calling.", ex:"Kız kardeş<b>in</b> arıyor."},
-  {inf:"olmak", en:"My phone is on the table.", ex:"Telefon<b>um</b> masada."},
-  {inf:"olmak", en:"Her room is clean.", ex:"Oda<b>sı</b> temiz."},
-  {inf:"olmak", en:"My bag is on the chair.", ex:"Çanta<b>m</b> sandalyede."},
-  {inf:"olmak", en:"Your book is interesting.", ex:"Kitab<b>ın</b> ilginç."},
-  {inf:"olmak", en:"His sister is very kind.", ex:"Kız kardeş<b>i</b> çok nazik."},
-  {inf:"gelmek", en:"Our friends are coming.", ex:"Arkadaş<b>larımız</b> geliyor."},
-  {inf:"olmak", en:"Your (plural) house is beautiful.", ex:"Ev<b>iniz</b> çok güzel."},
-  {inf:"beklemek", en:"Their teacher is waiting.", ex:"Öğretmen<b>leri</b> bekliyor."},
-  {inf:"çalışmak", en:"My father is working.", ex:"Baba<b>m</b> çalışıyor."},
-  {inf:"olmak", en:"Her car is red.", ex:"Araba<b>sı</b> kırmızı."},
-].map(x=>({...x, c:"iyelik"}));
-
+const CASE_LABELS = ["akuzatif","datif","lokatif","ablatif","ile","genitif+iyelik"];
 // More sentences for the cases verbs do govern, written for this tab (the verb rows keep one example each).
 const MORE_CASE_SENTENCES = {
   akuzatif: [
@@ -4052,14 +3992,115 @@ const MORE_CASE_SENTENCES = {
     {inf:"gelmek", en:"We're coming by train.", ex:"Tren<b>le</b> geliyoruz."},
   ],
 };
-const cases = {filter:"all", hint:false, deck:[], current:null, flipped:false, right:0, total:0};
+// ---- Genitif + iyelik: phrases built from nouns the learner already knows well ----
+// Only words that are light or dark green on the Sözlük are used. Forms are generated from the stem
+// rules below, with the few irregular stems spelled out so every answer is exactly right.
+// [turkish, english, stem before a vowel suffix (if it changes), vowel to harmonize with (if unusual)]
+const GP_NOUNS = Object.fromEntries([
+  ["öğretmen","teacher"],["öğrenci","student"],["doktor","doctor"],["pilot","pilot"],["müdür","manager"],["avukat","lawyer"],
+  ["garson","waiter"],["şoför","driver"],["turist","tourist"],["kadın","woman"],["erkek","man","erkeğ"],["çocuk","child","çocuğ"],
+  ["dişçi","dentist"],["müşteri","customer"],["ağabey","older brother (formal)"],["abi","older brother (informal)"],["hala","aunt"],["oğul","son","oğl"],
+  ["kitap","book","kitab"],["kalem","pencil"],["defter","notebook"],["çanta","bag"],["şemsiye","umbrella"],["araba","car"],
+  ["bilgisayar","computer"],["telefon","phone"],["cüzdan","wallet"],["anahtar","key"],["yüzük","ring","yüzüğ"],["saat","watch","saat","e"],
+  ["şapka","hat"],["mendil","tissue"],["kolye","necklace"],["uçak","airplane","uçağ"],
+  ["burun","nose","burn"],["ağız","mouth","ağz"],["karın","stomach","karn"],["alın","forehead","aln"],
+  ["okul","school"],["hastane","hospital"],["üniversite","university"],["şehir","city","şehr"],["oda","room"],["mutfak","kitchen","mutfağ"],
+  ["sınıf","classroom"],["bina","building"],["park","park"],["bahçe","garden"],["market","market"],["banka","bank"],["kafe","cafe"],
+  ["kafeterya","cafeteria"],["müze","museum"],["kütüphane","library"],["kantin","canteen"],["cami","mosque"],
+  ["duvar","wall"],["masa","table"],["sandalye","chair"],["dolap","cupboard","dolab"],["halı","carpet"],["koltuk","armchair","koltuğ"],
+  ["tahta","board"],["ağaç","tree","ağac"],["pist","runway"],["havaalanı","airport"],["havalimanı","international airport"],
+].map(([tr,en,stem,h])=>[tr,{tr,en,stem:stem||tr,h:h||lastVowel(tr)}]));
+// Words that already end in a possessive suffix (havaalanı = hava + alan + ı) are only used as owners.
+const GP_OWNER_ONLY = new Set(["havaalanı","havalimanı"]);
+const GP_PERSONS = ["öğretmen","öğrenci","doktor","pilot","müdür","avukat","garson","şoför","turist","kadın","erkek","çocuk","dişçi","müşteri"];
+const GP_FAMILY = ["oğul","ağabey","abi","hala"];
+const GP_ITEMS = ["kitap","kalem","defter","çanta","şemsiye","araba","bilgisayar","telefon","cüzdan","anahtar","yüzük","saat","şapka","mendil","kolye"];
+const GP_BODY = ["burun","ağız","karın","alın"];
+// owner → things that really belong to it ("tr:english" gives a different English word for that pairing)
+const GP_PAIRS = [
+  [[...GP_PERSONS, ...GP_FAMILY], GP_ITEMS],
+  [GP_PERSONS, GP_FAMILY],
+  [["çocuk","kadın","erkek","öğrenci","müşteri"], GP_BODY],
+  [["öğrenci","öğretmen"], ["okul","sınıf"]],
+  [["doktor"], ["hastane"]],
+  [["pilot"], ["uçak"]],
+  [["okul"], ["müdür:principal","öğretmen","öğrenci","bahçe","kantin","kütüphane","sınıf"]],
+  [["hastane"], ["doktor","bahçe","mutfak","kantin"]],
+  [["üniversite"], ["kütüphane","kafeterya","öğrenci","bahçe"]],
+  [["şehir"], ["park","müze","cami","banka","hastane","kütüphane","üniversite"]],
+  [["oda"], ["duvar","masa","sandalye","dolap","halı","koltuk"]],
+  [["mutfak"], ["masa","sandalye","dolap"]],
+  [["sınıf"], ["tahta","öğretmen","öğrenci","masa","duvar"]],
+  [["bina"], ["duvar"]],
+  [["park","bahçe"], ["ağaç"]],
+  [["market","banka","kafe","müze"], ["müdür"]],
+  [["kafe","kafeterya"], ["garson"]],
+  [["uçak"], ["pilot"]],
+  [["araba"], ["anahtar"]],
+  [["havaalanı","havalimanı"], ["pist"]],
+];
+const GP_PRONOUNS = [   // [turkish, english, possessor person index]
+  ["benim","my",0],["senin","your",1],["onun","his",2],["onun","her",2],["bizim","our",3],["sizin","your (plural)",4],["onların","their",5],
+];
+const GP_BELONGINGS = [...GP_ITEMS, ...GP_FAMILY, ...GP_BODY, "okul","oda","bahçe","sınıf","mutfak","bina","öğretmen","öğrenci","doktor","müdür","avukat","dişçi"];
+// The part of a noun before a suffix, with the vowel it harmonizes with.
+function gpVowelEnd(stem){ return isVowel(stem[stem.length-1]); }
+// The owned noun with a possessive suffix: returns [base, suffix].
+function gpPossessive(n, person){
+  const stem = n.stem, v = gpVowelEnd(stem), v4 = h4(n.h), v2 = h2(n.h);
+  switch(person){
+    case 0: return [stem, v ? "m" : v4+"m"];
+    case 1: return [stem, v ? "n" : v4+"n"];
+    case 2: return [stem, v ? "s"+v4 : v4];
+    case 3: return [stem, v ? "m"+v4+"z" : v4+"m"+v4+"z"];
+    case 4: return [stem, v ? "n"+v4+"z" : v4+"n"+v4+"z"];
+    default: return [n.tr, (v2==="a" ? "lar" : "ler") + h4(v2)];   // plural keeps the plain stem: kitap + ları
+  }
+}
+// The owner noun in the genitive: returns [base, suffix].
+function gpGenitive(n){
+  const stem = n.stem, v = gpVowelEnd(stem), v4 = h4(n.h);
+  return [stem, v ? "n"+v4+"n" : v4+"n"];
+}
+function gpJoin(parts){ return parts.map(p=>p[0]+p[1]).join(" "); }
+function gpMarked(parts){ return parts.map(p=>p[1] ? `${p[0]}<b>${p[1]}</b>` : p[0]).join(" "); }
+// Every sensible phrase from the nouns the learner knows well (light or dark green on the Sözlük).
+function genitifIyelikItems(){
+  const known = tr=>{ const lvl = wordFormLevel(`nonverb:${tr}`); return lvl!==null && lvl>=4; };
+  const noun = spec=>{ const [tr, en] = spec.split(":"); const n = GP_NOUNS[tr]; return n ? {...n, en:en||n.en} : null; };
+  const out = [];
+  const item = (en, parts, alts)=>out.push({inf:"", c:"genitif+iyelik", en, ex:gpMarked(parts), alts:(alts||[]).map(gpJoin), strict:true});
+  GP_PAIRS.forEach(([owners, owned])=>owners.forEach(ot=>{
+    if(!known(ot)) return;
+    const owner = noun(ot);
+    owned.forEach(spec=>{
+      const tr = spec.split(":")[0];
+      if(!known(tr) || GP_OWNER_ONLY.has(tr)) return;
+      const thing = noun(spec);
+      const parts = [gpGenitive(owner), gpPossessive(thing, 2)];
+      const en = Math.random()<0.5 ? `the ${owner.en}'s ${thing.en}` : `the ${thing.en} of the ${owner.en}`;
+      item(en, parts);
+    });
+  }));
+  GP_PRONOUNS.forEach(([pr, enPr, person])=>{
+    GP_BELONGINGS.forEach(tr=>{
+      if(!known(tr)) return;
+      const thing = noun(tr);
+      // "their house" is onların evi (or onların evleri, which also counts).
+      const main = [[pr, ""], gpPossessive(thing, person===5 ? 2 : person)];
+      item(`${enPr} ${thing.en}`, main, person===5 ? [[[pr, ""], gpPossessive(thing, 5)]] : []);
+    });
+  });
+  return out;
+}
+
+const cases = {filter:"all", deck:[], current:null, flipped:false, right:0, total:0};
 try{
   const t = JSON.parse(localStorage.getItem(CASES_KEY) || "{}");
   if(t.filter==="all" || CASE_LABELS.includes(t.filter)) cases.filter = t.filter;
-  if(typeof t.hint==="boolean") cases.hint = t.hint;
 }catch(e){}
 function saveCasesSettings(){
-  try{ localStorage.setItem(CASES_KEY, JSON.stringify({filter:cases.filter, hint:cases.hint})); }catch(e){}
+  try{ localStorage.setItem(CASES_KEY, JSON.stringify({filter:cases.filter})); }catch(e){}
 }
 // Every verb example that marks a case with <b>…</b> (the plain "örnek" ones have no case to practise).
 function caseSentences(){
@@ -4069,11 +4110,18 @@ function caseSentences(){
     if(cases.filter!=="all" && c.c!==cases.filter) return;
     out.push({inf:v.inf, c:c.c, en:c.en, ex:c.ex});
   }));
-  GENITIVE_SENTENCES.forEach(g=>{ if(cases.filter==="all" || cases.filter==="genitif") out.push(g); });
-  POSSESSIVE_SENTENCES.forEach(g=>{ if(cases.filter==="all" || cases.filter==="iyelik") out.push(g); });
   Object.keys(MORE_CASE_SENTENCES).forEach(c=>{
     if(cases.filter==="all" || cases.filter===c) MORE_CASE_SENTENCES[c].forEach(x=>out.push({...x, c}));
   });
+  if(cases.filter==="all" || cases.filter==="genitif+iyelik"){
+    let gp = genitifIyelikItems();
+    // In "All cases" they're a small share, not most of the round.
+    if(cases.filter==="all"){
+      for(let i=gp.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [gp[i],gp[j]]=[gp[j],gp[i]]; }
+      gp = gp.slice(0, 25);
+    }
+    out.push(...gp);
+  }
   return out;
 }
 function casePlain(html){ return html.replace(/<\/?b>/g,""); }
@@ -4091,8 +4139,6 @@ function showCasesMessage(title, detail){
   cases.current = null;
   document.getElementById("casesPrompt").textContent = title;
   document.getElementById("casesSub").textContent = detail || "";
-  document.getElementById("casesTag").textContent = "";
-  document.getElementById("casesCase").textContent = "";
   document.getElementById("casesSpeak").style.visibility = "hidden";
   document.getElementById("casesAnswerRow").style.display = "none";
   document.getElementById("casesNext").hidden = true;
@@ -4100,12 +4146,16 @@ function showCasesMessage(title, detail){
   fb.className = "feedback"; fb.innerHTML = "";
 }
 function updateCasesStats(){
-  document.getElementById("casesStats").textContent = cases.total ? `${cases.right} / ${cases.total} endings right this visit · ${cases.deck.length} left in this round` : `${cases.deck.length} sentences in this round`;
+  document.getElementById("casesStats").textContent = cases.total ? `${cases.right} / ${cases.total} right this visit · ${cases.deck.length} left in this round` : `${cases.deck.length} sentences in this round`;
 }
 function nextCasesCard(){
   if(!cases.deck.length){
     const all = caseSentences();
-    if(!all.length){ showCasesMessage("No sentences for this case yet."); return; }
+    if(!all.length){
+      if(cases.filter==="genitif+iyelik") showCasesMessage("Not enough words yet", "This uses nouns that are light or dark green on the Sözlük. Practise more words in Vocab or Tekrar and phrases will appear here.");
+      else showCasesMessage("No sentences for this case yet.");
+      return;
+    }
     for(let i=all.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [all[i],all[j]]=[all[j],all[i]]; }
     if(cases.current && all.length>1 && all[all.length-1].en===cases.current.en) all.unshift(all.pop());   // not the same one twice running
     cases.deck = all;
@@ -4115,10 +4165,6 @@ function nextCasesCard(){
   cases.flipped = false;
   document.getElementById("casesPrompt").textContent = item.en;
   document.getElementById("casesSub").textContent = "";
-  document.getElementById("casesTag").textContent = item.inf;
-  const cs = document.getElementById("casesCase");
-  cs.textContent = item.c;
-  cs.hidden = !cases.hint;
   document.getElementById("casesSpeak").style.visibility = "hidden";
   document.getElementById("casesAnswerRow").style.display = "";
   document.getElementById("casesCheck").disabled = false;
@@ -4135,8 +4181,9 @@ function checkCases(){
   if(!item || cases.flipped) return;
   const input = document.getElementById("casesInput");
   const given = caseWords(input.value), target = caseWords(casePlain(item.ex));
-  const exact = given.length>0 && given.join(" ")===target.join(" ");
-  const marked = caseMarkedWord(item.ex);
+  const exact = given.length>0 && (given.join(" ")===target.join(" ") || (item.alts||[]).some(a=>caseWords(a).join(" ")===given.join(" ")));
+  // Genitif + iyelik answers must be exactly right; the other cases also give credit for the right ending.
+  const marked = item.strict ? "" : caseMarkedWord(item.ex);
   const ending = exact || (marked && given.includes(marked));
   cases.flipped = true;
   cases.total++;
@@ -4166,13 +4213,6 @@ function renderCasesFilter(){
   });
 }
 renderCasesFilter();
-document.getElementById("casesHintChip").classList.toggle("on", cases.hint);
-document.getElementById("casesHintChip").onclick = e=>{
-  cases.hint = !cases.hint;
-  e.target.classList.toggle("on", cases.hint);
-  document.getElementById("casesCase").hidden = !cases.hint;
-  saveCasesSettings();
-};
 document.getElementById("casesCheck").onclick = checkCases;
 document.getElementById("casesNext").onclick = nextCasesCard;
 document.getElementById("casesSpeak").onclick = ()=>{ if(cases.current) speak(casePlain(cases.current.ex), "tr-TR"); };
