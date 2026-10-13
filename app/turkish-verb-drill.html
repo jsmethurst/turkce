@@ -4078,8 +4078,7 @@ function genitifIyelikItems(){
       if(!known(tr) || GP_OWNER_ONLY.has(tr)) return;
       const thing = noun(spec);
       const parts = [gpGenitive(owner), gpPossessive(thing, 2)];
-      const en = Math.random()<0.5 ? `the ${owner.en}'s ${thing.en}` : `the ${thing.en} of the ${owner.en}`;
-      item(en, parts);
+      item(`the ${owner.en}'s ${thing.en}`, parts);   // only the 's wording for now, not "the … of the …"
     });
   }));
   GP_PRONOUNS.forEach(([pr, enPr, person])=>{
