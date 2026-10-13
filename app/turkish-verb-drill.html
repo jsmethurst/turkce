@@ -70,6 +70,27 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .construction .note{margin:0;font-size:0.82rem;color:var(--ink-soft);}
 .how-list{margin:0;padding-left:20px;display:grid;gap:8px;font-size:0.9rem;line-height:1.45;color:var(--ink-soft);}
 .how-list b{color:var(--ink);}
+.modal-backdrop{position:fixed;inset:0;z-index:60;background:rgba(18,40,46,.5);display:flex;align-items:center;justify-content:center;padding:14px;}
+.modal-backdrop[hidden]{display:none;}
+.modal{background:#fff;border-radius:var(--radius);box-shadow:0 20px 60px -20px rgba(18,65,77,.6);width:min(680px,100%);max-height:calc(100vh - 28px);display:flex;flex-direction:column;overflow:hidden;}
+.modal-head{padding:16px 18px 6px;}
+.modal-head h2{font-family:'Fraunces',serif;font-size:1.2rem;margin:0 0 4px;color:var(--tile-blue-deep);}
+.modal-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:8px 18px;min-height:0;flex:1;}
+.modal-col{display:flex;flex-direction:column;min-height:0;border:1px solid var(--line);border-radius:12px;background:var(--paper);}
+.modal-col-head{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:8px 10px;border-bottom:1px solid var(--line);font-size:0.74rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
+.modal-col-head button{font:inherit;text-transform:none;letter-spacing:0;font-weight:600;background:none;border:none;color:var(--tile-blue);cursor:pointer;padding:2px 4px;}
+.modal-list{overflow-y:auto;padding:6px;min-height:120px;max-height:52vh;}
+.modal-group{font-size:0.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin:8px 4px 4px;}
+.modal-row{display:flex;align-items:center;justify-content:space-between;gap:6px;width:100%;text-align:left;font:inherit;font-size:0.83rem;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:7px 9px;margin-bottom:5px;cursor:pointer;}
+.modal-row:hover{border-color:var(--tile-turquoise);}
+.modal-row .meta{display:block;font-size:0.7rem;color:var(--ink-soft);}
+.modal-row .arrow{flex:none;font-weight:800;color:var(--tile-blue);}
+.modal-empty{font-size:0.8rem;color:var(--ink-soft);padding:10px 6px;}
+.modal-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 18px 16px;}
+.modal-foot .btn{padding:10px 16px;}
+.test-results{display:grid;gap:6px;margin-top:6px;text-align:left;font-size:0.95rem;color:var(--ink);}
+.test-results .row{display:flex;justify-content:space-between;gap:12px;}
+.test-results .row.total{border-top:1px solid var(--line);padding-top:6px;font-weight:700;}
 .upnext{display:grid;gap:6px;font-size:0.85rem;}
 .upnext-row{display:flex;gap:10px;align-items:baseline;}
 .upnext-when{flex:0 0 92px;font-weight:600;color:var(--ink);}
@@ -436,9 +457,8 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 
     <div class="section-title" id="testTitle" hidden>Test</div>
     <div class="settings-group" id="testGroup" hidden>
-      <p class="hint">Go through one list once, in random order, typing each answer. Your score is saved when you finish.</p>
+      <p class="hint">Test yourself on one or more lists at once, typing each answer, with all the words mixed. Each list gets its own saved score.</p>
       <div class="test-row">
-        <select id="testListSelect" class="select" aria-label="List to test"></select>
         <button class="btn btn-primary" id="testStartBtn">Start test</button>
         <button class="btn btn-ghost" id="testEndBtn" hidden>End test</button>
       </div>
@@ -611,6 +631,32 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <div class="chip-row" id="casesFilterChips"></div>
       <div class="chip-row" style="margin-top:8px;">
         <div class="chip on" id="casesHintChip">Show the case name</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="testModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="testModalTitle">
+      <div class="modal-head">
+        <h2 id="testModalTitle">Start a test</h2>
+        <p class="hint" style="margin:0;">Tap a list to move it. The right side is what you'll be tested on, with all the words mixed. This doesn't change your Sözlük selection.</p>
+      </div>
+      <div class="modal-cols">
+        <div class="modal-col">
+          <div class="modal-col-head"><span>Other lists</span><button type="button" id="testModalAddAll">Add all →</button></div>
+          <div class="modal-list" id="testModalLeft"></div>
+        </div>
+        <div class="modal-col">
+          <div class="modal-col-head"><span>In this test</span><button type="button" id="testModalClear">← Remove all</button></div>
+          <div class="modal-list" id="testModalRight"></div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <span class="hint" id="testModalCount" style="margin:0;"></span>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-ghost" id="testModalCancel" type="button">Cancel</button>
+          <button class="btn btn-primary" id="testModalStart" type="button">Start test</button>
+        </div>
       </div>
     </div>
   </div>
@@ -2596,7 +2642,6 @@ function updateSelectionCount(){
   tokenSet.forEach(tok=>{ roots.add(stripKnownSuffix(tok, tokenSet)); });
   el.textContent = `${roots.size} unique Turkish words selected  (from ${verbEntries} verb entries, ${nonverbEntries} non-verb entries)`;
   renderSelectionChips();
-  prefillTestList();
 }
 // Vocab tab: the current Sözlük selection as chips; clicking one removes it.
 // A fully selected category shows as one chip ("All verbs" / "All non-verbs").
@@ -3183,11 +3228,27 @@ function nextVocabCard(){
   }
   if(vocabState.testDone){
     const d = vocabState.testDone;
-    showVocabMessage("Test complete", `${d.label}: ${d.correct} / ${d.total} correct (${d.pct}%)`);
+    showVocabMessage("Test complete", " ");
+    const back = document.getElementById("vocabBack");
+    back.textContent = "";
+    const box = document.createElement("div");
+    box.className = "test-results";
+    const addRow = (label, r, total)=>{
+      const row = document.createElement("div");
+      row.className = "row" + (total ? " total" : "");
+      const a = document.createElement("span"); a.textContent = label;
+      const b = document.createElement("span"); b.textContent = `${r.correct} / ${r.total} (${r.pct}%)`;
+      row.append(a, b);
+      box.appendChild(row);
+    };
+    // "Derste 1-25" exists for both verbs and non-verbs: say which when a name repeats.
+    d.results.forEach(r=>addRow(d.results.filter(x=>x.label===r.label).length>1 ? `${r.label} (${r.group.toLowerCase()})` : r.label, r, false));
+    if(d.results.length>1) addRow("All together", d, true);
+    back.appendChild(box);
     const more = document.createElement("span");
     more.className = "vocab-continue";
     more.textContent = window.matchMedia("(hover: none)").matches ? "Tap to continue" : "Press any key to continue";
-    document.getElementById("vocabBack").appendChild(more);
+    back.appendChild(more);
     return;
   }
   const pool = vocabPool();
@@ -3335,40 +3396,82 @@ function testLists(){
     ...NONVERB_CHUNKS.map(c=>({key:c.key, label:c.label, group:"Non-verbs", items:c.items.map(n=>({kind:"nonverb", idx:NONVERBS.indexOf(n), tr:n.tr, en:n.en}))})),
   ];
 }
-function renderTestSelect(){
-  const sel = document.getElementById("testListSelect");
-  const prev = sel.value;
-  sel.innerHTML = "";
-  const groups = {};
-  testLists().forEach(l=>{
-    if(!groups[l.group]){
-      groups[l.group] = document.createElement("optgroup");
-      groups[l.group].label = l.group;
-      sel.appendChild(groups[l.group]);
+// Lists that are part of the learner's Sözlük selection (the starting point for a test).
+function selectedTestKeys(){
+  return testLists().filter(l=> l.key.startsWith("page") ? state.pages.has(Number(l.key.slice(4)))
+    : (state.bonusVerbChunks.has(l.key) || state.nonverbChunks.has(l.key))).map(l=>l.key);
+}
+// The test setup window: which lists go into this one test. Local to the window, so the Sözlük
+// selection is untouched.
+const testPick = {chosen:new Set()};
+function renderTestModal(){
+  const lists = testLists().filter(l=>l.items.length);
+  const draw = (box, inTest)=>{
+    const top = box.scrollTop;
+    box.innerHTML = "";
+    let lastGroup = null, n = 0;
+    lists.filter(l=>testPick.chosen.has(l.key)===inTest).forEach(l=>{
+      if(l.group!==lastGroup){
+        const g = document.createElement("div");
+        g.className = "modal-group"; g.textContent = l.group;
+        box.appendChild(g);
+        lastGroup = l.group;
+      }
+      const row = document.createElement("button");
+      row.type = "button";
+      row.className = "modal-row";
+      const text = document.createElement("span");
+      text.textContent = l.label;
+      const meta = document.createElement("span");
+      meta.className = "meta";
+      meta.textContent = `${l.items.length} words · ${testSummaryText(l.key)}`;
+      text.appendChild(meta);
+      const arrow = document.createElement("span");
+      arrow.className = "arrow"; arrow.textContent = inTest ? "←" : "→";
+      row.append(text, arrow);
+      row.onclick = ()=>{
+        if(inTest) testPick.chosen.delete(l.key); else testPick.chosen.add(l.key);
+        renderTestModal();
+      };
+      box.appendChild(row);
+      n++;
+    });
+    if(!n){
+      const e = document.createElement("div");
+      e.className = "modal-empty";
+      e.textContent = inTest ? "Nothing yet. Tap a list on the left to add it." : "Every list is in this test.";
+      box.appendChild(e);
     }
-    const o = document.createElement("option");
-    o.value = l.key;
-    o.textContent = `${l.label} (${testSummaryText(l.key)})`;
-    groups[l.group].appendChild(o);
-  });
-  if(prev && [...sel.options].some(o=>o.value===prev)) sel.value = prev;
-  else prefillTestList();
+    box.scrollTop = top;
+  };
+  draw(document.getElementById("testModalLeft"), false);
+  draw(document.getElementById("testModalRight"), true);
+  const chosen = lists.filter(l=>testPick.chosen.has(l.key));
+  const words = chosen.reduce((sum,l)=>sum+l.items.length, 0);
+  document.getElementById("testModalCount").textContent = chosen.length ? `${words} words from ${chosen.length} list${chosen.length===1?"":"s"}` : "No lists chosen";
+  document.getElementById("testModalStart").disabled = !chosen.length;
 }
-// The test menu starts on the first list in the learner's Sözlük selection.
-function prefillTestList(){
-  const sel = document.getElementById("testListSelect");
-  try{ if(!sel || vocabState.test) return; }catch(e){ return; }   // runs once before vocabState exists during page load
-  const selected = l => l.key.startsWith("page") ? state.pages.has(Number(l.key.slice(4)))
-    : state.bonusVerbChunks.has(l.key) || state.nonverbChunks.has(l.key);
-  const first = testLists().find(selected);
-  if(first && [...sel.options].some(o=>o.value===first.key)) sel.value = first.key;
+function openTestModal(){
+  if(vocabState.test || vocabState.testDone) return;
+  testPick.chosen = new Set(selectedTestKeys());
+  renderTestModal();
+  document.getElementById("testModal").hidden = false;
+  document.getElementById("testModalStart").focus();
 }
+function closeTestModal(){ document.getElementById("testModal").hidden = true; }
+document.getElementById("testModalCancel").onclick = closeTestModal;
+document.getElementById("testModal").addEventListener("click", e=>{ if(e.target.id==="testModal") closeTestModal(); });
+document.getElementById("testModalAddAll").onclick = ()=>{ testLists().forEach(l=>{ if(l.items.length) testPick.chosen.add(l.key); }); renderTestModal(); };
+document.getElementById("testModalClear").onclick = ()=>{ testPick.chosen.clear(); renderTestModal(); };
+document.getElementById("testModalStart").onclick = ()=>{ startTest([...testPick.chosen]); };
+document.addEventListener("keydown", e=>{
+  if(e.key==="Escape" && !document.getElementById("testModal").hidden){ e.preventDefault(); closeTestModal(); }
+});
 let testDaysShownOn = new Date().toDateString();
 function refreshTestDisplays(){
   testDaysShownOn = new Date().toDateString();
   renderPageChips();
   renderNonverbChunkChips();
-  renderTestSelect();
 }
 // "today" / "1 day ago" are worked out when the chips are drawn, so a page left open past midnight
 // would keep saying "today". Redraw once the date changes (checked on return to the tab and each minute).
@@ -3388,7 +3491,6 @@ function updateTestUI(){
   // the result stays on the card until any key / tap continues practice.
   endBtn.hidden = !t;
   endBtn.textContent = "End test";
-  document.getElementById("testListSelect").disabled = !!t;
   updateVocabHintText();
   const tag = document.getElementById("vocabTestTag");
   tag.hidden = !t;
@@ -3397,12 +3499,15 @@ function updateTestUI(){
     document.getElementById("testStatus").textContent = `Testing ${t.label}. Ending early saves nothing.`;
   }
 }
-function startTest(){
-  const list = testLists().find(l=>l.key===document.getElementById("testListSelect").value);
-  if(!list || !list.items.length) return;
-  const items = list.items.slice();
+function startTest(keys){
+  const lists = testLists().filter(l=>keys.includes(l.key) && l.items.length);
+  if(!lists.length) return;
+  closeTestModal();
+  // One test over all the chosen lists, mixed together; each word remembers which list it came from.
+  const items = lists.flatMap(l=>l.items.map(it=>({...it, listKey:l.key})));
   for(let i=items.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [items[i], items[j]] = [items[j], items[i]]; }
-  vocabState.test = {key:list.key, label:list.label, items, i:0, correct:0};
+  const label = lists.length===1 ? lists[0].label : `${lists.length} lists`;
+  vocabState.test = {label, lists:lists.map(l=>({key:l.key, label:l.label, group:l.group, total:l.items.length, correct:0})), items, i:0, correct:0};
   vocabState.testDone = null;
   // Tests are always typed. The learner's own mode comes back when they continue after the result.
   if(vocabState.typingBeforeTest==null) vocabState.typingBeforeTest = vocabState.typingMode;
@@ -3430,31 +3535,39 @@ function endTest(){
 }
 function recordTestAnswer(correct){
   const t = vocabState.test;
-  if(correct) t.correct++;
+  if(correct){
+    t.correct++;
+    const list = t.lists.find(l=>l.key===t.items[t.i].listKey);
+    if(list) list.correct++;
+  }
   t.i++;
   if(t.i >= t.items.length) finishTest();
 }
 async function finishTest(){
   const t = vocabState.test;
+  const date = new Date().toISOString();
   const total = t.items.length;
-  const entry = {correct:t.correct, total, pct:Math.round(t.correct/total*100), date:new Date().toISOString(), direction:vocabState.mode};
+  // A saved result for every list in the test, scored on just that list's words.
+  const docs = t.lists.map(l=>{
+    const entry = {correct:l.correct, total:l.total, pct:Math.round(l.correct/l.total*100), date, direction:vocabState.mode};
+    const prev = testResults[l.key];
+    return {key:l.key, label:l.label, group:l.group, entry, doc:{label:l.label, last:entry, history:[...((prev && prev.history) || []), entry]}};
+  });
   vocabState.test = null;
-  vocabState.testDone = {label:t.label, ...entry};
-  const prev = testResults[t.key];
-  const doc = {label:t.label, last:entry, history:[...((prev && prev.history) || []), entry]};
-  testResults[t.key] = doc;
+  vocabState.testDone = {label:t.label, correct:t.correct, total, pct:Math.round(t.correct/total*100), results:docs.map(d=>({label:d.label, group:d.group, ...d.entry}))};
+  docs.forEach(d=>{ testResults[d.key] = d.doc; });
   refreshTestDisplays();
   updateTestUI();
   const status = document.getElementById("testStatus");
   status.textContent = "Saving result…";
   try{
-    await testStore.doc(t.key).set(doc);
+    await Promise.all(docs.map(d=>testStore.doc(d.key).set(d.doc)));
     status.textContent = "";
   }catch(e){
     status.textContent = "Couldn't save this result. It will be lost when you close the page.";
   }
 }
-document.getElementById("testStartBtn").onclick = startTest;
+document.getElementById("testStartBtn").onclick = openTestModal;
 // After "Test complete", any key or a tap on the card goes back to practice.
 function continueAfterTest(){
   if(!vocabState.testDone || document.getElementById("tab-vocab").style.display==="none") return false;
