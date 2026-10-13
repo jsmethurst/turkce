@@ -643,7 +643,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       </div>
       <div class="modal-cols">
         <div class="modal-col">
-          <div class="modal-col-head"><span>Other lists</span><button type="button" id="testModalAddAll">Add all →</button></div>
+          <div class="modal-col-head"><span>Other lists</span></div>
           <div class="modal-list" id="testModalLeft"></div>
         </div>
         <div class="modal-col">
@@ -3461,7 +3461,6 @@ function openTestModal(){
 function closeTestModal(){ document.getElementById("testModal").hidden = true; }
 document.getElementById("testModalCancel").onclick = closeTestModal;
 document.getElementById("testModal").addEventListener("click", e=>{ if(e.target.id==="testModal") closeTestModal(); });
-document.getElementById("testModalAddAll").onclick = ()=>{ testLists().forEach(l=>{ if(l.items.length) testPick.chosen.add(l.key); }); renderTestModal(); };
 document.getElementById("testModalClear").onclick = ()=>{ testPick.chosen.clear(); renderTestModal(); };
 document.getElementById("testModalStart").onclick = ()=>{ startTest([...testPick.chosen]); };
 document.addEventListener("keydown", e=>{
