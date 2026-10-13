@@ -4064,19 +4064,6 @@ function gpGenitive(n){
 }
 function gpJoin(parts){ return parts.map(p=>p[0]+p[1]).join(" "); }
 function gpMarked(parts){ return parts.map(p=>p[1] ? `${p[0]}<b>${p[1]}</b>` : p[0]).join(" "); }
-// About 3 in 5 phrases use a pronoun ("my key"), 2 in 5 are noun + noun, so the endings vary more.
-function gpMix(items, limit){
-  const shuffle = a=>{ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
-  const pron = shuffle(items.filter(i=>i.pron)), noun = shuffle(items.filter(i=>!i.pron));
-  let np = pron.length, nn = noun.length;
-  if(np && nn){
-    // largest 3:2 mix the available phrases allow, then trimmed to the limit if there is one
-    const unit = Math.min(Math.floor(np/3), Math.floor(nn/2));
-    np = Math.max(unit*3, 1); nn = Math.max(unit*2, 1);
-    if(limit){ const u = Math.max(1, Math.floor(limit/5)); np = Math.min(np, u*3); nn = Math.min(nn, u*2); }
-  } else if(limit){ np = Math.min(np, limit); nn = Math.min(nn, limit); }
-  return shuffle([...pron.slice(0, np), ...noun.slice(0, nn)]);
-}
 // Every sensible phrase from the nouns the learner knows well (light or dark green on the Sözlük).
 function genitifIyelikItems(){
   const known = tr=>{ const lvl = wordFormLevel(`nonverb:${tr}`); return lvl!==null && lvl>=4; };
@@ -4125,11 +4112,42 @@ function caseSentences(){
   Object.keys(MORE_CASE_SENTENCES).forEach(c=>{
     if(cases.filter==="all" || cases.filter===c) MORE_CASE_SENTENCES[c].forEach(x=>out.push({...x, c}));
   });
-  if(cases.filter==="all" || cases.filter==="genitif+iyelik"){
-    // In "All cases" they're a small share (25 phrases), not most of the round.
-    out.push(...gpMix(genitifIyelikItems(), cases.filter==="all" ? 25 : 0));
-  }
   return out;
+}
+// Genitif + iyelik questions are picked one at a time, not from a shuffled pool, so the share of
+// pronoun phrases ("my key") among the ones asked can be held between 60% and 70% as you go:
+// each pick chooses pronoun or noun + noun so the running share lands in that band when it can.
+const GP_BAND = [0.6, 0.7], GP_AIM = 0.65;
+cases.gp = {pron:[], noun:[], served:0, pronServed:0, lastEn:""};
+function gpReset(){ cases.gp = {pron:[], noun:[], served:0, pronServed:0, lastEn:""}; }
+function gpRefill(kind){
+  const items = genitifIyelikItems().filter(i=>!!i.pron===(kind==="pron"));
+  for(let i=items.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [items[i],items[j]]=[items[j],items[i]]; }
+  cases.gp[kind] = items;
+}
+function gpPickType(){
+  const g = cases.gp;
+  const n = g.served, p = g.pronServed;
+  const ifPron = (p+1)/(n+1), ifNoun = p/(n+1);
+  const inBand = x=>x>=GP_BAND[0] && x<=GP_BAND[1];
+  if(inBand(ifPron) && !inBand(ifNoun)) return "pron";
+  if(inBand(ifNoun) && !inBand(ifPron)) return "noun";
+  if(inBand(ifPron) && inBand(ifNoun)) return Math.random()<GP_AIM ? "pron" : "noun";
+  // Neither lands in the band this time (small counts): get as close as possible.
+  return Math.abs(ifPron-GP_AIM) <= Math.abs(ifNoun-GP_AIM) ? "pron" : "noun";
+}
+function gpNext(){
+  const g = cases.gp;
+  if(!g.pron.length) gpRefill("pron");
+  if(!g.noun.length) gpRefill("noun");
+  if(!g.pron.length && !g.noun.length) return null;
+  const kind = !g.pron.length ? "noun" : !g.noun.length ? "pron" : gpPickType();
+  let item = g[kind].pop();
+  if(item.en===g.lastEn && g[kind].length) item = g[kind].pop();   // not the same prompt twice running
+  g.lastEn = item.en;
+  g.served++;
+  if(kind==="pron") g.pronServed++;
+  return item;
 }
 function casePlain(html){ return html.replace(/<\/?b>/g,""); }
 function caseWords(text){
@@ -4153,21 +4171,28 @@ function showCasesMessage(title, detail){
   fb.className = "feedback"; fb.innerHTML = "";
 }
 function updateCasesStats(){
-  document.getElementById("casesStats").textContent = cases.total ? `${cases.right} / ${cases.total} right this visit · ${cases.deck.length} left in this round` : `${cases.deck.length} sentences in this round`;
+  document.getElementById("casesStats").textContent = cases.filter==="genitif+iyelik"
+    ? (cases.total ? `${cases.right} / ${cases.total} right this visit` : "")
+    : (cases.total ? `${cases.right} / ${cases.total} right this visit · ${cases.deck.length} left in this round` : `${cases.deck.length} sentences in this round`);
 }
 function nextCasesCard(){
-  if(!cases.deck.length){
-    const all = caseSentences();
-    if(!all.length){
-      if(cases.filter==="genitif+iyelik") showCasesMessage("Not enough words yet", "This uses nouns that are light or dark green on the Sözlük. Practise more words in Vocab or Tekrar and phrases will appear here.");
-      else showCasesMessage("No sentences for this case yet.");
+  let item = null;
+  // "All cases" mixes in a genitif + iyelik phrase now and then; on its own it's every question.
+  if(cases.filter==="genitif+iyelik" || (cases.filter==="all" && Math.random()<0.1)) item = gpNext();
+  if(!item){
+    if(cases.filter==="genitif+iyelik"){
+      showCasesMessage("Not enough words yet", "This uses nouns that are light or dark green on the Sözlük. Practise more words in Vocab or Tekrar and phrases will appear here.");
       return;
     }
-    for(let i=all.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [all[i],all[j]]=[all[j],all[i]]; }
-    if(cases.current && all.length>1 && all[all.length-1].en===cases.current.en) all.unshift(all.pop());   // not the same one twice running
-    cases.deck = all;
+    if(!cases.deck.length){
+      const all = caseSentences();
+      if(!all.length){ showCasesMessage("No sentences for this case yet."); return; }
+      for(let i=all.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [all[i],all[j]]=[all[j],all[i]]; }
+      if(cases.current && all.length>1 && all[all.length-1].en===cases.current.en) all.unshift(all.pop());   // not the same one twice running
+      cases.deck = all;
+    }
+    item = cases.deck.pop();
   }
-  const item = cases.deck.pop();
   cases.current = item;
   cases.flipped = false;
   document.getElementById("casesPrompt").textContent = item.en;
@@ -4213,7 +4238,7 @@ function renderCasesFilter(){
     c.className = "chip" + (cases.filter===k ? " on" : "");
     c.textContent = k==="all" ? "All cases" : k;
     c.onclick = ()=>{
-      cases.filter = k; cases.deck = []; cases.current = null;
+      cases.filter = k; cases.deck = []; cases.current = null; gpReset();
       saveCasesSettings(); renderCasesFilter(); nextCasesCard();
     };
     box.appendChild(c);
