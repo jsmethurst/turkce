@@ -222,6 +222,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .feedback{margin-top:16px;padding:14px 16px;border-radius:11px;font-size:0.95rem;display:none;}
 .feedback.show{display:block;}
 .feedback.good{background:#EAF6EF;color:var(--good);}
+.feedback.warn{background:#FBF3D4;color:#8A6410;}
 .feedback.bad{background:#FBEAE5;color:var(--bad);}
 .feedback .correct-answer{font-family:'JetBrains Mono',monospace;font-weight:600;display:block;margin-top:4px;color:var(--ink);}
 
@@ -4228,8 +4229,9 @@ function checkCases(){
   cases.total++;
   if(ending) cases.right++;
   const fb = document.getElementById("casesFeedback");
-  fb.className = "feedback show " + (ending ? "good" : "bad");
-  const head = exact ? "Doğru! Nice work." : ending ? "Right ending! The sentence in the list reads:" : "Not quite. Correct sentence:";
+  // Green: exactly right. Yellow: the case ending is right but something else in the sentence is off. Red: wrong.
+  fb.className = "feedback show " + (exact ? "good" : ending ? "warn" : "bad");
+  const head = exact ? "Doğru! Nice work." : ending ? "Right ending, but the sentence has an issue. Correct sentence:" : "Not quite. Correct sentence:";
   fb.innerHTML = `${head}<span class="correct-answer">${item.ex}</span>`;
   document.getElementById("casesSpeak").style.visibility = "visible";
   document.getElementById("casesCheck").disabled = true;
