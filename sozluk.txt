@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-234 verbs · 800 non-verbs · 40 topics
+234 verbs · 818 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1108,7 +1108,7 @@ bütün gün                 all day
 buhar                     steam
 ücretsiz                  free
 
-DERSTE 176-198
+DERSTE 176-200
 --------------
 bedava                    free (informal / possibly rude)
 uyku                      sleep
@@ -1130,9 +1130,30 @@ metre kare                square meter
 uslu                      well-behaved
 elektrikçi                electrician
 çoğunlukla                mostly / for the most part
-hala                      aunt
+hala                      aunt (dad's sister)
 hâlâ                      still (continuing)
 pist                      runway
+anne tarafı               mother's side
+teyze                     aunt (mom's sister)
+
+DERSTE 201-216
+--------------
+dayı                      uncle (mom's brother)
+anneanne                  grandmother (mom's mom)
+baba tarafı               dad's side
+amca                      uncle (dad's brother)
+babaanne                  grandmother (dad's mom)
+dede                      grandfather
+enişte                    aunt's husband
+yenge                     uncle's wife
+kuzen                     cousin
+kız                       daughter
+erkek kardeş              younger brother
+soy                       lineage
+karı-koca                 wife-husband
+onlar kardeş              sibling
+abla                      older sister
+kız kardeş                younger sister
 
 SIFATLAR 1-25
 -------------
@@ -1432,7 +1453,7 @@ buyurun, geçmiş olsun, affedersiniz, rica ederim, teşekkürler, lütfen, afiy
 
 People & Professions
 --------------------
-insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi, hala
+insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi, hala, anne tarafı, teyze, dayı, anneanne, baba tarafı, amca, babaanne, dede, enişte, yenge, kuzen, kız, erkek kardeş, soy, karı-koca, onlar kardeş, abla, kız kardeş
 
 Places & Buildings
 ------------------
