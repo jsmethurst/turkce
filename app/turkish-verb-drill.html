@@ -3805,6 +3805,13 @@ function renderTekrarUpcoming(words){
   const now = Date.now();
   const coming = words.filter(w=>w.dueAt>now).sort((a,b)=>a.dueAt-b.dueAt);
   const rows = [];
+  const wordList = list=>{
+    const shown = list.slice(0, 40).map(w=>`<span title="${w.item.en.replace(/"/g,"&quot;")}">${w.item.tr}</span>`).join(", ");
+    return shown + (list.length>40 ? ` <span>+${list.length-40} more</span>` : "");
+  };
+  // Words due right now come first (the same ones the "due now" count adds up).
+  const dueNow = words.filter(w=>w.dueAt<=now).sort((a,b)=>b.overdue-a.overdue);
+  if(dueNow.length) rows.push(`<div class="upnext-row"><div class="upnext-when">Due now</div><div class="upnext-words">${wordList(dueNow)}</div></div>`);
   let i = 0;
   TEKRAR_UPCOMING.forEach(([hours, label], idx)=>{
     const limit = now + hours*36e5;
@@ -3812,9 +3819,7 @@ function renderTekrarUpcoming(words){
     const inRange = [];
     while(i<coming.length && (coming[i].dueAt<=limit || last)){ inRange.push(coming[i]); i++; }
     if(!inRange.length) return;
-    const shown = inRange.slice(0, 40).map(w=>`<span title="${w.item.en.replace(/"/g,"&quot;")}">${w.item.tr}</span>`).join(", ");
-    const more = inRange.length>40 ? ` <span>+${inRange.length-40} more</span>` : "";
-    rows.push(`<div class="upnext-row"><div class="upnext-when">${label}</div><div class="upnext-words">${shown}${more}</div></div>`);
+    rows.push(`<div class="upnext-row"><div class="upnext-when">${label}</div><div class="upnext-words">${wordList(inRange)}</div></div>`);
   });
   box.innerHTML = rows.length ? rows.join("") : '<span class="hint">Nothing scheduled yet. Words show up here once you answer them.</span>';
 }
