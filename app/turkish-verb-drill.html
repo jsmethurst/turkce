@@ -3749,7 +3749,7 @@ document.addEventListener("keydown", e=>{
 // how many right answers it has in a row at the end of its form (a miss resets the streak).
 const TEKRAR_MAX_DAYS = 30;   // the longest wait: a month
 const TEKRAR_RETRY_MS = 10*60*1000;              // wait after a miss
-const TEKRAR_AGAIN_MIN = 3, TEKRAR_AGAIN_MAX = 9;  // a missed word returns after a random number of other cards in this range
+const TEKRAR_AGAIN_MIN = 3, TEKRAR_AGAIN_MAX = 8;  // a missed word returns after a random number of other cards in this range
 const TEKRAR_KEY = "fiil_tekrar_v1";
 const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null, early:false, showUpcoming:true, currentEarly:false};
 try{
