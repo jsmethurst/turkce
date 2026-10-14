@@ -3751,7 +3751,7 @@ const TEKRAR_MAX_DAYS = 30;   // the longest wait: a month
 const TEKRAR_RETRY_MS = 10*60*1000;              // wait after a miss
 const TEKRAR_AGAIN_MIN = 3, TEKRAR_AGAIN_MAX = 9;  // a missed word returns after a random number of other cards in this range
 const TEKRAR_KEY = "fiil_tekrar_v1";
-const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null, early:false, showUpcoming:true, currentEarly:false};
+const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null, early:false, showUpcoming:true, currentEarly:false, owed:new Set(), currentWasDue:false};
 try{
   const t = JSON.parse(localStorage.getItem(TEKRAR_KEY) || "{}");
   if(typeof t.early==="boolean") tekrar.early = t.early;
@@ -3801,7 +3801,7 @@ const TEKRAR_UPCOMING = [
 function renderTekrarUpcoming(words){
   const box = document.getElementById("tekrarUpcoming");
   const now = Date.now();
-  const coming = words.filter(w=>w.dueAt>now).sort((a,b)=>a.dueAt-b.dueAt);
+  const coming = words.filter(w=>w.dueAt>now && !tekrar.owed.has(w.key)).sort((a,b)=>a.dueAt-b.dueAt);
   const rows = [];
   let i = 0;
   TEKRAR_UPCOMING.forEach(([hours, label], idx)=>{
@@ -3841,7 +3841,10 @@ function nextTekrarCard(){
   const words = tekrarWords();
   renderTekrarUpcoming(words);
   const now = Date.now();
-  const due = words.filter(w=>w.dueAt<=now && w.key!==tekrar.last).sort((a,b)=>b.overdue-a.overdue);
+  // Due = its time has come, or it was due and you missed it: a miss doesn't clear a word from the
+  // "due now" count, only getting it right does (tekrar.owed holds those missed-while-due words).
+  const isDue = w=>w.dueAt<=now || tekrar.owed.has(w.key);
+  const due = words.filter(w=>isDue(w) && w.key!==tekrar.last).sort((a,b)=>b.overdue-a.overdue);
   // A word you just missed comes back after a few other cards, or straight away if nothing else is due.
   let pickWord = null;
   const retry = tekrar.again.findIndex(a=>a.wait<=0);
@@ -3859,11 +3862,11 @@ function nextTekrarCard(){
     early = true;
   }
   tekrar.currentEarly = early;
-  const dueCount = words.filter(w=>w.dueAt<=now).length;
+  tekrar.currentWasDue = !!pickWord && isDue(pickWord);
   const stats = document.getElementById("tekrarStats");
   if(!pickWord){
     tekrar.currentEarly = false;
-    const next = words.filter(w=>w.dueAt>now).sort((a,b)=>a.dueAt-b.dueAt)[0];
+    const next = words.filter(w=>!isDue(w)).sort((a,b)=>a.dueAt-b.dueAt)[0];
     if(!words.length) showTekrarMessage("Nothing to review yet", "Answer a few words in Vocab first (typing or a test). Every word you've answered at least once shows up here.");
     else showTekrarMessage("All caught up!", next ? `Next word is due in ${tekrarWaitText(next.dueAt-now)}.` : "");
     stats.textContent = `${words.length} words in rotation`;
@@ -3890,7 +3893,12 @@ function nextTekrarCard(){
   const input = document.getElementById("tekrarInput");
   input.value = "";
   if(window.matchMedia("(hover: hover)").matches) input.focus();
-  stats.textContent = `${dueCount} due now · ${words.length} words in rotation` + (early ? " · practicing ahead" : "");
+  updateTekrarStats(words);
+}
+function updateTekrarStats(words){
+  const now = Date.now();
+  const dueCount = words.filter(w=>w.dueAt<=now || tekrar.owed.has(w.key)).length;
+  document.getElementById("tekrarStats").textContent = `${dueCount} due now · ${words.length} words in rotation` + (tekrar.currentEarly ? " · practicing ahead" : "");
 }
 function checkTekrar(){
   if(!tekrar.current || tekrar.flipped) return;
@@ -3902,6 +3910,8 @@ function checkTekrar(){
   tekrar.flipped = true;
   tekrar.last = key;
   tekrar.again.forEach(a=>a.wait--);
+  if(correct) tekrar.owed.delete(key);
+  else if(tekrar.currentWasDue) tekrar.owed.add(key);
   if(!correct) tekrar.again.push({key, wait:TEKRAR_AGAIN_MIN + Math.floor(Math.random()*(TEKRAR_AGAIN_MAX-TEKRAR_AGAIN_MIN+1))});
   const answerText = tekrar.mode==="tr2en" ? detail.gloss : detail.inf;
   const fb = document.getElementById("tekrarFeedback");
@@ -3910,7 +3920,9 @@ function checkTekrar(){
   const back = document.getElementById("tekrarBack");
   back.textContent = `Back in ${tekrarWaitText(tekrarWaitMs(key))}`;
   back.hidden = false;
-  renderTekrarUpcoming(tekrarWords());
+  const wordsNow = tekrarWords();
+  renderTekrarUpcoming(wordsNow);
+  updateTekrarStats(wordsNow);
   document.getElementById("tekrarForm").innerHTML = wordFormHTML(key);
   document.getElementById("tekrarForm").hidden = false;
   document.getElementById("tekrarSpeak").style.visibility = "visible";
