@@ -7,6 +7,9 @@ Live site: https://jsmethurst.github.io/turkce/ (owner: Jacob, jsmethurst). It's
 
 Learners sign in with email and password through Supabase so their progress syncs between devices.
 
+## Time zone
+Jacob works in **UTC+3** (Turkey, Istanbul; no daylight saving). Always give times to him in that time zone, not UTC, including in progress reports and database lookups. Database timestamps are stored in UTC, so convert them before reporting.
+
 ## How publishing works
 Every push to `main` triggers `.github/workflows/pages.yml`. It runs `build_site.py`, checks the JavaScript parses, and deploys `_site/` to GitHub Pages. The site is live about a minute after the push.
 
