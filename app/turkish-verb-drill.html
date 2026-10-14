@@ -3751,7 +3751,7 @@ const TEKRAR_MAX_DAYS = 30;   // the longest wait: a month
 const TEKRAR_RETRY_MS = 10*60*1000;              // wait after a miss
 const TEKRAR_AGAIN_MIN = 3, TEKRAR_AGAIN_MAX = 9;  // a missed word returns after a random number of other cards in this range
 const TEKRAR_KEY = "fiil_tekrar_v1";
-const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null, early:false, showUpcoming:true, currentEarly:false, owed:new Set(), currentWasDue:false};
+const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null, early:false, showUpcoming:true, currentEarly:false};
 try{
   const t = JSON.parse(localStorage.getItem(TEKRAR_KEY) || "{}");
   if(typeof t.early==="boolean") tekrar.early = t.early;
@@ -3772,6 +3772,8 @@ function syncTekrarControls(){
 function tekrarWaitMs(key){
   const r = ((wordStats[key] && wordStats[key].r) || "").slice(-HISTORY_LENGTH);
   if(!r) return TEKRAR_RETRY_MS;
+  // The latest answer was wrong: the word is due now and stays due (even after a refresh) until it is answered right.
+  if(r[r.length-1]==="0") return 0;
   let days = 0, right = 0;
   for(const c of r){
     if(c==="1"){ days += 1; right++; } else days /= 2;
@@ -3787,7 +3789,7 @@ function tekrarWords(){
     if(!wordForm(key)) return;
     const wait = tekrarWaitMs(key);
     const last = new Date(wordStats[key].at).getTime() || 0;
-    words.push({key, item, dueAt:last+wait, overdue:(now-last)/wait});
+    words.push({key, item, dueAt:last+wait, overdue:(now-last)/Math.max(wait, TEKRAR_RETRY_MS)});
   };
   VERBS.forEach((v,i)=>add(`verb:${v.inf}`, {kind:"verb", idx:i, tr:v.inf, en:v.vocabGloss}));
   NONVERBS.forEach((nv,i)=>add(`nonverb:${nv.tr}`, {kind:"nonverb", idx:i, tr:nv.tr, en:nv.en}));
@@ -3801,7 +3803,7 @@ const TEKRAR_UPCOMING = [
 function renderTekrarUpcoming(words){
   const box = document.getElementById("tekrarUpcoming");
   const now = Date.now();
-  const coming = words.filter(w=>w.dueAt>now && !tekrar.owed.has(w.key)).sort((a,b)=>a.dueAt-b.dueAt);
+  const coming = words.filter(w=>w.dueAt>now).sort((a,b)=>a.dueAt-b.dueAt);
   const rows = [];
   let i = 0;
   TEKRAR_UPCOMING.forEach(([hours, label], idx)=>{
@@ -3841,10 +3843,11 @@ function nextTekrarCard(){
   const words = tekrarWords();
   renderTekrarUpcoming(words);
   const now = Date.now();
-  // Due = its time has come, or it was due and you missed it: a miss doesn't clear a word from the
-  // "due now" count, only getting it right does (tekrar.owed holds those missed-while-due words).
-  const isDue = w=>w.dueAt<=now || tekrar.owed.has(w.key);
-  const due = words.filter(w=>isDue(w) && w.key!==tekrar.last).sort((a,b)=>b.overdue-a.overdue);
+  // A word whose latest answer was wrong is due straight away and stays due, even after a refresh,
+  // until it is answered right (see tekrarWaitMs). Missed words waiting their few cards aren't offered yet.
+  const isDue = w=>w.dueAt<=now;
+  const waiting = new Set(tekrar.again.filter(a=>a.wait>0).map(a=>a.key));
+  const due = words.filter(w=>isDue(w) && w.key!==tekrar.last && !waiting.has(w.key)).sort((a,b)=>b.overdue-a.overdue);
   // A word you just missed comes back after a few other cards, or straight away if nothing else is due.
   let pickWord = null;
   const retry = tekrar.again.findIndex(a=>a.wait<=0);
@@ -3862,7 +3865,6 @@ function nextTekrarCard(){
     early = true;
   }
   tekrar.currentEarly = early;
-  tekrar.currentWasDue = !!pickWord && isDue(pickWord);
   const stats = document.getElementById("tekrarStats");
   if(!pickWord){
     tekrar.currentEarly = false;
@@ -3897,7 +3899,7 @@ function nextTekrarCard(){
 }
 function updateTekrarStats(words){
   const now = Date.now();
-  const dueCount = words.filter(w=>w.dueAt<=now || tekrar.owed.has(w.key)).length;
+  const dueCount = words.filter(w=>w.dueAt<=now).length;
   document.getElementById("tekrarStats").textContent = `${dueCount} due now · ${words.length} words in rotation` + (tekrar.currentEarly ? " · practicing ahead" : "");
 }
 function checkTekrar(){
@@ -3910,15 +3912,13 @@ function checkTekrar(){
   tekrar.flipped = true;
   tekrar.last = key;
   tekrar.again.forEach(a=>a.wait--);
-  if(correct) tekrar.owed.delete(key);
-  else if(tekrar.currentWasDue) tekrar.owed.add(key);
   if(!correct) tekrar.again.push({key, wait:TEKRAR_AGAIN_MIN + Math.floor(Math.random()*(TEKRAR_AGAIN_MAX-TEKRAR_AGAIN_MIN+1))});
   const answerText = tekrar.mode==="tr2en" ? detail.gloss : detail.inf;
   const fb = document.getElementById("tekrarFeedback");
   fb.className = "feedback show " + (correct ? "good" : "bad");
   fb.innerHTML = (correct ? "Doğru! Nice work." : "Not quite. Correct answer:") + `<span class="correct-answer">${answerText}</span>${detail.caseNotes}`;
   const back = document.getElementById("tekrarBack");
-  back.textContent = `Back in ${tekrarWaitText(tekrarWaitMs(key))}`;
+  back.textContent = correct ? `Back in ${tekrarWaitText(tekrarWaitMs(key))}` : "Still due until you get it right";
   back.hidden = false;
   const wordsNow = tekrarWords();
   renderTekrarUpcoming(wordsNow);
