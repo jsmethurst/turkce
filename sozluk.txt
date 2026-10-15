@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-237 verbs · 881 non-verbs · 40 topics
+238 verbs · 886 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -431,7 +431,7 @@ geri dönmek               to come back / to go back
 keşfetmek                 to discover / to explore
     akuzatif: Şehri keşfediyorum.  (I'm exploring the city.)
 
-DERSTE 51-62
+DERSTE 51-63
 ------------
 sağlıklı olmak            to be healthy
     örnek: Sağlıklı olmak istiyorum.  (I want to be healthy.)
@@ -457,6 +457,8 @@ kavuşmak                  to reunite
     datif: Sevgililer birbirlerine kavuşuyor.  (The lovers are reuniting.)
 katlamak                  to fold
     akuzatif: Çamaşırları katlıyorum.  (I'm folding the laundry.)
+ummak                     to hope
+    akuzatif: Barışı umuyoruz.  (We're hoping for peace.)
 
 BIBLE 1-25
 ----------
@@ -939,7 +941,7 @@ mesela                    for example
 yalnız                    alone
 rüya                      dream (while sleeping)
 ön                        front
-arka                      back
+arka                      back (whole thing)
 kuzey                     north
 güney                     south
 doğu                      east
@@ -1226,12 +1228,17 @@ tırnak                    fingernail / toenail
 dudak                     lip
 dil                       tongue / language
 
-DERSTE 276-279
+DERSTE 276-284
 --------------
 diş                       tooth
 kas                       muscle
 sakal                     beard
 bıyık                     mustache
+saniye                    second (unit of time)
+göğüs                     chest (body)
+maceraperest              adventurer (in spirit)
+uğurlu                    auspicious / lucky
+şanslı                    lucky
 
 SIFATLAR 1-25
 -------------
@@ -1306,7 +1313,7 @@ kızgın                    angry
 canlı                     lively / alive / vivid
 yorgun                    tired
 şaşkın                    bewildered / surprised
-maceracı                  adventurous
+maceracı                  adventurer (does the activity)
 sağlıklı                  healthy
 sağlıksız                 unhealthy
 komik                     funny
@@ -1523,7 +1530,7 @@ birinci, ikinci, üçüncü, dördüncü, altıncı, yedinci, dokuzuncu, sonuncu
 
 Time & Schedule
 ---------------
-şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik
+şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik, saniye
 
 Politeness & Fillers
 --------------------
@@ -1603,7 +1610,7 @@ burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön,
 
 Feelings
 --------
-sevmek, beğenmek, hoşlanmak, korkmak, üzülmek, sevinmek, kızmak, şaşırmak, sıkılmak, yorulmak, hissetmek, özlemek, merak etmek, güvenmek, eğlenmek, ağlamak, gülmek, gülümsemek, harika, eğlenceli, yorucu, monoton, pozitif enerji, mutlu, üzgün, heyecanlı, memnun, huzurlu, pişman, endişeli, kızgın, yorgun, şaşkın, sinirli, kıskanç, sıkıcı, yormak, sıkıntılı, duygusal, sarılmak, kavuşmak
+sevmek, beğenmek, hoşlanmak, korkmak, üzülmek, sevinmek, kızmak, şaşırmak, sıkılmak, yorulmak, hissetmek, özlemek, merak etmek, güvenmek, eğlenmek, ağlamak, gülmek, gülümsemek, harika, eğlenceli, yorucu, monoton, pozitif enerji, mutlu, üzgün, heyecanlı, memnun, huzurlu, pişman, endişeli, kızgın, yorgun, şaşkın, sinirli, kıskanç, sıkıcı, yormak, sıkıntılı, duygusal, sarılmak, kavuşmak, ummak
 
 Daily Routine
 -------------
@@ -1611,7 +1618,7 @@ fırçalamak, uyanmak, kalkmak, yıkamak, diş fırçalamak, taramak, kurulanmak
 
 Health & Body
 -------------
-hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş olsun, beyin, kan, beden, sağlıklı olmak, spor yapmak, yorulmak, doğmak, büyümek, ölmek, ilaç, yaralı, sağlıklı, sağlıksız, yaşlanmak, alın, karın, burun, ağız, hapşırmak, göğüs kafesi, baş, kafa, saç, çene, yanak, kulak, göz, kirpik, kaş, boyun, boğaz, omuz, kol, dirsek, bilek, ayak bileği, el, parmak, avuç, bacak, diz, ayak, topuk, sırt, bel, ayak parmağı, tırnak, dudak, dil, diş, kas, sakal, bıyık
+hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş olsun, beyin, kan, beden, sağlıklı olmak, spor yapmak, yorulmak, doğmak, büyümek, ölmek, ilaç, yaralı, sağlıklı, sağlıksız, yaşlanmak, alın, karın, burun, ağız, hapşırmak, göğüs kafesi, baş, kafa, saç, çene, yanak, kulak, göz, kirpik, kaş, boyun, boğaz, omuz, kol, dirsek, bilek, ayak bileği, el, parmak, avuç, bacak, diz, ayak, topuk, sırt, bel, ayak parmağı, tırnak, dudak, dil, diş, kas, sakal, bıyık, göğüs
 
 Talking & Communicating
 -----------------------
@@ -1631,7 +1638,7 @@ bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, pl
 
 Describing Things
 -----------------
-eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel
+eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı
 
 Little Words
 ------------
@@ -1655,7 +1662,7 @@ tuzlu, tatlı, acı, ekşi, lezzetli, kuru yemekler, sulu yemekler, hafif yemek,
 
 Character Traits
 ----------------
-nazik, kaba, kibar, akıllı, akılsız, sabırlı, sabırsız, dürüst, neşeli, eğlenceli, sakin, arkadaş canlısı, cömert, cimri, düzenli, dağınık, güleryüzlü, hayalperest, merhametli, hırslı, karizmatik, güvenilir, kararlı, kararsız, mütevazı, enerjik, özgüvenli, becerikli, yetenekli, meraklı, esprili, zeki, bencil, sosyal, asosyal, utangaç, düşünceli, düşüncesiz, inatçı, çok yönlü, anlayışlı, anlayışsız, hoşgörülü, maceracı, cesur, korkak, çılgın, yaratıcı, misafirperver, yaramaz, çalışkan, tembel, yardımsever, davranmak, eli açık, uslu, şakacı
+nazik, kaba, kibar, akıllı, akılsız, sabırlı, sabırsız, dürüst, neşeli, eğlenceli, sakin, arkadaş canlısı, cömert, cimri, düzenli, dağınık, güleryüzlü, hayalperest, merhametli, hırslı, karizmatik, güvenilir, kararlı, kararsız, mütevazı, enerjik, özgüvenli, becerikli, yetenekli, meraklı, esprili, zeki, bencil, sosyal, asosyal, utangaç, düşünceli, düşüncesiz, inatçı, çok yönlü, anlayışlı, anlayışsız, hoşgörülü, maceracı, cesur, korkak, çılgın, yaratıcı, misafirperver, yaramaz, çalışkan, tembel, yardımsever, davranmak, eli açık, uslu, şakacı, maceraperest
 
 Opposites
 ---------
