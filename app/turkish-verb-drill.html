@@ -3404,6 +3404,22 @@ function nextVocabCard(){
     else showVocabMessage("Nothing matches this filter.");
     return;
   }
+  if(vocabState.unknownOnly){
+    const keyOf = vocabKnownKey, inPool = new Set(pool.map(keyOf));
+    vocabState.again = vocabState.again.filter(a=>inPool.has(a.key));   // dropped from the selection since
+    const due = vocabState.again.find(a=>a.wait<=0);
+    if(due){
+      vocabState.again = vocabState.again.filter(a=>a!==due);
+      showVocabItem(pool.find(p=>keyOf(p)===due.key));
+      return;
+    }
+    // Words still waiting their turn stay out of the draw while there is anything else to show.
+    const waiting = new Set(vocabState.again.map(a=>a.key));
+    const rest = pool.filter(p=>!waiting.has(keyOf(p)));
+    const from = rest.length ? rest : pool;
+    showVocabItem(from[Math.floor(Math.random()*from.length)]);
+    return;
+  }
   showVocabItem(pool[Math.floor(Math.random()*pool.length)]);
 }
 
@@ -3473,6 +3489,16 @@ function vocabAnswerCorrect(input){
   if(!vocabState.current) return false;
   return wordAnswerMatches(vocabItemDetail(vocabState.current), vocabState.mode, input);
 }
+// "Show words until I get them right": a word you miss comes back after 3 to 9 other cards.
+const VOCAB_AGAIN_MIN = 3, VOCAB_AGAIN_MAX = 9;
+vocabState.again = [];
+function vocabLoop(item, correct){
+  if(!item || vocabState.test || !vocabState.unknownOnly) return;
+  vocabState.again.forEach(a=>a.wait--);
+  const key = vocabKnownKey(item);
+  vocabState.again = vocabState.again.filter(a=>a.key!==key);
+  if(!correct) vocabState.again.push({key, wait:VOCAB_AGAIN_MIN + Math.floor(Math.random()*(VOCAB_AGAIN_MAX-VOCAB_AGAIN_MIN+1))});
+}
 function checkVocabAnswer(){
   if(!vocabState.current || vocabState.flipped) return;
   const input = document.getElementById("vocabAnswerInput").value;
@@ -3480,6 +3506,7 @@ function checkVocabAnswer(){
   const answerText = vocabState.mode==="tr2en" ? detail.gloss : detail.inf;
   const correct = vocabAnswerCorrect(input);
   recordWordResult(vocabState.current, correct);
+  vocabLoop(vocabState.current, correct);
   vocabState.flipped = true;
   vocabState.lastCheck = correct;
   autoPlay(vocabState.current.tr);
@@ -3525,12 +3552,12 @@ document.getElementById("vocabBack").onclick = flipVocabCard;
 // Flashcard answers (Doğru / Yanlış) move the progress filter and count toward a word's form,
 // the same as typed or spoken answers.
 document.getElementById("vocabKnowBtn").onclick = ()=>{
-  if(vocabState.current) recordWordResult(vocabState.current, true);
+  if(vocabState.current){ recordWordResult(vocabState.current, true); vocabLoop(vocabState.current, true); }
   if(vocabState.current && updatesProgressFilter()) setKnown(vocabKnownKey(vocabState.current), true);
   nextVocabCard();
 };
 document.getElementById("vocabDontKnowBtn").onclick = ()=>{
-  if(vocabState.current) recordWordResult(vocabState.current, false);
+  if(vocabState.current){ recordWordResult(vocabState.current, false); vocabLoop(vocabState.current, false); }
   if(vocabState.current && updatesProgressFilter()) setKnown(vocabKnownKey(vocabState.current), false);
   nextVocabCard();
 };
