@@ -402,8 +402,6 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
         <div class="chip" data-form="negatives">Include negatives</div>
         <div class="chip" data-form="questions">Include questions</div>
         <div class="chip" data-form="ability">Include ability forms ("can" / "can't")</div>
-        <div class="chip" data-form="lenient">Lenient spelling (ignore ı/i, ş/s, ç/c, ğ/g, ö/o, ü/u)</div>
-        <div class="chip" data-form="autoSpeak">Auto-speak each prompt</div>
       </div>
     </div>
 
@@ -484,7 +482,6 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
         <div class="chip" id="vocabFlashcardChip" data-typing="false">Flashcards</div>
       </div>
       <div class="chip-row" style="margin-top:8px;">
-        <div class="chip" id="vocabLenientChip">Lenient spelling (ignore ı/i, ş/s, ç/c, ğ/g, ö/o, ü/u)</div>
       </div>
     </div>
   </div>
@@ -563,6 +560,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       </div>
       <div class="answer-row" id="tekrarAnswerRow">
         <input id="tekrarInput" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type your answer…">
+        <button class="icon-btn mic-btn" id="tekrarMicBtn" title="Answer by voice" aria-label="Answer by voice" aria-pressed="false" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4M8 22h8"></path></svg></button>
         <button class="btn btn-primary" id="tekrarCheck">Check</button>
       </div>
       <div class="feedback" id="tekrarFeedback"></div>
@@ -616,6 +614,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       </div>
       <div class="answer-row" id="casesAnswerRow">
         <input id="casesInput" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type the Turkish sentence…">
+        <button class="icon-btn mic-btn" id="casesMicBtn" title="Answer by voice" aria-label="Answer by voice" aria-pressed="false" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4M8 22h8"></path></svg></button>
         <button class="btn btn-primary" id="casesCheck">Check</button>
       </div>
       <div class="feedback" id="casesFeedback"></div>
@@ -2963,6 +2962,19 @@ function applyVocabSettings(S){
   if(typeof S.vocabLenientTyping==="boolean") vocabState.lenientTyping = S.vocabLenientTyping;
 }
 if(SAVED_SETTINGS) applyVocabSettings(SAVED_SETTINGS);
+// Global settings (the gear in the header): one spelling rule and one auto-play choice for every tab.
+// Spelling used to be a separate switch on Forms and on Vocab, so either one being on counts as on.
+function globalLenient(){ return !!(state.lenient || vocabState.lenientTyping); }
+window.turkceSettings = {
+  get: ()=>({lenient: globalLenient(), autoSpeak: !!state.autoSpeak}),
+  set: (key, value)=>{
+    if(key==="lenient"){ state.lenient = !!value; vocabState.lenientTyping = !!value; }
+    else if(key==="autoSpeak"){ state.autoSpeak = !!value; }
+    saveSettings();
+  },
+};
+// Reads Turkish text aloud when "Auto-play" is on.
+function autoPlay(text){ if(state.autoSpeak && text) speak(text, "tr-TR"); }
 function syncVocabSettingChips(){
   document.querySelectorAll(".chip[data-master]").forEach(c=>{
     c.classList.toggle("on", c.dataset.master===vocabState.masterMode);
@@ -2970,7 +2982,6 @@ function syncVocabSettingChips(){
   document.querySelectorAll("#vocabFilterChips .chip").forEach(c=>c.classList.toggle("on", (c.dataset.unknownOnly==="true")===vocabState.unknownOnly));
   document.getElementById("vocabTypingModeChip").classList.toggle("on", vocabState.typingMode);
   document.getElementById("vocabFlashcardChip").classList.toggle("on", !vocabState.typingMode);
-  document.getElementById("vocabLenientChip").classList.toggle("on", vocabState.lenientTyping);
   updateVocabHintText();
 }
 syncVocabSettingChips();
@@ -3378,6 +3389,7 @@ function flipVocabCard(){
   vocabState.flipped = !vocabState.flipped;
   setVocabBackVisible(vocabState.flipped);
   updateVocabAudioSlot();
+  if(vocabState.flipped) autoPlay(vocabState.current.tr);
 }
 
 function wordAnswerMatches(detail, mode, input){
@@ -3402,6 +3414,7 @@ function checkVocabAnswer(){
   recordWordResult(vocabState.current, correct);
   vocabState.flipped = true;
   vocabState.lastCheck = correct;
+  autoPlay(vocabState.current.tr);
   let newlyKnown = false;
   if(correct && updatesProgressFilter()){
     const key = vocabKnownKey(vocabState.current);
@@ -3708,11 +3721,6 @@ document.querySelectorAll("#vocabAnswerModeChips .chip").forEach(chip=>{
     saveSettings();
   };
 });
-document.getElementById("vocabLenientChip").onclick = (e)=>{
-  vocabState.lenientTyping = !vocabState.lenientTyping;
-  e.target.classList.toggle("on", vocabState.lenientTyping);
-  saveSettings();
-};
 
 document.addEventListener("keydown", e=>{
   if(document.getElementById("tab-vocab").style.display==="none") return;
@@ -3914,6 +3922,7 @@ function checkTekrar(){
   const correct = wordAnswerMatches(detail, tekrar.mode, input.value);
   const key = vocabKnownKey(tekrar.current);
   recordWordResult(tekrar.current, correct);
+  autoPlay(tekrar.current.tr);
   tekrar.flipped = true;
   tekrar.last = key;
   tekrar.again.forEach(a=>a.wait--);
@@ -4251,16 +4260,20 @@ function nextCasesCard(){
   if(window.matchMedia("(hover: hover)").matches) input.focus();
   updateCasesStats();
 }
+// Exactly right, or (for the verb cases) at least the right ending. Genitif + iyelik must be exact.
+function caseGrade(item, text){
+  const given = caseWords(text), target = caseWords(casePlain(item.ex));
+  const exact = given.length>0 && (given.join(" ")===target.join(" ") || (item.alts||[]).some(a=>caseWords(a).join(" ")===given.join(" ")));
+  const marked = item.strict ? "" : caseMarkedWord(item.ex);
+  return {exact, ending: exact || !!(marked && given.includes(marked))};
+}
 function checkCases(){
   const item = cases.current;
   if(!item || cases.flipped) return;
   const input = document.getElementById("casesInput");
-  const given = caseWords(input.value), target = caseWords(casePlain(item.ex));
-  const exact = given.length>0 && (given.join(" ")===target.join(" ") || (item.alts||[]).some(a=>caseWords(a).join(" ")===given.join(" ")));
-  // Genitif + iyelik answers must be exactly right; the other cases also give credit for the right ending.
-  const marked = item.strict ? "" : caseMarkedWord(item.ex);
-  const ending = exact || (marked && given.includes(marked));
+  const {exact, ending} = caseGrade(item, input.value);
   cases.flipped = true;
+  autoPlay(casePlain(item.ex));
   cases.total++;
   if(ending) cases.right++;
   const fb = document.getElementById("casesFeedback");
@@ -4354,7 +4367,7 @@ function nextQuestion(){
   state.current = {verb, tenseKey, personIdx, negative, question, ability, answer, gloss};
   renderQuestion();
   updateBackButtonState();
-  if(state.autoSpeak) speakCurrent();
+  if(state.mode!=="en2tr") autoPlay(state.mode==="tr" ? state.current.verb.inf : state.current.answer.trim());   // a Turkish prompt
 }
 
 function refreshCurrentQuestion(){
@@ -4464,6 +4477,7 @@ function setPrimaryButtonMode(mode){
 }
 
 function normalizeTR(s, lenient){
+  lenient = lenient || globalLenient();
   let x = s.trim().toLowerCase().replace(/\s+/g," ");
   x = x.replace(/i̇/g,"i");
   // Şapka (circumflex) is optional: â/î/û count the same as a/i/u, e.g. "kahin" for "kâhin".
@@ -4529,6 +4543,7 @@ function simpleFuzzy(a,b){
 
 function showFeedback(correct){
   updateSpeakButton(true);
+  if(state.mode!=="tr2en") autoPlay(state.current.answer.trim());   // the Turkish answer
   const fb = document.getElementById("feedback");
   fb.className = "feedback show " + (correct?"good":"bad");
   const {answer, gloss, verb, personIdx} = state.current;
@@ -4544,6 +4559,7 @@ function showFeedback(correct){
 function revealAnswer(){
   if(!state.current) return;
   updateSpeakButton(true);
+  if(state.mode!=="tr2en") autoPlay(state.current.answer.trim());
   const fb = document.getElementById("feedback");
   fb.className = "feedback show good";
   const {personIdx} = state.current;
@@ -4634,10 +4650,13 @@ function voiceTarget(){
     return {tab:"forms", lang: state.mode==="tr2en" ? "en-US" : "tr-TR"};
   if(document.getElementById("tab-vocab").style.display!=="none" && vocabState.typingMode)
     return {tab:"vocab", lang: vocabState.mode==="tr2en" ? "en-US" : "tr-TR"};
+  // Tekrar and Cases are answered in Turkish.
+  if(document.getElementById("tab-tekrar").style.display!=="none" && tekrar.current) return {tab:"tekrar", lang:"tr-TR"};
+  if(document.getElementById("tab-cases").style.display!=="none" && cases.current) return {tab:"cases", lang:"tr-TR"};
   return null;
 }
 function paintMicButtons(){
-  ["micBtn","vocabMicBtn"].forEach(id=>{
+  ["micBtn","vocabMicBtn","tekrarMicBtn","casesMicBtn"].forEach(id=>{
     const b = document.getElementById(id);
     b.classList.toggle("mic-on", voice.on);
     b.setAttribute("aria-pressed", String(voice.on));
@@ -4677,7 +4696,7 @@ function voiceSync(){
 }
 function showVoiceProblem(msg){
   const t = voiceTarget() || {tab:"forms"};
-  const fb = document.getElementById(t.tab==="forms" ? "feedback" : "vocabFeedback");
+  const fb = document.getElementById({forms:"feedback", vocab:"vocabFeedback", tekrar:"tekrarFeedback", cases:"casesFeedback"}[t.tab] || "vocabFeedback");
   fb.className = "feedback show bad";
   fb.textContent = msg;
 }
@@ -4734,6 +4753,25 @@ function onVoiceResult(e){
     showHeard("answerInput", heard, match);
     document.getElementById("answerInput").blur();
     startAutoAdvance(document.getElementById("micBtn"), nextQuestion);
+  } else if(target.tab==="tekrar"){
+    if(!tekrar.current || tekrar.flipped) return;
+    const detail = vocabItemDetail(tekrar.current);
+    const match = alts.findIndex(a=>wordAnswerMatches(detail, tekrar.mode, a));
+    const heard = match>=0 ? alts[match] : alts[0];
+    document.getElementById("tekrarInput").value = heard;
+    checkTekrar();
+    showHeard("tekrarInput", heard, match);
+    startAutoAdvance(document.getElementById("tekrarMicBtn"), nextTekrarCard);
+  } else if(target.tab==="cases"){
+    if(!cases.current || cases.flipped) return;
+    // Prefer a guess that is exactly right, then one with the right ending.
+    let match = alts.findIndex(a=>caseGrade(cases.current, a).exact);
+    if(match<0) match = alts.findIndex(a=>caseGrade(cases.current, a).ending);
+    const heard = match>=0 ? alts[match] : alts[0];
+    document.getElementById("casesInput").value = heard;
+    checkCases();
+    showHeard("casesInput", heard, match);
+    startAutoAdvance(document.getElementById("casesMicBtn"), nextCasesCard);
   } else {
     if(!vocabState.current || vocabState.flipped) return;
     const match = alts.findIndex(a=>vocabAnswerCorrect(a));
@@ -4778,7 +4816,7 @@ function micAllowedHere(){
   try{ return window.top===window.self; }catch(e){ return false; }
 }
 if(SpeechRec && micAllowedHere()){
-  ["micBtn","vocabMicBtn"].forEach(id=>{
+  ["micBtn","vocabMicBtn","tekrarMicBtn","casesMicBtn"].forEach(id=>{
     const b = document.getElementById(id);
     b.hidden = false;
     b.onclick = toggleVoice;

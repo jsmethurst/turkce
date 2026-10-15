@@ -144,6 +144,11 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
 .feedback-msg.good{color:var(--good);}
 .feedback-msg.bad{color:var(--bad);}
 .help-wrap .feedback-btn svg{width:16px;height:16px;}
+.settings-wrap .feedback-btn svg{width:17px;height:17px;}
+.settings-pop{width:300px;}
+.settings-pop .gs-row{display:flex;align-items:flex-start;gap:10px;padding:9px 2px;font-size:13px;line-height:1.4;color:var(--ink);cursor:pointer;}
+.settings-pop .gs-row input{margin-top:2px;width:17px;height:17px;flex:none;accent-color:var(--tile-blue-deep);cursor:pointer;}
+.settings-pop .gs-row small{display:block;margin-top:2px;font-size:12px;color:var(--ink-soft);}
 .help-pop{width:330px;max-height:calc(100vh - 120px);overflow-y:auto;}
 .help-pop ol{margin:0;padding-left:20px;display:grid;gap:9px;font-size:13px;line-height:1.45;color:var(--ink-soft);}
 .help-pop li b{color:var(--ink);}
@@ -288,6 +293,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     if(menu && !menu.hidden && !ev.target.closest(".account-wrap")) toggleMenu(false);
     if(fb && !fb.pop.hidden && !ev.target.closest(".feedback-wrap")) toggleFeedback(false);
     if(help && !help.pop.hidden && !ev.target.closest(".help-wrap")) toggleHelp(false);
+    if(gear && !gear.pop.hidden && !ev.target.closest(".settings-wrap")) toggleSettings(false);
   });
 
   // Keep a popover on screen: line its right edge up with its button's, then
@@ -304,6 +310,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     if(menu && !menu.hidden) placePopover(menu);
     if(fb && !fb.pop.hidden) placePopover(fb.pop);
     if(help && !help.pop.hidden) placePopover(help.pop);
+    if(gear && !gear.pop.hidden) placePopover(gear.pop);
   });
 
   // ---------- "Suggest a change" (bug reports and ideas alike) ----------
@@ -341,7 +348,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     fb = {wrap: w, btn: w.querySelector("#feedbackBtn"), pop: w.querySelector("#feedbackPop"),
           text: w.querySelector("#feedbackText"), send: w.querySelector("#feedbackSend"), msg: w.querySelector("#feedbackMsg"),
           shotBtn: w.querySelector("#feedbackShotBtn"), shotBox: w.querySelector("#feedbackShot"), shot: null};
-    fb.btn.onclick = function(){ if(menu) toggleMenu(false); if(help) toggleHelp(false); toggleFeedback(); };
+    fb.btn.onclick = function(){ if(menu) toggleMenu(false); if(help) toggleHelp(false); if(gear) toggleSettings(false); toggleFeedback(); };
     fb.shotBtn.onclick = takeScreenshot;
     fb.shotBox.querySelector("button").onclick = function(){ setShot(null); fb.shotBtn.focus(); };
     fb.pop.addEventListener("keydown", function(ev){ ev.stopPropagation(); if(ev.key === "Escape"){ toggleFeedback(false); fb.btn.focus(); } });
@@ -387,9 +394,41 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
       </div>
     </div>`);
     help = {wrap: w, btn: w.querySelector("#helpBtn"), pop: w.querySelector("#helpPop")};
-    help.btn.onclick = function(){ if(menu) toggleMenu(false); if(fb) toggleFeedback(false); toggleHelp(); };
+    help.btn.onclick = function(){ if(menu) toggleMenu(false); if(fb) toggleFeedback(false); if(gear) toggleSettings(false); toggleHelp(); };
     help.pop.addEventListener("keydown", function(ev){ ev.stopPropagation(); if(ev.key === "Escape"){ toggleHelp(false); help.btn.focus(); } });
     return w;
+  }
+  // ---------- Global settings: a gear next to the guide and suggestion buttons ----------
+  var GEAR_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
+  var gear = null;
+  function buildSettings(){
+    var w = el(`<div class="feedback-wrap settings-wrap">
+      <button class="feedback-btn" id="settingsBtn" type="button" title="Settings" aria-label="Settings" aria-haspopup="true" aria-expanded="false">${GEAR_ICON}</button>
+      <div class="feedback-pop settings-pop" id="settingsPop" role="dialog" aria-label="Global settings" hidden>
+        <div class="feedback-title">Global Settings</div>
+        <label class="gs-row"><input type="checkbox" id="gsLenient"><span>Lenient spelling<small>Ignore ı/i, ş/s, ç/c, ğ/g, ö/o, ü/u</small></span></label>
+        <label class="gs-row"><input type="checkbox" id="gsAutoPlay"><span>Auto-play Turkish prompts and answers</span></label>
+      </div>
+    </div>`);
+    gear = {wrap: w, btn: w.querySelector("#settingsBtn"), pop: w.querySelector("#settingsPop"),
+            lenient: w.querySelector("#gsLenient"), autoPlay: w.querySelector("#gsAutoPlay")};
+    gear.btn.onclick = function(){ if(menu) toggleMenu(false); if(fb) toggleFeedback(false); if(help) toggleHelp(false); toggleSettings(); };
+    gear.pop.addEventListener("keydown", function(ev){ ev.stopPropagation(); if(ev.key === "Escape"){ toggleSettings(false); gear.btn.focus(); } });
+    // The app owns the values (window.turkceSettings); this only shows and changes them.
+    gear.lenient.onchange = function(){ if(window.turkceSettings) window.turkceSettings.set("lenient", gear.lenient.checked); };
+    gear.autoPlay.onchange = function(){ if(window.turkceSettings) window.turkceSettings.set("autoSpeak", gear.autoPlay.checked); };
+    return w;
+  }
+  function toggleSettings(force){
+    var open = typeof force === "boolean" ? force : gear.pop.hidden;
+    if(open && window.turkceSettings){
+      var v = window.turkceSettings.get();
+      gear.lenient.checked = !!v.lenient;
+      gear.autoPlay.checked = !!v.autoSpeak;
+    }
+    gear.pop.hidden = !open;
+    if(open) placePopover(gear.pop);
+    gear.btn.setAttribute("aria-expanded", open ? "true" : "false");
   }
   function toggleHelp(force){
     var open = typeof force === "boolean" ? force : help.pop.hidden;
@@ -561,6 +600,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     };
     actions.appendChild(buildHelp());
     actions.appendChild(buildFeedback());
+    actions.appendChild(buildSettings());
     var wrap = document.createElement("div");
     wrap.className = "account-wrap";
     actions.appendChild(wrap);
@@ -568,7 +608,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     wrap.appendChild(buildMenu());
     pill.setAttribute("aria-haspopup", "true");
     pill.setAttribute("aria-expanded", "false");
-    pill.onclick = function(){ if(help) toggleHelp(false); if(signedInEmail !== null && !recovering){ panel.hidden = true; toggleMenu(); } else togglePanel(); };
+    pill.onclick = function(){ if(help) toggleHelp(false); if(gear) toggleSettings(false); if(signedInEmail !== null && !recovering){ panel.hidden = true; toggleMenu(); } else togglePanel(); };
     pill.addEventListener("keydown", function(ev){
       if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); ev.stopPropagation(); pill.onclick(); }
       else if(ev.key === "Escape" && menu && !menu.hidden){ ev.stopPropagation(); toggleMenu(false); }
