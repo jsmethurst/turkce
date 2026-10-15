@@ -3099,6 +3099,7 @@ function wordFormLabel(key){
 function recordWordResult(item, correct){
   if(!item || vocabState.recordedItem===item) return;
   vocabState.recordedItem = item;
+  countAnswer();
   const key = vocabKnownKey(item);
   const prev = (wordStats[key] && wordStats[key].r) || "";
   wordStats[key] = {r: (prev + (correct ? "1" : "0")).slice(-HISTORY_LENGTH), at: new Date().toISOString()};
@@ -4270,6 +4271,7 @@ function checkCases(){
   cases.flipped = true;
   autoPlay(casePlain(item.ex));
   cases.total++;
+  countAnswer();
   if(ending) cases.right++;
   const fb = document.getElementById("casesFeedback");
   // Green: exactly right. Yellow: the case ending is right but something else in the sentence is off. Red: wrong.
@@ -4537,6 +4539,7 @@ function simpleFuzzy(a,b){
 }
 
 function showFeedback(correct){
+  countAnswer();
   updateSpeakButton(true);
   if(state.mode!=="tr2en") autoPlay(state.current.answer.trim());   // the Turkish answer
   const fb = document.getElementById("feedback");
@@ -4972,4 +4975,56 @@ lastLocalSettings = collectSettings();
 initRemote();
 </script>
 
+
+<!-- Positive reinforcement: shown once a day when a learner reaches 1000 answers -->
+<div class="modal-backdrop" id="praiseModal" hidden>
+  <div class="praise-card" role="dialog" aria-modal="true" aria-labelledby="praiseTitle">
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="pbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1F5C6B"/><stop offset="1" stop-color="#12414D"/></linearGradient>
+        <linearGradient id="ptea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E0662E"/><stop offset="1" stop-color="#A8321A"/></linearGradient>
+        <clipPath id="ptile"><rect width="64" height="64" rx="15"/></clipPath>
+        <clipPath id="pglass"><path d="M21 20H43C42.5 28 36.5 31 36.5 36C36.5 40.5 42.5 43 41.8 49C41.2 53.5 37.5 55.5 32 55.5C26.5 55.5 22.8 53.5 22.2 49C21.5 43 27.5 40.5 27.5 36C27.5 31 21.5 28 21 20Z"/></clipPath>
+      </defs>
+      <g clip-path="url(#ptile)"><rect width="64" height="64" fill="url(#pbg)"/><circle cx="3" cy="3" r="15" fill="#2E9C97"/><circle cx="63" cy="63" r="11" fill="#C9932E"/></g>
+      <g fill="none" stroke="#FBF5E9" stroke-width="2.6" stroke-linecap="round" opacity="0.9"><path d="M28 16C25 13.2 31 10.8 28 7"/><path d="M36 16C33 13.2 39 10.8 36 7"/></g>
+      <ellipse cx="32" cy="56.5" rx="15.5" ry="3.8" fill="#C1442B"/>
+      <g clip-path="url(#pglass)"><rect x="18" y="20" width="28" height="40" fill="#FBF5E9" opacity="0.22"/><rect x="18" y="25.5" width="28" height="34" fill="url(#ptea)"/><rect x="18" y="25.5" width="28" height="2.2" fill="#F2A15A"/></g>
+      <path d="M21 20H43C42.5 28 36.5 31 36.5 36C36.5 40.5 42.5 43 41.8 49C41.2 53.5 37.5 55.5 32 55.5C26.5 55.5 22.8 53.5 22.2 49C21.5 43 27.5 40.5 27.5 36C27.5 31 21.5 28 21 20Z" fill="none" stroke="#FBF5E9" stroke-width="2.4" stroke-linejoin="round"/>
+      <g fill="none" stroke="#21323A" stroke-width="1.4" stroke-linecap="round"><path d="M24.6 38.6Q27.8 35.6 31 38.2"/><path d="M33 38.2Q36.2 35.6 39.4 38.6"/></g>
+      <circle cx="27.8" cy="42.6" r="3.3" fill="#fff" stroke="#21323A" stroke-width="0.9"/><circle cx="36.2" cy="42.6" r="3.3" fill="#fff" stroke="#21323A" stroke-width="0.9"/>
+      <circle cx="28.2" cy="42.9" r="1.8" fill="#21323A"/><circle cx="36.6" cy="42.9" r="1.8" fill="#21323A"/>
+      <circle cx="28.9" cy="42" r="0.7" fill="#fff"/><circle cx="37.3" cy="42" r="0.7" fill="#fff"/>
+      <path d="M25.2 47.4Q32 56.5 38.8 47.4Z" fill="#8E2A18" stroke="#21323A" stroke-width="1.2" stroke-linejoin="round"/>
+      <path d="M28 51.4Q32 49.6 36 51.4Q32 54.6 28 51.4Z" fill="#F08A7A"/>
+      <path d="M26.6 47.9H37.4" stroke="#FBF5E9" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    <h2 id="praiseTitle">Positive Reinforcement</h2>
+    <p>Wow! You've been practicing a lot. See Jacob to claim your <b>₺50</b> reward.</p>
+    <button class="btn btn-primary" id="praiseOk">OK</button>
+  </div>
+</div>
+<style>
+.praise-card{background:var(--paper);border-radius:20px;max-width:360px;width:100%;padding:26px 24px 22px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.35);}
+.praise-card svg{width:150px;height:150px;display:block;margin:-6px auto 8px;filter:drop-shadow(0 6px 10px rgba(18,65,77,.3));animation:praisePop .5s cubic-bezier(.3,1.6,.5,1);}
+@keyframes praisePop{from{transform:scale(.4) rotate(-8deg);opacity:0;}}
+.praise-card h2{font-family:'Fraunces',serif;font-size:1.6rem;margin:0 0 10px;color:var(--ink);}
+.praise-card p{font-size:1.05rem;line-height:1.45;margin:0 0 20px;}
+.praise-card b{color:var(--tile-red);}
+</style>
+<script>
+// Counts every answer (Forms, Vocab, Tekrar, Cases) per calendar day on this device. At 1000 the pop-up shows once that day.
+const DAILY_GOAL = 1000, DAILY_KEY = "turkce.dailyAnswers";
+function countAnswer(){
+  try{
+    const d = new Date(), today = d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    let rec = JSON.parse(localStorage.getItem(DAILY_KEY) || "null");
+    if(!rec || rec.date!==today) rec = {date:today, n:0, shown:false};
+    rec.n++;
+    if(rec.n>=DAILY_GOAL && !rec.shown){ rec.shown = true; document.getElementById("praiseModal").hidden = false; }
+    localStorage.setItem(DAILY_KEY, JSON.stringify(rec));
+  }catch(e){}
+}
+document.getElementById("praiseOk").onclick = ()=>{ document.getElementById("praiseModal").hidden = true; };
+</script>
 </body></html>
