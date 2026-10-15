@@ -445,9 +445,14 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     </div>
     <p class="hint" style="text-align:center;margin-top:14px;margin-bottom:22px;" id="vocabHintText"><kbd>Space</kbd>: Flip &nbsp; <kbd>Enter</kbd>: Advance &nbsp; <kbd>Left arrow</kbd>: Yanlış &nbsp; <kbd>Right arrow</kbd>: Doğru &nbsp; <kbd>P</kbd>: Play audio</p>
 
-    <div class="section-title">Flashcards</div>
+    <div class="section-title">Practice</div>
     <div class="settings-group">
-      <h3>Selection filter</h3>
+      <h3>Input</h3>
+      <div class="chip-row" id="vocabAnswerModeChips">
+        <div class="chip" id="vocabTypingModeChip" data-typing="true">Typing</div>
+        <div class="chip" id="vocabFlashcardChip" data-typing="false">Flashcards</div>
+      </div>
+      <h3 style="margin-top:14px;">Selection filter</h3>
       <div class="chip-row sel-chips" id="vocabSelectionChips"></div>
       <div class="chip-row" id="vocabMasterChips" style="margin-top:6px;">
         <div class="chip on" data-master="both">All words</div>
@@ -474,16 +479,6 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <p class="hint" id="testStatus"></p>
     </div>
 
-    <div class="section-title">Settings</div>
-    <div class="settings-group">
-      <h3>Mode</h3>
-      <div class="chip-row" id="vocabAnswerModeChips">
-        <div class="chip" id="vocabTypingModeChip" data-typing="true">Typing</div>
-        <div class="chip" id="vocabFlashcardChip" data-typing="false">Flashcards</div>
-      </div>
-      <div class="chip-row" style="margin-top:8px;">
-      </div>
-    </div>
   </div>
 
   <!-- ============ SÖZLÜK ============ -->
