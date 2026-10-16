@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-239 verbs · 898 non-verbs · 40 topics
+239 verbs · 899 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1230,7 +1230,7 @@ tırnak                    fingernail / toenail
 dudak                     lip
 dil                       tongue / language
 
-DERSTE 276-296
+DERSTE 276-297
 --------------
 diş                       tooth
 kas                       muscle
@@ -1253,6 +1253,7 @@ görüntülü                 video
 sonunda                   finally
 ise                       if
 aktarma                   transfer / connection (travel)
+birkaç                    a few
 
 SIFATLAR 1-25
 -------------
@@ -1656,7 +1657,7 @@ eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geni�
 
 Little Words
 ------------
-bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise
+bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç
 
 Cities & Countries
 ------------------
