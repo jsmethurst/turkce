@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-240 verbs · 901 non-verbs · 40 topics
+240 verbs · 902 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1232,7 +1232,7 @@ tırnak                    fingernail / toenail
 dudak                     lip
 dil                       tongue / language
 
-DERSTE 276-299
+DERSTE 276-300
 --------------
 diş                       tooth
 kas                       muscle
@@ -1258,6 +1258,7 @@ aktarma                   transfer / connection (travel)
 birkaç                    a few
 havalı                    cool (person)
 olur                      sure / okay
+sesi                      sound
 
 SIFATLAR 1-25
 -------------
@@ -1577,7 +1578,7 @@ araba, uçak, dolmuş, vapur, motosiklet, trafik, yolculuk, tur, sahil, havaalan
 
 Electronics & Media
 -------------------
-bilgisayar, telefon, cep telefonu, televizyon, radyo, internet, kanal, dizi, haber, program, yayın akışı, çizgi film, magazin, komedi filmi, ana haber, spor programı, yemek programı, yarışma, çocuk programı, müzik programı, sinema filmi, yabancı sinema, tekrar, yayında, yayınlanmak, yayınlamak, izlemek, seyretmek, televizyon izlemek, televizyon seyretmek, fotoğraf, gazete, dergi, televizyon kanalı, televizyon programı, komedi, yüklemek, mesaj atmak, telefon etmek, e-posta adresi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, kahvaltı haberleri, tekerleme, görüntülü
+bilgisayar, telefon, cep telefonu, televizyon, radyo, internet, kanal, dizi, haber, program, yayın akışı, çizgi film, magazin, komedi filmi, ana haber, spor programı, yemek programı, yarışma, çocuk programı, müzik programı, sinema filmi, yabancı sinema, tekrar, yayında, yayınlanmak, yayınlamak, izlemek, seyretmek, televizyon izlemek, televizyon seyretmek, fotoğraf, gazete, dergi, televizyon kanalı, televizyon programı, komedi, yüklemek, mesaj atmak, telefon etmek, e-posta adresi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, kahvaltı haberleri, tekerleme, görüntülü, sesi
 
 Personality & Appearance
 ------------------------
