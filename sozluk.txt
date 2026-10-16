@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-240 verbs · 902 non-verbs · 40 topics
+240 verbs · 903 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1260,6 +1260,10 @@ havalı                    cool (person)
 olur                      sure / okay
 sesi                      sound
 
+DERSTE 301-301
+--------------
+böyle                     like this
+
 SIFATLAR 1-25
 -------------
 iyi                       good
@@ -1662,7 +1666,7 @@ eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geni�
 
 Little Words
 ------------
-bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur
+bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle
 
 Cities & Countries
 ------------------
