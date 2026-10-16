@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-239 verbs · 899 non-verbs · 40 topics
+239 verbs · 901 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1230,7 +1230,7 @@ tırnak                    fingernail / toenail
 dudak                     lip
 dil                       tongue / language
 
-DERSTE 276-297
+DERSTE 276-299
 --------------
 diş                       tooth
 kas                       muscle
@@ -1254,6 +1254,8 @@ sonunda                   finally
 ise                       if
 aktarma                   transfer / connection (travel)
 birkaç                    a few
+havalı                    cool (person)
+olur                      sure / okay
 
 SIFATLAR 1-25
 -------------
@@ -1657,7 +1659,7 @@ eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geni�
 
 Little Words
 ------------
-bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç
+bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur
 
 Cities & Countries
 ------------------
@@ -1677,7 +1679,7 @@ tuzlu, tatlı, acı, ekşi, lezzetli, kuru yemekler, sulu yemekler, hafif yemek,
 
 Character Traits
 ----------------
-nazik, kaba, kibar, akıllı, akılsız, sabırlı, sabırsız, dürüst, neşeli, eğlenceli, sakin, arkadaş canlısı, cömert, cimri, düzenli, dağınık, güleryüzlü, hayalperest, merhametli, hırslı, karizmatik, güvenilir, kararlı, kararsız, mütevazı, enerjik, özgüvenli, becerikli, yetenekli, meraklı, esprili, zeki, bencil, sosyal, asosyal, utangaç, düşünceli, düşüncesiz, inatçı, çok yönlü, anlayışlı, anlayışsız, hoşgörülü, maceracı, cesur, korkak, çılgın, yaratıcı, misafirperver, yaramaz, çalışkan, tembel, yardımsever, davranmak, eli açık, uslu, şakacı, maceraperest
+nazik, kaba, kibar, akıllı, akılsız, sabırlı, sabırsız, dürüst, neşeli, eğlenceli, sakin, arkadaş canlısı, cömert, cimri, düzenli, dağınık, güleryüzlü, hayalperest, merhametli, hırslı, karizmatik, güvenilir, kararlı, kararsız, mütevazı, enerjik, özgüvenli, becerikli, yetenekli, meraklı, esprili, zeki, bencil, sosyal, asosyal, utangaç, düşünceli, düşüncesiz, inatçı, çok yönlü, anlayışlı, anlayışsız, hoşgörülü, maceracı, cesur, korkak, çılgın, yaratıcı, misafirperver, yaramaz, çalışkan, tembel, yardımsever, davranmak, eli açık, uslu, şakacı, maceraperest, havalı
 
 Opposites
 ---------
