@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-239 verbs · 897 non-verbs · 40 topics
+239 verbs · 898 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1230,7 +1230,7 @@ tırnak                    fingernail / toenail
 dudak                     lip
 dil                       tongue / language
 
-DERSTE 276-295
+DERSTE 276-296
 --------------
 diş                       tooth
 kas                       muscle
@@ -1252,6 +1252,7 @@ doğalgaz                  natural gas
 görüntülü                 video
 sonunda                   finally
 ise                       if
+aktarma                   transfer / connection (travel)
 
 SIFATLAR 1-25
 -------------
@@ -1567,7 +1568,7 @@ mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, z
 
 Transportation & Travel
 -----------------------
-araba, uçak, dolmuş, vapur, motosiklet, trafik, yolculuk, tur, sahil, havaalanı, havalimanı, bilet almak, seyahat etmek, sürmek, binmek, indirmek, arabada, tatil planı, gezmek, keşfetmek, ziyaret etmek, bavul hazırlamak, harita, geri dönmek, inmek, yat, uzak, gezgin, köy, pist
+araba, uçak, dolmuş, vapur, motosiklet, trafik, yolculuk, tur, sahil, havaalanı, havalimanı, bilet almak, seyahat etmek, sürmek, binmek, indirmek, arabada, tatil planı, gezmek, keşfetmek, ziyaret etmek, bavul hazırlamak, harita, geri dönmek, inmek, yat, uzak, gezgin, köy, pist, aktarma
 
 Electronics & Media
 -------------------
