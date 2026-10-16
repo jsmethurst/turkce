@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-239 verbs · 901 non-verbs · 40 topics
+240 verbs · 901 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -431,7 +431,7 @@ geri dönmek               to come back / to go back
 keşfetmek                 to discover / to explore
     akuzatif: Şehri keşfediyorum.  (I'm exploring the city.)
 
-DERSTE 51-64
+DERSTE 51-65
 ------------
 sağlıklı olmak            to be healthy
     örnek: Sağlıklı olmak istiyorum.  (I want to be healthy.)
@@ -461,6 +461,8 @@ ummak                     to hope
     akuzatif: Barışı umuyoruz.  (We're hoping for peace.)
 birikmek                  to accumulate
     lokatif: Su çukurda birikiyor.  (Water is accumulating in the hole.)
+sanmak                    to suppose / to assume
+    akuzatif: Ahmet'i evde sanıyorum.  (I assume Ahmet is at home.)
 
 BIBLE 1-25
 ----------
@@ -1651,7 +1653,7 @@ açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, 
 
 Thinking & Deciding
 -------------------
-bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir
+bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir, sanmak
 
 Describing Things
 -----------------
