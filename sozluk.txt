@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-238 verbs · 886 non-verbs · 40 topics
+239 verbs · 897 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -431,7 +431,7 @@ geri dönmek               to come back / to go back
 keşfetmek                 to discover / to explore
     akuzatif: Şehri keşfediyorum.  (I'm exploring the city.)
 
-DERSTE 51-63
+DERSTE 51-64
 ------------
 sağlıklı olmak            to be healthy
     örnek: Sağlıklı olmak istiyorum.  (I want to be healthy.)
@@ -459,6 +459,8 @@ katlamak                  to fold
     akuzatif: Çamaşırları katlıyorum.  (I'm folding the laundry.)
 ummak                     to hope
     akuzatif: Barışı umuyoruz.  (We're hoping for peace.)
+birikmek                  to accumulate
+    lokatif: Su çukurda birikiyor.  (Water is accumulating in the hole.)
 
 BIBLE 1-25
 ----------
@@ -1228,7 +1230,7 @@ tırnak                    fingernail / toenail
 dudak                     lip
 dil                       tongue / language
 
-DERSTE 276-284
+DERSTE 276-295
 --------------
 diş                       tooth
 kas                       muscle
@@ -1239,6 +1241,17 @@ göğüs                     chest (body)
 maceraperest              adventurer (in spirit)
 uğurlu                    auspicious / lucky
 şanslı                    lucky
+felaket                   disaster
+sel                       flood
+deprem                    earthquake
+yangın                    fire
+buna rağmen               despite this / nevertheless
+tekerleme                 nursery rhyme
+kesik                     cut / shut off
+doğalgaz                  natural gas
+görüntülü                 video
+sonunda                   finally
+ise                       if
 
 SIFATLAR 1-25
 -------------
@@ -1550,7 +1563,7 @@ masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitapl
 
 Kitchen & Food
 --------------
-mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek
+mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz
 
 Transportation & Travel
 -----------------------
@@ -1558,7 +1571,7 @@ araba, uçak, dolmuş, vapur, motosiklet, trafik, yolculuk, tur, sahil, havaalan
 
 Electronics & Media
 -------------------
-bilgisayar, telefon, cep telefonu, televizyon, radyo, internet, kanal, dizi, haber, program, yayın akışı, çizgi film, magazin, komedi filmi, ana haber, spor programı, yemek programı, yarışma, çocuk programı, müzik programı, sinema filmi, yabancı sinema, tekrar, yayında, yayınlanmak, yayınlamak, izlemek, seyretmek, televizyon izlemek, televizyon seyretmek, fotoğraf, gazete, dergi, televizyon kanalı, televizyon programı, komedi, yüklemek, mesaj atmak, telefon etmek, e-posta adresi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, kahvaltı haberleri
+bilgisayar, telefon, cep telefonu, televizyon, radyo, internet, kanal, dizi, haber, program, yayın akışı, çizgi film, magazin, komedi filmi, ana haber, spor programı, yemek programı, yarışma, çocuk programı, müzik programı, sinema filmi, yabancı sinema, tekrar, yayında, yayınlanmak, yayınlamak, izlemek, seyretmek, televizyon izlemek, televizyon seyretmek, fotoğraf, gazete, dergi, televizyon kanalı, televizyon programı, komedi, yüklemek, mesaj atmak, telefon etmek, e-posta adresi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, kahvaltı haberleri, tekerleme, görüntülü
 
 Personality & Appearance
 ------------------------
@@ -1630,7 +1643,7 @@ gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, ge�
 
 Everyday Actions
 ----------------
-açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak
+açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek
 
 Thinking & Deciding
 -------------------
@@ -1638,11 +1651,11 @@ bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, pl
 
 Describing Things
 -----------------
-eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı
+eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı, kesik
 
 Little Words
 ------------
-bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek
+bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise
 
 Cities & Countries
 ------------------
@@ -1650,7 +1663,7 @@ Cities & Countries
 
 Weather
 -------
-hava, güneşli, bulutlu, parçalı bulutlu, yağmurlu, yağmur, rüzgarlı, karlı, sisli, nemli, serin, ılık, sıcak, soğuk, buz, kuru, ıslak, yağmurluk, şemsiye, üşümek, ıslanmak, eksi
+hava, güneşli, bulutlu, parçalı bulutlu, yağmurlu, yağmur, rüzgarlı, karlı, sisli, nemli, serin, ılık, sıcak, soğuk, buz, kuru, ıslak, yağmurluk, şemsiye, üşümek, ıslanmak, eksi, felaket, sel, deprem, yangın
 
 Films & Genres
 --------------
