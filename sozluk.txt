@@ -1118,7 +1118,7 @@ acemi                     novice
 emin                      certain / sure
 bütün gün                 all day
 buhar                     steam
-ücretsiz                  free
+ücretsiz                  free (no cost)
 
 DERSTE 176-200
 --------------
