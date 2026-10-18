@@ -177,7 +177,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .mic-btn.mic-on{background:var(--mic);border-color:var(--mic);color:#fff;}
 .mic-btn.mic-on:hover{background:var(--mic);}
 .mic-btn::before{content:"";position:absolute;left:0;right:0;bottom:0;height:0;background:var(--mic-fill);}
-.mic-btn.filling::before{animation:micfill 1.5s linear forwards;}
+.mic-btn.filling::before{animation:micfill var(--fill,1.5s) linear forwards;}
 @keyframes micfill{from{height:0;}to{height:100%;}}
 .mic-btn:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
 #vocabAnswerInput:disabled{opacity:0.6;}
@@ -4868,7 +4868,7 @@ function onVoiceResult(e){
     showFeedback(match>=0);
     showHeard("answerInput", heard, match);
     document.getElementById("answerInput").blur();
-    startAutoAdvance(document.getElementById("micBtn"), nextQuestion);
+    startAutoAdvance(document.getElementById("micBtn"), nextQuestion, match<0);
   } else if(target.tab==="tekrar"){
     if(!tekrar.current || tekrar.flipped) return;
     const detail = vocabItemDetail(tekrar.current);
@@ -4877,7 +4877,7 @@ function onVoiceResult(e){
     document.getElementById("tekrarInput").value = heard;
     checkTekrar();
     showHeard("tekrarInput", heard, match);
-    startAutoAdvance(document.getElementById("tekrarMicBtn"), nextTekrarCard);
+    startAutoAdvance(document.getElementById("tekrarMicBtn"), nextTekrarCard, match<0);
   } else if(target.tab==="cases"){
     if(!cases.current || cases.flipped) return;
     // Prefer a guess that is exactly right, then one with the right ending.
@@ -4887,7 +4887,7 @@ function onVoiceResult(e){
     document.getElementById("casesInput").value = heard;
     checkCases();
     showHeard("casesInput", heard, match);
-    startAutoAdvance(document.getElementById("casesMicBtn"), nextCasesCard);
+    startAutoAdvance(document.getElementById("casesMicBtn"), nextCasesCard, !caseGrade(cases.current, heard).exact);
   } else {
     if(!vocabState.current || vocabState.flipped) return;
     const match = alts.findIndex(a=>vocabAnswerCorrect(a));
@@ -4895,7 +4895,7 @@ function onVoiceResult(e){
     document.getElementById("vocabAnswerInput").value = heard;
     checkVocabAnswer();
     showHeard("vocabAnswerInput", heard, match);
-    startAutoAdvance(document.getElementById("vocabMicBtn"), ()=>{ if(vocabState.test) advanceTypingTest(); else nextVocabCard(); });
+    startAutoAdvance(document.getElementById("vocabMicBtn"), ()=>{ if(vocabState.test) advanceTypingTest(); else nextVocabCard(); }, match<0);
   }
 }
 // After a spoken answer has been checked, the answer box shows what the recognizer heard.
@@ -4905,10 +4905,13 @@ function showHeard(inputId, heard, matchIndex){
   const ordinal = ["", "2nd", "3rd", "4th", "5th"][matchIndex] || "";
   document.getElementById(inputId).value = `Heard: “${heard}”` + (ordinal ? ` (${ordinal} guess)` : "");
 }
-// After a spoken answer, move on in 1.5 s unless the viewer clicks, taps, scrolls or presses a key.
-function startAutoAdvance(btn, advance){
+// After a spoken answer, move on in 1.5 s (3 s after a wrong one, to read the correct answer)
+// unless the viewer clicks, taps, scrolls or presses a key.
+function startAutoAdvance(btn, advance, wrong){
   cancelAutoAdvance();
+  const ms = wrong ? 3000 : 1500;
   voice.btn = btn;
+  btn.style.setProperty("--fill", ms+"ms");
   btn.classList.remove("filling");
   void btn.offsetWidth;
   btn.classList.add("filling");
@@ -4916,7 +4919,7 @@ function startAutoAdvance(btn, advance){
     voice.timer = null;
     cancelAutoAdvance();
     advance();
-  }, 1500);
+  }, ms);
   ["pointerdown","keydown","wheel","touchstart"].forEach(t=>document.addEventListener(t, cancelAutoAdvance, {capture:true, passive:true}));
 }
 function cancelAutoAdvance(){
