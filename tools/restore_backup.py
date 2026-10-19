@@ -4,7 +4,7 @@
     python3 tools/restore_backup.py turkce-backup-YYYY-MM-DD.json.enc > /tmp/restore.sql
 
 It asks for the backup passphrase (openssl prompts for it), decrypts in memory,
-and prints SQL that writes each person's docs into public.user_docs for the
+and prints SQL that writes each person's docs into public.user_docs (plus their word_stats and answer_events) for the
 account with the same email. People must have signed up again first; anyone
 without an account is listed as a comment at the end.
 
@@ -38,6 +38,28 @@ def main():
                 f"select u.id, '{doc.replace(chr(39), chr(39) * 2)}', $restore${body}$restore$::jsonb, 'restore', now()\n"
                 f"from auth.users u where lower(u.email) = lower('{email}')\n"
                 "on conflict (user_id, doc) do update set data = excluded.data, writer = excluded.writer, updated_at = now();")
+        # word_stats and answer_events came in later backups; older files simply don't have them.
+        ws = user.get("word_stats") or {}
+        if ws:
+            body = json.dumps(ws, ensure_ascii=False)
+            if "$restore$" in body:
+                sys.exit("unexpected delimiter in data")
+            out.append(
+                "insert into public.word_stats (user_id, key, r, at, writer)\n"
+                f"select u.id, e.key, e.value->>'r', (e.value->>'at')::timestamptz, 'restore'\n"
+                f"from auth.users u, jsonb_each($restore${body}$restore$::jsonb) e where lower(u.email) = lower('{email}')\n"
+                "on conflict (user_id, key) do update set r = excluded.r, at = excluded.at, writer = excluded.writer, updated_at = now();")
+        ev = user.get("answer_events") or []
+        if ev:
+            body = json.dumps(ev, ensure_ascii=False)
+            if "$restore$" in body:
+                sys.exit("unexpected delimiter in data")
+            out.append(
+                "insert into public.answer_events (user_id, at, tab, key, correct)\n"
+                "select u.id, (e->>0)::timestamptz, e->>1, e->>2, (e->>3)::boolean\n"
+                f"from auth.users u, jsonb_array_elements($restore${body}$restore$::jsonb) e where lower(u.email) = lower('{email}')\n"
+                "and not exists (select 1 from public.answer_events x where x.user_id = u.id and x.at = (e->>0)::timestamptz\n"
+                "  and x.tab = e->>1 and coalesce(x.key, '') = coalesce(e->>2, '') and x.correct = (e->>3)::boolean);")
     out.append("commit;")
     out.append("-- Accounts in the backup with no matching account now (they need to sign up, then re-run):")
     out.append("select b.email from (values " +

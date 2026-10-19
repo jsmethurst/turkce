@@ -3209,7 +3209,7 @@ function wordFormLabel(key){
   const r = wordForm(key);
   return r ? `Last ${r.length}: ${[...r].filter(c=>c==="1").length} right` : "";
 }
-function recordWordResult(item, correct){
+function recordWordResult(item, correct, tab){
   if(!item || vocabState.recordedItem===item) return;
   vocabState.recordedItem = item;
   countAnswer();
@@ -3217,8 +3217,9 @@ function recordWordResult(item, correct){
   const prev = (wordStats[key] && wordStats[key].r) || "";
   wordStats[key] = {r: (prev + (correct ? "1" : "0")).slice(-HISTORY_LENGTH), at: new Date().toISOString()};
   try{ localStorage.setItem(WORD_STATS_KEY, JSON.stringify(wordStats)); }catch(e){}
-  statsDirty.add(key);
+  statsDirty.add(key);   // used only while the account still has the old wordstats document
   if(remoteStats){ clearTimeout(statsTimer); statsTimer = setTimeout(flushStats, 800); }
+  queueAnswer(tab || "vocab", key, correct, true);   // table mode: sent as an append, so two devices never overwrite each other
   updateVocabScoreTag();
   updateVocabProgress();
 }
@@ -3237,6 +3238,69 @@ async function flushStats(){
   }
   statsSaving = false;
   if(statsDirty.size && remoteStats) statsTimer = setTimeout(flushStats, 2000);
+}
+// ---- Answers saved to the account (word_stats + answer_events) ----
+// Each answer is queued here (and kept in this browser until the server confirms it), then sent in batches
+// as appends. A failed send is retried with a growing pause; the same batch id is reused, so a retry
+// after a lost reply is never counted twice. statsMode: "unknown" until the page has checked the account,
+// "table" when word_stats exists, "legacy" when the database hasn't been updated yet (old wordstats document).
+var statsMode = "unknown";
+const PENDING_KEY = "fiil_pending_answers_v1", BATCH_KEY = "fiil_pending_batch_v1";
+let pendingAnswers = [], sendingBatch = null, answerSending = false, answerTimer = null, answerFailures = 0;
+try{ pendingAnswers = JSON.parse(localStorage.getItem(PENDING_KEY) || "[]") || []; }catch(e){ pendingAnswers = []; }
+try{ sendingBatch = JSON.parse(localStorage.getItem(BATCH_KEY) || "null"); }catch(e){ sendingBatch = null; }
+function savePending(){
+  try{ localStorage.setItem(PENDING_KEY, JSON.stringify(pendingAnswers)); localStorage.setItem(BATCH_KEY, JSON.stringify(sendingBatch)); }catch(e){}
+}
+function newBatchId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 10); }
+// tab: forms | vocab | tekrar | cases. key: "verb:..."/"nonverb:..." or null. stat: also counts toward the word's history.
+function queueAnswer(tab, key, ok, stat){
+  if(!window.turkceBackend || !window.turkceBackend.stats || statsMode==="legacy") return;
+  pendingAnswers.push({k:key||null, tab, ok:!!ok, at:new Date().toISOString(), s:!!stat});
+  if(pendingAnswers.length>3000) pendingAnswers.splice(0, pendingAnswers.length-3000);
+  savePending();
+  scheduleAnswerFlush(800);
+}
+function scheduleAnswerFlush(ms){
+  if(statsMode!=="table") return;
+  clearTimeout(answerTimer);
+  answerTimer = setTimeout(flushAnswers, ms);
+}
+async function flushAnswers(){
+  if(answerSending || statsMode!=="table" || !window.turkceBackend) return;
+  if(!sendingBatch){
+    if(!pendingAnswers.length) return;
+    sendingBatch = {id:newBatchId(), items:pendingAnswers.slice(0, 200)};
+    savePending();
+  }
+  answerSending = true;
+  let failed = false;
+  try{
+    await window.turkceBackend.stats.append(sendingBatch.id, sendingBatch.items);
+    pendingAnswers.splice(0, sendingBatch.items.length);
+    sendingBatch = null;
+    savePending();
+    if(answerFailures>=3) setSyncStatus(true);
+    answerFailures = 0;
+  }catch(e){
+    failed = true;
+    answerFailures++;
+    if(answerFailures===3) setSyncStatus(false, "Having trouble saving to " + accountName() + ". Your answers are kept in this browser and will be sent as soon as it works.");
+  }
+  answerSending = false;
+  if(pendingAnswers.length || sendingBatch) scheduleAnswerFlush(failed ? Math.min(60000, 2000 * Math.pow(2, Math.min(answerFailures, 5))) : 300);
+}
+window.addEventListener("online", ()=>{ answerFailures = 0; scheduleAnswerFlush(500); });
+document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="hidden") scheduleAnswerFlush(0); else scheduleAnswerFlush(500); });
+// Answers saved on the account become this device's history; answers still waiting to be sent go on the end.
+function applyServerStats(rows){
+  const unsent = {};
+  pendingAnswers.forEach(a=>{ if(a.s && a.k){ const u = unsent[a.k] || (unsent[a.k] = {r:"", at:""}); u.r += a.ok ? "1" : "0"; u.at = a.at; } });
+  Object.keys(rows).forEach(k=>{
+    const u = unsent[k];
+    wordStats[k] = {r:(rows[k].r + (u ? u.r : "")).slice(-HISTORY_LENGTH), at:(u && u.at > rows[k].at) ? u.at : rows[k].at};
+  });
+  try{ localStorage.setItem(WORD_STATS_KEY, JSON.stringify(wordStats)); }catch(e){}
 }
 function statsFromRemote(data){
   const W = (data && data.words) || {};
@@ -4057,7 +4121,7 @@ function checkTekrar(){
   const detail = vocabItemDetail(tekrar.current);
   const correct = wordAnswerMatches(detail, tekrar.mode, input.value);
   const key = vocabKnownKey(tekrar.current);
-  recordWordResult(tekrar.current, correct);
+  recordWordResult(tekrar.current, correct, "tekrar");
   autoPlay(tekrar.current.tr);
   tekrar.flipped = true;
   tekrar.last = key;
@@ -4412,6 +4476,7 @@ function checkCases(){
   autoPlay(casePlain(item.ex));
   cases.total++;
   countAnswer();
+  queueAnswer("cases", null, exact, false);
   if(ending) cases.right++;
   const fb = document.getElementById("casesFeedback");
   // Green: exactly right. Yellow: the case ending is right but something else in the sentence is off. Red: wrong.
@@ -4680,6 +4745,7 @@ function simpleFuzzy(a,b){
 
 function showFeedback(correct){
   countAnswer();
+  if(state.current && state.current.verb) queueAnswer("forms", "verb:"+state.current.verb.inf, correct, false);
   updateSpeakButton(true);
   if(state.mode!=="tr2en") autoPlay(state.current.answer.trim());   // the Turkish answer
   const fb = document.getElementById("feedback");
@@ -5082,8 +5148,43 @@ async function initRemote(){
         if(knownDirty.size) queueKnownFlush();
         progressRef.onSnapshot(onRemoteProgress, ()=>{});
       }catch(e){ remoteProgress = null; syncLost(); }
+      const bk = window.turkceBackend;
+      let tableMode = false;
+      if(bk && bk.stats){
+        // Word history lives in its own table (one row per word); if the database doesn't have it yet, use the old document.
+        const loadRows = async ()=>{
+          const rows = await bk.stats.load();
+          statsMode = "table";
+          if(!Object.keys(rows).length && Object.keys(wordStats).length){ try{ await bk.stats.importWords(wordStats); }catch(e){} }
+          applyServerStats(rows);
+          updateVocabScoreTag();
+          updateVocabProgress();
+        };
+        try{
+          await loadRows();
+          tableMode = true;
+          bk.stats.listen(row=>{
+            applyServerStats({[row.key]:{r:row.r, at:row.at}});
+            updateVocabScoreTag();
+            updateVocabProgress();
+          });
+          scheduleAnswerFlush(300);
+        }catch(e){
+          if(e && e.missing){
+            statsMode = "legacy";
+            pendingAnswers = []; sendingBatch = null; savePending();
+          } else {
+            // Couldn't reach the account just now: keep going on this device's copy and try again shortly.
+            statsMode = "table";
+            tableMode = true;
+            syncLost();
+            const retry = async ()=>{ try{ await loadRows(); bk.stats.listen(row=>{ applyServerStats({[row.key]:{r:row.r, at:row.at}}); updateVocabScoreTag(); updateVocabProgress(); }); scheduleAnswerFlush(300); setSyncStatus(true); }catch(err){ setTimeout(retry, 15000); } };
+            setTimeout(retry, 15000);
+          }
+        }
+      }
       const statsRef = db.doc(`data/users/${uid}/wordstats`);
-      try{
+      if(!tableMode) try{
         const ssnap = await statsRef.get();
         remoteStats = statsRef;
         statsExists = ssnap.exists;

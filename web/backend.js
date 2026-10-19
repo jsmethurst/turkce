@@ -630,7 +630,54 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
   var signedInEmail = null;   // null = not signed in
   function signedInLabel(){ return signedInEmail === null ? "" : "Signed in"; }
 
+  // ---------- word stats: one row per word (public.word_stats), answers are appended on the server ----------
+  function isMissing(error){
+    var msg = String(error && error.message || "");
+    return !!error && (/^(42P01|PGRST205|PGRST202)$/.test(String(error.code || "")) || /could not find the (table|function)|does not exist/i.test(msg));
+  }
+  function statsError(error){
+    var e = dbError(error);
+    if(isMissing(error)) e.missing = true;
+    return e;
+  }
+  var stats = {
+    // Everything saved for this account: {"nonverb:usta": {r: "1101", at: "<time>"}, ...}
+    load: async function(){
+      var out = {}, from = 0, size = 1000;
+      for(;;){
+        var r = await client.from("word_stats").select("key,r,at").order("key").range(from, from + size - 1);
+        if(r.error) throw statsError(r.error);
+        (r.data || []).forEach(function(row){ out[row.key] = {r: row.r, at: row.at}; });
+        if(!r.data || r.data.length < size) break;
+        from += size;
+      }
+      return out;
+    },
+    // Add answers (never overwrite). Sending the same batch id twice counts once.
+    append: async function(batchId, items){
+      var r = await client.rpc("append_word_answers", {p_batch_id: batchId, p_items: items, p_writer: CLIENT_ID});
+      if(r.error) throw statsError(r.error);
+    },
+    // A brand-new account sends what this browser already has (only words the account lacks are added).
+    importWords: async function(words){
+      var r = await client.rpc("import_word_stats", {p_words: words, p_writer: CLIENT_ID});
+      if(r.error) throw statsError(r.error);
+    },
+    // Another of this person's devices changed a word: cb({key, r, at}).
+    listen: async function(cb){
+      var id = await uid();
+      client.channel("word_stats:" + id)
+        .on("postgres_changes", {event:"*", schema:"public", table:"word_stats", filter:"user_id=eq." + id}, function(p){
+          var row = p.new;
+          if(!row || !row.key || row.writer === CLIENT_ID) return;
+          cb({key: row.key, r: row.r, at: row.at});
+        })
+        .subscribe();
+    }
+  };
+
   window.turkceBackend = {
+    stats: stats,
     accountName: "your account",
     // The page shows this in the status pill once saving to the account works.
     signedInLabel: signedInLabel,
