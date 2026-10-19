@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-243 verbs · 916 non-verbs · 40 topics
+243 verbs · 919 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1266,7 +1266,7 @@ havalı                    cool (person)
 olur                      sure / okay
 sesi                      sound
 
-DERSTE 301-314
+DERSTE 301-317
 --------------
 böyle                     like this
 kucak                     lap (top of legs)
@@ -1282,6 +1282,9 @@ mümkün                    possible
 hakkında                  about / regarding
 bu kadar                  that's all / that much
 veteriner                 veterinarian
+yani                      well...
+kaçta                     what time?
+tuhaf                     strange
 
 SIFATLAR 1-25
 -------------
@@ -1565,7 +1568,7 @@ TOPICS
 
 Question Words
 --------------
-ne, kim, neresi, nerede, kimde, ne var, ne yok, açık mı, kapalı mı, kaç kez, ne haber
+ne, kim, neresi, nerede, kimde, ne var, ne yok, açık mı, kapalı mı, kaç kez, ne haber, kaçta
 
 Numbers & Ordering
 ------------------
@@ -1681,11 +1684,11 @@ bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, pl
 
 Describing Things
 -----------------
-eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı, kesik, korkutucu, ürkütücü, mümkün
+eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı, kesik, korkutucu, ürkütücü, mümkün, tuhaf
 
 Little Words
 ------------
-bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar
+bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani
 
 Cities & Countries
 ------------------
