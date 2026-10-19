@@ -68,6 +68,15 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .construction .tape{height:16px;border-radius:8px;background:repeating-linear-gradient(-45deg,#f6c500 0 14px,#26231f 14px 28px);}
 .construction .label{margin:10px 0 2px;font-weight:800;font-size:0.95rem;letter-spacing:0.14em;text-transform:uppercase;color:#26231f;}
 .construction .note{margin:0;font-size:0.82rem;color:var(--ink-soft);}
+.heatgrid{width:100%;border-collapse:separate;border-spacing:3px;table-layout:fixed;font-size:0.78rem;}
+.heatgrid th{font-weight:700;color:var(--ink-soft);padding:4px 2px;text-align:center;}
+.heatgrid th.rowh{text-align:left;width:34%;padding-left:2px;font-size:0.76rem;color:var(--ink);}
+.heatgrid td{text-align:center;padding:9px 0;border-radius:7px;background:var(--paper-2);color:var(--ink-soft);font-weight:600;}
+.heatgrid td.hg-g{background:#bfe3cc;color:#14502d;}
+.heatgrid td.hg-y{background:#f6e3a1;color:#6a4b00;}
+.heatgrid td.hg-r{background:#f3bdb1;color:#7a1f10;}
+.heat-key{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 0;font-size:0.76rem;color:var(--ink-soft);}
+.heat-key i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:4px;vertical-align:-1px;}
 .how-list{margin:0;padding-left:20px;display:grid;gap:8px;font-size:0.9rem;line-height:1.45;color:var(--ink-soft);}
 .how-list b{color:var(--ink);}
 .modal-backdrop{position:fixed;inset:0;z-index:60;background:rgba(18,40,46,.5);display:flex;align-items:center;justify-content:center;padding:14px;}
@@ -412,6 +421,17 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <h3 style="margin-top:14px;">Compound (hikâye) tenses</h3>
       <div class="chip-row" id="compoundChips"></div>
       <p class="hint">Compound tenses combine two markers, like <em>gidecektik</em> (future+past, "we were going to go") or <em>giderdik</em> (aorist+past, "we used to go").</p>
+    </div>
+
+    <div class="section-title">Heat grid</div>
+    <div class="construction">
+      <div class="tape" aria-hidden="true"></div>
+      <div class="label">Under construction</div>
+    </div>
+    <div class="settings-group">
+      <p class="hint" style="margin-top:0;">How you're doing on each tense and person, from your last 20 answers in Forms. It starts filling in from now.</p>
+      <div id="heatGridBox"></div>
+      <div class="heat-key"><span><i style="background:#bfe3cc"></i>90% or more</span><span><i style="background:#f6e3a1"></i>70–89%</span><span><i style="background:#f3bdb1"></i>under 70%</span><span><i style="background:var(--paper-2)"></i>fewer than 3 answers</span></div>
     </div>
   </div>
 
@@ -3238,7 +3258,55 @@ async function flushStats(){
   statsSaving = false;
   if(statsDirty.size && remoteStats) statsTimer = setTimeout(flushStats, 2000);
 }
+// Heat grid: for each tense and person, the last 20 answers given in Forms ("1" right, "0" wrong), per learner.
+const FORM_GRID_KEY = "fiil_form_grid_v1", GRID_LENGTH = 20;
+var formGrid = {};
+try{ formGrid = JSON.parse(localStorage.getItem(FORM_GRID_KEY) || "{}") || {}; }catch(e){ formGrid = {}; }
+const gridDirty = new Set();
+let gridTimer = null;
+function saveGridLocal(){ try{ localStorage.setItem(FORM_GRID_KEY, JSON.stringify(formGrid)); }catch(e){} }
+function recordGrid(tenseKey, personIdx, correct){
+  if(!tenseKey || !(personIdx>=0)) return;
+  const k = tenseKey+"|"+personIdx;
+  formGrid[k] = ((formGrid[k]||"") + (correct ? "1" : "0")).slice(-GRID_LENGTH);
+  gridDirty.add(k);
+  saveGridLocal();
+  renderHeatGrid();
+  if(remoteStats){ clearTimeout(gridTimer); gridTimer = setTimeout(flushGrid, 800); }
+}
+async function flushGrid(){
+  if(!remoteStats || statsSaving || !gridDirty.size) return;
+  const keys = [...gridDirty];
+  gridDirty.clear();
+  const patch = Object.fromEntries(keys.map(k=>[k, formGrid[k]]));
+  try{
+    if(statsExists) await remoteStats.update({grid: patch});
+    else { await remoteStats.set({grid: patch}); statsExists = true; }
+  }catch(e){
+    keys.forEach(k=>gridDirty.add(k));
+    gridTimer = setTimeout(flushGrid, 4000);
+  }
+}
+function renderHeatGrid(){
+  const box = document.getElementById("heatGridBox");
+  if(!box) return;
+  const rows = [...TENSES, ...COMPOUNDS.filter(c=>PERSONS.some((p,i)=>formGrid[c.key+"|"+i]))];
+  const cell = (key,i)=>{
+    const r = formGrid[key+"|"+i] || "";
+    if(r.length<3) return `<td title="${r.length} answer${r.length===1?"":"s"} so far">·</td>`;
+    const pct = Math.round(100*[...r].filter(c=>c==="1").length/r.length);
+    return `<td class="${pct>=90?"hg-g":pct>=70?"hg-y":"hg-r"}" title="${pct}% of the last ${r.length}">${pct}</td>`;
+  };
+  box.innerHTML = `<table class="heatgrid"><thead><tr><th class="rowh"></th>${PERSONS.map(p=>`<th>${p}</th>`).join("")}</tr></thead><tbody>`
+    + rows.map(t=>`<tr><th class="rowh">${t.label.replace(/\s*\(.*\)/,"")}</th>${PERSONS.map((p,i)=>cell(t.key,i)).join("")}</tr>`).join("")
+    + `</tbody></table>`;
+}
+renderHeatGrid();
 function statsFromRemote(data){
+  const G = (data && data.grid) || {};
+  Object.keys(G).forEach(k=>{ if(!gridDirty.has(k) && typeof G[k]==="string") formGrid[k] = G[k]; });
+  saveGridLocal();
+  renderHeatGrid();
   const W = (data && data.words) || {};
   Object.keys(W).forEach(k=>{ if(!statsDirty.has(k)) wordStats[k] = W[k]; });
   try{ localStorage.setItem(WORD_STATS_KEY, JSON.stringify(wordStats)); }catch(e){}
@@ -4680,6 +4748,7 @@ function simpleFuzzy(a,b){
 
 function showFeedback(correct){
   countAnswer();
+  if(state.current) recordGrid(state.current.tenseKey, state.current.personIdx, correct);
   updateSpeakButton(true);
   if(state.mode!=="tr2en") autoPlay(state.current.answer.trim());   // the Turkish answer
   const fb = document.getElementById("feedback");
@@ -5090,6 +5159,10 @@ async function initRemote(){
         if(ssnap.exists) statsFromRemote(ssnap.data());
         else Object.keys(wordStats).forEach(k=>statsDirty.add(k));
         if(statsDirty.size) statsTimer = setTimeout(flushStats, 800);
+        // Heat-grid cells this device has but the saved copy doesn't yet.
+        const savedGrid = (ssnap.exists && ssnap.data().grid) || {};
+        Object.keys(formGrid).forEach(k=>{ if(!savedGrid[k]) gridDirty.add(k); });
+        if(gridDirty.size) gridTimer = setTimeout(flushGrid, 1500);
         statsRef.onSnapshot(snap=>{
           if(!snap.exists || snap.metadata.hasPendingWrites || snap.metadata.fromCache) return;
           statsExists = true;
