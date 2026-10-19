@@ -4073,8 +4073,11 @@ function nextTekrarCard(){
   // "Keep going": with nothing due, take whichever words are due soonest.
   let early = false;
   if(!pickWord && tekrar.early && words.length){
-    const ahead = words.filter(w=>w.key!==tekrar.last).sort((a,b)=>a.dueAt-b.dueAt);
-    pickWord = ahead[0] || words[0];
+    // Not a word you answered right in the last hour: its wait is short only because of an old miss.
+    const fresh = w=>{ const st = wordStats[w.key]; return st && st.r && st.r.slice(-1)==="1" && now - new Date(st.at).getTime() < 3600e3; };
+    const others = words.filter(w=>w.key!==tekrar.last);
+    const ahead = others.filter(w=>!fresh(w)).sort((a,b)=>a.dueAt-b.dueAt);
+    pickWord = ahead[0] || others.sort((a,b)=>a.dueAt-b.dueAt)[0] || words[0];
     early = true;
   }
   tekrar.currentEarly = early;
