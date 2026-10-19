@@ -76,7 +76,9 @@ The database holds only per-person data, with row-level security so each signed-
 - `public.user_docs (user_id, doc, data jsonb, writer, updated_at)`: settings, progress, meta and test results. The old `wordstats` doc is kept but frozen: a trigger (`private.carry_old_wordstats`) copies anything an old cached page still writes into `word_stats`. Drop that trigger once nobody runs the old page.
 - `public.word_stats (user_id, key, r, at, writer, updated_at)`: one row per learner and word. Learners can only read it; the page saves answers by calling `append_word_answers(batch_id, items, writer)`, which appends to `r` (never overwrites) and is safe to retry.
 - `public.answer_events`: one row per answer (forms, vocab, tekrar, cases), written by the same function, for usage numbers.
-- `private.user_docs_history` and `private.word_stats_history`: one snapshot a day for 14 days, the undo for bad writes. `backups.*_20261019`: plain copies from before the 19 Oct 2026 upgrade. The `doc` values are `settings`, `progress`, `wordstats`, `meta` and `tests/lists/<key>`. The function `merge_doc(p_doc, p_patch, p_writer)` deep-merges a patch, and realtime is on for the table.
+- `private.user_docs_history` and `private.word_stats_history`: one snapshot a day for 14 days, the undo for bad writes. `backups.*_20261019`: plain copies from before the 19 Oct 2026 upgrade.
+
+The `doc` values are `settings`, `progress`, `wordstats`, `meta` and `tests/lists/<key>`. The function `merge_doc(p_doc, p_patch, p_writer)` deep-merges a patch, and realtime is on for the table.
 
 To change the database:
 1. Add a **new** file `supabase/migrations/<YYYYMMDDHHMMSS>_<short_name>.sql`, using the current UTC time. Never edit or rename a migration that's already on `main`.
