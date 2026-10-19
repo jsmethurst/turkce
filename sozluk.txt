@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-243 verbs · 919 non-verbs · 40 topics
+243 verbs · 922 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1266,7 +1266,7 @@ havalı                    cool (person)
 olur                      sure / okay
 sesi                      sound
 
-DERSTE 301-317
+DERSTE 301-320
 --------------
 böyle                     like this
 kucak                     lap (top of legs)
@@ -1285,6 +1285,9 @@ veteriner                 veterinarian
 yani                      well...
 kaçta                     what time?
 tuhaf                     strange
+mantık                    logic
+mezuniyet                 graduation
+tören                     ceremony
 
 SIFATLAR 1-25
 -------------
@@ -1612,7 +1615,7 @@ Personality & Appearance
 
 School & Study
 --------------
-sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, kitaplar, kitap, kalem, tahta, defter, çanta, sözlük, kağıt, kareli kağıt, çizgili kağıt, cümle, fiil, isim, sıfat, fotokopi, okumak, yazmak, öğrenmek, öğretmek, anlamak, cevaplamak, tekrar etmek, tamamlamak, düzeltmek, açıklamak, çözmek, sırt çantası, doğru, yanlış
+sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, kitaplar, kitap, kalem, tahta, defter, çanta, sözlük, kağıt, kareli kağıt, çizgili kağıt, cümle, fiil, isim, sıfat, fotokopi, okumak, yazmak, öğrenmek, öğretmek, anlamak, cevaplamak, tekrar etmek, tamamlamak, düzeltmek, açıklamak, çözmek, sırt çantası, doğru, yanlış, mezuniyet, tören
 
 Shopping & Money
 ----------------
@@ -1680,7 +1683,7 @@ açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, 
 
 Thinking & Deciding
 -------------------
-bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir, sanmak
+bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir, sanmak, mantık
 
 Describing Things
 -----------------
