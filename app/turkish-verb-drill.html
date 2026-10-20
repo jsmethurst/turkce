@@ -4808,7 +4808,10 @@ function renderFtestResults(){
     const c = ftestSettingsLine(r);
     const pct = Math.round(100*r.correct/r.n);
     const when = new Date(r.at).toLocaleString([], {month:"short", day:"numeric", hour:"numeric", minute:"2-digit"});
-    return `<div class="ftest-result"><div class="top"><span class="meta">${pct}% correct</span><span class="meta">${r.correct} / ${r.n}</span><span class="meta">${r.correct ? (r.ms/r.correct/1000).toFixed(1) + " s per correct answer" : "no correct answers"}</span><span class="meta">${fmtClock(r.ms)} total</span><span class="when">${when}</span></div>`
+    // Average time over the correct answers only: how long wrong ones took doesn't matter. Tests saved before
+    // this was tracked have no per-answer times, so they show no speed.
+    const speed = !r.correct ? "no correct answers" : typeof r.cms==="number" ? `${(r.cms/r.correct/1000).toFixed(1)} s per correct answer` : "";
+    return `<div class="ftest-result"><div class="top"><span class="meta">${pct}% correct</span><span class="meta">${r.correct} / ${r.n}</span>${speed ? `<span class="meta">${speed}</span>` : ""}<span class="meta">${fmtClock(r.ms)} total</span><span class="when">${when}</span></div>`
       + `<div class="cfg"><b>Forms:</b> ${c.forms} · <b>Tenses:</b> ${c.tenses}</div></div>`;
   }).join("");
 }
@@ -4836,7 +4839,7 @@ function startFtest(){
   }
   status.textContent = "";
   clearInterval(ftestTimer);
-  ftest = {n:0, correct:0, answered:false, accum:0, runStart:Date.now(),
+  ftest = {n:0, correct:0, correctMs:0, answered:false, accum:0, runStart:Date.now(),
     cfg:{mode:state.mode, tenses:[...state.tenses], compounds:[...state.compounds], negatives:state.negatives, questions:state.questions, ability:state.ability}};
   const clock = document.getElementById("ftestClock");
   hideFtestDone();
@@ -4882,6 +4885,8 @@ document.getElementById("ftestDone").onclick = hideFtestDone;
 function ftestRecord(correct){
   if(!ftest || ftest.finished || ftest.answered) return;
   ftest.answered = true;
+  const took = ftest.runStart ? Date.now() - ftest.runStart : 0;   // this question's own answering time
+  if(correct) ftest.correctMs += took;
   ftest.accum = ftestElapsed();   // pause the clock until the next question appears
   ftest.runStart = null;
   ftestTick();
@@ -4893,7 +4898,7 @@ function ftestRecord(correct){
   const ms = ftest.accum;
   clearInterval(ftestTimer);
   document.getElementById("ftestTime").textContent = fmtClock(ms);   // the clock stays, stopped, while you look at the last answer
-  const result = {at:new Date().toISOString(), n:ftest.n, correct:ftest.correct, ms, ...ftest.cfg};
+  const result = {at:new Date().toISOString(), n:ftest.n, correct:ftest.correct, ms, cms:ftest.correctMs, ...ftest.cfg};
   state.formsTests = [result, ...state.formsTests].slice(0, 10);
   saveSettings();
   renderFtestResults();
