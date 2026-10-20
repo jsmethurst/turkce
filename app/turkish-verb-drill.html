@@ -4566,7 +4566,8 @@ function allActiveTenseKeys(){
 }
 
 function nextQuestion(){
-  if(ftest){ ftest.answered = false; ftest.runStart = Date.now(); }
+  if(ftest && ftest.finished) finishFtestUI();   // advancing after the last answer: celebrate
+  else if(ftest){ ftest.answered = false; ftest.runStart = Date.now(); }
   const tenseKeys = allActiveTenseKeys();
   const personIdxs = [...state.persons];
   const verbIdxs = [...state.verbs];
@@ -4879,7 +4880,7 @@ function celebrateFtest(){
 }
 document.getElementById("ftestDone").onclick = hideFtestDone;
 function ftestRecord(correct){
-  if(!ftest || ftest.answered) return;
+  if(!ftest || ftest.finished || ftest.answered) return;
   ftest.answered = true;
   ftest.accum = ftestElapsed();   // pause the clock until the next question appears
   ftest.runStart = null;
@@ -4891,15 +4892,23 @@ function ftestRecord(correct){
   // The 20th answer is in: stop the clock and save the result.
   const ms = ftest.accum;
   clearInterval(ftestTimer);
-  celebrateFtest();   // a short "Test complete!" in place of the clock; the result below keeps the time
+  document.getElementById("ftestTime").textContent = fmtClock(ms);   // the clock stays, stopped, while you look at the last answer
   const result = {at:new Date().toISOString(), n:ftest.n, correct:ftest.correct, ms, ...ftest.cfg};
-  ftest = null;
   state.formsTests = [result, ...state.formsTests].slice(0, 10);
   saveSettings();
   renderFtestResults();
+  document.getElementById("ftestStatus").textContent = "";
+  // The test is over and saved, but the card stays as it is until you advance: then "Test complete!" plays.
+  ftest.finished = true;
+  document.getElementById("ftestEndBtn").hidden = true;
+  document.getElementById("ftestStartBtn").hidden = false;
+}
+function finishFtestUI(){
+  ftest = null;
+  document.getElementById("ftestClock").hidden = true;
   setFtestUI(false);
   updateBackButtonState();
-  document.getElementById("ftestStatus").textContent = "";
+  celebrateFtest();
 }
 document.getElementById("ftestStartBtn").onclick = startFtest;
 document.getElementById("ftestEndBtn").onclick = endFtest;
