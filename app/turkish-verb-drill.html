@@ -176,6 +176,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .mic-btn svg{position:relative;z-index:1;}
 .mic-btn.mic-on{background:var(--mic);border-color:var(--mic);color:#fff;}
 .mic-btn.mic-on:hover{background:var(--mic);}
+.mic-btn.mic-on.mic-wait{opacity:.6;}   /* the browser's listener is restarting for a moment */
 .mic-btn::before{content:"";position:absolute;left:0;right:0;bottom:0;height:0;background:var(--mic-fill);}
 .mic-btn.filling::before{animation:micfill var(--fill,1.5s) linear forwards;}
 @keyframes micfill{from{height:0;}to{height:100%;}}
@@ -5054,8 +5055,9 @@ function paintMicButtons(){
   ["micBtn","vocabMicBtn","tekrarMicBtn","casesMicBtn"].forEach(id=>{
     const b = document.getElementById(id);
     b.classList.toggle("mic-on", voice.on);
+    b.classList.toggle("mic-wait", voice.on && !voice.listening);
     b.setAttribute("aria-pressed", String(voice.on));
-    b.title = voice.on ? "Listening — tap to stop" : "Answer by voice";
+    b.title = voice.on ? (voice.listening ? "Listening — tap to stop" : "Starting to listen — tap to stop") : "Answer by voice";
   });
 }
 function voiceSync(){
@@ -5071,7 +5073,9 @@ function voiceSync(){
   rec.continuous = true;
   rec.interimResults = false;
   rec.maxAlternatives = 5;
-  rec.onresult = onVoiceResult;
+  rec.onstart = ()=>{ voice.listening = true; voice.startedAt = Date.now(); paintMicButtons(); };
+  rec.onspeechstart = ()=>{ voice.lastSpeech = Date.now(); };
+  rec.onresult = e=>{ voice.lastSpeech = Date.now(); onVoiceResult(e); };
   rec.onerror = e=>{
     if(e.error==="not-allowed" || e.error==="service-not-allowed" || e.error==="audio-capture"){
       voice.on = false;
@@ -5081,14 +5085,31 @@ function voiceSync(){
       else micBlockedMessage();
     }
   };
+  // Browsers end listening on their own now and then (after silence, or about a minute). Start again
+  // straight away so little speech is missed; only back off if it keeps ending the instant it starts.
   rec.onend = ()=>{
     voice.running = false;
+    voice.listening = false;
     if(voice.rec===rec) voice.rec = null;
-    if(voice.on) setTimeout(voiceSync, 250);
+    voice.fastEnds = (Date.now() - (voice.startedAt || 0) < 800) ? (voice.fastEnds || 0) + 1 : 0;
+    paintMicButtons();
+    if(voice.on) setTimeout(voiceSync, voice.fastEnds >= 3 ? 1000 : 40);
   };
-  try{ rec.start(); voice.rec = rec; voice.running = true; voice.lang = target.lang; }
+  try{ voice.startAttempt = Date.now(); voice.startedAt = 0; rec.start(); voice.rec = rec; voice.running = true; voice.lang = target.lang; }
   catch(e){ voice.running = false; }
 }
+// Safety net: restart a listener that never started or has been listening a long time in silence
+// (some browsers go deaf without saying so, which is when you'd have to tap the mic off and on).
+setInterval(()=>{
+  if(!SpeechRec || !voice || !voice.on || !voice.running || !voice.rec) return;
+  const now = Date.now();
+  const stuck = !voice.listening && now - voice.startAttempt > 4000;
+  const old = voice.listening && now - voice.startedAt > 50000 && now - (voice.lastSpeech || 0) > 3000 && !voice.timer;
+  if(!stuck && !old) return;
+  const rec = voice.rec;
+  try{ rec.abort(); }catch(e){}
+  setTimeout(()=>{ if(voice.rec===rec){ voice.running = false; voice.listening = false; voice.rec = null; voiceSync(); } }, 500);   // if abort never reported back
+}, 2000);
 function showVoiceProblem(msg){
   const t = voiceTarget() || {tab:"forms"};
   const fb = document.getElementById({forms:"feedback", vocab:"vocabFeedback", tekrar:"tekrarFeedback", cases:"casesFeedback"}[t.tab] || "vocabFeedback");
