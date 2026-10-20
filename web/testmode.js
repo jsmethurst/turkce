@@ -102,7 +102,7 @@
         done.push(args.p_batch_id); write(BATCHES_KEY, done.slice(-200));
         var all = read(STATS_KEY, {}), events = read(EVENTS_KEY, []);
         (args.p_items || []).forEach(function(it){
-          events.push([it.at || new Date().toISOString(), it.tab, it.k || null, !!it.ok]);
+          events.push([it.at || new Date().toISOString(), it.tab, it.k || null, !!it.ok, it.tn || null, it.p == null ? null : it.p, it.ng == null ? null : it.ng, it.q == null ? null : it.q, it.ab == null ? null : it.ab, it.md || null, it.ms == null ? null : it.ms, it.ts == null ? null : it.ts]);
           if(it.s && it.k){
             var cur = all[it.k] || {r: "", at: it.at};
             all[it.k] = {r: (cur.r + (it.ok ? "1" : "0")).slice(-25), at: it.at > cur.at ? it.at : cur.at};

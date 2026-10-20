@@ -3288,9 +3288,9 @@ function savePending(){
 }
 function newBatchId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 10); }
 // tab: forms | vocab | tekrar | cases. key: "verb:..."/"nonverb:..." or null. stat: also counts toward the word's history.
-function queueAnswer(tab, key, ok, stat){
+function queueAnswer(tab, key, ok, stat, extra){
   if(!window.turkceBackend || !window.turkceBackend.stats || statsMode==="legacy") return;
-  pendingAnswers.push({k:key||null, tab, ok:!!ok, at:new Date().toISOString(), s:!!stat});
+  pendingAnswers.push({k:key||null, tab, ok:!!ok, at:new Date().toISOString(), s:!!stat, ...(extra||{})});
   if(pendingAnswers.length>3000) pendingAnswers.splice(0, pendingAnswers.length-3000);
   savePending();
   scheduleAnswerFlush(800);
@@ -4669,6 +4669,7 @@ function updateSpeakButton(revealed){
 }
 
 function renderQuestion(){
+  state.shownAt = Date.now();   // for how long each answer took
   const {verb, tenseKey, personIdx, negative, question, ability, answer, gloss} = state.current;
   updateHintButton();
   updateSpeakButton(false);
@@ -4894,10 +4895,20 @@ document.getElementById("ftestStartBtn").onclick = startFtest;
 document.getElementById("ftestEndBtn").onclick = endFtest;
 renderFtestResults();
 
+// Every Forms answer is logged in full: verb, tense, person, negative / question / ability, direction,
+// how long it took and whether it was in a timed test, so the weakest combinations can be worked out later.
+function logFormsAnswer(correct, timed){
+  const c = state.current;
+  if(!c || !c.verb) return;
+  queueAnswer("forms", "verb:"+c.verb.inf, correct, false, {
+    tn:c.tenseKey, p:c.personIdx, ng:!!c.negative, q:!!c.question, ab:!!c.ability, md:state.mode,
+    ms:Math.max(0, Math.min(3600000, Date.now() - (state.shownAt || Date.now()))), ts:!!timed});
+}
 function showFeedback(correct){
   countAnswer();
+  const timed = !!ftest;
   ftestRecord(correct);
-  if(state.current && state.current.verb) queueAnswer("forms", "verb:"+state.current.verb.inf, correct, false);
+  logFormsAnswer(correct, timed);
   updateSpeakButton(true);
   if(state.mode!=="tr2en") autoPlay(state.current.answer.trim());   // the Turkish answer
   const fb = document.getElementById("feedback");
@@ -4914,7 +4925,9 @@ function showFeedback(correct){
 
 function revealAnswer(){
   if(!state.current) return;
+  const timed = !!ftest;
   ftestRecord(false);   // submitting nothing during a timed test counts as wrong
+  logFormsAnswer(false, timed);   // "show me the answer" is logged as a miss
   updateSpeakButton(true);
   if(state.mode!=="tr2en") autoPlay(state.current.answer.trim());
   const fb = document.getElementById("feedback");

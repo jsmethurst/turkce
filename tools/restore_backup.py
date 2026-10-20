@@ -55,8 +55,9 @@ def main():
             if "$restore$" in body:
                 sys.exit("unexpected delimiter in data")
             out.append(
-                "insert into public.answer_events (user_id, at, tab, key, correct)\n"
-                "select u.id, (e->>0)::timestamptz, e->>1, e->>2, (e->>3)::boolean\n"
+                "insert into public.answer_events (user_id, at, tab, key, correct, tense, person, negative, question, ability, mode, ms, timed)\n"
+                "select u.id, (e->>0)::timestamptz, e->>1, e->>2, (e->>3)::boolean,\n"
+                "  e->>4, (e->>5)::smallint, (e->>6)::boolean, (e->>7)::boolean, (e->>8)::boolean, e->>9, (e->>10)::integer, (e->>11)::boolean\n"
                 f"from auth.users u, jsonb_array_elements($restore${body}$restore$::jsonb) e where lower(u.email) = lower('{email}')\n"
                 "and not exists (select 1 from public.answer_events x where x.user_id = u.id and x.at = (e->>0)::timestamptz\n"
                 "  and x.tab = e->>1 and coalesce(x.key, '') = coalesce(e->>2, '') and x.correct = (e->>3)::boolean);")
