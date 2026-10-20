@@ -244,8 +244,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .ftest-clock{display:flex;gap:8px;align-items:center;height:44px;padding:0 14px;box-sizing:border-box;font-variant-numeric:tabular-nums;font-weight:800;font-size:0.95rem;letter-spacing:.02em;color:var(--tile-blue-deep);background:var(--paper);border:1px solid var(--line);border-radius:12px;white-space:nowrap;}
 .ftest-clock .count{font-weight:600;font-size:0.8rem;color:var(--ink-soft);}
 .ftest-result{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:10px 12px;margin-top:8px;}
-.ftest-result .top{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;font-weight:700;font-size:0.82rem;}
-.ftest-result .pct{font-size:0.82rem;color:var(--tile-blue-deep);}
+.ftest-result .top{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;}
 .ftest-result .meta{font-size:0.82rem;color:var(--ink-soft);font-weight:500;}
 .ftest-result .when{margin-left:auto;font-size:0.78rem;color:var(--ink-soft);font-weight:500;}
 .ftest-result .cfg{margin-top:4px;font-size:0.8rem;color:var(--ink-soft);line-height:1.4;}
@@ -4795,7 +4794,7 @@ function renderFtestResults(){
     const c = ftestSettingsLine(r);
     const pct = Math.round(100*r.correct/r.n);
     const when = new Date(r.at).toLocaleString([], {month:"short", day:"numeric", hour:"numeric", minute:"2-digit"});
-    return `<div class="ftest-result"><div class="top"><span class="pct">${pct}% correct</span><span class="meta">${r.correct} / ${r.n}</span><span class="meta">${(r.ms/r.n/1000).toFixed(1)} s per question</span><span class="meta">${fmtClock(r.ms)} total</span><span class="when">${when}</span></div>`
+    return `<div class="ftest-result"><div class="top"><span class="meta">${pct}% correct</span><span class="meta">${r.correct} / ${r.n}</span><span class="meta">${r.correct ? (r.ms/r.correct/1000).toFixed(1) + " s per correct answer" : "no correct answers"}</span><span class="meta">${fmtClock(r.ms)} total</span><span class="when">${when}</span></div>`
       + `<div class="cfg"><b>Forms:</b> ${c.forms} · <b>Tenses:</b> ${c.tenses}</div></div>`;
   }).join("");
 }
