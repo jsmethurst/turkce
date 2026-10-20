@@ -241,15 +241,15 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .chip-meta{display:block;font-size:0.7rem;margin-top:2px;opacity:0.75;font-variant-numeric:tabular-nums;}
 .tag-test{background:var(--tile-gold);color:#fff;margin-left:6px;}
 .test-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px;}
-.ftest-clock{position:absolute;top:9px;left:50%;transform:translateX(-50%);z-index:2;display:flex;gap:10px;align-items:baseline;font-variant-numeric:tabular-nums;font-weight:800;font-size:0.95rem;letter-spacing:.02em;color:var(--tile-blue-deep);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:2px 12px;white-space:nowrap;}
+.ftest-clock{display:flex;gap:8px;align-items:center;height:44px;padding:0 14px;box-sizing:border-box;font-variant-numeric:tabular-nums;font-weight:800;font-size:0.95rem;letter-spacing:.02em;color:var(--tile-blue-deep);background:var(--paper);border:1px solid var(--line);border-radius:12px;white-space:nowrap;}
 .ftest-clock .count{font-weight:600;font-size:0.8rem;color:var(--ink-soft);}
-.ftest-clock.done{background:#e1f1e7;color:#14502d;}
 .ftest-result{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:10px 12px;margin-top:8px;}
-.ftest-result .top{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;font-weight:700;}
-.ftest-result .pct{font-size:1.05rem;color:var(--tile-blue-deep);}
+.ftest-result .top{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;font-weight:700;font-size:0.82rem;}
+.ftest-result .pct{font-size:0.82rem;color:var(--tile-blue-deep);}
 .ftest-result .meta{font-size:0.82rem;color:var(--ink-soft);font-weight:500;}
 .ftest-result .when{margin-left:auto;font-size:0.78rem;color:var(--ink-soft);font-weight:500;}
 .ftest-result .cfg{margin-top:4px;font-size:0.8rem;color:var(--ink-soft);line-height:1.4;}
+.ftest-result .cfg b{font-weight:600;color:var(--ink);}
 .test-row .btn{padding:10px 16px;}
 .select{flex:1 1 220px;min-width:0;font-family:'Inter',sans-serif;font-size:0.9rem;padding:10px 12px;border-radius:11px;border:1.5px solid var(--line);background:#fff;color:var(--ink);}
 .select:focus{outline:none;border-color:var(--tile-turquoise);}
@@ -364,7 +364,6 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
   <!-- ============ VERBS ============ -->
   <div id="tab-verbs">
     <div class="card">
-      <div class="ftest-clock" id="ftestClock" hidden><span id="ftestTime">0:00.0</span><span class="count" id="ftestCount"></span></div>
       <div class="prompt-header">
         <div class="prompt-main">
           <div class="prompt-eyebrow" id="promptEyebrow"></div>
@@ -377,6 +376,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
           </button>
           <button class="btn btn-ghost" id="hintBtn" title="Hint" style="display:none;">Hint</button>
+          <div class="ftest-clock" id="ftestClock" hidden><span id="ftestTime">0:00.0</span><span class="count" id="ftestCount"></span></div>
         </div>
       </div>
       <div class="answer-row">
@@ -4796,7 +4796,7 @@ function renderFtestResults(){
     const pct = Math.round(100*r.correct/r.n);
     const when = new Date(r.at).toLocaleString([], {month:"short", day:"numeric", hour:"numeric", minute:"2-digit"});
     return `<div class="ftest-result"><div class="top"><span class="pct">${pct}% correct</span><span class="meta">${r.correct} / ${r.n}</span><span class="meta">${(r.ms/r.n/1000).toFixed(1)} s per question</span><span class="meta">${fmtClock(r.ms)} total</span><span class="when">${when}</span></div>`
-      + `<div class="cfg">${c.dir} · Tenses: ${c.tenses} · Forms: ${c.forms}</div></div>`;
+      + `<div class="cfg"><b>Forms:</b> ${c.forms} · <b>Tenses:</b> ${c.tenses}</div></div>`;
   }).join("");
 }
 function setFtestUI(running){
@@ -4821,7 +4821,7 @@ function startFtest(){
   ftest = {n:0, correct:0, answered:false, startedAt:Date.now(),
     cfg:{mode:state.mode, tenses:[...state.tenses], compounds:[...state.compounds], negatives:state.negatives, questions:state.questions, ability:state.ability}};
   const clock = document.getElementById("ftestClock");
-  clock.hidden = false; clock.classList.remove("done");
+  clock.hidden = false;
   document.getElementById("ftestCount").textContent = `0 / ${FTEST_LENGTH}`;
   setFtestUI(true);
   ftestTimer = setInterval(ftestTick, 100);
@@ -4848,8 +4848,7 @@ function ftestRecord(correct){
   // The 20th answer is in: stop the clock and save the result.
   const ms = Date.now() - ftest.startedAt;
   clearInterval(ftestTimer);
-  document.getElementById("ftestTime").textContent = fmtClock(ms);
-  document.getElementById("ftestClock").classList.add("done");
+  document.getElementById("ftestClock").hidden = true;   // the result below keeps the time
   const result = {at:new Date().toISOString(), n:ftest.n, correct:ftest.correct, ms, ...ftest.cfg};
   ftest = null;
   state.formsTests = [result, ...state.formsTests].slice(0, 10);
