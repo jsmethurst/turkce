@@ -435,7 +435,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 
     <div class="section-title">Timed test</div>
     <div class="settings-group" id="ftestGroup">
-      <p class="hint" style="margin-top:0;">20 questions against the clock, using the direction, persons, forms and tenses chosen above. Back, Skip and Hint are off while it runs.</p>
+      <p class="hint" style="margin-top:0;">20 questions against the clock, using the direction, persons, forms and tenses chosen above. The clock only runs while a question is waiting for your answer, not while you read the feedback. Back, Skip and Hint are off while it runs.</p>
       <div class="test-row">
         <button class="btn btn-primary" id="ftestStartBtn">Start timed test</button>
         <button class="btn btn-ghost" id="ftestEndBtn" hidden>End test</button>
@@ -4564,7 +4564,7 @@ function allActiveTenseKeys(){
 }
 
 function nextQuestion(){
-  if(ftest) ftest.answered = false;
+  if(ftest){ ftest.answered = false; ftest.runStart = Date.now(); }
   const tenseKeys = allActiveTenseKeys();
   const personIdxs = [...state.persons];
   const verbIdxs = [...state.verbs];
@@ -4816,9 +4816,14 @@ function setFtestUI(running){
   document.getElementById("backBtn").style.display = running ? "none" : "";
   if(running) document.getElementById("hintBtn").style.display = "none";
 }
+// The clock only runs while a question is on screen waiting for an answer: it stops when you submit
+// and starts again when the next question appears.
+function ftestElapsed(){
+  return ftest.accum + (ftest.runStart ? Date.now() - ftest.runStart : 0);
+}
 function ftestTick(){
   if(!ftest) return;
-  document.getElementById("ftestTime").textContent = fmtClock(Date.now() - ftest.startedAt);
+  document.getElementById("ftestTime").textContent = fmtClock(ftestElapsed());
 }
 function startFtest(){
   const status = document.getElementById("ftestStatus");
@@ -4828,7 +4833,7 @@ function startFtest(){
   }
   status.textContent = "";
   clearInterval(ftestTimer);
-  ftest = {n:0, correct:0, answered:false, startedAt:Date.now(),
+  ftest = {n:0, correct:0, answered:false, accum:0, runStart:Date.now(),
     cfg:{mode:state.mode, tenses:[...state.tenses], compounds:[...state.compounds], negatives:state.negatives, questions:state.questions, ability:state.ability}};
   const clock = document.getElementById("ftestClock");
   hideFtestDone();
@@ -4874,12 +4879,15 @@ document.getElementById("ftestDone").onclick = hideFtestDone;
 function ftestRecord(correct){
   if(!ftest || ftest.answered) return;
   ftest.answered = true;
+  ftest.accum = ftestElapsed();   // pause the clock until the next question appears
+  ftest.runStart = null;
+  ftestTick();
   ftest.n++;
   if(correct) ftest.correct++;
   document.getElementById("ftestCount").textContent = `${ftest.n} / ${FTEST_LENGTH}`;
   if(ftest.n < FTEST_LENGTH) return;
   // The 20th answer is in: stop the clock and save the result.
-  const ms = Date.now() - ftest.startedAt;
+  const ms = ftest.accum;
   clearInterval(ftestTimer);
   celebrateFtest();   // a short "Test complete!" in place of the clock; the result below keeps the time
   const result = {at:new Date().toISOString(), n:ftest.n, correct:ftest.correct, ms, ...ftest.cfg};
