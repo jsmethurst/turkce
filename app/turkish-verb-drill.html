@@ -4027,8 +4027,10 @@ function tekrarWaitMs(key){
 function tekrarWords(){
   const now = Date.now();
   const words = [];
+  const seen = new Set();   // some words (e.g. the adjectives) are in two lists with the same spelling: count each once
   const add = (key, item)=>{
-    if(!wordForm(key)) return;
+    if(!wordForm(key) || seen.has(key)) return;
+    seen.add(key);
     const wait = tekrarWaitMs(key);
     const last = new Date(wordStats[key].at).getTime() || 0;
     words.push({key, item, dueAt:last+wait, overdue:(now-last)/Math.max(wait, TEKRAR_RETRY_MS)});
