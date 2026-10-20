@@ -242,6 +242,11 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .tag-test{background:var(--tile-gold);color:#fff;margin-left:6px;}
 .test-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px;}
 .ftest-clock{display:flex;gap:8px;align-items:center;height:44px;padding:0 14px;box-sizing:border-box;font-variant-numeric:tabular-nums;font-weight:800;font-size:0.95rem;letter-spacing:.02em;color:var(--tile-blue-deep);background:var(--paper);border:1px solid var(--line);border-radius:12px;white-space:nowrap;}
+.ftest-clock.btn-rainbow{padding:0 10px;font-size:0.74rem;line-height:1.1;text-align:center;white-space:normal;min-width:74px;justify-content:center;border:2px solid transparent;
+  background:linear-gradient(#fff,#fff) padding-box,
+    linear-gradient(90deg,#E8453C,#F39C33,#F2D23B,#3FB85B,#2F8FE0,#7B4FD6,#E8453C) border-box;
+  background-size:100% 100%,200% 100%;}
+.ftest-clock.fade{opacity:0;transition:opacity .6s ease;}
 .ftest-clock .count{font-weight:600;font-size:0.8rem;color:var(--ink-soft);}
 .ftest-result{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:10px 12px;margin-top:8px;}
 .ftest-result .top{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;}
@@ -4644,7 +4649,7 @@ function tenseLabel(key){
 
 function updateHintButton(){
   const btn = document.getElementById("hintBtn");
-  if(ftest){ btn.style.display = "none"; return; }
+  if(ftest || ftestCelebrating){ btn.style.display = "none"; return; }
   const reveal = document.getElementById("hintReveal");
   state.hintUsed = false;
   reveal.style.display = "none";
@@ -4774,7 +4779,7 @@ function simpleFuzzy(a,b){
 
 // ---- Timed test: 20 questions, stopwatch on the card, result saved under "Recent test results" ----
 const FTEST_LENGTH = 20;
-let ftest = null, ftestTimer = null;
+let ftest = null, ftestTimer = null, ftestCelebrating = false;
 function fmtClock(ms){
   const t = Math.floor(ms/100), m = Math.floor(t/600), sec = Math.floor((t%600)/10);
   return `${m}:${String(sec).padStart(2,"0")}.${t%10}`;
@@ -4820,7 +4825,7 @@ function startFtest(){
   ftest = {n:0, correct:0, answered:false, startedAt:Date.now(),
     cfg:{mode:state.mode, tenses:[...state.tenses], compounds:[...state.compounds], negatives:state.negatives, questions:state.questions, ability:state.ability}};
   const clock = document.getElementById("ftestClock");
-  clock.hidden = false;
+  clock.hidden = false; clock.classList.remove("btn-rainbow", "fade"); ftestCelebrating = false;
   document.getElementById("ftestCount").textContent = `0 / ${FTEST_LENGTH}`;
   setFtestUI(true);
   ftestTimer = setInterval(ftestTick, 100);
@@ -4837,6 +4842,28 @@ function endFtest(){   // stopped early: nothing is saved
   updateBackButtonState();
   if(state.current) updateHintButton();
 }
+// A rainbow "Test complete!" where the clock was, then it fades out and the Hint button comes back.
+function celebrateFtest(){
+  const clock = document.getElementById("ftestClock");
+  ftestCelebrating = true;
+  document.getElementById("hintBtn").style.display = "none";
+  clock.querySelector("#ftestTime").innerHTML = "Test<br>complete!";
+  document.getElementById("ftestCount").textContent = "";
+  clock.classList.remove("fade");
+  clock.classList.add("btn-rainbow");
+  clock.hidden = false;
+  setTimeout(()=>{
+    if(ftest) return;   // a new test started meanwhile
+    clock.classList.add("fade");
+    setTimeout(()=>{
+      if(ftest) return;
+      clock.hidden = true;
+      clock.classList.remove("btn-rainbow", "fade");
+      ftestCelebrating = false;
+      if(!ftest) updateHintButton();
+    }, 650);
+  }, 1800);
+}
 function ftestRecord(correct){
   if(!ftest || ftest.answered) return;
   ftest.answered = true;
@@ -4847,7 +4874,7 @@ function ftestRecord(correct){
   // The 20th answer is in: stop the clock and save the result.
   const ms = Date.now() - ftest.startedAt;
   clearInterval(ftestTimer);
-  document.getElementById("ftestClock").hidden = true;   // the result below keeps the time
+  celebrateFtest();   // a short "Test complete!" in place of the clock; the result below keeps the time
   const result = {at:new Date().toISOString(), n:ftest.n, correct:ftest.correct, ms, ...ftest.cfg};
   ftest = null;
   state.formsTests = [result, ...state.formsTests].slice(0, 10);
