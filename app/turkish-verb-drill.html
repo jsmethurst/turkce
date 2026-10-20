@@ -4897,7 +4897,7 @@ function ftestRecord(correct){
   renderFtestResults();
   setFtestUI(false);
   updateBackButtonState();
-  document.getElementById("ftestStatus").textContent = `Finished: ${result.correct} / ${result.n} in ${fmtClock(ms)}. Saved under Recent test results.`;
+  document.getElementById("ftestStatus").textContent = "";
 }
 document.getElementById("ftestStartBtn").onclick = startFtest;
 document.getElementById("ftestEndBtn").onclick = endFtest;
