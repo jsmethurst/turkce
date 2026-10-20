@@ -241,6 +241,15 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .chip-meta{display:block;font-size:0.7rem;margin-top:2px;opacity:0.75;font-variant-numeric:tabular-nums;}
 .tag-test{background:var(--tile-gold);color:#fff;margin-left:6px;}
 .test-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px;}
+.ftest-clock{position:absolute;top:9px;left:50%;transform:translateX(-50%);z-index:2;display:flex;gap:10px;align-items:baseline;font-variant-numeric:tabular-nums;font-weight:800;font-size:0.95rem;letter-spacing:.02em;color:var(--tile-blue-deep);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:2px 12px;white-space:nowrap;}
+.ftest-clock .count{font-weight:600;font-size:0.8rem;color:var(--ink-soft);}
+.ftest-clock.done{background:#e1f1e7;color:#14502d;}
+.ftest-result{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:10px 12px;margin-top:8px;}
+.ftest-result .top{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;font-weight:700;}
+.ftest-result .pct{font-size:1.05rem;color:var(--tile-blue-deep);}
+.ftest-result .meta{font-size:0.82rem;color:var(--ink-soft);font-weight:500;}
+.ftest-result .when{margin-left:auto;font-size:0.78rem;color:var(--ink-soft);font-weight:500;}
+.ftest-result .cfg{margin-top:4px;font-size:0.8rem;color:var(--ink-soft);line-height:1.4;}
 .test-row .btn{padding:10px 16px;}
 .select{flex:1 1 220px;min-width:0;font-family:'Inter',sans-serif;font-size:0.9rem;padding:10px 12px;border-radius:11px;border:1.5px solid var(--line);background:#fff;color:var(--ink);}
 .select:focus{outline:none;border-color:var(--tile-turquoise);}
@@ -355,6 +364,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
   <!-- ============ VERBS ============ -->
   <div id="tab-verbs">
     <div class="card">
+      <div class="ftest-clock" id="ftestClock" hidden><span id="ftestTime">0:00.0</span><span class="count" id="ftestCount"></span></div>
       <div class="prompt-header">
         <div class="prompt-main">
           <div class="prompt-eyebrow" id="promptEyebrow"></div>
@@ -412,6 +422,18 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <h3 style="margin-top:14px;">Compound (hikâye) tenses</h3>
       <div class="chip-row" id="compoundChips"></div>
       <p class="hint">Compound tenses combine two markers, like <em>gidecektik</em> (future+past, "we were going to go") or <em>giderdik</em> (aorist+past, "we used to go").</p>
+    </div>
+
+    <div class="section-title">Timed test</div>
+    <div class="settings-group" id="ftestGroup">
+      <p class="hint" style="margin-top:0;">20 questions against the clock, using the direction, persons, forms and tenses chosen above. Back, Skip and Hint are off while it runs.</p>
+      <div class="test-row">
+        <button class="btn btn-primary" id="ftestStartBtn">Start timed test</button>
+        <button class="btn btn-ghost" id="ftestEndBtn" hidden>End test</button>
+      </div>
+      <p class="hint" id="ftestStatus"></p>
+      <h3 style="margin-top:14px;">Recent test results</h3>
+      <div id="ftestResults"></div>
     </div>
   </div>
 
@@ -2521,6 +2543,7 @@ const state = {
   ability: false,
   lenient: false,
   autoSpeak: false,
+  formsTests: [],   // recent timed-test results, newest first (kept with the settings so they sync)
   hintUsed: false,
   current: null,
   history: []
@@ -2544,6 +2567,7 @@ function collectSettings(){
       ability: state.ability,
       lenient: state.lenient,
       autoSpeak: state.autoSpeak,
+      formsTests: state.formsTests,
       vocabMode: vocabState.mode,
       vocabUnknownOnly: vocabState.unknownOnly,
       vocabTypingMode: vocabState.typingBeforeTest ?? vocabState.typingMode,
@@ -2649,6 +2673,7 @@ function applyFormsSettings(S){
   if(typeof S.ability==="boolean") state.ability = S.ability;
   if(typeof S.lenient==="boolean") state.lenient = S.lenient;
   if(typeof S.autoSpeak==="boolean") state.autoSpeak = S.autoSpeak;
+  if(Array.isArray(S.formsTests)) state.formsTests = S.formsTests.filter(r=>r && typeof r.ms==="number").slice(0, 10);
 }
 if(SAVED_SETTINGS) applyFormsSettings(SAVED_SETTINGS);
 applyPageSelection();
@@ -4530,6 +4555,7 @@ function allActiveTenseKeys(){
 }
 
 function nextQuestion(){
+  if(ftest) ftest.answered = false;
   const tenseKeys = allActiveTenseKeys();
   const personIdxs = [...state.persons];
   const verbIdxs = [...state.verbs];
@@ -4600,7 +4626,7 @@ function refreshCurrentQuestion(){
 }
 
 function goBack(){
-  if(state.history.length===0) return;
+  if(ftest || state.history.length===0) return;
   state.current = state.history.pop();
   renderQuestion();
   updateBackButtonState();
@@ -4619,6 +4645,7 @@ function tenseLabel(key){
 
 function updateHintButton(){
   const btn = document.getElementById("hintBtn");
+  if(ftest){ btn.style.display = "none"; return; }
   const reveal = document.getElementById("hintReveal");
   state.hintUsed = false;
   reveal.style.display = "none";
@@ -4746,8 +4773,99 @@ function simpleFuzzy(a,b){
   return hits / wb.length >= 0.6;
 }
 
+// ---- Timed test: 20 questions, stopwatch on the card, result saved under "Recent test results" ----
+const FTEST_LENGTH = 20;
+let ftest = null, ftestTimer = null;
+function fmtClock(ms){
+  const t = Math.floor(ms/100), m = Math.floor(t/600), sec = Math.floor((t%600)/10);
+  return `${m}:${String(sec).padStart(2,"0")}.${t%10}`;
+}
+function ftestSettingsLine(r){
+  const short = k=>tenseLabel(k).replace(/\s*\(.*\)/,"");
+  const tenses = [...(r.tenses||[]), ...(r.compounds||[])].map(short);
+  const forms = ["negatives","questions","ability"].filter(k=>r[k]);
+  const dir = {en2tr:"English → Turkish", tr:"Infinitive → Turkish", tr2en:"Turkish → English"}[r.mode] || r.mode;
+  return {dir, tenses: tenses.length ? tenses.join(", ") : "none", forms: forms.length ? forms.join(", ") : "plain affirmative only"};
+}
+function renderFtestResults(){
+  const box = document.getElementById("ftestResults");
+  if(!box) return;
+  if(!state.formsTests.length){ box.innerHTML = '<p class="hint" style="margin:6px 0 0;">No tests yet.</p>'; return; }
+  box.innerHTML = state.formsTests.map(r=>{
+    const c = ftestSettingsLine(r);
+    const pct = Math.round(100*r.correct/r.n);
+    const when = new Date(r.at).toLocaleString([], {month:"short", day:"numeric", hour:"numeric", minute:"2-digit"});
+    return `<div class="ftest-result"><div class="top"><span class="pct">${pct}% correct</span><span class="meta">${r.correct} / ${r.n}</span><span class="meta">${(r.ms/r.n/1000).toFixed(1)} s per question</span><span class="meta">${fmtClock(r.ms)} total</span><span class="when">${when}</span></div>`
+      + `<div class="cfg">${c.dir} · Tenses: ${c.tenses} · Forms: ${c.forms}</div></div>`;
+  }).join("");
+}
+function setFtestUI(running){
+  document.getElementById("ftestStartBtn").hidden = running;
+  document.getElementById("ftestEndBtn").hidden = !running;
+  document.getElementById("skipBtn").style.display = running ? "none" : "";
+  document.getElementById("backBtn").style.display = running ? "none" : "";
+  if(running) document.getElementById("hintBtn").style.display = "none";
+}
+function ftestTick(){
+  if(!ftest) return;
+  document.getElementById("ftestTime").textContent = fmtClock(Date.now() - ftest.startedAt);
+}
+function startFtest(){
+  const status = document.getElementById("ftestStatus");
+  if(allActiveTenseKeys().length===0 || state.persons.size===0 || state.verbs.size===0){
+    status.textContent = state.verbs.size===0 ? "Choose some verbs on the Sözlük tab first." : "Pick at least one tense and person above first.";
+    return;
+  }
+  status.textContent = "";
+  clearInterval(ftestTimer);
+  ftest = {n:0, correct:0, answered:false, startedAt:Date.now(),
+    cfg:{mode:state.mode, tenses:[...state.tenses], compounds:[...state.compounds], negatives:state.negatives, questions:state.questions, ability:state.ability}};
+  const clock = document.getElementById("ftestClock");
+  clock.hidden = false; clock.classList.remove("done");
+  document.getElementById("ftestCount").textContent = `0 / ${FTEST_LENGTH}`;
+  setFtestUI(true);
+  ftestTimer = setInterval(ftestTick, 100);
+  ftestTick();
+  window.scrollTo({top:0, behavior:"smooth"});
+  nextQuestion();
+  document.getElementById("answerInput").focus();
+}
+function endFtest(){   // stopped early: nothing is saved
+  clearInterval(ftestTimer); ftest = null;
+  document.getElementById("ftestClock").hidden = true;
+  setFtestUI(false);
+  document.getElementById("ftestStatus").textContent = "Test ended. Nothing was saved.";
+  updateBackButtonState();
+  if(state.current) updateHintButton();
+}
+function ftestRecord(correct){
+  if(!ftest || ftest.answered) return;
+  ftest.answered = true;
+  ftest.n++;
+  if(correct) ftest.correct++;
+  document.getElementById("ftestCount").textContent = `${ftest.n} / ${FTEST_LENGTH}`;
+  if(ftest.n < FTEST_LENGTH) return;
+  // The 20th answer is in: stop the clock and save the result.
+  const ms = Date.now() - ftest.startedAt;
+  clearInterval(ftestTimer);
+  document.getElementById("ftestTime").textContent = fmtClock(ms);
+  document.getElementById("ftestClock").classList.add("done");
+  const result = {at:new Date().toISOString(), n:ftest.n, correct:ftest.correct, ms, ...ftest.cfg};
+  ftest = null;
+  state.formsTests = [result, ...state.formsTests].slice(0, 10);
+  saveSettings();
+  renderFtestResults();
+  setFtestUI(false);
+  updateBackButtonState();
+  document.getElementById("ftestStatus").textContent = `Finished: ${result.correct} / ${result.n} in ${fmtClock(ms)}. Saved under Recent test results.`;
+}
+document.getElementById("ftestStartBtn").onclick = startFtest;
+document.getElementById("ftestEndBtn").onclick = endFtest;
+renderFtestResults();
+
 function showFeedback(correct){
   countAnswer();
+  ftestRecord(correct);
   if(state.current && state.current.verb) queueAnswer("forms", "verb:"+state.current.verb.inf, correct, false);
   updateSpeakButton(true);
   if(state.mode!=="tr2en") autoPlay(state.current.answer.trim());   // the Turkish answer
@@ -4765,6 +4883,7 @@ function showFeedback(correct){
 
 function revealAnswer(){
   if(!state.current) return;
+  ftestRecord(false);   // submitting nothing during a timed test counts as wrong
   updateSpeakButton(true);
   if(state.mode!=="tr2en") autoPlay(state.current.answer.trim());
   const fb = document.getElementById("feedback");
@@ -4799,7 +4918,7 @@ document.getElementById("speakBtn").onclick = speakCurrent;
 
 setPrimaryButtonMode("check");
 document.getElementById("backBtn").onclick = goBack;
-document.getElementById("skipBtn").onclick = nextQuestion;
+document.getElementById("skipBtn").onclick = ()=>{ if(!ftest) nextQuestion(); };
 document.getElementById("answerInput").addEventListener("keydown", e=>{
   if(e.key==="Enter"){
     e.preventDefault();
@@ -4833,6 +4952,7 @@ if('speechSynthesis' in window){
 nextQuestion();
 
 function syncSettingsUI(){
+  renderFtestResults();
   [...tenseChips.children].forEach(c=>c.classList.toggle("on", state.tenses.has(c.dataset.key)));
   [...compoundChips.children].forEach(c=>c.classList.toggle("on", state.compounds.has(c.dataset.key)));
   [...personChips.children].forEach((c,i)=>c.classList.toggle("on", state.persons.has(i)));
