@@ -89,6 +89,20 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .modal-empty{font-size:0.8rem;color:var(--ink-soft);padding:10px 6px;}
 .modal-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 18px 16px;}
 .modal-foot .btn{padding:10px 16px;}
+.ref-row.verb-row{cursor:pointer;}
+.ref-row.verb-row:hover .ref-tr{text-decoration:underline;text-decoration-color:var(--tile-turquoise);text-underline-offset:3px;}
+.ref-row.verb-row:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;border-radius:4px;}
+.vm-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.vm-x{flex:none;width:34px;height:34px;border:1px solid var(--line);border-radius:50%;background:#fff;font-size:1.3rem;line-height:1;color:var(--ink-soft);cursor:pointer;}
+.vm-x:hover{background:var(--paper-2);color:var(--ink);}
+.vm-controls{padding:6px 18px 8px;border-bottom:1px solid var(--line);}
+.vm-body{overflow-y:auto;padding:10px 18px 6px;min-height:120px;flex:1;}
+.vm-tense{margin-bottom:12px;}
+.vm-tense h4{margin:0 0 4px;font-size:0.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
+.vm-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;font-size:0.92rem;}
+.vm-grid div{padding:3px 0;border-bottom:1px solid var(--line);}
+.vm-grid .pn{color:var(--ink-soft);margin-right:6px;font-size:0.8rem;}
+.vm-grid b{font-weight:600;color:var(--tile-blue-deep);}
 .test-results{display:grid;gap:6px;margin-top:6px;text-align:left;font-size:0.95rem;color:var(--ink);}
 .test-results .row{display:flex;justify-content:space-between;gap:12px;}
 .test-name{font:inherit;background:none;border:none;padding:0;color:var(--ink);cursor:pointer;text-align:left;font-weight:600;}
@@ -655,6 +669,29 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     <div class="settings-group">
       <h3>Cases</h3>
       <div class="chip-row" id="casesFilterChips"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="verbModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="verbModalTitle">
+      <div class="modal-head vm-head">
+        <div><h2 id="verbModalTitle"></h2><p class="hint" id="verbModalGloss" style="margin:0;"></p></div>
+        <button type="button" class="vm-x" id="verbModalX" aria-label="Close">&times;</button>
+      </div>
+      <div class="vm-controls">
+        <div class="chip-row" id="vmForms">
+          <div class="chip on" data-form="plain">Plain</div>
+          <div class="chip" data-form="neg">Negative</div>
+          <div class="chip" data-form="q">Question</div>
+          <div class="chip" data-form="negq">Negative question</div>
+        </div>
+        <div class="chip-row" style="margin-top:6px;"><div class="chip" id="vmAbility">Ability (can / can't)</div></div>
+      </div>
+      <div class="vm-body" id="verbModalBody"></div>
+      <div class="modal-foot">
+        <span class="hint" style="margin:0;">Every tense, for reference.</span>
+        <button class="btn btn-primary" id="verbModalClose" type="button">Close</button>
+      </div>
     </div>
   </div>
 
@@ -2974,15 +3011,70 @@ function renderReferencePanel(){
     g.rows.forEach(v=>{
       const row = document.createElement("div");
       const key = `verb:${v.inf}`;
-      row.className = "ref-row" + wordFormClass(key);
+      row.className = "ref-row verb-row" + wordFormClass(key);
       row.dataset.level = wordFormLevelName(key);
-      row.title = wordFormLabel(key);
+      row.dataset.inf = v.inf;
+      row.tabIndex = 0;
+      row.setAttribute("role", "button");
+      row.title = (wordFormLabel(key) ? wordFormLabel(key) + " · " : "") + "Tap to see all forms";
       row.innerHTML = `<span class="ref-tr">${v.inf}</span><span class="ref-en">${v.vocabGloss}</span>`;
       list.appendChild(row);
     });
     box.appendChild(list);
   });
 }
+// ---- Verb forms: tap a verb in the Sözlük to see every tense, for reference ----
+const vm = {verb:null, form:"plain", ability:false};
+function renderVerbModal(){
+  const v = vm.verb;
+  if(!v) return;
+  const neg = vm.form==="neg" || vm.form==="negq", q = vm.form==="q" || vm.form==="negq";
+  const section = t=>{
+    const rows = PERSONS.map((p,i)=>{
+      let form = "";
+      try{ form = conjugateFull(v, t.key, i, neg, q, vm.ability).trim(); }catch(e){ form = "—"; }
+      return `<div><span class="pn">${p}</span><b>${form}</b></div>`;
+    }).join("");
+    return `<div class="vm-tense"><h4>${t.label}</h4><div class="vm-grid">${rows}</div></div>`;
+  };
+  document.getElementById("verbModalBody").innerHTML =
+    [...TENSES, ...COMPOUNDS].map(section).join("");
+}
+function openVerbModal(inf){
+  const v = VERBS.find(x=>x.inf===inf);
+  if(!v) return;
+  vm.verb = v; vm.form = "plain"; vm.ability = false;
+  document.getElementById("verbModalTitle").textContent = v.inf;
+  document.getElementById("verbModalGloss").textContent = v.vocabGloss;
+  document.querySelectorAll("#vmForms .chip").forEach(c=>c.classList.toggle("on", c.dataset.form==="plain"));
+  document.getElementById("vmAbility").classList.remove("on");
+  renderVerbModal();
+  document.getElementById("verbModalBody").scrollTop = 0;
+  document.getElementById("verbModal").hidden = false;
+}
+function closeVerbModal(){ document.getElementById("verbModal").hidden = true; }
+document.getElementById("refPanel").addEventListener("click", e=>{
+  const row = e.target.closest(".verb-row");
+  if(row) openVerbModal(row.dataset.inf);
+});
+document.getElementById("refPanel").addEventListener("keydown", e=>{
+  const row = e.target.closest && e.target.closest(".verb-row");
+  if(row && (e.key==="Enter" || e.key===" ")){ e.preventDefault(); openVerbModal(row.dataset.inf); }
+});
+document.querySelectorAll("#vmForms .chip").forEach(c=>c.onclick = ()=>{
+  vm.form = c.dataset.form;
+  document.querySelectorAll("#vmForms .chip").forEach(x=>x.classList.toggle("on", x===c));
+  renderVerbModal();
+});
+document.getElementById("vmAbility").onclick = ()=>{
+  vm.ability = !vm.ability;
+  document.getElementById("vmAbility").classList.toggle("on", vm.ability);
+  renderVerbModal();
+};
+document.getElementById("verbModalClose").onclick = closeVerbModal;
+document.getElementById("verbModalX").onclick = closeVerbModal;
+document.getElementById("verbModal").addEventListener("click", e=>{ if(e.target.id==="verbModal") closeVerbModal(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && !document.getElementById("verbModal").hidden){ e.preventDefault(); closeVerbModal(); } });
 function renderNonverbReferencePanel(){
   const box = document.getElementById("nonverbRefPanel");
   box.innerHTML = "";
