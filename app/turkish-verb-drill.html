@@ -58,15 +58,15 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .gsearch .clr:hover{background:var(--paper-2);}
 .gsearch-results{position:fixed;z-index:70;max-height:min(60vh,420px);overflow-y:auto;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 40px -12px rgba(18,65,77,.5);padding:6px;}
 .gsearch-results[hidden]{display:none;}
-.gs-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;width:100%;text-align:left;font:inherit;font-size:0.92rem;background:none;border:none;border-radius:9px;padding:8px 10px;color:var(--ink);cursor:default;}
-.gs-row.verb{cursor:pointer;}
-.gs-row.verb:hover,.gs-row.active{background:var(--paper-2);}
+.sr-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;width:100%;text-align:left;font:inherit;font-size:0.92rem;background:none;border:none;border-radius:9px;padding:8px 10px;color:var(--ink);cursor:default;}
+.sr-row.verb{cursor:pointer;}
+.sr-row.verb:hover,.sr-row.active{background:var(--paper-2);}
 .gs-tr{font-weight:700;color:var(--tile-blue-deep);}
 .gs-tag{margin-left:6px;font-size:0.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--tile-turquoise);}
 .gs-en{color:var(--ink-soft);font-size:0.85rem;text-align:right;}
 .gs-left{color:var(--ink);font-size:0.92rem;text-align:left;}
 .gs-main{text-align:right;white-space:nowrap;}
-.gs-row .gs-main:first-child{text-align:left;}
+.sr-row .gs-main:first-child{text-align:left;}
 .gs-empty{padding:10px;font-size:0.88rem;color:var(--ink-soft);}
 .gs-empty button{font:inherit;background:none;border:none;padding:0;color:var(--tile-blue);font-weight:600;text-decoration:underline;cursor:pointer;}
 .gs-form{padding:10px;display:grid;gap:8px;}
@@ -78,7 +78,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .gs-form-actions .btn{padding:9px 16px;}
 .gs-form-msg{margin:0;font-size:0.82rem;color:var(--bad);}
 .gs-source{padding:6px 10px 2px;font-size:0.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--tile-gold);}
-.gs-wk .gs-row{cursor:default;}
+.gs-wk .sr-row{cursor:default;}
 .gs-wk .gs-pos{margin-left:6px;font-size:0.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
 .gs-foot{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;justify-content:space-between;padding:6px 10px 4px;font-size:0.82rem;color:var(--ink-soft);}
 .gs-foot a,.gs-foot button{font:inherit;background:none;border:none;padding:0;color:var(--tile-blue);font-weight:600;text-decoration:underline;cursor:pointer;}
@@ -2695,6 +2695,7 @@ const state = {
   ability: false,
   lenient: false,
   autoSpeak: false,
+  wiktionary: true,   // search falls back to Wiktionary when the Sözlük has no match
   formsTests: [],   // recent timed-test results, newest first (kept with the settings so they sync)
   hintUsed: false,
   current: null,
@@ -2719,6 +2720,7 @@ function collectSettings(){
       ability: state.ability,
       lenient: state.lenient,
       autoSpeak: state.autoSpeak,
+      wiktionary: state.wiktionary,
       formsTests: state.formsTests,
       vocabMode: vocabState.mode,
       vocabUnknownOnly: vocabState.unknownOnly,
@@ -2825,6 +2827,7 @@ function applyFormsSettings(S){
   if(typeof S.ability==="boolean") state.ability = S.ability;
   if(typeof S.lenient==="boolean") state.lenient = S.lenient;
   if(typeof S.autoSpeak==="boolean") state.autoSpeak = S.autoSpeak;
+  if(typeof S.wiktionary==="boolean") state.wiktionary = S.wiktionary;
   if(Array.isArray(S.formsTests)) state.formsTests = S.formsTests.filter(r=>r && typeof r.ms==="number").slice(0, 10);
 }
 if(SAVED_SETTINGS) applyFormsSettings(SAVED_SETTINGS);
@@ -3190,7 +3193,7 @@ function closeSearchResults(){
   gs.active = -1;
 }
 function paintSearchActive(){
-  document.querySelectorAll("#gsearchResults .gs-row").forEach((el,i)=>el.classList.toggle("active", i===gs.active));
+  document.querySelectorAll("#gsearchResults .sr-row").forEach((el,i)=>el.classList.toggle("active", i===gs.active));
 }
 function renderSearchResults(){
   const input = document.getElementById("gsearchInput"), box = document.getElementById("gsearchResults");
@@ -3207,7 +3210,7 @@ function renderSearchResults(){
           ? `<span class="gs-left">${esc(it.en)}</span>${turkish}`   // typed English: English on the left, bold Turkish on the right
           : `${turkish}<span class="gs-en">${esc(it.en)}</span>`;     // typed Turkish: bold Turkish on the left, English on the right
         const el = it.kind==="verb" ? 'button type="button"' : "div";
-        return `<${el} class="gs-row ${it.kind==="verb" ? "verb" : ""}" role="option" data-i="${i}">${body}</${it.kind==="verb" ? "button" : "div"}>`;
+        return `<${el} class="sr-row ${it.kind==="verb" ? "verb" : ""}" role="option" data-i="${i}">${body}</${it.kind==="verb" ? "button" : "div"}>`;
       }).join("")
     : "";
   if(!gs.items.length) startWiktionarySearch(input.value.trim());
@@ -3265,7 +3268,7 @@ function renderWiktionary(q, rows){
   box.innerHTML = `<div class="gs-wk"><div class="gs-source">From Wiktionary · not in your word list</div>`
     + rows.map(r=>{
         const turkish = `<span class="gs-main"><span class="gs-tr">${esc(r.tr)}</span>${r.pos ? `<span class="gs-pos">${esc(r.pos)}</span>` : ""}</span>`;
-        return `<div class="gs-row">${r.dir==="en" ? `<span class="gs-left">${esc(r.en)}</span>${turkish}` : `${turkish}<span class="gs-en">${esc(r.en)}</span>`}</div>`;
+        return `<div class="sr-row">${r.dir==="en" ? `<span class="gs-left">${esc(r.en)}</span>${turkish}` : `${turkish}<span class="gs-en">${esc(r.en)}</span>`}</div>`;
       }).join("")
     + `<div class="gs-foot"><a href="https://en.wiktionary.org/wiki/${encodeURIComponent(q)}" target="_blank" rel="noopener">View on Wiktionary ›</a><button type="button" id="gsSuggest">Suggest a gloss?</button></div></div>`;
   placeSearchResults();
@@ -3275,7 +3278,7 @@ function startWiktionarySearch(q){
   if(wk.ctrl){ wk.ctrl.abort(); wk.ctrl = null; }
   const box = document.getElementById("gsearchResults");
   const key = q.toLocaleLowerCase("tr");
-  if(key.length < 3){ box.innerHTML = NO_RESULTS_HTML; return; }
+  if(state.wiktionary===false || key.length < 3){ box.innerHTML = NO_RESULTS_HTML; return; }   // Wiktionary lookups can be turned off in the gear settings
   box.innerHTML = '<div id="gsWk" class="gs-empty">Not in your word list. Looking on Wiktionary…</div>';
   if(wk.cache.has(key)){ renderWiktionary(q, wk.cache.get(key)); return; }
   wk.timer = setTimeout(async ()=>{
@@ -3352,7 +3355,7 @@ function chooseSearchResult(i){
       const next = e.key==="ArrowDown" ? (pos+1) % verbs.length : (pos<=0 ? verbs.length-1 : pos-1);
       gs.active = verbs[next];
       paintSearchActive();
-      const el = box.querySelector(`.gs-row[data-i="${gs.active}"]`); if(el) el.scrollIntoView({block:"nearest"});
+      const el = box.querySelector(`.sr-row[data-i="${gs.active}"]`); if(el) el.scrollIntoView({block:"nearest"});
     } else if(e.key==="Enter"){
       e.preventDefault();
       if(gs.active>=0) chooseSearchResult(gs.active);
@@ -3360,7 +3363,7 @@ function chooseSearchResult(i){
     }
   });
   box.addEventListener("click", e=>{
-    const row = e.target.closest(".gs-row.verb");
+    const row = e.target.closest(".sr-row.verb");
     if(row) chooseSearchResult(Number(row.dataset.i));
     if(e.target.id==="gsSuggest") openSuggestForm();
     if(e.target.id==="gsCancel") renderSearchResults();
@@ -3552,10 +3555,11 @@ if(SAVED_SETTINGS) applyVocabSettings(SAVED_SETTINGS);
 // Spelling used to be a separate switch on Forms and on Vocab, so either one being on counts as on.
 function globalLenient(){ return !!(state.lenient || vocabState.lenientTyping); }
 window.turkceSettings = {
-  get: ()=>({lenient: globalLenient(), autoSpeak: !!state.autoSpeak}),
+  get: ()=>({lenient: globalLenient(), autoSpeak: !!state.autoSpeak, wiktionary: state.wiktionary!==false}),
   set: (key, value)=>{
     if(key==="lenient"){ state.lenient = !!value; vocabState.lenientTyping = !!value; }
     else if(key==="autoSpeak"){ state.autoSpeak = !!value; }
+    else if(key==="wiktionary"){ state.wiktionary = !!value; }
     saveSettings();
   },
 };
