@@ -3329,18 +3329,44 @@ async function wkGet(url, signal){
 }
 // A Turkish word -> its English meanings (Wiktionary's Turkish entry); an English word -> the Turkish
 // translations listed on its page. Both are tried, since the search box doesn't know which you typed.
+// Wiktionary wikitext -> plain text for a definition line.
+function wkClean(t){
+  let prev;
+  do{
+    prev = t;
+    t = t.replace(/\{\{([^{}]*)\}\}/g, (_, inner)=>{
+      const parts = inner.split("|").map(x=>x.trim());
+      const name = parts[0].toLowerCase();
+      const pick = (from)=>parts.slice(from).find(x=>x && !/^[a-z\-]+=/.test(x)) || "";
+      if(["l","m","link","mention","l-self","ll","w","wikipedia","cog"].includes(name)) return pick(2);
+      if(["gloss","gl","n-g","ng","non-gloss","q","qualifier","i","qual"].includes(name)) return pick(1);
+      return "";
+    });
+  }while(t!==prev);
+  return t.replace(/\[\[(?:[^\]|]*\|)?([^\]]*)\]\]/g, "$1").replace(/'{2,}/g, "").replace(/<[^>]*>/g, "").replace(/\s+/g, " ").replace(/^[\s,;:]+|[\s]+$/g, "").replace(/\(\s*\)/g, "").trim();
+}
 async function wiktionaryLookup(q, signal){
   const enc = encodeURIComponent(q);
-  const [def, page] = await Promise.all([
-    wkGet(`https://en.wiktionary.org/api/rest_v1/page/definition/${enc}`, signal),
-    wkGet(`https://en.wiktionary.org/w/api.php?action=parse&page=${enc}&prop=wikitext&redirects=1&format=json&formatversion=2&origin=*`, signal),
-  ]);
+  const page = await wkGet(`https://en.wiktionary.org/w/api.php?action=parse&page=${enc}&prop=wikitext&redirects=1&format=json&formatversion=2&origin=*`, signal);
   const rows = [];
-  ((def && def.tr) || []).slice(0, 3).forEach(entry=>{
-    const meanings = (entry.definitions || []).map(d=>wkText(d.definition)).filter(Boolean).slice(0, 3);
-    if(meanings.length) rows.push({dir:"tr", words:[q], en:meanings.join("; "), pos:(entry.partOfSpeech || "").toLowerCase()});
-  });
-  const text = page && page.parse && page.parse.wikitext;
+  const text0 = page && page.parse && page.parse.wikitext;
+  if(text0){
+    const m = text0.match(/(?:^|\n)==\s*Turkish\s*==\s*\n([\s\S]*?)(?=\n==[^=]|$)/);
+    if(m){
+      let pos = "", meanings = [];
+      const flush = ()=>{ if(meanings.length) rows.push({dir:"tr", words:[q], en:meanings.slice(0, 3).join("; "), pos}); meanings = []; };
+      m[1].split("\n").forEach(line=>{
+        const h = line.match(/^===+\s*([^=]+?)\s*=+\s*$/);
+        if(h){ flush(); pos = h[1].toLowerCase(); return; }
+        if(/^#(?![:*#])/.test(line)){
+          const d = wkClean(line.replace(/^#\s*/, ""));
+          if(d) meanings.push(d);
+        }
+      });
+      flush();
+    }
+  }
+  const text = text0;
   if(text){
     const bySense = new Map();
     let sense = "";
@@ -3392,6 +3418,7 @@ function startWiktionarySearch(q){
       renderWiktionary(q, rows);
     }catch(e){
       if(e && e.name==="AbortError") return;
+      console.warn("Wiktionary lookup failed:", e);
       if(document.getElementById("gsWk") && document.getElementById("gsearchInput").value.trim()===q){
         box.innerHTML = '<div class="gs-empty">No results. Wiktionary couldn\'t be reached. <button type="button" id="gsSuggest">Suggest a gloss?</button></div>';
         placeSearchResults();
