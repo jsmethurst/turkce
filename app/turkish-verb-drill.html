@@ -77,6 +77,11 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .gs-form-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;}
 .gs-form-actions .btn{padding:9px 16px;}
 .gs-form-msg{margin:0;font-size:0.82rem;color:var(--bad);}
+.gs-source{padding:6px 10px 2px;font-size:0.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--tile-gold);}
+.gs-wk .gs-row{cursor:default;}
+.gs-wk .gs-pos{margin-left:6px;font-size:0.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
+.gs-foot{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;justify-content:space-between;padding:6px 10px 4px;font-size:0.82rem;color:var(--ink-soft);}
+.gs-foot a,.gs-foot button{font:inherit;background:none;border:none;padding:0;color:var(--tile-blue);font-weight:600;text-decoration:underline;cursor:pointer;}
 .gs-thanks{padding:14px 12px;font-size:0.92rem;color:var(--good);font-weight:600;}
 .brand-mark{width:42px;height:42px;flex:none;display:block;filter:drop-shadow(0 1px 1px rgba(18,65,77,0.12)) drop-shadow(0 6px 10px rgba(18,65,77,0.22));}
 /* Logo: a glass of çay; the steam drifts gently. */
@@ -3204,10 +3209,89 @@ function renderSearchResults(){
         const el = it.kind==="verb" ? 'button type="button"' : "div";
         return `<${el} class="gs-row ${it.kind==="verb" ? "verb" : ""}" role="option" data-i="${i}">${body}</${it.kind==="verb" ? "button" : "div"}>`;
       }).join("")
-    : '<div class="gs-empty">No results. <button type="button" id="gsSuggest">Suggest a gloss?</button></div>';
+    : "";
+  if(!gs.items.length) startWiktionarySearch(input.value.trim());
+  else { clearTimeout(wk.timer); if(wk.ctrl){ wk.ctrl.abort(); wk.ctrl = null; } }
   placeSearchResults();
   box.hidden = false;
   input.setAttribute("aria-expanded", "true");
+}
+// ---- Nothing in the Sözlük matched: look it up on Wiktionary, and say clearly that is where it came from ----
+const wk = {timer:null, ctrl:null, cache:new Map()};
+const NO_RESULTS_HTML = '<div class="gs-empty">No results. <button type="button" id="gsSuggest">Suggest a gloss?</button></div>';
+function wkText(html){ const d = document.createElement("div"); d.innerHTML = html; return (d.textContent || "").replace(/\s+/g, " ").trim(); }
+async function wkGet(url, signal){
+  const r = await fetch(url, {signal});
+  if(r.status===404) return null;
+  if(!r.ok) throw new Error("Wiktionary " + r.status);
+  return r.json();
+}
+// A Turkish word -> its English meanings (Wiktionary's Turkish entry); an English word -> the Turkish
+// translations listed on its page. Both are tried, since the search box doesn't know which you typed.
+async function wiktionaryLookup(q, signal){
+  const enc = encodeURIComponent(q);
+  const [def, page] = await Promise.all([
+    wkGet(`https://en.wiktionary.org/api/rest_v1/page/definition/${enc}`, signal),
+    wkGet(`https://en.wiktionary.org/w/api.php?action=parse&page=${enc}&prop=wikitext&redirects=1&format=json&formatversion=2&origin=*`, signal),
+  ]);
+  const rows = [];
+  ((def && def.tr) || []).slice(0, 3).forEach(entry=>{
+    const meanings = (entry.definitions || []).map(d=>wkText(d.definition)).filter(Boolean).slice(0, 3);
+    if(meanings.length) rows.push({dir:"tr", tr:q, en:meanings.join("; "), pos:(entry.partOfSpeech || "").toLowerCase()});
+  });
+  const text = page && page.parse && page.parse.wikitext;
+  if(text){
+    const bySense = new Map();
+    let sense = "";
+    text.split("\n").forEach(line=>{
+      const top = line.match(/^\{\{(?:trans-top|checktrans-top)\|([^}|]*)/);
+      if(top){ sense = top[1].trim(); return; }
+      if(/^\*\s*Turkish:/.test(line)){
+        const list = bySense.get(sense) || [];
+        [...line.matchAll(/\{\{t[a-z+\-]*\|tr\|([^}|]+)/g)].forEach(m=>{ const w = m[1].trim(); if(w && !list.includes(w)) list.push(w); });
+        if(list.length) bySense.set(sense, list);
+      }
+    });
+    [...bySense.entries()].slice(0, 4).forEach(([sns, words])=>
+      rows.push({dir:"en", en: q + (sns ? ` (${sns})` : ""), tr: words.slice(0, 4).join(", ")}));
+  }
+  return rows;
+}
+function renderWiktionary(q, rows){
+  const box = document.getElementById("gsearchResults");
+  if(document.getElementById("gsearchInput").value.trim()!==q || !document.getElementById("gsWk")) return;
+  const esc = t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+  if(!rows.length){ box.innerHTML = NO_RESULTS_HTML; placeSearchResults(); return; }
+  box.innerHTML = `<div class="gs-wk"><div class="gs-source">From Wiktionary · not in your word list</div>`
+    + rows.map(r=>{
+        const turkish = `<span class="gs-main"><span class="gs-tr">${esc(r.tr)}</span>${r.pos ? `<span class="gs-pos">${esc(r.pos)}</span>` : ""}</span>`;
+        return `<div class="gs-row">${r.dir==="en" ? `<span class="gs-left">${esc(r.en)}</span>${turkish}` : `${turkish}<span class="gs-en">${esc(r.en)}</span>`}</div>`;
+      }).join("")
+    + `<div class="gs-foot"><a href="https://en.wiktionary.org/wiki/${encodeURIComponent(q)}" target="_blank" rel="noopener">View on Wiktionary ›</a><button type="button" id="gsSuggest">Suggest a gloss?</button></div></div>`;
+  placeSearchResults();
+}
+function startWiktionarySearch(q){
+  clearTimeout(wk.timer);
+  if(wk.ctrl){ wk.ctrl.abort(); wk.ctrl = null; }
+  const box = document.getElementById("gsearchResults");
+  const key = q.toLocaleLowerCase("tr");
+  if(key.length < 3){ box.innerHTML = NO_RESULTS_HTML; return; }
+  box.innerHTML = '<div id="gsWk" class="gs-empty">Not in your word list. Looking on Wiktionary…</div>';
+  if(wk.cache.has(key)){ renderWiktionary(q, wk.cache.get(key)); return; }
+  wk.timer = setTimeout(async ()=>{
+    const ctrl = wk.ctrl = new AbortController();
+    try{
+      const rows = await wiktionaryLookup(key, ctrl.signal);
+      wk.cache.set(key, rows);
+      renderWiktionary(q, rows);
+    }catch(e){
+      if(e && e.name==="AbortError") return;
+      if(document.getElementById("gsWk") && document.getElementById("gsearchInput").value.trim()===q){
+        box.innerHTML = '<div class="gs-empty">No results. Wiktionary couldn\'t be reached. <button type="button" id="gsSuggest">Suggest a gloss?</button></div>';
+        placeSearchResults();
+      }
+    }
+  }, 450);
 }
 // "No results. Suggest a gloss?" opens a small form that goes into Jacob's suggestion queue.
 function openSuggestForm(){
