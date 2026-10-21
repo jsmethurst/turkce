@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-258 verbs · 957 non-verbs · 40 topics
+258 verbs · 958 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1355,13 +1355,14 @@ eczaneci                  pharmacist
 nezle                     common cold
 teşhiş                    diagnosis
 
-DERSTE 351-355
+DERSTE 351-356
 --------------
 halsiz                    sluggish (because of sickness)
 şikayet                   complaint
 reçete                    prescription
 tedavi                    treatment
 nihayet                   finally (at long last)
+ne alaka                  what's that got to do with it?
 
 SIFATLAR 1-25
 -------------
@@ -1645,7 +1646,7 @@ TOPICS
 
 Question Words
 --------------
-ne, kim, neresi, nerede, kimde, ne var, ne yok, açık mı, kapalı mı, kaç kez, ne haber, kaçta
+ne, kim, neresi, nerede, kimde, ne var, ne yok, açık mı, kapalı mı, kaç kez, ne haber, kaçta, ne alaka
 
 Numbers & Ordering
 ------------------
