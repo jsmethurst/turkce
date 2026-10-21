@@ -4456,7 +4456,7 @@ function nextTekrarCard(){
   document.getElementById("tekrarBack").hidden = true;
   const input = document.getElementById("tekrarInput");
   input.value = "";
-  if(window.matchMedia("(hover: hover)").matches) input.focus();
+  if(window.matchMedia("(hover: hover)").matches) focusAnswerBox(input);
   updateTekrarStats(words);
 }
 function updateTekrarStats(words){
@@ -4806,7 +4806,7 @@ function nextCasesCard(){
   fb.className = "feedback"; fb.innerHTML = "";
   const input = document.getElementById("casesInput");
   input.value = "";
-  if(window.matchMedia("(hover: hover)").matches) input.focus();
+  if(window.matchMedia("(hover: hover)").matches) focusAnswerBox(input);
   updateCasesStats();
 }
 // Exactly right, or (for the verb cases) at least the right ending. Genitif + iyelik must be exact.
@@ -4981,6 +4981,14 @@ function updateSpeakButton(revealed){
   btn.style.display = (state.mode==="en2tr" && !revealed) ? "none" : "flex";
 }
 
+// Put the cursor in an answer box when a new card appears, but never pull it away from another box
+// you're typing in (the header search, the sign-in form, the feedback note). A background refresh, like
+// settings arriving from another device, used to do exactly that.
+function focusAnswerBox(input, opts){
+  const ae = document.activeElement;
+  if(ae && ae!==input && ae!==document.body && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) return;
+  input.focus(opts);
+}
 function renderQuestion(){
   state.shownAt = Date.now();   // for how long each answer took
   const {verb, tenseKey, personIdx, negative, question, ability, answer, gloss} = state.current;
@@ -5016,7 +5024,7 @@ function renderQuestion(){
   document.getElementById("answerInput").placeholder = (state.mode==="tr2en") ? "Type the English meaning…" : "Type the Turkish form…";
   document.getElementById("answerInput").value = "";
   document.getElementById("feedback").className = "feedback";
-  document.getElementById("answerInput").focus({preventScroll:true});
+  focusAnswerBox(document.getElementById("answerInput"), {preventScroll:true});
   setPrimaryButtonMode("check");
 }
 
