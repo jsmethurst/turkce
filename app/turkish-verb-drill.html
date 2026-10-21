@@ -4415,7 +4415,7 @@ document.querySelectorAll("#vocabAnswerModeChips .chip").forEach(chip=>{
     if(typing===vocabState.typingMode) return;
     vocabState.typingMode = typing;
     syncTypingChip();
-    refreshVocabCard();
+    nextVocabCard();   // a card flipped in flashcard mode would leave the typing box disabled
     saveSettings();
   };
 });
