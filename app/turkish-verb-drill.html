@@ -344,9 +344,11 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 .ref-row.is-hidden{opacity:.5;cursor:pointer;}
 .ref-row.is-hidden .ref-tr{text-decoration:line-through;}
 #vocabTierTag{cursor:pointer;}
-.hide-row{display:flex;justify-content:flex-start;margin:6px 0 0;}
-.hide-row[hidden]{display:none;}
-.hide-row .btn{padding:6px 14px;font-size:0.82rem;}
+#tekrarTag{cursor:pointer;}
+.tag{transition:width .22s ease,background-color .2s ease,color .2s ease;box-sizing:border-box;}
+.tag.arm{background:#E5191C;color:#fff;white-space:nowrap;overflow:hidden;box-shadow:0 0 0 2px rgba(229,25,28,.25);}
+.prompt-tags.armed{flex-wrap:nowrap;}
+.prompt-tags.armed .tag:not(.arm){display:none;}
 .upnext-hidden{margin-top:10px;font-size:0.82rem;color:var(--ink-soft);}
 .ref-list{columns:2;column-gap:20px;}
 @media(max-width:560px){.ref-list{columns:1;}}
@@ -532,7 +534,6 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
           </button>
         </div>
       </div>
-      <div class="hide-row" id="vocabHideRow" hidden><button type="button" class="btn btn-ghost" id="vocabHideBtn">Exclude from review</button></div>
       <div class="prompt-main" style="text-align:center;">
         <div class="prompt-word" id="vocabFront" style="cursor:pointer;">gitmek</div>
         <hr class="vocab-divider" id="vocabDivider" style="display:none;">
@@ -3944,6 +3945,7 @@ function updateVocabHintText(){
 }
 
 function showVocabMessage(title, detail){
+  disarmTags();
   document.getElementById("vocabFront").textContent = title;
   const back = document.getElementById("vocabBack");
   back.textContent = detail || "";
@@ -4069,7 +4071,7 @@ function nextVocabCard(){
 }
 
 function showVocabItem(item){
-  document.getElementById("vocabHideRow").hidden = true;
+  disarmTags();
   const front = document.getElementById("vocabFront");
   const back = document.getElementById("vocabBack");
   back.classList.remove("vocab-note");
@@ -4452,21 +4454,44 @@ document.querySelectorAll("#vocabFilterChips .chip").forEach(c=>{
     saveSettings();
   };
 });
-// The list tag in the corner opens a one-button option to leave this word out of review for good.
-document.getElementById("vocabTierTag").onclick = ()=>{
-  if(!vocabState.current || vocabState.test) return;
-  const row = document.getElementById("vocabHideRow");
-  row.hidden = !row.hidden;
-};
-document.getElementById("vocabHideBtn").onclick = ()=>{
-  const cur = vocabState.current;
-  document.getElementById("vocabHideRow").hidden = true;
-  if(!cur) return;
-  state.hidden.add(vocabKnownKey(cur));
-  saveSettings();
-  renderReferencePanel(); renderNonverbReferencePanel();
-  nextVocabCard();
-};
+// The list tag in the corner turns into a red "Exclude word from review?" button; a second tap leaves the word out for good.
+// It grows sideways only, and any other tap (or a new card) puts the tag back.
+function disarmTags(){
+  document.querySelectorAll(".tag.arm").forEach(t=>{
+    t.classList.remove("arm");
+    t.parentNode.classList.remove("armed");
+    t.textContent = t.dataset.orig; t.style.width = "";
+  });
+}
+function wireExcludeTag(tag, current, afterHide){
+  tag.addEventListener("click", e=>{
+    const cur = current();
+    if(!cur) return;
+    e.stopPropagation();
+    if(tag.classList.contains("arm")){
+      disarmTags();
+      state.hidden.add(vocabKnownKey(cur));
+      saveSettings();
+      renderReferencePanel(); renderNonverbReferencePanel();
+      afterHide();
+      return;
+    }
+    disarmTags();
+    tag.dataset.orig = tag.textContent;
+    const from = tag.offsetWidth;
+    tag.classList.add("arm");
+    tag.parentNode.classList.add("armed");
+    tag.textContent = "Exclude word from review?";
+    tag.style.width = "";
+    const to = tag.offsetWidth;
+    tag.style.width = from + "px";
+    tag.getBoundingClientRect();
+    tag.style.width = to + "px";
+  });
+}
+wireExcludeTag(document.getElementById("vocabTierTag"), ()=>!vocabState.test && vocabState.current, ()=>nextVocabCard());
+wireExcludeTag(document.getElementById("tekrarTag"), ()=>tekrar.current, ()=>nextTekrarCard());
+document.addEventListener("click", disarmTags);
 // Typing / Flashcards: pick one.
 document.querySelectorAll("#vocabAnswerModeChips .chip").forEach(chip=>{
   chip.onclick = ()=>{
@@ -4602,6 +4627,7 @@ function tekrarWaitText(ms){
   return d===1 ? "1 day" : `${d} days`;
 }
 function showTekrarMessage(title, detail){
+  disarmTags();
   tekrar.current = null;
   document.getElementById("tekrarPrompt").textContent = title;
   document.getElementById("tekrarSub").textContent = detail || "";
@@ -4615,6 +4641,7 @@ function showTekrarMessage(title, detail){
   document.getElementById("tekrarBack").hidden = true;
 }
 function nextTekrarCard(){
+  disarmTags();
   const words = tekrarWords();
   renderTekrarUpcoming(words);
   const now = Date.now();
