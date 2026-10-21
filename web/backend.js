@@ -99,8 +99,8 @@
   // ---------- sign in / sign out ----------
   var css = `
 header{flex-wrap:wrap;}
-.sync-status.clickable{display:flex;align-items:center;flex:none;cursor:pointer;font:inherit;font-size:12px;background:transparent;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;}
-.sync-status.clickable::before{display:inline-block;margin-right:6px;vertical-align:1px;}
+.sync-status.clickable{display:flex;align-items:center;flex:none;cursor:pointer;font:inherit;font-size:14px;font-weight:500;padding:0 18px;background:transparent;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;}
+.sync-status.clickable::before{flex:none;width:10px;height:10px;margin-right:9px;}
 .account-wrap{position:relative;min-width:0;max-width:100%;}
 .update-bar{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:12px;max-width:calc(100vw - 32px);padding:10px 10px 10px 16px;border-radius:12px;background:var(--tile-blue-deep);color:#fff;font-size:14px;box-shadow:0 8px 24px -8px rgba(18,65,77,.5);}
 .update-bar .btn{padding:8px 14px;font-size:0.85rem;background:#fff;color:var(--tile-blue-deep);}
@@ -143,7 +143,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
 .feedback-msg{margin:8px 0 0;font-size:12.5px;}
 .feedback-msg.good{color:var(--good);}
 .feedback-msg.bad{color:var(--bad);}
-.help-wrap .feedback-btn svg{width:20px;height:20px;}
+.help-wrap .feedback-btn svg{width:17px;height:21px;}
 .settings-wrap .feedback-btn svg{width:21px;height:21px;}
 .settings-pop{width:300px;}
 .settings-pop .gs-row{display:flex;align-items:flex-start;gap:10px;padding:9px 2px;font-size:13px;line-height:1.4;color:var(--ink);cursor:pointer;}
@@ -377,7 +377,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     return w;
   }
   // ---------- "How to use Türkçe": a short guide next to "Suggest a change" ----------
-  var HELP_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>';
+  var HELP_ICON = '<svg viewBox="6 4 12 15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>';
   var help = null;
   function buildHelp(){
     var w = el(`<div class="feedback-wrap help-wrap">
