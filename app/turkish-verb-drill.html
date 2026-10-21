@@ -41,7 +41,7 @@ body{
 @media(min-width:640px){.wrap{padding:44px 24px 100px;}}
 
 header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:22px;}
-.sync-status{display:flex;align-items:center;gap:6px;margin-top:6px;padding:5px 11px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:var(--ink-soft);white-space:nowrap;}
+.sync-status{display:flex;align-items:center;gap:6px;height:42px;box-sizing:border-box;padding:0 14px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:var(--ink-soft);white-space:nowrap;}
 .sync-status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--good);}
 .sync-status.local::before{background:var(--bad);}
 .export-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:-8px 0 20px;font-size:13px;color:var(--ink-soft);}
@@ -50,8 +50,8 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .export-msg.bad{color:var(--bad);}
 .sync-note{margin:-8px 0 20px;padding:10px 14px;border-radius:10px;background:#FBEAE5;color:var(--bad);font-size:13px;line-height:1.5;}
 .brand{display:flex;align-items:center;gap:12px;}
-.gsearch{position:relative;flex:1 1 0;min-width:0;margin-top:2px;}
-.gsearch input{width:100%;box-sizing:border-box;height:38px;font:inherit;font-size:0.92rem;padding:0 32px 0 34px;border:1.5px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);outline:none;}
+.gsearch{position:relative;flex:1 1 0;min-width:0;}
+.gsearch input{width:100%;box-sizing:border-box;height:42px;font:inherit;font-size:0.92rem;padding:0 32px 0 34px;border:1.5px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);outline:none;}
 .gsearch input:focus{border-color:var(--tile-turquoise);}
 .gsearch .mag{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--ink-soft);pointer-events:none;}
 .gsearch .clr{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:26px;height:26px;border:none;border-radius:50%;background:none;font-size:1.15rem;line-height:1;color:var(--ink-soft);cursor:pointer;}
