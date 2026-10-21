@@ -60,6 +60,16 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .gsearch-results[hidden]{display:none;}
 .sr-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;width:100%;text-align:left;font:inherit;font-size:0.92rem;background:none;border:none;border-radius:9px;padding:8px 10px;color:var(--ink);cursor:default;}
 .sr-row.verb{cursor:pointer;}
+.sr-item{display:flex;align-items:center;gap:2px;}
+.sr-item .sr-row{flex:1;min-width:0;}
+.sr-item.is-excl .gs-tr{text-decoration:line-through;opacity:.55;}
+.xbtn{flex:none;align-self:center;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;height:24px;min-width:24px;margin-block:-8px;padding:0;border:none;border-radius:12px;background:transparent;color:var(--ink-soft);opacity:0;cursor:pointer;font:inherit;font-size:.72rem;font-weight:700;white-space:nowrap;overflow:hidden;transition:width .2s ease,background-color .2s ease,color .2s ease,opacity .2s;}
+.ref-row:hover .xbtn,.sr-item:hover .xbtn,.xbtn:focus-visible{opacity:.6;}
+.xbtn:hover{opacity:1;}
+@media (hover:none){.xbtn:not(.arm):not(.incl){display:none;}}
+.xbtn svg{width:14px;height:14px;}
+.xbtn.arm{background:#E5191C;color:#fff;opacity:1 !important;padding:0 10px;}
+.xbtn.incl{opacity:.85 !important;padding:0 9px;border:1px solid var(--line);}
 .sr-row.verb:hover,.sr-row.active{background:var(--paper-2);}
 .gs-tr{font-weight:700;color:var(--tile-blue-deep);}
 .gs-tag{margin-left:6px;font-size:0.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--tile-turquoise);}
@@ -3096,7 +3106,7 @@ function renderReferencePanel(){
       row.tabIndex = 0;
       row.setAttribute("role", "button");
       row.title = (wordFormLabel(key) ? wordFormLabel(key) + " · " : "") + "Tap to see all forms";
-      row.innerHTML = `<span class="ref-tr">${v.inf}</span><span class="ref-en">${v.vocabGloss}</span>`;
+      row.innerHTML = `<span class="ref-tr">${v.inf}</span><span class="ref-en">${v.vocabGloss}</span>` + (hid ? "" : xbtnHTML(key));
       list.appendChild(row);
     });
     box.appendChild(list);
@@ -3138,6 +3148,7 @@ function openVerbModal(inf){
 }
 function closeVerbModal(){ document.getElementById("verbModal").hidden = true; }
 document.getElementById("refPanel").addEventListener("click", e=>{
+  if(e.target.closest(".xbtn")) return;
   const title = e.target.closest(".ref-page-title");
   if(title){ toggleHiddenList(title.dataset.group); return; }
   const row = e.target.closest(".verb-row");
@@ -3146,11 +3157,43 @@ document.getElementById("refPanel").addEventListener("click", e=>{
   else openVerbModal(row.dataset.inf);
 });
 document.getElementById("nonverbRefPanel").addEventListener("click", e=>{
+  if(e.target.closest(".xbtn")) return;
   const title = e.target.closest(".ref-page-title");
   if(title){ toggleHiddenList(title.dataset.group); return; }
   const row = e.target.closest(".ref-row.is-hidden");
   if(row) unhideWord(row.dataset.key);
 });
+const BAN_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg>';
+function xbtnHTML(key){
+  return state.hidden.has(key)
+    ? `<button type="button" class="xbtn incl" data-key="${key.replace(/"/g,"&quot;")}" aria-label="Include in review">Include</button>`
+    : `<button type="button" class="xbtn" data-key="${key.replace(/"/g,"&quot;")}" aria-label="Exclude from review">${BAN_ICON}</button>`;
+}
+// One tap arms the button ("Exclude?", red, growing sideways); a second tap excludes the word.
+function disarmX(){
+  document.querySelectorAll(".xbtn.arm").forEach(b=>{ b.classList.remove("arm"); b.innerHTML = BAN_ICON; b.style.width = ""; });
+}
+document.addEventListener("click", e=>{
+  const b = e.target.closest && e.target.closest(".xbtn");
+  if(!b){ disarmX(); return; }
+  e.stopImmediatePropagation();
+  const key = b.dataset.key;
+  if(b.classList.contains("incl")){ state.hidden.delete(key); afterExcludeChange(); return; }
+  if(b.classList.contains("arm")){ state.hidden.add(key); afterExcludeChange(); return; }
+  disarmX();
+  const from = b.offsetWidth;
+  b.classList.add("arm"); b.textContent = "Exclude?"; b.style.width = "";
+  const to = b.offsetWidth;
+  b.style.width = from + "px"; b.getBoundingClientRect(); b.style.width = to + "px";
+});
+function afterExcludeChange(){
+  refreshAfterHiddenChange();
+  if(!document.getElementById("gsearchResults").hidden && gs.items.length){
+    const sel = document.getElementById("gsearchResults").scrollTop;
+    renderSearchResults();
+    document.getElementById("gsearchResults").scrollTop = sel;
+  }
+}
 function toggleHiddenList(label){
   if(showHiddenIn.has(label)) showHiddenIn.delete(label); else showHiddenIn.add(label);
   renderReferencePanel(); renderNonverbReferencePanel();
@@ -3252,7 +3295,8 @@ function renderSearchResults(){
           ? `<span class="gs-left">${esc(it.en)}</span>${turkish}`   // typed English: English on the left, bold Turkish on the right
           : `${turkish}<span class="gs-en">${esc(it.en)}</span>`;     // typed Turkish: bold Turkish on the left, English on the right
         const el = it.kind==="verb" ? 'button type="button"' : "div";
-        return `<${el} class="sr-row ${it.kind==="verb" ? "verb" : ""}" role="option" data-i="${i}">${body}</${it.kind==="verb" ? "button" : "div"}>`;
+        const key = `${it.kind==="verb" ? "verb" : "nonverb"}:${it.tr}`;
+        return `<div class="sr-item${state.hidden.has(key) ? " is-excl" : ""}"><${el} class="sr-row ${it.kind==="verb" ? "verb" : ""}" role="option" data-i="${i}">${body}</${it.kind==="verb" ? "button" : "div"}>${xbtnHTML(key)}</div>`;
       }).join("")
     : "";
   if(!gs.items.length) startWiktionarySearch(input.value.trim());
@@ -3453,7 +3497,7 @@ function renderNonverbReferencePanel(){
       row.dataset.key = key;
       row.dataset.level = state.hidden.has(key) ? "excluded" : wordFormLevelName(key);
       row.title = wordFormLabel(key);
-      row.innerHTML = `<span class="ref-tr">${nv.tr}</span><span class="ref-en">${nv.en}</span>`;
+      row.innerHTML = `<span class="ref-tr">${nv.tr}</span><span class="ref-en">${nv.en}</span>` + (hid ? "" : xbtnHTML(key));
       list.appendChild(row);
     });
     box.appendChild(list);
