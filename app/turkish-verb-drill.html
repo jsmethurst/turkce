@@ -64,6 +64,9 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .gs-tr{font-weight:700;color:var(--tile-blue-deep);}
 .gs-tag{margin-left:6px;font-size:0.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--tile-turquoise);}
 .gs-en{color:var(--ink-soft);font-size:0.85rem;text-align:right;}
+.gs-left{color:var(--ink);font-size:0.92rem;text-align:left;}
+.gs-main{text-align:right;white-space:nowrap;}
+.gs-row .gs-main:first-child{text-align:left;}
 .gs-empty{padding:10px;font-size:0.85rem;color:var(--ink-soft);}
 .brand-mark{width:42px;height:42px;flex:none;display:block;filter:drop-shadow(0 1px 1px rgba(18,65,77,0.12)) drop-shadow(0 6px 10px rgba(18,65,77,0.22));}
 /* Logo: a glass of çay; the steam drifts gently. */
@@ -3144,9 +3147,12 @@ function searchWords(query){
     return 0;
   };
   const out = [];
+  // Each result remembers which side matched: "tr" if what you typed looks like the Turkish word,
+  // "en" if it looks like the English gloss. The row is then laid out with the side you typed on the left.
   const add = (kind, tr, en, key)=>{
-    const sc = Math.max(scoreText(tr, true), scoreText(en, false));
-    if(sc>0) out.push({kind, tr, en, sc, key});
+    const st = scoreText(tr, true), se = scoreText(en, false);
+    const sc = Math.max(st, se);
+    if(sc>0) out.push({kind, tr, en, sc, key, dir: st>=se ? "tr" : "en"});
   };
   VERBS.forEach(v=>add("verb", v.inf, v.vocabGloss, v.inf));
   const seen = new Set();
@@ -3179,7 +3185,15 @@ function renderSearchResults(){
   gs.active = -1;
   const esc = t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;");
   box.innerHTML = gs.items.length
-    ? gs.items.map((it,i)=>`<${it.kind==="verb" ? "button type=\"button\"" : "div"} class="gs-row ${it.kind==="verb" ? "verb" : ""}" role="option" data-i="${i}"><span><span class="gs-tr">${esc(it.tr)}</span>${it.kind==="verb" ? '<span class="gs-tag">verb ›</span>' : ""}</span><span class="gs-en">${esc(it.en)}</span></${it.kind==="verb" ? "button" : "div"}>`).join("")
+    ? gs.items.map((it,i)=>{
+        const tag = it.kind==="verb" ? '<span class="gs-tag">verb ›</span>' : "";
+        const turkish = `<span class="gs-main"><span class="gs-tr">${esc(it.tr)}</span>${tag}</span>`;
+        const body = it.dir==="en"
+          ? `<span class="gs-left">${esc(it.en)}</span>${turkish}`   // typed English: English on the left, bold Turkish on the right
+          : `${turkish}<span class="gs-en">${esc(it.en)}</span>`;     // typed Turkish: bold Turkish on the left, English on the right
+        const el = it.kind==="verb" ? 'button type="button"' : "div";
+        return `<${el} class="gs-row ${it.kind==="verb" ? "verb" : ""}" role="option" data-i="${i}">${body}</${it.kind==="verb" ? "button" : "div"}>`;
+      }).join("")
     : '<div class="gs-empty">No match in the word list.</div>';
   placeSearchResults();
   box.hidden = false;
