@@ -95,7 +95,18 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .vm-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
 .vm-x{flex:none;width:34px;height:34px;border:1px solid var(--line);border-radius:50%;background:#fff;font-size:1.3rem;line-height:1;color:var(--ink-soft);cursor:pointer;}
 .vm-x:hover{background:var(--paper-2);color:var(--ink);}
-.vm-controls{padding:6px 18px 8px;border-bottom:1px solid var(--line);}
+.vm-controls{padding:8px 18px 10px;border-bottom:1px solid var(--line);}
+.vm-switches{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.vm-switch{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:0.85rem;color:var(--ink-soft);background:none;border:none;padding:2px 0;cursor:pointer;}
+.vm-switch .lbl.on{color:var(--ink);font-weight:700;}
+.vm-switch .track{position:relative;flex:none;width:38px;height:22px;border-radius:999px;background:var(--tile-blue);transition:background .15s;}
+.vm-switch .track::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .15s;}
+.vm-switch[aria-checked="true"] .track::after{transform:translateX(16px);}
+#vmPolarity[aria-checked="true"] .track{background:var(--tile-red);}
+#vmEnglish .track{background:#c9c4b5;}
+#vmEnglish[aria-checked="true"] .track{background:var(--tile-turquoise);}
+.vm-switch:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:3px;border-radius:6px;}
+.vm-grid small.en{display:block;font-size:0.66rem;line-height:1.2;color:var(--ink-soft);margin-top:1px;}
 .vm-body{overflow-y:auto;padding:10px 18px 6px;min-height:120px;flex:1;}
 .vm-tense{margin-bottom:12px;}
 .vm-tense h4{margin:0 0 4px;font-size:0.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
@@ -679,11 +690,15 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
         <button type="button" class="vm-x" id="verbModalX" aria-label="Close">&times;</button>
       </div>
       <div class="vm-controls">
-        <div class="chip-row" id="vmPolarity">
-          <div class="chip on" data-neg="false">Positive</div>
-          <div class="chip" data-neg="true">Negative</div>
+        <div class="vm-switches">
+          <button type="button" class="vm-switch" id="vmPolarity" role="switch" aria-checked="false" aria-label="Positive or negative">
+            <span class="lbl on" id="vmPosLbl">Positive</span><span class="track"></span><span class="lbl" id="vmNegLbl">Negative</span>
+          </button>
+          <button type="button" class="vm-switch" id="vmEnglish" role="switch" aria-checked="false">
+            <span class="lbl">English</span><span class="track"></span>
+          </button>
         </div>
-        <div class="chip-row" style="margin-top:6px;">
+        <div class="chip-row" style="margin-top:8px;">
           <div class="chip" id="vmQuestion">Question</div>
           <div class="chip" id="vmAbility">Ability</div>
         </div>
@@ -3024,7 +3039,7 @@ function renderReferencePanel(){
   });
 }
 // ---- Verb forms: tap a verb in the Sözlük to see every tense, for reference ----
-const vm = {verb:null, neg:false, q:false, ability:false};
+const vm = {verb:null, neg:false, q:false, ability:false, en:false};
 function renderVerbModal(){
   const v = vm.verb;
   if(!v) return;
@@ -3033,7 +3048,11 @@ function renderVerbModal(){
     const rows = PERSONS.map((p,i)=>{
       let form = "";
       try{ form = conjugateFull(v, t.key, i, neg, q, vm.ability).trim(); }catch(e){ form = "—"; }
-      return `<div><span class="pn">${p}</span><b>${form}</b></div>`;
+      let en = "";
+      if(vm.en){
+        try{ en = englishGloss(v, t.key, i, neg, q, vm.ability).replace(/^question:\s*/i, ""); }catch(e){ en = ""; }
+      }
+      return `<div><span class="pn">${p}</span><b>${form}</b>${en ? `<small class="en">${en}</small>` : ""}</div>`;
     }).join("");
     return `<div class="vm-tense"><h4>${t.label}</h4><div class="vm-grid">${rows}</div></div>`;
   };
@@ -3043,10 +3062,10 @@ function renderVerbModal(){
 function openVerbModal(inf){
   const v = VERBS.find(x=>x.inf===inf);
   if(!v) return;
-  vm.verb = v; vm.neg = false; vm.q = false; vm.ability = false;
+  vm.verb = v; vm.neg = false; vm.q = false; vm.ability = false; vm.en = false;
   document.getElementById("verbModalTitle").textContent = v.inf;
   document.getElementById("verbModalGloss").textContent = v.vocabGloss;
-  document.querySelectorAll("#vmPolarity .chip").forEach(c=>c.classList.toggle("on", c.dataset.neg==="false"));
+  paintVerbSwitches();
   document.getElementById("vmQuestion").classList.remove("on");
   document.getElementById("vmAbility").classList.remove("on");
   renderVerbModal();
@@ -3062,12 +3081,16 @@ document.getElementById("refPanel").addEventListener("keydown", e=>{
   const row = e.target.closest && e.target.closest(".verb-row");
   if(row && (e.key==="Enter" || e.key===" ")){ e.preventDefault(); openVerbModal(row.dataset.inf); }
 });
-// Positive / Negative: one or the other. Question and Ability: each on or off, together if you like.
-document.querySelectorAll("#vmPolarity .chip").forEach(c=>c.onclick = ()=>{
-  vm.neg = c.dataset.neg==="true";
-  document.querySelectorAll("#vmPolarity .chip").forEach(x=>x.classList.toggle("on", x===c));
-  renderVerbModal();
-});
+// Positive / Negative is a side-to-side switch. Question and Ability: each on or off, together if you like.
+function paintVerbSwitches(){
+  const pol = document.getElementById("vmPolarity");
+  pol.setAttribute("aria-checked", String(vm.neg));
+  document.getElementById("vmPosLbl").classList.toggle("on", !vm.neg);
+  document.getElementById("vmNegLbl").classList.toggle("on", vm.neg);
+  document.getElementById("vmEnglish").setAttribute("aria-checked", String(vm.en));
+}
+document.getElementById("vmPolarity").onclick = ()=>{ vm.neg = !vm.neg; paintVerbSwitches(); renderVerbModal(); };
+document.getElementById("vmEnglish").onclick = ()=>{ vm.en = !vm.en; paintVerbSwitches(); renderVerbModal(); };
 document.getElementById("vmQuestion").onclick = ()=>{
   vm.q = !vm.q;
   document.getElementById("vmQuestion").classList.toggle("on", vm.q);
