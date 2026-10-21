@@ -371,6 +371,8 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 .form-swatch.dim{opacity:.4;}
 .form-swatch:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
 .form-key-hint{flex-basis:100%;font-size:12px;color:var(--ink-soft);}
+.form-swatch.excl{background:transparent;border:1.5px dashed var(--line);color:var(--ink-soft);}
+.form-swatch.excl[aria-pressed="true"]{border-style:solid;border-color:var(--ink);}
 .form-swatch.none{background:transparent;border:1.5px dashed var(--line);color:var(--ink-soft);}
 .form-swatch.none[aria-pressed="true"]{border-style:solid;border-color:var(--ink);}
 .form-swatch b{font-weight:700;margin-left:3px;}
@@ -632,6 +634,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <button type="button" class="form-swatch form-2" data-level="2" aria-pressed="false">2/5 <b></b></button>
       <button type="button" class="form-swatch form-0" data-level="0" aria-pressed="false">1/5 or 0/5 <b></b></button>
       <button type="button" class="form-swatch none" data-level="none" aria-pressed="false">never reviewed <b></b></button>
+      <button type="button" class="form-swatch excl" data-level="excluded" aria-pressed="false"><s>excluded</s> <b></b></button>
       <span class="form-key-hint" id="formKeyHint">Tap colors to show only those words below.</span>
     </div>
 
@@ -3086,10 +3089,9 @@ function renderReferencePanel(){
       const row = document.createElement("div");
       const key = `verb:${v.inf}`;
       const hid = state.hidden.has(key);
-      if(hid && !showHiddenIn.has(g.label)) return;
       row.className = "ref-row verb-row" + (hid ? " is-hidden" : wordFormClass(key));
       row.dataset.key = key;
-      row.dataset.level = wordFormLevelName(key);
+      row.dataset.level = state.hidden.has(key) ? "excluded" : wordFormLevelName(key);
       row.dataset.inf = v.inf;
       row.tabIndex = 0;
       row.setAttribute("role", "button");
@@ -3447,10 +3449,9 @@ function renderNonverbReferencePanel(){
       const row = document.createElement("div");
       const key = `nonverb:${nv.tr}`;
       const hid = state.hidden.has(key);
-      if(hid && !showHiddenIn.has(c.label)) return;
       row.className = "ref-row" + (hid ? " is-hidden" : wordFormClass(key));
       row.dataset.key = key;
-      row.dataset.level = wordFormLevelName(key);
+      row.dataset.level = state.hidden.has(key) ? "excluded" : wordFormLevelName(key);
       row.title = wordFormLabel(key);
       row.innerHTML = `<span class="ref-tr">${nv.tr}</span><span class="ref-en">${nv.en}</span>`;
       list.appendChild(row);
@@ -3461,7 +3462,7 @@ function renderNonverbReferencePanel(){
 }
 // Counts every word in the Sözlük by its highlight color, for the key above the lists.
 function updateFormKey(){
-  const counts = {5:0, 4:0, 3:0, 2:0, 0:0, none:0};
+  const counts = {5:0, 4:0, 3:0, 2:0, 0:0, none:0, excluded:state.hidden.size};
   const seen = new Set();
   const add = key=>{
     if(seen.has(key) || state.hidden.has(key)) return;
@@ -3506,7 +3507,10 @@ function applyFormFilter(){
     box.querySelectorAll(".ref-list").forEach(list=>{
       let n = 0;
       list.querySelectorAll(".ref-row").forEach(row=>{
-        const hide = active && !formFilter.has(row.dataset.level);
+        const group = row.parentNode.previousElementSibling;
+        const hide = row.dataset.level==="excluded"
+          ? !(formFilter.has("excluded") || (group && showHiddenIn.has(group.dataset.group)))
+          : active && !formFilter.has(row.dataset.level);
         row.hidden = hide;
         if(!hide) n++;
       });
@@ -4616,7 +4620,7 @@ function renderTekrarUpcoming(words){
   });
   const hid = [...state.hidden].map(k=>k.slice(k.indexOf(":")+1)).sort((a,b)=>a.localeCompare(b,"tr"));
   box.innerHTML = (rows.length ? rows.join("") : '<span class="hint">Nothing scheduled yet. Words show up here once you answer them.</span>')
-    + (hid.length ? `<div class="upnext-hidden"><b>Hidden:</b> ${hid.join(", ")}</div>` : "");
+    + (hid.length ? `<div class="upnext-hidden"><b>Excluded:</b> ${hid.join(", ")}</div>` : "");
 }
 function tekrarWaitText(ms){
   const m = Math.max(1, Math.round(ms/60000));
