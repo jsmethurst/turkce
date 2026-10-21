@@ -340,6 +340,14 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 
 .ref-page-title{font-weight:600;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-soft);margin:16px 0 6px;}
 .ref-page-title:first-child{margin-top:0;}
+.ref-page-title{cursor:pointer;user-select:none;}
+.ref-row.is-hidden{opacity:.5;cursor:pointer;}
+.ref-row.is-hidden .ref-tr{text-decoration:line-through;}
+#vocabTierTag{cursor:pointer;}
+.hide-row{display:flex;justify-content:flex-start;margin:6px 0 0;}
+.hide-row[hidden]{display:none;}
+.hide-row .btn{padding:6px 14px;font-size:0.82rem;}
+.upnext-hidden{margin-top:10px;font-size:0.82rem;color:var(--ink-soft);}
 .ref-list{columns:2;column-gap:20px;}
 @media(max-width:560px){.ref-list{columns:1;}}
 .ref-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:0.82rem;break-inside:avoid;}
@@ -524,6 +532,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
           </button>
         </div>
       </div>
+      <div class="hide-row" id="vocabHideRow" hidden><button type="button" class="btn btn-ghost" id="vocabHideBtn">Exclude from review</button></div>
       <div class="prompt-main" style="text-align:center;">
         <div class="prompt-word" id="vocabFront" style="cursor:pointer;">gitmek</div>
         <hr class="vocab-divider" id="vocabDivider" style="display:none;">
@@ -2697,6 +2706,7 @@ const state = {
   ability: false,
   lenient: false,
   autoSpeak: false,
+  hidden: new Set(),   // words excluded from Vocab and Tekrar for good ("verb:x" / "nonverb:x"); shown again from the Sözlük
   wiktionary: true,   // search falls back to Wiktionary when the Sözlük has no match
   formsTests: [],   // recent timed-test results, newest first (kept with the settings so they sync)
   hintUsed: false,
@@ -2723,6 +2733,7 @@ function collectSettings(){
       lenient: state.lenient,
       autoSpeak: state.autoSpeak,
       wiktionary: state.wiktionary,
+      hiddenWords: [...state.hidden],
       formsTests: state.formsTests,
       vocabMode: vocabState.mode,
       vocabUnknownOnly: vocabState.unknownOnly,
@@ -2830,6 +2841,7 @@ function applyFormsSettings(S){
   if(typeof S.lenient==="boolean") state.lenient = S.lenient;
   if(typeof S.autoSpeak==="boolean") state.autoSpeak = S.autoSpeak;
   if(typeof S.wiktionary==="boolean") state.wiktionary = S.wiktionary;
+  if(Array.isArray(S.hiddenWords)) state.hidden = new Set(S.hiddenWords.filter(k=>typeof k==="string"));
   if(Array.isArray(S.formsTests)) state.formsTests = S.formsTests.filter(r=>r && typeof r.ms==="number").slice(0, 10);
 }
 if(SAVED_SETTINGS) applyFormsSettings(SAVED_SETTINGS);
@@ -3052,6 +3064,7 @@ document.getElementById("topicsNone").onclick = ()=>{
 };
 updateSelectionCount();
 
+const showHiddenIn = new Set();   // Sözlük lists whose hidden words are currently shown
 function renderReferencePanel(){
   const box = document.getElementById("refPanel");
   box.innerHTML = "";
@@ -3064,13 +3077,17 @@ function renderReferencePanel(){
     const title = document.createElement("div");
     title.className = "ref-page-title";
     title.textContent = g.label;
+    title.dataset.group = g.label;
     box.appendChild(title);
     const list = document.createElement("div");
     list.className = "ref-list";
     g.rows.forEach(v=>{
       const row = document.createElement("div");
       const key = `verb:${v.inf}`;
-      row.className = "ref-row verb-row" + wordFormClass(key);
+      const hid = state.hidden.has(key);
+      if(hid && !showHiddenIn.has(g.label)) return;
+      row.className = "ref-row verb-row" + (hid ? " is-hidden" : wordFormClass(key));
+      row.dataset.key = key;
       row.dataset.level = wordFormLevelName(key);
       row.dataset.inf = v.inf;
       row.tabIndex = 0;
@@ -3118,12 +3135,32 @@ function openVerbModal(inf){
 }
 function closeVerbModal(){ document.getElementById("verbModal").hidden = true; }
 document.getElementById("refPanel").addEventListener("click", e=>{
+  const title = e.target.closest(".ref-page-title");
+  if(title){ toggleHiddenList(title.dataset.group); return; }
   const row = e.target.closest(".verb-row");
-  if(row) openVerbModal(row.dataset.inf);
+  if(!row) return;
+  if(row.classList.contains("is-hidden")) unhideWord(row.dataset.key);
+  else openVerbModal(row.dataset.inf);
 });
+document.getElementById("nonverbRefPanel").addEventListener("click", e=>{
+  const title = e.target.closest(".ref-page-title");
+  if(title){ toggleHiddenList(title.dataset.group); return; }
+  const row = e.target.closest(".ref-row.is-hidden");
+  if(row) unhideWord(row.dataset.key);
+});
+function toggleHiddenList(label){
+  if(showHiddenIn.has(label)) showHiddenIn.delete(label); else showHiddenIn.add(label);
+  renderReferencePanel(); renderNonverbReferencePanel();
+}
+function refreshAfterHiddenChange(){
+  saveSettings();
+  renderReferencePanel(); renderNonverbReferencePanel();
+  if(typeof updateSelectionCount==="function") updateSelectionCount();
+}
+function unhideWord(key){ state.hidden.delete(key); refreshAfterHiddenChange(); }
 document.getElementById("refPanel").addEventListener("keydown", e=>{
   const row = e.target.closest && e.target.closest(".verb-row");
-  if(row && (e.key==="Enter" || e.key===" ")){ e.preventDefault(); openVerbModal(row.dataset.inf); }
+  if(row && (e.key==="Enter" || e.key===" ")){ e.preventDefault(); row.classList.contains("is-hidden") ? unhideWord(row.dataset.key) : openVerbModal(row.dataset.inf); }
 });
 // Positive / Negative is a side-to-side switch. Question and Ability: each on or off, together if you like.
 function paintVerbSwitches(){
@@ -3401,13 +3438,17 @@ function renderNonverbReferencePanel(){
     const title = document.createElement("div");
     title.className = "ref-page-title";
     title.textContent = c.label;
+    title.dataset.group = c.label;
     box.appendChild(title);
     const list = document.createElement("div");
     list.className = "ref-list";
     c.items.forEach(nv=>{
       const row = document.createElement("div");
       const key = `nonverb:${nv.tr}`;
-      row.className = "ref-row" + wordFormClass(key);
+      const hid = state.hidden.has(key);
+      if(hid && !showHiddenIn.has(c.label)) return;
+      row.className = "ref-row" + (hid ? " is-hidden" : wordFormClass(key));
+      row.dataset.key = key;
       row.dataset.level = wordFormLevelName(key);
       row.title = wordFormLabel(key);
       row.innerHTML = `<span class="ref-tr">${nv.tr}</span><span class="ref-en">${nv.en}</span>`;
@@ -3422,7 +3463,7 @@ function updateFormKey(){
   const counts = {5:0, 4:0, 3:0, 2:0, 0:0, none:0};
   const seen = new Set();
   const add = key=>{
-    if(seen.has(key)) return;
+    if(seen.has(key) || state.hidden.has(key)) return;
     seen.add(key);
     const level = wordFormLevel(key);
     counts[level===null ? "none" : level]++;
@@ -3819,6 +3860,7 @@ function vocabPool(){
   const weakOnly = vocabState.masterMode==="weak";
   const keep = item=>{
     const key = vocabKnownKey(item);
+    if(state.hidden.has(key)) return false;
     if(weakOnly && !inWeakSelection(key)) return false;
     return !(vocabState.unknownOnly && vocabState.known.has(key));
   };
@@ -4027,6 +4069,7 @@ function nextVocabCard(){
 }
 
 function showVocabItem(item){
+  document.getElementById("vocabHideRow").hidden = true;
   const front = document.getElementById("vocabFront");
   const back = document.getElementById("vocabBack");
   back.classList.remove("vocab-note");
@@ -4137,6 +4180,7 @@ function vocabSelectionCounts(){
   let total = 0, known = 0;
   const weakOnly = vocabState.masterMode==="weak";
   const count = key=>{
+    if(state.hidden.has(key)) return;
     if(weakOnly && !inWeakSelection(key)) return;
     total++;
     if(vocabState.known.has(key)) known++;
@@ -4166,10 +4210,11 @@ document.getElementById("vocabDontKnowBtn").onclick = ()=>{
 };
 function testLists(){
   const verbItem = v=>({kind:"verb", idx:VERBS.indexOf(v), tr:v.inf, en:v.vocabGloss});
+  const shown = it=>!state.hidden.has(`${it.kind}:${it.tr}`);
   return [
-    ...VERB_PAGES.map(p=>({key:`page${p.key}`, label:p.label, group:"Verbs", items:VERBS.filter(v=>v.page===p.key).map(verbItem)})),
-    ...VERB_BONUS_CHUNKS.map(c=>({key:c.key, label:c.label, group:"Verbs", items:c.items.map(verbItem)})),
-    ...NONVERB_CHUNKS.map(c=>({key:c.key, label:c.label, group:"Non-verbs", items:c.items.map(n=>({kind:"nonverb", idx:NONVERBS.indexOf(n), tr:n.tr, en:n.en}))})),
+    ...VERB_PAGES.map(p=>({key:`page${p.key}`, label:p.label, group:"Verbs", items:VERBS.filter(v=>v.page===p.key).map(verbItem).filter(shown)})),
+    ...VERB_BONUS_CHUNKS.map(c=>({key:c.key, label:c.label, group:"Verbs", items:c.items.map(verbItem).filter(shown)})),
+    ...NONVERB_CHUNKS.map(c=>({key:c.key, label:c.label, group:"Non-verbs", items:c.items.map(n=>({kind:"nonverb", idx:NONVERBS.indexOf(n), tr:n.tr, en:n.en})).filter(shown)})),
   ];
 }
 // Lists that are part of the learner's Sözlük selection (the starting point for a test).
@@ -4407,6 +4452,21 @@ document.querySelectorAll("#vocabFilterChips .chip").forEach(c=>{
     saveSettings();
   };
 });
+// The list tag in the corner opens a one-button option to leave this word out of review for good.
+document.getElementById("vocabTierTag").onclick = ()=>{
+  if(!vocabState.current || vocabState.test) return;
+  const row = document.getElementById("vocabHideRow");
+  row.hidden = !row.hidden;
+};
+document.getElementById("vocabHideBtn").onclick = ()=>{
+  const cur = vocabState.current;
+  document.getElementById("vocabHideRow").hidden = true;
+  if(!cur) return;
+  state.hidden.add(vocabKnownKey(cur));
+  saveSettings();
+  renderReferencePanel(); renderNonverbReferencePanel();
+  nextVocabCard();
+};
 // Typing / Flashcards: pick one.
 document.querySelectorAll("#vocabAnswerModeChips .chip").forEach(chip=>{
   chip.onclick = ()=>{
@@ -4493,7 +4553,7 @@ function tekrarWords(){
   const words = [];
   const seen = new Set();   // some words (e.g. the adjectives) are in two lists with the same spelling: count each once
   const add = (key, item)=>{
-    if(!wordForm(key) || seen.has(key)) return;
+    if(!wordForm(key) || seen.has(key) || state.hidden.has(key)) return;
     seen.add(key);
     const wait = tekrarWaitMs(key);
     const last = new Date(wordStats[key].at).getTime() || 0;
@@ -4529,7 +4589,9 @@ function renderTekrarUpcoming(words){
     if(!inRange.length) return;
     rows.push(`<div class="upnext-row"><div class="upnext-when">${label}</div><div class="upnext-words">${wordList(inRange)}</div></div>`);
   });
-  box.innerHTML = rows.length ? rows.join("") : '<span class="hint">Nothing scheduled yet. Words show up here once you answer them.</span>';
+  const hid = [...state.hidden].map(k=>k.slice(k.indexOf(":")+1)).sort((a,b)=>a.localeCompare(b,"tr"));
+  box.innerHTML = (rows.length ? rows.join("") : '<span class="hint">Nothing scheduled yet. Words show up here once you answer them.</span>')
+    + (hid.length ? `<div class="upnext-hidden"><b>Hidden:</b> ${hid.join(", ")}</div>` : "");
 }
 function tekrarWaitText(ms){
   const m = Math.max(1, Math.round(ms/60000));
