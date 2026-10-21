@@ -408,7 +408,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
         <div class="feedback-title">Global Settings</div>
         <label class="gs-row"><input type="checkbox" id="gsLenient"><span>Lenient spelling<small>Ignore ı/i, ş/s, ç/c, ğ/g, ö/o, ü/u</small></span></label>
         <label class="gs-row"><input type="checkbox" id="gsAutoPlay"><span>Auto-play Turkish prompts and answers</span></label>
-        <label class="gs-row"><input type="checkbox" id="gsWiktionary"><span>Look up unknown words on Wiktionary<small>When a search finds nothing in your word list</small></span></label>
+        <label class="gs-row"><input type="checkbox" id="gsWiktionary"><span>Look up unknown words on Wiktionary</span></label>
       </div>
     </div>`);
     gear = {wrap: w, btn: w.querySelector("#settingsBtn"), pop: w.querySelector("#settingsPop"),
