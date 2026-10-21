@@ -79,6 +79,8 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .gs-form-msg{margin:0;font-size:0.82rem;color:var(--bad);}
 .gs-source{padding:6px 10px 2px;font-size:0.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--tile-gold);}
 .gs-wk .sr-row{cursor:default;}
+.gs-wk a.gs-tr{text-decoration:none;}
+.gs-wk a.gs-tr:hover{text-decoration:underline;}
 .gs-wk .gs-pos{margin-left:6px;font-size:0.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
 .gs-foot{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;justify-content:space-between;padding:6px 10px 4px;font-size:0.82rem;color:var(--ink-soft);}
 .gs-foot a,.gs-foot button{font:inherit;background:none;border:none;padding:0;color:var(--tile-blue);font-weight:600;text-decoration:underline;cursor:pointer;}
@@ -3240,7 +3242,7 @@ async function wiktionaryLookup(q, signal){
   const rows = [];
   ((def && def.tr) || []).slice(0, 3).forEach(entry=>{
     const meanings = (entry.definitions || []).map(d=>wkText(d.definition)).filter(Boolean).slice(0, 3);
-    if(meanings.length) rows.push({dir:"tr", tr:q, en:meanings.join("; "), pos:(entry.partOfSpeech || "").toLowerCase()});
+    if(meanings.length) rows.push({dir:"tr", words:[q], en:meanings.join("; "), pos:(entry.partOfSpeech || "").toLowerCase()});
   });
   const text = page && page.parse && page.parse.wikitext;
   if(text){
@@ -3256,7 +3258,7 @@ async function wiktionaryLookup(q, signal){
       }
     });
     [...bySense.entries()].slice(0, 4).forEach(([sns, words])=>
-      rows.push({dir:"en", en: q + (sns ? ` (${sns})` : ""), tr: words.slice(0, 4).join(", ")}));
+      rows.push({dir:"en", en: q + (sns ? ` (${sns})` : ""), words: words.slice(0, 4)}));
   }
   return rows;
 }
@@ -3265,12 +3267,17 @@ function renderWiktionary(q, rows){
   if(document.getElementById("gsearchInput").value.trim()!==q || !document.getElementById("gsWk")) return;
   const esc = t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;");
   if(!rows.length){ box.innerHTML = NO_RESULTS_HTML; placeSearchResults(); return; }
+  // Links go to the Turkish word's own Wiktionary entry (its Turkish section, with the English glosses),
+  // never to the English word's page.
+  const entry = w=>`https://en.wiktionary.org/wiki/${encodeURIComponent(w.replace(/ /g, "_"))}#Turkish`;
+  const link = w=>`<a class="gs-tr" href="${entry(w)}" target="_blank" rel="noopener">${esc(w)}</a>`;
+  const firstWord = rows[0].words[0];
   box.innerHTML = `<div class="gs-wk"><div class="gs-source">From Wiktionary · not in your word list</div>`
     + rows.map(r=>{
-        const turkish = `<span class="gs-main"><span class="gs-tr">${esc(r.tr)}</span>${r.pos ? `<span class="gs-pos">${esc(r.pos)}</span>` : ""}</span>`;
+        const turkish = `<span class="gs-main">${r.words.map(link).join(", ")}${r.pos ? `<span class="gs-pos">${esc(r.pos)}</span>` : ""}</span>`;
         return `<div class="sr-row">${r.dir==="en" ? `<span class="gs-left">${esc(r.en)}</span>${turkish}` : `${turkish}<span class="gs-en">${esc(r.en)}</span>`}</div>`;
       }).join("")
-    + `<div class="gs-foot"><a href="https://en.wiktionary.org/wiki/${encodeURIComponent(q)}" target="_blank" rel="noopener">View on Wiktionary ›</a><button type="button" id="gsSuggest">Suggest a gloss?</button></div></div>`;
+    + `<div class="gs-foot"><a href="${entry(firstWord)}" target="_blank" rel="noopener">Open ${esc(firstWord)} on Wiktionary ›</a><button type="button" id="gsSuggest">Suggest a gloss?</button></div></div>`;
   placeSearchResults();
 }
 function startWiktionarySearch(q){
