@@ -377,7 +377,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     return w;
   }
   // ---------- "How to use Türkçe": a short guide next to "Suggest a change" ----------
-  var HELP_ICON = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><mask id="helpQ" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M7.6 8.8C7.6 4.4 16.4 4.4 16.4 9C16.4 12 12 12.2 12 15" stroke="#fff" stroke-width="6.2"/><circle cx="12" cy="20.2" r="1.2" stroke="#fff" stroke-width="4.4"/><path d="M7.6 8.8C7.6 4.4 16.4 4.4 16.4 9C16.4 12 12 12.2 12 15" stroke="#000" stroke-width="2"/><circle cx="12" cy="20.2" r="1.2" stroke="#000" stroke-width="0.9"/></g></mask></defs><rect width="24" height="24" fill="currentColor" mask="url(#helpQ)"/></svg>';
+  var HELP_ICON = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><mask id="helpQ" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M7.6 8.8C7.6 4.4 16.4 4.4 16.4 9C16.4 12 12 12.2 12 15" stroke="#fff" stroke-width="6.2"/><circle cx="12" cy="20.2" r="3.3" fill="#fff" stroke="none"/><path d="M7.6 8.8C7.6 4.4 16.4 4.4 16.4 9C16.4 12 12 12.2 12 15" stroke="#000" stroke-width="2.6"/><circle cx="12" cy="20.2" r="1.6" fill="#000" stroke="none"/></g></mask></defs><rect width="24" height="24" fill="currentColor" mask="url(#helpQ)"/></svg>';
   var help = null;
   function buildHelp(){
     var w = el(`<div class="feedback-wrap help-wrap">
