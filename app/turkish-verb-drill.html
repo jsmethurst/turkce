@@ -4092,8 +4092,8 @@ function vocabAnswerCorrect(input){
   if(!vocabState.current) return false;
   return wordAnswerMatches(vocabItemDetail(vocabState.current), vocabState.mode, input);
 }
-// "Show words until I get them right": a word you miss comes back after 3 to 7 other cards.
-const VOCAB_AGAIN_MIN = 3, VOCAB_AGAIN_MAX = 7;
+// "Show words until I get them right": a word you miss comes back after 3 to 6 other cards.
+const VOCAB_AGAIN_MIN = 3, VOCAB_AGAIN_MAX = 6;
 vocabState.again = [];
 function vocabLoop(item, correct){
   if(!item || vocabState.test || !vocabState.unknownOnly) return;
