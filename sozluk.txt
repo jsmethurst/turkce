@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-243 verbs · 922 non-verbs · 40 topics
+256 verbs · 956 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -431,7 +431,7 @@ geri dönmek               to come back / to go back
 keşfetmek                 to discover / to explore
     akuzatif: Şehri keşfediyorum.  (I'm exploring the city.)
 
-DERSTE 51-68
+DERSTE 51-75
 ------------
 sağlıklı olmak            to be healthy
     örnek: Sağlıklı olmak istiyorum.  (I want to be healthy.)
@@ -469,6 +469,35 @@ dağılmak                  to disperse / to scatter
     örnek: Kalabalık dağılıyor.  (The crowd is dispersing.)
 bağış vermek              to give a donation
     datif: Okula bağış veriyorum.  (I'm giving a donation to the school.)
+savaşmak                  to fight
+    ile: Askerler düşmanla savaşıyor.  (The soldiers are fighting the enemy.)
+vazgeçmek                 to give up
+    ablatif: Plandan vazgeçiyorum.  (I'm giving up on the plan.)
+rahatlatmak               to soothe (someone)
+    akuzatif: Anne bebeği rahatlatıyor.  (The mother is soothing the baby.)
+rahatlamak                to relax
+    örnek: Müzik dinleyerek rahatlıyorum.  (I relax by listening to music.)
+eşleştirmek               to match together
+    akuzatif: Çocuklar çorapları eşleştiriyor.  (The children are matching the socks.)
+ava çıkmak                to go hunting
+    örnek: Hafta sonu ava çıkıyoruz.  (We're going hunting this weekend.)
+yaramazlık yapmak         to misbehave
+    örnek: Çocuklar yaramazlık yapıyor.  (The children are misbehaving.)
+
+DERSTE 76-81
+------------
+dirsek atmak              to elbow someone
+    datif: Oyuncu rakibe dirsek atıyor.  (The player is elbowing his opponent.)
+ağrımak                   to ache
+    örnek: Başım ağrıyor.  (My head is aching.)
+acımak                    to have pain (suddenly) / to feel pity
+    datif: Yaralı kediye acıyorum.  (I feel sorry for the injured cat.)
+hıçkırmak                 to hiccup
+    örnek: Çocuk hıçkırıyor.  (The child is hiccuping.)
+akmak                     to flow
+    datif: Nehir denize akıyor.  (The river flows into the sea.)
+nezle olmak               to have a cold
+    örnek: Çocuklar nezle oluyor.  (The children are catching a cold.)
 
 BIBLE 1-25
 ----------
@@ -1266,7 +1295,7 @@ havalı                    cool (person)
 olur                      sure / okay
 sesi                      sound
 
-DERSTE 301-320
+DERSTE 301-325
 --------------
 böyle                     like this
 kucak                     lap (top of legs)
@@ -1288,6 +1317,46 @@ tuhaf                     strange
 mantık                    logic
 mezuniyet                 graduation
 tören                     ceremony
+sivrisinek                mosquito
+tavan                     ceiling
+kelebek                   butterfly
+yazar                     author
+düğün                     wedding
+
+DERSTE 326-350
+--------------
+hata                      mistake
+dakikalarca               for several minutes
+saatlerce                 for several hours
+günlerce                  for several days
+haftalarca                for several weeks
+aylarca                   for several months
+yıllarca                  for several years
+kalorifer                 radiator
+spor aletleri             exercise equipment
+bordo                     burgundy
+yan                       beside
+antrasit                  anthracite
+yoğun                     intense
+ağrı                      ache
+başı ağrı                 headache
+karnı ağrı                stomachache
+dişi ağrı                 toothache
+dizi ağrı                 knee pain
+grip                      flu
+hap                       pill
+şurup                     syrup
+eczane                    pharmacy
+eczaneci                  pharmacist
+nezle                     common cold
+teşhiş                    diagnosis
+
+DERSTE 351-354
+--------------
+halsiz                    sluggish (because of sickness)
+şikayet                   complaint
+reçete                    prescription
+tedavi                    treatment
 
 SIFATLAR 1-25
 -------------
@@ -1579,7 +1648,7 @@ birinci, ikinci, üçüncü, dördüncü, altıncı, yedinci, dokuzuncu, sonuncu
 
 Time & Schedule
 ---------------
-şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik, saniye
+şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik, saniye, dakikalarca, saatlerce, günlerce, haftalarca, aylarca, yıllarca
 
 Politeness & Fillers
 --------------------
@@ -1587,7 +1656,7 @@ buyurun, geçmiş olsun, affedersiniz, rica ederim, teşekkürler, lütfen, afiy
 
 People & Professions
 --------------------
-insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi, hala, anne tarafı, teyze, dayı, anneanne, baba tarafı, amca, babaanne, dede, enişte, yenge, kuzen, kız, erkek kardeş, soy, karı-koca, onlar kardeş, abla, kız kardeş, komşu, akraba, yeğen, herkes, görümce, kayınço, balıkçı, veteriner
+insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi, hala, anne tarafı, teyze, dayı, anneanne, baba tarafı, amca, babaanne, dede, enişte, yenge, kuzen, kız, erkek kardeş, soy, karı-koca, onlar kardeş, abla, kız kardeş, komşu, akraba, yeğen, herkes, görümce, kayınço, balıkçı, veteriner, yazar
 
 Places & Buildings
 ------------------
@@ -1595,7 +1664,7 @@ okul, sınıf, kütüphane, hastane, cami, banka, sinema, kafe, kafeterya, kanti
 
 House & Furniture
 -----------------
-masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitaplık, vazo, şamdan, avize, ayna, evde, odada, masada, kitaplıkta, eşya, piyano, anahtar, kilitlemek, temizlemek, taşınmak, kiralamak, zemin kat, bodrum kat, mum
+masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitaplık, vazo, şamdan, avize, ayna, evde, odada, masada, kitaplıkta, eşya, piyano, anahtar, kilitlemek, temizlemek, taşınmak, kiralamak, zemin kat, bodrum kat, mum, tavan, kalorifer
 
 Kitchen & Food
 --------------
@@ -1615,7 +1684,7 @@ Personality & Appearance
 
 School & Study
 --------------
-sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, kitaplar, kitap, kalem, tahta, defter, çanta, sözlük, kağıt, kareli kağıt, çizgili kağıt, cümle, fiil, isim, sıfat, fotokopi, okumak, yazmak, öğrenmek, öğretmek, anlamak, cevaplamak, tekrar etmek, tamamlamak, düzeltmek, açıklamak, çözmek, sırt çantası, doğru, yanlış, mezuniyet, tören
+sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, kitaplar, kitap, kalem, tahta, defter, çanta, sözlük, kağıt, kareli kağıt, çizgili kağıt, cümle, fiil, isim, sıfat, fotokopi, okumak, yazmak, öğrenmek, öğretmek, anlamak, cevaplamak, tekrar etmek, tamamlamak, düzeltmek, açıklamak, çözmek, sırt çantası, doğru, yanlış, mezuniyet, tören, hata
 
 Shopping & Money
 ----------------
@@ -1623,7 +1692,7 @@ para çekmek, alışveriş, alışveriş yapmak, ucuz, pahalı, bilet almak, kil
 
 Hobbies & Free Time
 -------------------
-satranç, gitar çalmak, top oynamak, fotoğraf çekmek, hobi, koleksiyon, paraşüt, sörf, kamp yapmak, bulmaca, piknik, klasik müzik, dans etmek, boş zaman, boş olmak, kazanmak, kaybetmek, konser, parti, yürüyüş, yüzmek, spor yapmak, tırmanmak, çizmek, oynamak, eğlenmek, güzel vakit geçirmek, dışarı çıkmak, amatör, boncuk, seramik, ipek
+satranç, gitar çalmak, top oynamak, fotoğraf çekmek, hobi, koleksiyon, paraşüt, sörf, kamp yapmak, bulmaca, piknik, klasik müzik, dans etmek, boş zaman, boş olmak, kazanmak, kaybetmek, konser, parti, yürüyüş, yüzmek, spor yapmak, tırmanmak, çizmek, oynamak, eğlenmek, güzel vakit geçirmek, dışarı çıkmak, amatör, boncuk, seramik, ipek, düğün, spor aletleri, ava çıkmak
 
 Common Verbs
 ------------
@@ -1635,7 +1704,7 @@ başlamak, bitmek, bitirmek, devam etmek, tamamlamak, beklemek, kalmak, durmak, 
 
 Colors
 ------
-renkler, kırmızı, mavi, sarı, yeşil, turuncu, mor, pembe, kahverengi, siyah, beyaz, gri, lacivert, açık mavi, koyu mavi, açık yeşil, koyu yeşil, koyu kırmızı, koyu
+renkler, kırmızı, mavi, sarı, yeşil, turuncu, mor, pembe, kahverengi, siyah, beyaz, gri, lacivert, açık mavi, koyu mavi, açık yeşil, koyu yeşil, koyu kırmızı, koyu, bordo, antrasit
 
 Clothes
 -------
@@ -1651,15 +1720,15 @@ takılar, özel takılar, küpe, yüzük, alyans, kolye, bileklik, bilezik, halh
 
 Nature & Outdoors
 -----------------
-hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, çiçekler, bitki, toprak, kum, hayvan, boğa, yakmak, ateşi yakmak, söndürmek, beslemek, koklamak, ıslanmak, üşümek, buhar, dalga, dal
+hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, çiçekler, bitki, toprak, kum, hayvan, boğa, yakmak, ateşi yakmak, söndürmek, beslemek, koklamak, ıslanmak, üşümek, buhar, dalga, dal, sivrisinek, kelebek, akmak
 
 Here, There & Directions
 ------------------------
-burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön, arka, arası, uzak, kuzey, güney, doğu, batı, harita, metre, kat, zemin kat, bodrum kat, birinci katta, ikinci kat, altıncı kat
+burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön, arka, arası, uzak, kuzey, güney, doğu, batı, harita, metre, kat, zemin kat, bodrum kat, birinci katta, ikinci kat, altıncı kat, yan
 
 Feelings
 --------
-sevmek, beğenmek, hoşlanmak, korkmak, üzülmek, sevinmek, kızmak, şaşırmak, sıkılmak, yorulmak, hissetmek, özlemek, merak etmek, güvenmek, eğlenmek, ağlamak, gülmek, gülümsemek, harika, eğlenceli, yorucu, monoton, pozitif enerji, mutlu, üzgün, heyecanlı, memnun, huzurlu, pişman, endişeli, kızgın, yorgun, şaşkın, sinirli, kıskanç, sıkıcı, yormak, sıkıntılı, duygusal, sarılmak, kavuşmak, ummak
+sevmek, beğenmek, hoşlanmak, korkmak, üzülmek, sevinmek, kızmak, şaşırmak, sıkılmak, yorulmak, hissetmek, özlemek, merak etmek, güvenmek, eğlenmek, ağlamak, gülmek, gülümsemek, harika, eğlenceli, yorucu, monoton, pozitif enerji, mutlu, üzgün, heyecanlı, memnun, huzurlu, pişman, endişeli, kızgın, yorgun, şaşkın, sinirli, kıskanç, sıkıcı, yormak, sıkıntılı, duygusal, sarılmak, kavuşmak, ummak, rahatlatmak, rahatlamak
 
 Daily Routine
 -------------
@@ -1667,7 +1736,7 @@ fırçalamak, uyanmak, kalkmak, yıkamak, diş fırçalamak, taramak, kurulanmak
 
 Health & Body
 -------------
-hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş olsun, beyin, kan, beden, sağlıklı olmak, spor yapmak, yorulmak, doğmak, büyümek, ölmek, ilaç, yaralı, sağlıklı, sağlıksız, yaşlanmak, alın, karın, burun, ağız, hapşırmak, göğüs kafesi, baş, kafa, saç, çene, yanak, kulak, göz, kirpik, kaş, boyun, boğaz, omuz, kol, dirsek, bilek, ayak bileği, el, parmak, avuç, bacak, diz, ayak, topuk, sırt, bel, ayak parmağı, tırnak, dudak, dil, diş, kas, sakal, bıyık, göğüs, kucak
+hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş olsun, beyin, kan, beden, sağlıklı olmak, spor yapmak, yorulmak, doğmak, büyümek, ölmek, ilaç, yaralı, sağlıklı, sağlıksız, yaşlanmak, alın, karın, burun, ağız, hapşırmak, göğüs kafesi, baş, kafa, saç, çene, yanak, kulak, göz, kirpik, kaş, boyun, boğaz, omuz, kol, dirsek, bilek, ayak bileği, el, parmak, avuç, bacak, diz, ayak, topuk, sırt, bel, ayak parmağı, tırnak, dudak, dil, diş, kas, sakal, bıyık, göğüs, kucak, ağrı, başı ağrı, karnı ağrı, dişi ağrı, dizi ağrı, grip, hap, şurup, eczane, eczaneci, nezle, teşhiş, halsiz, şikayet, reçete, tedavi, ağrımak, acımak, hıçkırmak, nezle olmak
 
 Talking & Communicating
 -----------------------
@@ -1679,15 +1748,15 @@ gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, ge�
 
 Everyday Actions
 ----------------
-açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek
+açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, eşleştirmek, dirsek atmak
 
 Thinking & Deciding
 -------------------
-bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir, sanmak, mantık
+bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir, sanmak, mantık, vazgeçmek
 
 Describing Things
 -----------------
-eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı, kesik, korkutucu, ürkütücü, mümkün, tuhaf
+eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı, kesik, korkutucu, ürkütücü, mümkün, tuhaf, yoğun
 
 Little Words
 ------------
@@ -1711,7 +1780,7 @@ tuzlu, tatlı, acı, ekşi, lezzetli, kuru yemekler, sulu yemekler, hafif yemek,
 
 Character Traits
 ----------------
-nazik, kaba, kibar, akıllı, akılsız, sabırlı, sabırsız, dürüst, neşeli, eğlenceli, sakin, arkadaş canlısı, cömert, cimri, düzenli, dağınık, güleryüzlü, hayalperest, merhametli, hırslı, karizmatik, güvenilir, kararlı, kararsız, mütevazı, enerjik, özgüvenli, becerikli, yetenekli, meraklı, esprili, zeki, bencil, sosyal, asosyal, utangaç, düşünceli, düşüncesiz, inatçı, çok yönlü, anlayışlı, anlayışsız, hoşgörülü, maceracı, cesur, korkak, çılgın, yaratıcı, misafirperver, yaramaz, çalışkan, tembel, yardımsever, davranmak, eli açık, uslu, şakacı, maceraperest, havalı
+nazik, kaba, kibar, akıllı, akılsız, sabırlı, sabırsız, dürüst, neşeli, eğlenceli, sakin, arkadaş canlısı, cömert, cimri, düzenli, dağınık, güleryüzlü, hayalperest, merhametli, hırslı, karizmatik, güvenilir, kararlı, kararsız, mütevazı, enerjik, özgüvenli, becerikli, yetenekli, meraklı, esprili, zeki, bencil, sosyal, asosyal, utangaç, düşünceli, düşüncesiz, inatçı, çok yönlü, anlayışlı, anlayışsız, hoşgörülü, maceracı, cesur, korkak, çılgın, yaratıcı, misafirperver, yaramaz, çalışkan, tembel, yardımsever, davranmak, eli açık, uslu, şakacı, maceraperest, havalı, yaramazlık yapmak
 
 Opposites
 ---------
