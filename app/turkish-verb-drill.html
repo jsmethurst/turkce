@@ -67,7 +67,17 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .gs-left{color:var(--ink);font-size:0.92rem;text-align:left;}
 .gs-main{text-align:right;white-space:nowrap;}
 .gs-row .gs-main:first-child{text-align:left;}
-.gs-empty{padding:10px;font-size:0.85rem;color:var(--ink-soft);}
+.gs-empty{padding:10px;font-size:0.88rem;color:var(--ink-soft);}
+.gs-empty button{font:inherit;background:none;border:none;padding:0;color:var(--tile-blue);font-weight:600;text-decoration:underline;cursor:pointer;}
+.gs-form{padding:10px;display:grid;gap:8px;}
+.gs-form h4{margin:0;font-family:'Fraunces',serif;font-size:1rem;color:var(--tile-blue-deep);}
+.gs-form label{display:grid;gap:3px;font-size:0.74rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);}
+.gs-form input{font:inherit;font-size:0.92rem;font-weight:400;letter-spacing:0;text-transform:none;height:38px;box-sizing:border-box;padding:0 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);outline:none;}
+.gs-form input:focus{border-color:var(--tile-turquoise);background:#fff;}
+.gs-form-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;}
+.gs-form-actions .btn{padding:9px 16px;}
+.gs-form-msg{margin:0;font-size:0.82rem;color:var(--bad);}
+.gs-thanks{padding:14px 12px;font-size:0.92rem;color:var(--good);font-weight:600;}
 .brand-mark{width:42px;height:42px;flex:none;display:block;filter:drop-shadow(0 1px 1px rgba(18,65,77,0.12)) drop-shadow(0 6px 10px rgba(18,65,77,0.22));}
 /* Logo: a glass of çay; the steam drifts gently. */
 .brand-steam{animation:steam 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:bottom center;}
@@ -3194,10 +3204,45 @@ function renderSearchResults(){
         const el = it.kind==="verb" ? 'button type="button"' : "div";
         return `<${el} class="gs-row ${it.kind==="verb" ? "verb" : ""}" role="option" data-i="${i}">${body}</${it.kind==="verb" ? "button" : "div"}>`;
       }).join("")
-    : '<div class="gs-empty">No match in the word list.</div>';
+    : '<div class="gs-empty">No results. <button type="button" id="gsSuggest">Suggest a gloss?</button></div>';
   placeSearchResults();
   box.hidden = false;
   input.setAttribute("aria-expanded", "true");
+}
+// "No results. Suggest a gloss?" opens a small form that goes into Jacob's suggestion queue.
+function openSuggestForm(){
+  const typed = document.getElementById("gsearchInput").value.trim();
+  const box = document.getElementById("gsearchResults");
+  const esc = t=>String(t).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+  box.innerHTML = `<form class="gs-form" id="gsForm" novalidate>
+    <h4>Suggest a gloss</h4>
+    <label>Word<input id="gsWord" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(typed)}"></label>
+    <label>Gloss<input id="gsGloss" type="text" maxlength="300" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
+    <p class="gs-form-msg" id="gsMsg" role="status" hidden></p>
+    <div class="gs-form-actions"><button type="button" class="btn btn-ghost" id="gsCancel">Cancel</button><button type="submit" class="btn btn-primary" id="gsSend">Submit</button></div>
+  </form>`;
+  placeSearchResults();
+  document.getElementById(typed ? "gsGloss" : "gsWord").focus();
+}
+async function sendGlossSuggestion(){
+  const word = document.getElementById("gsWord").value.trim(), gloss = document.getElementById("gsGloss").value.trim();
+  const msg = document.getElementById("gsMsg"), send = document.getElementById("gsSend");
+  const problem = t=>{ msg.textContent = t; msg.hidden = false; };
+  if(!word) return problem("Type the word first.");
+  if(!gloss) return problem("Add a gloss first.");
+  if(!window.turkceBackend || !window.turkceBackend.sendSuggestion) return problem("Suggestions can't be sent from here.");
+  send.disabled = true; msg.hidden = true;
+  try{
+    await window.turkceBackend.sendSuggestion(`Gloss suggestion: ${word} - ${gloss}`, "search box: no results");
+  }catch(e){
+    send.disabled = false;
+    return problem("Couldn't send it. Check your connection and try again.");
+  }
+  document.getElementById("gsearchResults").innerHTML = '<div class="gs-thanks">Thank you. Your response will go in Jacob\'s queue.</div>';
+  setTimeout(()=>{
+    if(!document.querySelector("#gsearchResults .gs-thanks")) return;   // they've moved on to another search
+    const inp = document.getElementById("gsearchInput"); inp.value = ""; renderSearchResults();
+  }, 3200);
 }
 function chooseSearchResult(i){
   const it = gs.items[i];
@@ -3233,7 +3278,12 @@ function chooseSearchResult(i){
   box.addEventListener("click", e=>{
     const row = e.target.closest(".gs-row.verb");
     if(row) chooseSearchResult(Number(row.dataset.i));
+    if(e.target.id==="gsSuggest") openSuggestForm();
+    if(e.target.id==="gsCancel") renderSearchResults();
   });
+  // Typing in the suggestion form must not trigger the drill's keyboard shortcuts either.
+  box.addEventListener("keydown", e=>{ e.stopPropagation(); if(e.key==="Escape") closeSearchResults(); });
+  box.addEventListener("submit", e=>{ e.preventDefault(); sendGlossSuggestion(); });
   document.getElementById("gsearchClear").onclick = ()=>{ input.value = ""; renderSearchResults(); input.focus(); };
   document.addEventListener("pointerdown", e=>{
     if(!box.hidden && !box.contains(e.target) && !document.getElementById("gsearch").contains(e.target)) closeSearchResults();
