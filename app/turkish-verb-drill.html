@@ -50,6 +50,21 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .export-msg.bad{color:var(--bad);}
 .sync-note{margin:-8px 0 20px;padding:10px 14px;border-radius:10px;background:#FBEAE5;color:var(--bad);font-size:13px;line-height:1.5;}
 .brand{display:flex;align-items:center;gap:12px;}
+.gsearch{position:relative;flex:1 1 170px;min-width:140px;margin-top:2px;}
+.gsearch input{width:100%;box-sizing:border-box;height:38px;font:inherit;font-size:0.92rem;padding:0 32px 0 34px;border:1.5px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);outline:none;}
+.gsearch input:focus{border-color:var(--tile-turquoise);}
+.gsearch .mag{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--ink-soft);pointer-events:none;}
+.gsearch .clr{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:26px;height:26px;border:none;border-radius:50%;background:none;font-size:1.15rem;line-height:1;color:var(--ink-soft);cursor:pointer;}
+.gsearch .clr:hover{background:var(--paper-2);}
+.gsearch-results{position:fixed;z-index:70;max-height:min(60vh,420px);overflow-y:auto;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 40px -12px rgba(18,65,77,.5);padding:6px;}
+.gsearch-results[hidden]{display:none;}
+.gs-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;width:100%;text-align:left;font:inherit;font-size:0.92rem;background:none;border:none;border-radius:9px;padding:8px 10px;color:var(--ink);cursor:default;}
+.gs-row.verb{cursor:pointer;}
+.gs-row.verb:hover,.gs-row.active{background:var(--paper-2);}
+.gs-tr{font-weight:700;color:var(--tile-blue-deep);}
+.gs-tag{margin-left:6px;font-size:0.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--tile-turquoise);}
+.gs-en{color:var(--ink-soft);font-size:0.85rem;text-align:right;}
+.gs-empty{padding:10px;font-size:0.85rem;color:var(--ink-soft);}
 .brand-mark{width:42px;height:42px;flex:none;display:block;filter:drop-shadow(0 1px 1px rgba(18,65,77,0.12)) drop-shadow(0 6px 10px rgba(18,65,77,0.22));}
 /* Logo: a glass of çay; the steam drifts gently. */
 .brand-steam{animation:steam 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:bottom center;}
@@ -378,6 +393,12 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       </svg>
       <h1>Türkçe</h1>
     </div>
+    <div class="gsearch" id="gsearch">
+      <svg class="mag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input id="gsearchInput" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Search words…" aria-label="Search words in English or Turkish" role="combobox" aria-expanded="false" aria-controls="gsearchResults">
+      <button type="button" class="clr" id="gsearchClear" aria-label="Clear search" hidden>&times;</button>
+    </div>
+    <div class="gsearch-results" id="gsearchResults" role="listbox" hidden></div>
     <div class="sync-status" id="syncStatus" hidden></div>
   </header>
   <p class="sync-note" id="syncNote" hidden></p>
@@ -3105,6 +3126,107 @@ document.getElementById("verbModalClose").onclick = closeVerbModal;
 document.getElementById("verbModalX").onclick = closeVerbModal;
 document.getElementById("verbModal").addEventListener("click", e=>{ if(e.target.id==="verbModal") closeVerbModal(); });
 document.addEventListener("keydown", e=>{ if(e.key==="Escape" && !document.getElementById("verbModal").hidden){ e.preventDefault(); closeVerbModal(); } });
+// ---- Search: type English or Turkish in the header; verbs open the same forms popup as the Sözlük ----
+function foldSearch(str){
+  return String(str).toLocaleLowerCase("tr").replace(/ı/g,"i").replace(/ş/g,"s").replace(/ç/g,"c").replace(/ğ/g,"g").replace(/ö/g,"o").replace(/ü/g,"u").replace(/[âîû]/g, c=>({"â":"a","î":"i","û":"u"}[c]));
+}
+function searchWords(query){
+  const q = foldSearch(query).trim();
+  if(!q) return [];
+  const scoreText = (text, turkish)=>{
+    const f = foldSearch(text);
+    if(f===q) return turkish ? 100 : 75;
+    if(f.startsWith(q)) return turkish ? 85 : 62;
+    const tokens = f.split(/[^a-z0-9]+/).filter(Boolean);
+    if(tokens.some(t=>t===q)) return turkish ? 70 : 72;
+    if(tokens.some(t=>t.startsWith(q))) return turkish ? 55 : 56;
+    if(q.length>=3 && f.includes(q)) return turkish ? 35 : 28;
+    return 0;
+  };
+  const out = [];
+  const add = (kind, tr, en, key)=>{
+    const sc = Math.max(scoreText(tr, true), scoreText(en, false));
+    if(sc>0) out.push({kind, tr, en, sc, key});
+  };
+  VERBS.forEach(v=>add("verb", v.inf, v.vocabGloss, v.inf));
+  const seen = new Set();
+  NONVERBS.forEach(nv=>{ if(seen.has(nv.tr)) return; seen.add(nv.tr); add("word", nv.tr, nv.en, nv.tr); });
+  out.sort((a,b)=> b.sc-a.sc || a.tr.length-b.tr.length || a.tr.localeCompare(b.tr, "tr"));
+  return out.slice(0, 12);
+}
+const gs = {items:[], active:-1};
+function placeSearchResults(){
+  const box = document.getElementById("gsearchResults");
+  const r = document.getElementById("gsearchInput").getBoundingClientRect();
+  const w = Math.min(430, window.innerWidth - 32);
+  box.style.width = w + "px";
+  box.style.left = Math.max(16, Math.min(r.left, window.innerWidth - 16 - w)) + "px";
+  box.style.top = (r.bottom + 6) + "px";
+}
+function closeSearchResults(){
+  document.getElementById("gsearchResults").hidden = true;
+  document.getElementById("gsearchInput").setAttribute("aria-expanded", "false");
+  gs.active = -1;
+}
+function paintSearchActive(){
+  document.querySelectorAll("#gsearchResults .gs-row").forEach((el,i)=>el.classList.toggle("active", i===gs.active));
+}
+function renderSearchResults(){
+  const input = document.getElementById("gsearchInput"), box = document.getElementById("gsearchResults");
+  document.getElementById("gsearchClear").hidden = !input.value;
+  if(!input.value.trim()){ closeSearchResults(); return; }
+  gs.items = searchWords(input.value);
+  gs.active = -1;
+  const esc = t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+  box.innerHTML = gs.items.length
+    ? gs.items.map((it,i)=>`<${it.kind==="verb" ? "button type=\"button\"" : "div"} class="gs-row ${it.kind==="verb" ? "verb" : ""}" role="option" data-i="${i}"><span><span class="gs-tr">${esc(it.tr)}</span>${it.kind==="verb" ? '<span class="gs-tag">verb ›</span>' : ""}</span><span class="gs-en">${esc(it.en)}</span></${it.kind==="verb" ? "button" : "div"}>`).join("")
+    : '<div class="gs-empty">No match in the word list.</div>';
+  placeSearchResults();
+  box.hidden = false;
+  input.setAttribute("aria-expanded", "true");
+}
+function chooseSearchResult(i){
+  const it = gs.items[i];
+  if(!it || it.kind!=="verb") return;
+  closeSearchResults();
+  document.getElementById("gsearchInput").blur();
+  openVerbModal(it.key);
+}
+(function setupSearch(){
+  const input = document.getElementById("gsearchInput"), box = document.getElementById("gsearchResults");
+  input.addEventListener("input", renderSearchResults);
+  input.addEventListener("focus", ()=>{ if(input.value.trim()) renderSearchResults(); });
+  // Typing here must not trigger the drill's keyboard shortcuts.
+  input.addEventListener("keydown", e=>{
+    e.stopPropagation();
+    if(e.key==="Escape"){ input.value = ""; renderSearchResults(); input.blur(); return; }
+    if(box.hidden || !gs.items.length) return;
+    const verbs = gs.items.map((it,i)=>it.kind==="verb" ? i : -1).filter(i=>i>=0);
+    if(e.key==="ArrowDown" || e.key==="ArrowUp"){
+      e.preventDefault();
+      if(!verbs.length) return;
+      const pos = verbs.indexOf(gs.active);
+      const next = e.key==="ArrowDown" ? (pos+1) % verbs.length : (pos<=0 ? verbs.length-1 : pos-1);
+      gs.active = verbs[next];
+      paintSearchActive();
+      const el = box.querySelector(`.gs-row[data-i="${gs.active}"]`); if(el) el.scrollIntoView({block:"nearest"});
+    } else if(e.key==="Enter"){
+      e.preventDefault();
+      if(gs.active>=0) chooseSearchResult(gs.active);
+      else if(verbs.length===1) chooseSearchResult(verbs[0]);
+    }
+  });
+  box.addEventListener("click", e=>{
+    const row = e.target.closest(".gs-row.verb");
+    if(row) chooseSearchResult(Number(row.dataset.i));
+  });
+  document.getElementById("gsearchClear").onclick = ()=>{ input.value = ""; renderSearchResults(); input.focus(); };
+  document.addEventListener("pointerdown", e=>{
+    if(!box.hidden && !box.contains(e.target) && !document.getElementById("gsearch").contains(e.target)) closeSearchResults();
+  });
+  window.addEventListener("resize", ()=>{ if(!box.hidden) placeSearchResults(); });
+  window.addEventListener("scroll", ()=>{ if(!box.hidden) placeSearchResults(); }, {passive:true});
+})();
 function renderNonverbReferencePanel(){
   const box = document.getElementById("nonverbRefPanel");
   box.innerHTML = "";
