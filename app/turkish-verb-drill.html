@@ -679,13 +679,14 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
         <button type="button" class="vm-x" id="verbModalX" aria-label="Close">&times;</button>
       </div>
       <div class="vm-controls">
-        <div class="chip-row" id="vmForms">
-          <div class="chip on" data-form="plain">Plain</div>
-          <div class="chip" data-form="neg">Negative</div>
-          <div class="chip" data-form="q">Question</div>
-          <div class="chip" data-form="negq">Negative question</div>
+        <div class="chip-row" id="vmPolarity">
+          <div class="chip on" data-neg="false">Positive</div>
+          <div class="chip" data-neg="true">Negative</div>
         </div>
-        <div class="chip-row" style="margin-top:6px;"><div class="chip" id="vmAbility">Ability (can / can't)</div></div>
+        <div class="chip-row" style="margin-top:6px;">
+          <div class="chip" id="vmQuestion">Question</div>
+          <div class="chip" id="vmAbility">Ability</div>
+        </div>
       </div>
       <div class="vm-body" id="verbModalBody"></div>
       <div class="modal-foot">
@@ -3023,11 +3024,11 @@ function renderReferencePanel(){
   });
 }
 // ---- Verb forms: tap a verb in the Sözlük to see every tense, for reference ----
-const vm = {verb:null, form:"plain", ability:false};
+const vm = {verb:null, neg:false, q:false, ability:false};
 function renderVerbModal(){
   const v = vm.verb;
   if(!v) return;
-  const neg = vm.form==="neg" || vm.form==="negq", q = vm.form==="q" || vm.form==="negq";
+  const neg = vm.neg, q = vm.q;
   const section = t=>{
     const rows = PERSONS.map((p,i)=>{
       let form = "";
@@ -3042,10 +3043,11 @@ function renderVerbModal(){
 function openVerbModal(inf){
   const v = VERBS.find(x=>x.inf===inf);
   if(!v) return;
-  vm.verb = v; vm.form = "plain"; vm.ability = false;
+  vm.verb = v; vm.neg = false; vm.q = false; vm.ability = false;
   document.getElementById("verbModalTitle").textContent = v.inf;
   document.getElementById("verbModalGloss").textContent = v.vocabGloss;
-  document.querySelectorAll("#vmForms .chip").forEach(c=>c.classList.toggle("on", c.dataset.form==="plain"));
+  document.querySelectorAll("#vmPolarity .chip").forEach(c=>c.classList.toggle("on", c.dataset.neg==="false"));
+  document.getElementById("vmQuestion").classList.remove("on");
   document.getElementById("vmAbility").classList.remove("on");
   renderVerbModal();
   document.getElementById("verbModalBody").scrollTop = 0;
@@ -3060,11 +3062,17 @@ document.getElementById("refPanel").addEventListener("keydown", e=>{
   const row = e.target.closest && e.target.closest(".verb-row");
   if(row && (e.key==="Enter" || e.key===" ")){ e.preventDefault(); openVerbModal(row.dataset.inf); }
 });
-document.querySelectorAll("#vmForms .chip").forEach(c=>c.onclick = ()=>{
-  vm.form = c.dataset.form;
-  document.querySelectorAll("#vmForms .chip").forEach(x=>x.classList.toggle("on", x===c));
+// Positive / Negative: one or the other. Question and Ability: each on or off, together if you like.
+document.querySelectorAll("#vmPolarity .chip").forEach(c=>c.onclick = ()=>{
+  vm.neg = c.dataset.neg==="true";
+  document.querySelectorAll("#vmPolarity .chip").forEach(x=>x.classList.toggle("on", x===c));
   renderVerbModal();
 });
+document.getElementById("vmQuestion").onclick = ()=>{
+  vm.q = !vm.q;
+  document.getElementById("vmQuestion").classList.toggle("on", vm.q);
+  renderVerbModal();
+};
 document.getElementById("vmAbility").onclick = ()=>{
   vm.ability = !vm.ability;
   document.getElementById("vmAbility").classList.toggle("on", vm.ability);
