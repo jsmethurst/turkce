@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-256 verbs · 956 non-verbs · 40 topics
+258 verbs · 956 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -200,7 +200,7 @@ tercih etmek              to prefer
     akuzatif + datif: Çayı kahveye tercih ediyorum.  (I prefer tea to coffee.)
 katılmak                  to join / to attend
     datif: Toplantıya katılıyorum.  (I'm joining the meeting.)
-ayrılmak                  to leave / to separate
+ayrılmak                  to leave / to separate from
     ablatif: İşten ayrılıyorum.  (I'm leaving my job.)
 seyahat etmek             to travel
     ile: Trenle seyahat ediyorum.  (I travel by train.)
@@ -484,7 +484,7 @@ ava çıkmak                to go hunting
 yaramazlık yapmak         to misbehave
     örnek: Çocuklar yaramazlık yapıyor.  (The children are misbehaving.)
 
-DERSTE 76-81
+DERSTE 76-83
 ------------
 dirsek atmak              to elbow someone
     datif: Oyuncu rakibe dirsek atıyor.  (The player is elbowing his opponent.)
@@ -498,6 +498,10 @@ akmak                     to flow
     datif: Nehir denize akıyor.  (The river flows into the sea.)
 nezle olmak               to have a cold
     örnek: Çocuklar nezle oluyor.  (The children are catching a cold.)
+öksürmek                  to cough
+    örnek: Hasta çocuk öksürüyor.  (The sick child is coughing.)
+ayırmak                   to separate / to set aside
+    akuzatif: Parayı ayırıyorum.  (I'm setting aside the money.)
 
 BIBLE 1-25
 ----------
@@ -1736,7 +1740,7 @@ fırçalamak, uyanmak, kalkmak, yıkamak, diş fırçalamak, taramak, kurulanmak
 
 Health & Body
 -------------
-hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş olsun, beyin, kan, beden, sağlıklı olmak, spor yapmak, yorulmak, doğmak, büyümek, ölmek, ilaç, yaralı, sağlıklı, sağlıksız, yaşlanmak, alın, karın, burun, ağız, hapşırmak, göğüs kafesi, baş, kafa, saç, çene, yanak, kulak, göz, kirpik, kaş, boyun, boğaz, omuz, kol, dirsek, bilek, ayak bileği, el, parmak, avuç, bacak, diz, ayak, topuk, sırt, bel, ayak parmağı, tırnak, dudak, dil, diş, kas, sakal, bıyık, göğüs, kucak, ağrı, başı ağrı, karnı ağrı, dişi ağrı, dizi ağrı, grip, hap, şurup, eczane, eczaneci, nezle, teşhiş, halsiz, şikayet, reçete, tedavi, ağrımak, acımak, hıçkırmak, nezle olmak
+hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş olsun, beyin, kan, beden, sağlıklı olmak, spor yapmak, yorulmak, doğmak, büyümek, ölmek, ilaç, yaralı, sağlıklı, sağlıksız, yaşlanmak, alın, karın, burun, ağız, hapşırmak, göğüs kafesi, baş, kafa, saç, çene, yanak, kulak, göz, kirpik, kaş, boyun, boğaz, omuz, kol, dirsek, bilek, ayak bileği, el, parmak, avuç, bacak, diz, ayak, topuk, sırt, bel, ayak parmağı, tırnak, dudak, dil, diş, kas, sakal, bıyık, göğüs, kucak, ağrı, başı ağrı, karnı ağrı, dişi ağrı, dizi ağrı, grip, hap, şurup, eczane, eczaneci, nezle, teşhiş, halsiz, şikayet, reçete, tedavi, ağrımak, acımak, hıçkırmak, nezle olmak, öksürmek
 
 Talking & Communicating
 -----------------------
@@ -1748,7 +1752,7 @@ gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, ge�
 
 Everyday Actions
 ----------------
-açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, eşleştirmek, dirsek atmak
+açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, eşleştirmek, dirsek atmak, ayırmak
 
 Thinking & Deciding
 -------------------
