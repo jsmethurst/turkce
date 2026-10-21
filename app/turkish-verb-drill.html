@@ -62,14 +62,10 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .sr-row.verb{cursor:pointer;}
 .sr-item{display:flex;align-items:center;position:relative;}
 .sr-item .sr-row{flex:1;min-width:0;}
+.sr-item{position:relative;}
+.xpill{position:absolute;top:50%;transform:translateY(-50%);height:20px;box-sizing:border-box;display:inline-flex;align-items:center;padding:0 10px;border:none;border-radius:10px;background:#E5191C;color:#fff;font:inherit;font-size:.72rem;font-weight:700;white-space:nowrap;overflow:hidden;cursor:pointer;transition:width .2s ease;}
+.xpill.incl{background:var(--tile-blue-deep);}
 .sr-item.is-excl .gs-tr{text-decoration:line-through;opacity:.55;}
-.xbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;height:24px;min-width:24px;padding:0;border:none;border-radius:12px;background:var(--paper);color:var(--ink-soft);opacity:0;cursor:pointer;font:inherit;font-size:.72rem;font-weight:700;white-space:nowrap;overflow:hidden;transition:width .2s ease,background-color .2s ease,color .2s ease,opacity .2s;}
-.ref-row:hover .xbtn,.sr-item:hover .xbtn,.xbtn:focus-visible{opacity:.6;}
-.xbtn:hover{opacity:1;}
-@media (hover:none){.xbtn:not(.arm):not(.incl){display:none;}}
-.xbtn svg{width:14px;height:14px;}
-.xbtn.arm{background:#E5191C;color:#fff;opacity:1 !important;padding:0 10px;}
-.xbtn.incl{opacity:.85 !important;padding:0 9px;border:1px solid var(--line);}
 .sr-row.verb:hover,.sr-row.active{background:var(--paper-2);}
 .gs-tr{font-weight:700;color:var(--tile-blue-deep);}
 .gs-tag{margin-left:6px;font-size:0.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--tile-turquoise);}
@@ -3107,7 +3103,7 @@ function renderReferencePanel(){
       row.tabIndex = 0;
       row.setAttribute("role", "button");
       row.title = (wordFormLabel(key) ? wordFormLabel(key) + " · " : "") + "Tap to see all forms";
-      row.innerHTML = `<span class="ref-tr">${v.inf}</span><span class="ref-en">${v.vocabGloss}</span>` + (hid ? "" : xbtnHTML(key));
+      row.innerHTML = `<span class="ref-tr">${v.inf}</span><span class="ref-en">${v.vocabGloss}</span>`;
       list.appendChild(row);
     });
     box.appendChild(list);
@@ -3149,7 +3145,6 @@ function openVerbModal(inf){
 }
 function closeVerbModal(){ document.getElementById("verbModal").hidden = true; }
 document.getElementById("refPanel").addEventListener("click", e=>{
-  if(e.target.closest(".xbtn")) return;
   const title = e.target.closest(".ref-page-title");
   if(title){ toggleHiddenList(title.dataset.group); return; }
   const row = e.target.closest(".verb-row");
@@ -3158,35 +3153,51 @@ document.getElementById("refPanel").addEventListener("click", e=>{
   else openVerbModal(row.dataset.inf);
 });
 document.getElementById("nonverbRefPanel").addEventListener("click", e=>{
-  if(e.target.closest(".xbtn")) return;
   const title = e.target.closest(".ref-page-title");
   if(title){ toggleHiddenList(title.dataset.group); return; }
   const row = e.target.closest(".ref-row.is-hidden");
   if(row) unhideWord(row.dataset.key);
 });
-const BAN_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg>';
-function xbtnHTML(key){
-  return state.hidden.has(key)
-    ? `<button type="button" class="xbtn incl" data-key="${key.replace(/"/g,"&quot;")}" aria-label="Include in review">Include</button>`
-    : `<button type="button" class="xbtn" data-key="${key.replace(/"/g,"&quot;")}" aria-label="Exclude from review">${BAN_ICON}</button>`;
-}
-// One tap arms the button ("Exclude?", red, growing sideways); a second tap excludes the word.
+// Tap the far right of a word's row: its gloss turns into a red "Exclude?" pill. Tap the pill to exclude the word.
 function disarmX(){
-  document.querySelectorAll(".xbtn.arm").forEach(b=>{ b.classList.remove("arm"); b.innerHTML = BAN_ICON; b.style.width = ""; });
+  document.querySelectorAll(".xpill").forEach(p=>{
+    const hid = p.__hid; if(hid) hid.style.visibility = "";
+    p.remove();
+  });
 }
 document.addEventListener("click", e=>{
-  const b = e.target.closest && e.target.closest(".xbtn");
-  if(!b){ disarmX(); return; }
+  const pill = e.target.closest && e.target.closest(".xpill");
+  if(pill){
+    e.stopImmediatePropagation();
+    const key = pill.dataset.key;
+    if(pill.classList.contains("incl")) state.hidden.delete(key); else state.hidden.add(key);
+    afterExcludeChange();
+    return;
+  }
+  const row = e.target.closest && e.target.closest("#refPanel .ref-row:not(.is-hidden), #nonverbRefPanel .ref-row:not(.is-hidden), #gsearchResults .sr-item");
+  if(!row || !row.dataset.key){ disarmX(); return; }
+  const r = row.getBoundingClientRect();
+  if(e.clientX < r.right - 44){ disarmX(); return; }
   e.stopImmediatePropagation();
-  const key = b.dataset.key;
-  if(b.classList.contains("incl")){ state.hidden.delete(key); afterExcludeChange(); return; }
-  if(b.classList.contains("arm")){ state.hidden.add(key); afterExcludeChange(); return; }
+  e.preventDefault();
   disarmX();
-  const from = b.offsetWidth;
-  b.classList.add("arm"); b.textContent = "Exclude?"; b.style.width = "";
-  const to = b.offsetWidth;
-  b.style.width = from + "px"; b.getBoundingClientRect(); b.style.width = to + "px";
-});
+  const box = row.querySelector(".sr-row") || row;
+  const target = [...box.children].filter(x=>!x.classList.contains("xpill")).pop();
+  const tr = target.getBoundingClientRect(), rr = row.getBoundingClientRect();
+  const pillEl = document.createElement("button");
+  pillEl.type = "button";
+  pillEl.className = "xpill" + (state.hidden.has(row.dataset.key) ? " incl" : "");
+  pillEl.dataset.key = row.dataset.key;
+  pillEl.textContent = state.hidden.has(row.dataset.key) ? "Include?" : "Exclude?";
+  pillEl.style.right = (rr.right - tr.right) + "px";
+  row.appendChild(pillEl);
+  const to = pillEl.offsetWidth;
+  pillEl.style.width = Math.max(tr.width, 20) + "px";
+  pillEl.getBoundingClientRect();
+  pillEl.style.width = to + "px";
+  target.style.visibility = "hidden";
+  pillEl.__hid = target;
+}, true);
 function afterExcludeChange(){
   refreshAfterHiddenChange();
   if(!document.getElementById("gsearchResults").hidden && gs.items.length){
@@ -3297,7 +3308,7 @@ function renderSearchResults(){
           : `${turkish}<span class="gs-en">${esc(it.en)}</span>`;     // typed Turkish: bold Turkish on the left, English on the right
         const el = it.kind==="verb" ? 'button type="button"' : "div";
         const key = `${it.kind==="verb" ? "verb" : "nonverb"}:${it.tr}`;
-        return `<div class="sr-item${state.hidden.has(key) ? " is-excl" : ""}"><${el} class="sr-row ${it.kind==="verb" ? "verb" : ""}" role="option" data-i="${i}">${body}</${it.kind==="verb" ? "button" : "div"}>${xbtnHTML(key)}</div>`;
+        return `<div class="sr-item${state.hidden.has(key) ? " is-excl" : ""}" data-key="${key.replace(/"/g,"&quot;")}"><${el} class="sr-row ${it.kind==="verb" ? "verb" : ""}" role="option" data-i="${i}">${body}</${it.kind==="verb" ? "button" : "div"}></div>`;
       }).join("")
     : "";
   if(!gs.items.length) startWiktionarySearch(input.value.trim());
@@ -3498,7 +3509,7 @@ function renderNonverbReferencePanel(){
       row.dataset.key = key;
       row.dataset.level = state.hidden.has(key) ? "excluded" : wordFormLevelName(key);
       row.title = wordFormLabel(key);
-      row.innerHTML = `<span class="ref-tr">${nv.tr}</span><span class="ref-en">${nv.en}</span>` + (hid ? "" : xbtnHTML(key));
+      row.innerHTML = `<span class="ref-tr">${nv.tr}</span><span class="ref-en">${nv.en}</span>`;
       list.appendChild(row);
     });
     box.appendChild(list);
