@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-258 verbs · 956 non-verbs · 40 topics
+258 verbs · 957 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -765,7 +765,7 @@ televizyon                television / TV
 kapalı                    closed / turned off
 sıra                      queue / line
 üçüncü                    third
-sonuncu                   the last one
+sonuncu                   the last one (final in a sequence)
 
 2. ÜNİTE 26-50
 --------------
@@ -1291,7 +1291,7 @@ tekerleme                 nursery rhyme
 kesik                     cut / shut off
 doğalgaz                  natural gas
 görüntülü                 video
-sonunda                   finally
+sonunda                   finally (in the end)
 ise                       if
 aktarma                   transfer / connection (travel)
 birkaç                    a few
@@ -1355,12 +1355,13 @@ eczaneci                  pharmacist
 nezle                     common cold
 teşhiş                    diagnosis
 
-DERSTE 351-354
+DERSTE 351-355
 --------------
 halsiz                    sluggish (because of sickness)
 şikayet                   complaint
 reçete                    prescription
 tedavi                    treatment
+nihayet                   finally (at long last)
 
 SIFATLAR 1-25
 -------------
@@ -1512,7 +1513,7 @@ diğer                     other
 yalnız                    alone / lonely
 gürültülü                 noisy
 ilk                       first / earliest
-son                       last
+son                       last / final / latest
 yüksek                    high
 alçak                     low
 kolay                     easy
@@ -1764,7 +1765,7 @@ eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geni�
 
 Little Words
 ------------
-bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani
+bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani, nihayet
 
 Cities & Countries
 ------------------
