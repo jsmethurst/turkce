@@ -5138,6 +5138,7 @@ function nextCasesCard(){
   cases.current = item;
   cases.flipped = false;
   document.getElementById("casesPrompt").textContent = item.en;
+  autoPlayEn(item.en);
   document.getElementById("casesSub").textContent = "";
   document.getElementById("casesSpeak").style.visibility = "hidden";
   document.getElementById("casesAnswerRow").style.display = "";
@@ -5262,6 +5263,7 @@ function nextQuestion(){
   renderQuestion();
   updateBackButtonState();
   if(state.mode!=="en2tr") autoPlay(state.mode==="tr" ? state.current.verb.inf : state.current.answer.trim());   // a Turkish prompt
+  else autoPlayEn(state.current.gloss);   // an English prompt
 }
 
 function refreshCurrentQuestion(){
@@ -5594,6 +5596,7 @@ function showFeedback(correct){
   logFormsAnswer(correct, timed);
   updateSpeakButton(true);
   if(state.mode!=="tr2en") autoPlay(state.current.answer.trim());   // the Turkish answer
+  else autoPlayEn(state.current.gloss);   // the English answer
   const fb = document.getElementById("feedback");
   fb.className = "feedback show " + (correct?"good":"bad");
   const {answer, gloss, verb, personIdx} = state.current;
@@ -5613,6 +5616,7 @@ function revealAnswer(){
   logFormsAnswer(false, timed);   // "show me the answer" is logged as a miss
   updateSpeakButton(true);
   if(state.mode!=="tr2en") autoPlay(state.current.answer.trim());
+  else autoPlayEn(state.current.gloss);
   const fb = document.getElementById("feedback");
   fb.className = "feedback show good";
   const {personIdx} = state.current;
@@ -5629,7 +5633,8 @@ function speak(text, lang){
   u.lang = lang;
   u.rate = 0.92;
   const voices = window.speechSynthesis.getVoices();
-  const match = voices.find(v=>v.lang && v.lang.toLowerCase().startsWith(lang.toLowerCase().slice(0,2)));
+  const match = voices.find(v=>v.lang && v.lang.toLowerCase().replace("_","-")===lang.toLowerCase())
+    || voices.find(v=>v.lang && v.lang.toLowerCase().startsWith(lang.toLowerCase().slice(0,2)));
   if(match) u.voice = match;
   // The microphone stays shut from now until a moment after the speech ends (it would hear itself).
   const mute = ms=>{ if(typeof voice==="object" && voice){ voice.quietUntil = Date.now() + ms; voiceStop(); } };
