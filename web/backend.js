@@ -408,16 +408,18 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
         <div class="feedback-title">Global Settings</div>
         <label class="gs-row"><input type="checkbox" id="gsLenient"><span>Lenient spelling<small>Ignore ı/i, ş/s, ç/c, ğ/g, ö/o, ü/u</small></span></label>
         <label class="gs-row"><input type="checkbox" id="gsAutoPlay"><span>Auto-play Turkish prompts and answers</span></label>
+        <label class="gs-row"><input type="checkbox" id="gsAutoPlayEn"><span>Auto-play English prompts and answers</span></label>
         <label class="gs-row"><input type="checkbox" id="gsWiktionary"><span>Look up unknown words on Wiktionary</span></label>
       </div>
     </div>`);
     gear = {wrap: w, btn: w.querySelector("#settingsBtn"), pop: w.querySelector("#settingsPop"),
-            lenient: w.querySelector("#gsLenient"), autoPlay: w.querySelector("#gsAutoPlay"), wiktionary: w.querySelector("#gsWiktionary")};
+            lenient: w.querySelector("#gsLenient"), autoPlay: w.querySelector("#gsAutoPlay"), autoPlayEn: w.querySelector("#gsAutoPlayEn"), wiktionary: w.querySelector("#gsWiktionary")};
     gear.btn.onclick = function(){ if(menu) toggleMenu(false); if(fb) toggleFeedback(false); if(help) toggleHelp(false); toggleSettings(); };
     gear.pop.addEventListener("keydown", function(ev){ ev.stopPropagation(); if(ev.key === "Escape"){ toggleSettings(false); gear.btn.focus(); } });
     // The app owns the values (window.turkceSettings); this only shows and changes them.
     gear.lenient.onchange = function(){ if(window.turkceSettings) window.turkceSettings.set("lenient", gear.lenient.checked); };
     gear.autoPlay.onchange = function(){ if(window.turkceSettings) window.turkceSettings.set("autoSpeak", gear.autoPlay.checked); };
+    gear.autoPlayEn.onchange = function(){ if(window.turkceSettings) window.turkceSettings.set("autoSpeakEn", gear.autoPlayEn.checked); };
     gear.wiktionary.onchange = function(){ if(window.turkceSettings) window.turkceSettings.set("wiktionary", gear.wiktionary.checked); };
     return w;
   }
@@ -427,6 +429,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
       var v = window.turkceSettings.get();
       gear.lenient.checked = !!v.lenient;
       gear.autoPlay.checked = !!v.autoSpeak;
+      gear.autoPlayEn.checked = !!v.autoSpeakEn;
       gear.wiktionary.checked = v.wiktionary !== false;   // on unless turned off
     }
     gear.pop.hidden = !open;

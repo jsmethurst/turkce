@@ -2717,6 +2717,7 @@ const state = {
   ability: false,
   lenient: false,
   autoSpeak: false,
+  autoSpeakEn: false,
   hidden: new Set(),   // words excluded from Vocab and Tekrar for good ("verb:x" / "nonverb:x"); shown again from the Sözlük
   wiktionary: true,   // search falls back to Wiktionary when the Sözlük has no match
   formsTests: [],   // recent timed-test results, newest first (kept with the settings so they sync)
@@ -2743,6 +2744,7 @@ function collectSettings(){
       ability: state.ability,
       lenient: state.lenient,
       autoSpeak: state.autoSpeak,
+      autoSpeakEn: state.autoSpeakEn,
       wiktionary: state.wiktionary,
       hiddenWords: [...state.hidden],
       formsTests: state.formsTests,
@@ -2851,6 +2853,7 @@ function applyFormsSettings(S){
   if(typeof S.ability==="boolean") state.ability = S.ability;
   if(typeof S.lenient==="boolean") state.lenient = S.lenient;
   if(typeof S.autoSpeak==="boolean") state.autoSpeak = S.autoSpeak;
+  if(typeof S.autoSpeakEn==="boolean") state.autoSpeakEn = S.autoSpeakEn;
   if(typeof S.wiktionary==="boolean") state.wiktionary = S.wiktionary;
   if(Array.isArray(S.hiddenWords)) state.hidden = new Set(S.hiddenWords.filter(k=>typeof k==="string"));
   if(Array.isArray(S.formsTests)) state.formsTests = S.formsTests.filter(r=>r && typeof r.ms==="number").slice(0, 10);
@@ -3700,16 +3703,20 @@ if(SAVED_SETTINGS) applyVocabSettings(SAVED_SETTINGS);
 // Spelling used to be a separate switch on Forms and on Vocab, so either one being on counts as on.
 function globalLenient(){ return !!(state.lenient || vocabState.lenientTyping); }
 window.turkceSettings = {
-  get: ()=>({lenient: globalLenient(), autoSpeak: !!state.autoSpeak, wiktionary: state.wiktionary!==false}),
+  get: ()=>({lenient: globalLenient(), autoSpeak: !!state.autoSpeak, autoSpeakEn: !!state.autoSpeakEn, wiktionary: state.wiktionary!==false}),
   set: (key, value)=>{
     if(key==="lenient"){ state.lenient = !!value; vocabState.lenientTyping = !!value; }
     else if(key==="autoSpeak"){ state.autoSpeak = !!value; }
+    else if(key==="autoSpeakEn"){ state.autoSpeakEn = !!value; }
     else if(key==="wiktionary"){ state.wiktionary = !!value; }
     saveSettings();
   },
 };
 // Reads Turkish text aloud when "Auto-play" is on.
 function autoPlay(text){ if(state.autoSpeak && text) speak(text, "tr-TR"); }
+// Reads English aloud (Vocab and Tekrar prompts and answers) when "Auto-play English" is on. The microphone
+// stays shut while anything is being spoken, so it never hears this.
+function autoPlayEn(text){ if(state.autoSpeakEn && text) speak(String(text).replace(/\s*\/\s*/g, ", "), "en-US"); }
 function syncVocabSettingChips(){
   document.querySelectorAll(".chip[data-master]").forEach(c=>{
     c.classList.toggle("on", c.dataset.master===vocabState.masterMode);
@@ -4179,6 +4186,7 @@ function showVocabItem(item){
   updateVocabAudioSlot();
   updateVocabProgress();
   updateVocabTypingUI();
+  if(vocabState.mode!=="tr2en") autoPlayEn(item.en);   // an English prompt
 }
 
 function refreshVocabCard(){
@@ -4208,7 +4216,7 @@ function flipVocabCard(){
   vocabState.flipped = !vocabState.flipped;
   setVocabBackVisible(vocabState.flipped);
   updateVocabAudioSlot();
-  if(vocabState.flipped) autoPlay(vocabState.current.tr);
+  if(vocabState.flipped){ autoPlay(vocabState.current.tr); if(vocabState.mode==="tr2en") autoPlayEn(vocabState.current.en); }
 }
 
 function wordAnswerMatches(detail, mode, input){
@@ -4245,6 +4253,7 @@ function checkVocabAnswer(){
   vocabState.flipped = true;
   vocabState.lastCheck = correct;
   autoPlay(vocabState.current.tr);
+  if(vocabState.mode==="tr2en") autoPlayEn(vocabState.current.en);   // the English answer
   let newlyKnown = false;
   if(correct && updatesProgressFilter()){
     const key = vocabKnownKey(vocabState.current);
@@ -4778,6 +4787,7 @@ function nextTekrarCard(){
   form.title = wordFormLabel(pickWord.key);
   form.hidden = !form.innerHTML;
   document.getElementById("tekrarSpeak").style.visibility = tekrar.mode==="tr2en" ? "visible" : "hidden";
+  if(tekrar.mode!=="tr2en") autoPlayEn(detail.gloss);   // an English prompt
   document.getElementById("tekrarAnswerRow").style.display = "";
   document.getElementById("tekrarCheck").disabled = false;
   document.getElementById("tekrarNext").hidden = true;
@@ -4802,6 +4812,7 @@ function checkTekrar(){
   const key = vocabKnownKey(tekrar.current);
   recordWordResult(tekrar.current, correct, "tekrar");
   autoPlay(tekrar.current.tr);
+  if(tekrar.mode==="tr2en") autoPlayEn(tekrar.current.en);
   tekrar.flipped = true;
   tekrar.last = key;
   tekrar.again.forEach(a=>a.wait--);
