@@ -5800,13 +5800,20 @@ async function toggleVoice(){
   voiceSync();
 }
 function onVoiceResult(e){
-  const res = e.results[e.results.length-1];
+  const idx = e.results.length-1;
+  const res = e.results[idx];
   if(!res || !res.isFinal || voice.timer) return;
+  // Each final result is used once. Some browsers fire the event again for a result they already
+  // reported (or repeat the same words as a new one a moment later); that echo used to land on the next question.
+  if(e.target===voice.handledRec && idx<=voice.handledIdx) return;
   if('speechSynthesis' in window && window.speechSynthesis.speaking) return;
   const alts = [...res].map(a=>a.transcript.trim()).filter(Boolean);
   if(!alts.length) return;
+  const norm = alts[0].toLocaleLowerCase("tr");
+  if(norm===voice.handledText && Date.now()-voice.handledAt < 6000) return;
   const target = voiceTarget();
   if(!target) return;
+  voice.handledRec = e.target; voice.handledIdx = idx; voice.handledText = norm; voice.handledAt = Date.now();
   if(target.tab==="forms"){
     if(!state.current || document.getElementById("feedback").classList.contains("show")) return;
     const match = alts.findIndex(a=>formsAnswerCorrect(a));
