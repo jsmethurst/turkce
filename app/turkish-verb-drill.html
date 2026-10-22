@@ -5620,6 +5620,10 @@ function speak(text, lang){
   const voices = window.speechSynthesis.getVoices();
   const match = voices.find(v=>v.lang && v.lang.toLowerCase().startsWith(lang.toLowerCase().slice(0,2)));
   if(match) u.voice = match;
+  // The microphone stays shut from now until a moment after the speech ends (it would hear itself).
+  const mute = ms=>{ if(typeof voice==="object" && voice){ voice.quietUntil = Date.now() + ms; voiceStop(); } };
+  u.onend = u.onerror = ()=>{ if(typeof voice==="object" && voice) voice.quietUntil = Date.now() + 350; };
+  mute(1500 + String(text).length*110);
   window.speechSynthesis.speak(u);
 }
 function speakCurrent(){
@@ -5707,22 +5711,33 @@ function paintMicButtons(){
     b.title = voice.on ? (voice.listening ? "Listening — tap to stop" : "Starting to listen — tap to stop") : "Answer by voice";
   });
 }
+// The microphone is only open while a question is waiting for an answer, and never while the page is
+// speaking (it would hear itself). It shuts the moment an answer is taken, so the revealed answer's audio
+// and the pause between questions are never picked up. A short poll decides, so no call site can forget.
+function voiceAwaiting(tab){
+  if(tab==="forms") return !!state.current && !document.getElementById("feedback").classList.contains("show");
+  if(tab==="vocab") return !!vocabState.current && !vocabState.flipped;
+  if(tab==="tekrar") return !!tekrar.current && !tekrar.flipped;
+  if(tab==="cases") return !!cases.current && !cases.flipped;
+  return false;
+}
+function voiceSpeaking(){
+  return ('speechSynthesis' in window && window.speechSynthesis.speaking) || Date.now() < (voice.quietUntil || 0);
+}
+function voiceStop(){ if(typeof voice==='object' && voice && voice.rec){ try{ voice.rec.abort(); }catch(e){} } }
 function voiceSync(){
   if(!SpeechRec || !voice) return;
   const target = voice.on ? voiceTarget() : null;
-  if(!target || (voice.running && voice.lang!==target.lang)){
-    if(voice.running && voice.rec) voice.rec.abort();
-    return;
-  }
-  if(voice.running) return;
+  const want = !!target && voiceAwaiting(target.tab) && !voiceSpeaking() && !voice.timer && !document.hidden;
+  if(!want || (voice.running && voice.lang!==target.lang)){ if(voice.running) voiceStop(); return; }
+  if(voice.running || Date.now() < (voice.retryAt || 0)) return;
   const rec = new SpeechRec();
   rec.lang = target.lang;
   rec.continuous = true;
   rec.interimResults = false;
   rec.maxAlternatives = 5;
   rec.onstart = ()=>{ voice.listening = true; voice.startedAt = Date.now(); paintMicButtons(); };
-  rec.onspeechstart = ()=>{ voice.lastSpeech = Date.now(); };
-  rec.onresult = e=>{ voice.lastSpeech = Date.now(); onVoiceResult(e); };
+  rec.onresult = e=>{ if(voice.rec===rec) onVoiceResult(e); };
   rec.onerror = e=>{
     if(e.error==="not-allowed" || e.error==="service-not-allowed" || e.error==="audio-capture"){
       voice.on = false;
@@ -5732,31 +5747,27 @@ function voiceSync(){
       else micBlockedMessage();
     }
   };
-  // Browsers end listening on their own now and then (after silence, or about a minute). Start again
-  // straight away so little speech is missed; only back off if it keeps ending the instant it starts.
   rec.onend = ()=>{
-    voice.running = false;
-    voice.listening = false;
-    if(voice.rec===rec) voice.rec = null;
+    if(voice.rec===rec){ voice.rec = null; voice.running = false; voice.listening = false; }
+    // Only back off if it keeps ending the instant it starts.
     voice.fastEnds = (Date.now() - (voice.startedAt || 0) < 800) ? (voice.fastEnds || 0) + 1 : 0;
+    voice.retryAt = voice.fastEnds >= 3 ? Date.now() + 1000 : 0;
     paintMicButtons();
-    if(voice.on) setTimeout(voiceSync, voice.fastEnds >= 3 ? 1000 : 40);
+    voiceSync();
   };
   try{ voice.startAttempt = Date.now(); voice.startedAt = 0; rec.start(); voice.rec = rec; voice.running = true; voice.lang = target.lang; }
-  catch(e){ voice.running = false; }
+  catch(e){ voice.running = false; voice.rec = null; }
 }
-// Safety net: restart a listener that never started or has been listening a long time in silence
-// (some browsers go deaf without saying so, which is when you'd have to tap the mic off and on).
 setInterval(()=>{
-  if(!SpeechRec || !voice || !voice.on || !voice.running || !voice.rec) return;
-  const now = Date.now();
-  const stuck = !voice.listening && now - voice.startAttempt > 4000;
-  const old = voice.listening && now - voice.startedAt > 50000 && now - (voice.lastSpeech || 0) > 3000 && !voice.timer;
-  if(!stuck && !old) return;
-  const rec = voice.rec;
-  try{ rec.abort(); }catch(e){}
-  setTimeout(()=>{ if(voice.rec===rec){ voice.running = false; voice.listening = false; voice.rec = null; voiceSync(); } }, 500);   // if abort never reported back
-}, 2000);
+  if(!SpeechRec || !voice) return;
+  // A listener that never reported starting is replaced.
+  if(voice.running && voice.rec && !voice.listening && Date.now() - voice.startAttempt > 4000){
+    const rec = voice.rec;
+    try{ rec.abort(); }catch(e){}
+    setTimeout(()=>{ if(voice.rec===rec){ voice.rec = null; voice.running = false; voice.listening = false; } }, 400);
+  }
+  voiceSync();
+}, 120);
 function showVoiceProblem(msg){
   const t = voiceTarget() || {tab:"forms"};
   const fb = document.getElementById({forms:"feedback", vocab:"vocabFeedback", tekrar:"tekrarFeedback", cases:"casesFeedback"}[t.tab] || "vocabFeedback");
@@ -5800,20 +5811,13 @@ async function toggleVoice(){
   voiceSync();
 }
 function onVoiceResult(e){
-  const idx = e.results.length-1;
-  const res = e.results[idx];
-  if(!res || !res.isFinal || voice.timer) return;
-  // Each final result is used once. Some browsers fire the event again for a result they already
-  // reported (or repeat the same words as a new one a moment later); that echo used to land on the next question.
-  if(e.target===voice.handledRec && idx<=voice.handledIdx) return;
-  if('speechSynthesis' in window && window.speechSynthesis.speaking) return;
+  const res = e.results[e.results.length-1];
+  if(!res || !res.isFinal || voice.timer || voiceSpeaking()) return;
   const alts = [...res].map(a=>a.transcript.trim()).filter(Boolean);
   if(!alts.length) return;
-  const norm = alts[0].toLocaleLowerCase("tr");
-  if(norm===voice.handledText && Date.now()-voice.handledAt < 6000) return;
   const target = voiceTarget();
-  if(!target) return;
-  voice.handledRec = e.target; voice.handledIdx = idx; voice.handledText = norm; voice.handledAt = Date.now();
+  if(!target || !voiceAwaiting(target.tab)) return;
+  voiceStop();   // an answer is being taken: close the microphone right away
   if(target.tab==="forms"){
     if(!state.current || document.getElementById("feedback").classList.contains("show")) return;
     const match = alts.findIndex(a=>formsAnswerCorrect(a));
