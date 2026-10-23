@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-258 verbs · 959 non-verbs · 40 topics
+261 verbs · 972 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -484,7 +484,7 @@ ava çıkmak                to go hunting
 yaramazlık yapmak         to misbehave
     örnek: Çocuklar yaramazlık yapıyor.  (The children are misbehaving.)
 
-DERSTE 76-83
+DERSTE 76-86
 ------------
 dirsek atmak              to elbow someone
     datif: Oyuncu rakibe dirsek atıyor.  (The player is elbowing his opponent.)
@@ -502,6 +502,12 @@ nezle olmak               to have a cold
     örnek: Hasta çocuk öksürüyor.  (The sick child is coughing.)
 ayırmak                   to separate / to set aside
     akuzatif: Parayı ayırıyorum.  (I'm setting aside the money.)
+doymak                    to get full / to be satisfied
+    ablatif: Çocuk yemekten doyuyor.  (The child is getting full from the food.)
+acıkmak                   to get hungry
+    örnek: Acıkıyorum.  (I'm getting hungry.)
+yakalamak                 to catch
+    akuzatif: Topu yakalıyor.  (He is catching the ball.)
 
 BIBLE 1-25
 ----------
@@ -1355,7 +1361,7 @@ eczaneci                  pharmacist
 nezle                     common cold
 teşhiş                    diagnosis
 
-DERSTE 351-357
+DERSTE 351-370
 --------------
 halsiz                    sluggish (because of sickness)
 şikayet                   complaint
@@ -1364,6 +1370,19 @@ tedavi                    treatment
 nihayet                   finally (at long last)
 ne alaka                  what's that got to do with it?
 peynir                    cheese
+ada                       island
+hece                      syllable
+borç                      debt
+asla                      never
+yüzde yüz                 100%
+kılıf                     case / protective cover
+kapak                     front cover
+kumanda                   remote control
+başkent                   capital city
+başkan                    president / chairman
+yaprak                    leaf
+yönetmen                  director
+anten                     antenna
 
 SIFATLAR 1-25
 -------------
@@ -1651,7 +1670,7 @@ ne, kim, neresi, nerede, kimde, ne var, ne yok, açık mı, kapalı mı, kaç ke
 
 Numbers & Ordering
 ------------------
-birinci, ikinci, üçüncü, dördüncü, altıncı, yedinci, dokuzuncu, sonuncu, numaralı, ilk, sıra, sıradaki, sırada, üçüncü kişi, numara, toplam, kilo, sıralama, milyonlarca, artı
+birinci, ikinci, üçüncü, dördüncü, altıncı, yedinci, dokuzuncu, sonuncu, numaralı, ilk, sıra, sıradaki, sırada, üçüncü kişi, numara, toplam, kilo, sıralama, milyonlarca, artı, yüzde yüz
 
 Time & Schedule
 ---------------
@@ -1663,7 +1682,7 @@ buyurun, geçmiş olsun, affedersiniz, rica ederim, teşekkürler, lütfen, afiy
 
 People & Professions
 --------------------
-insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi, hala, anne tarafı, teyze, dayı, anneanne, baba tarafı, amca, babaanne, dede, enişte, yenge, kuzen, kız, erkek kardeş, soy, karı-koca, onlar kardeş, abla, kız kardeş, komşu, akraba, yeğen, herkes, görümce, kayınço, balıkçı, veteriner, yazar
+insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi, hala, anne tarafı, teyze, dayı, anneanne, baba tarafı, amca, babaanne, dede, enişte, yenge, kuzen, kız, erkek kardeş, soy, karı-koca, onlar kardeş, abla, kız kardeş, komşu, akraba, yeğen, herkes, görümce, kayınço, balıkçı, veteriner, yazar, başkan
 
 Places & Buildings
 ------------------
@@ -1675,7 +1694,7 @@ masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitapl
 
 Kitchen & Food
 --------------
-mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir
+mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak
 
 Transportation & Travel
 -----------------------
@@ -1683,7 +1702,7 @@ araba, uçak, dolmuş, vapur, motosiklet, trafik, yolculuk, tur, sahil, havaalan
 
 Electronics & Media
 -------------------
-bilgisayar, telefon, cep telefonu, televizyon, radyo, internet, kanal, dizi, haber, program, yayın akışı, çizgi film, magazin, komedi filmi, ana haber, spor programı, yemek programı, yarışma, çocuk programı, müzik programı, sinema filmi, yabancı sinema, tekrar, yayında, yayınlanmak, yayınlamak, izlemek, seyretmek, televizyon izlemek, televizyon seyretmek, fotoğraf, gazete, dergi, televizyon kanalı, televizyon programı, komedi, yüklemek, mesaj atmak, telefon etmek, e-posta adresi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, kahvaltı haberleri, tekerleme, görüntülü, sesi
+bilgisayar, telefon, cep telefonu, televizyon, radyo, internet, kanal, dizi, haber, program, yayın akışı, çizgi film, magazin, komedi filmi, ana haber, spor programı, yemek programı, yarışma, çocuk programı, müzik programı, sinema filmi, yabancı sinema, tekrar, yayında, yayınlanmak, yayınlamak, izlemek, seyretmek, televizyon izlemek, televizyon seyretmek, fotoğraf, gazete, dergi, televizyon kanalı, televizyon programı, komedi, yüklemek, mesaj atmak, telefon etmek, e-posta adresi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, kahvaltı haberleri, tekerleme, görüntülü, sesi, kılıf, kumanda, anten
 
 Personality & Appearance
 ------------------------
@@ -1691,11 +1710,11 @@ Personality & Appearance
 
 School & Study
 --------------
-sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, kitaplar, kitap, kalem, tahta, defter, çanta, sözlük, kağıt, kareli kağıt, çizgili kağıt, cümle, fiil, isim, sıfat, fotokopi, okumak, yazmak, öğrenmek, öğretmek, anlamak, cevaplamak, tekrar etmek, tamamlamak, düzeltmek, açıklamak, çözmek, sırt çantası, doğru, yanlış, mezuniyet, tören, hata
+sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, kitaplar, kitap, kalem, tahta, defter, çanta, sözlük, kağıt, kareli kağıt, çizgili kağıt, cümle, fiil, isim, sıfat, fotokopi, okumak, yazmak, öğrenmek, öğretmek, anlamak, cevaplamak, tekrar etmek, tamamlamak, düzeltmek, açıklamak, çözmek, sırt çantası, doğru, yanlış, mezuniyet, tören, hata, hece, kapak
 
 Shopping & Money
 ----------------
-para çekmek, alışveriş, alışveriş yapmak, ucuz, pahalı, bilet almak, kilo, numara, manav, müşteri, almak, satmak, ödemek, harcamak, biriktirmek, kumbara, cüzdan, beden, pazar, seçmek, denemek, fakir, zengin, kıymetli, ücretsiz, bedava, indirim, zam, ürün, bağış vermek
+para çekmek, alışveriş, alışveriş yapmak, ucuz, pahalı, bilet almak, kilo, numara, manav, müşteri, almak, satmak, ödemek, harcamak, biriktirmek, kumbara, cüzdan, beden, pazar, seçmek, denemek, fakir, zengin, kıymetli, ücretsiz, bedava, indirim, zam, ürün, bağış vermek, borç
 
 Hobbies & Free Time
 -------------------
@@ -1727,7 +1746,7 @@ takılar, özel takılar, küpe, yüzük, alyans, kolye, bileklik, bilezik, halh
 
 Nature & Outdoors
 -----------------
-hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, çiçekler, bitki, toprak, kum, hayvan, boğa, yakmak, ateşi yakmak, söndürmek, beslemek, koklamak, ıslanmak, üşümek, buhar, dalga, dal, sivrisinek, kelebek, akmak
+hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, çiçekler, bitki, toprak, kum, hayvan, boğa, yakmak, ateşi yakmak, söndürmek, beslemek, koklamak, ıslanmak, üşümek, buhar, dalga, dal, sivrisinek, kelebek, akmak, ada, yaprak
 
 Here, There & Directions
 ------------------------
@@ -1755,7 +1774,7 @@ gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, ge�
 
 Everyday Actions
 ----------------
-açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, eşleştirmek, dirsek atmak, ayırmak
+açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, eşleştirmek, dirsek atmak, ayırmak, yakalamak
 
 Thinking & Deciding
 -------------------
@@ -1767,11 +1786,11 @@ eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geni�
 
 Little Words
 ------------
-bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani, nihayet
+bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani, nihayet, asla
 
 Cities & Countries
 ------------------
-şehir, metropol, memleket, Moskova, Londra, Pekin, Tokyo, Buenos Aires, İngiliz, Koreli
+şehir, metropol, memleket, Moskova, Londra, Pekin, Tokyo, Buenos Aires, İngiliz, Koreli, başkent
 
 Weather
 -------
@@ -1779,7 +1798,7 @@ hava, güneşli, bulutlu, parçalı bulutlu, yağmurlu, yağmur, rüzgarlı, kar
 
 Films & Genres
 --------------
-sinema, sinemada, sinema salonu, sinema filmi, yabancı sinema, komedi, komedi filmi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, savaş, çizgi film, dizi, bölüm, özgün, izlemek, seyretmek
+sinema, sinemada, sinema salonu, sinema filmi, yabancı sinema, komedi, komedi filmi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, savaş, çizgi film, dizi, bölüm, özgün, izlemek, seyretmek, yönetmen
 
 Tastes & Dishes
 ---------------
