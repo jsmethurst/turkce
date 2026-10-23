@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-261 verbs · 974 non-verbs · 40 topics
+261 verbs · 975 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1361,7 +1361,7 @@ eczaneci                  pharmacist
 nezle                     common cold
 teşhiş                    diagnosis
 
-DERSTE 351-372
+DERSTE 351-373
 --------------
 halsiz                    sluggish (because of sickness)
 şikayet                   complaint
@@ -1385,6 +1385,7 @@ yönetmen                  director
 anten                     antenna
 tuş                       button (never for clothes)
 cam                       glass (material)
+hediye                    gift
 
 SIFATLAR 1-25
 -------------
@@ -1716,7 +1717,7 @@ sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, k
 
 Shopping & Money
 ----------------
-para çekmek, alışveriş, alışveriş yapmak, ucuz, pahalı, bilet almak, kilo, numara, manav, müşteri, almak, satmak, ödemek, harcamak, biriktirmek, kumbara, cüzdan, beden, pazar, seçmek, denemek, fakir, zengin, kıymetli, ücretsiz, bedava, indirim, zam, ürün, bağış vermek, borç
+para çekmek, alışveriş, alışveriş yapmak, ucuz, pahalı, bilet almak, kilo, numara, manav, müşteri, almak, satmak, ödemek, harcamak, biriktirmek, kumbara, cüzdan, beden, pazar, seçmek, denemek, fakir, zengin, kıymetli, ücretsiz, bedava, indirim, zam, ürün, bağış vermek, borç, hediye
 
 Hobbies & Free Time
 -------------------
