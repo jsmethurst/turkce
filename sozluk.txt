@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-261 verbs · 1058 non-verbs · 40 topics
+261 verbs · 1082 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1628,7 +1628,7 @@ elma                      apple
 armut                     pear
 limon                     lemon
 
-COMMON 51-64
+COMMON 51-75
 ------------
 karpuz                    watermelon
 kavun                     melon
@@ -1644,6 +1644,33 @@ biber                     pepper
 patlıcan                  eggplant
 havuç                     carrot
 kabak                     zucchini
+hepsi                     all of them
+ıspanak                   spinach
+fasulye                   bean
+tuz                       salt
+şeker                     sugar
+karabiber                 black pepper
+baharat                   spice
+un                        flour
+bal                       honey
+çikolata                  chocolate
+dondurma                  ice cream
+
+COMMON 76-88
+------------
+meydan                    square / plaza
+köprü                     bridge
+tünel                     tunnel
+kaldırım                  sidewalk
+istasyon                  station
+otogar                    bus station
+pasaport                  passport
+vize                      visa
+dünya                     world / earth
+elektrik                  electricity
+fırsat                    opportunity
+santimetre                centimeter
+şarkı                     song
 
 BIBLE 1-25
 ----------
@@ -1768,7 +1795,7 @@ ne, kim, neresi, nerede, kimde, ne var, ne yok, açık mı, kapalı mı, kaç ke
 
 Numbers & Ordering
 ------------------
-birinci, ikinci, üçüncü, dördüncü, altıncı, yedinci, dokuzuncu, sonuncu, numaralı, ilk, sıra, sıradaki, sırada, üçüncü kişi, numara, toplam, kilo, sıralama, milyonlarca, artı, yüzde yüz
+birinci, ikinci, üçüncü, dördüncü, altıncı, yedinci, dokuzuncu, sonuncu, numaralı, ilk, sıra, sıradaki, sırada, üçüncü kişi, numara, toplam, kilo, sıralama, milyonlarca, artı, yüzde yüz, santimetre
 
 Time & Schedule
 ---------------
@@ -1784,7 +1811,7 @@ insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avu
 
 Places & Buildings
 ------------------
-okul, sınıf, kütüphane, hastane, cami, banka, sinema, kafe, kafeterya, kantin, park, bahçe, şehir, üniversite, havaalanı, havalimanı, durak, market, manav, idari amirlik, halkla ilişkiler, okuma salonu, öğrenci işleri, bina, metropol, müze, okulda, sınıfta, hastanede, sinemada, sinema salonu, cadde, sokak, bu sokak, büfe, şirket, memleket, köy, yer, yerler, sur, devlet
+okul, sınıf, kütüphane, hastane, cami, banka, sinema, kafe, kafeterya, kantin, park, bahçe, şehir, üniversite, havaalanı, havalimanı, durak, market, manav, idari amirlik, halkla ilişkiler, okuma salonu, öğrenci işleri, bina, metropol, müze, okulda, sınıfta, hastanede, sinemada, sinema salonu, cadde, sokak, bu sokak, büfe, şirket, memleket, köy, yer, yerler, sur, devlet, meydan, köprü, tünel, kaldırım
 
 House & Furniture
 -----------------
@@ -1792,15 +1819,15 @@ masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitapl
 
 Kitchen & Food
 --------------
-mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak, tabak, kaşık, çatal, bıçak, yumurta, tavuk, balık, salata, elma, armut, limon, karpuz, kavun, kiraz, şeftali, erik, incir, patates, salatalık, soğan, sarımsak, biber, patlıcan, havuç, kabak
+mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak, tabak, kaşık, çatal, bıçak, yumurta, tavuk, balık, salata, elma, armut, limon, karpuz, kavun, kiraz, şeftali, erik, incir, patates, salatalık, soğan, sarımsak, biber, patlıcan, havuç, kabak, ıspanak, fasulye, tuz, şeker, karabiber, baharat, un, bal
 
 Transportation & Travel
 -----------------------
-araba, uçak, dolmuş, vapur, motosiklet, trafik, yolculuk, tur, sahil, havaalanı, havalimanı, bilet almak, seyahat etmek, sürmek, binmek, indirmek, arabada, tatil planı, gezmek, keşfetmek, ziyaret etmek, bavul hazırlamak, harita, geri dönmek, inmek, yat, uzak, gezgin, köy, pist, aktarma
+araba, uçak, dolmuş, vapur, motosiklet, trafik, yolculuk, tur, sahil, havaalanı, havalimanı, bilet almak, seyahat etmek, sürmek, binmek, indirmek, arabada, tatil planı, gezmek, keşfetmek, ziyaret etmek, bavul hazırlamak, harita, geri dönmek, inmek, yat, uzak, gezgin, köy, pist, aktarma, istasyon, otogar, pasaport, vize
 
 Electronics & Media
 -------------------
-bilgisayar, telefon, cep telefonu, televizyon, radyo, internet, kanal, dizi, haber, program, yayın akışı, çizgi film, magazin, komedi filmi, ana haber, spor programı, yemek programı, yarışma, çocuk programı, müzik programı, sinema filmi, yabancı sinema, tekrar, yayında, yayınlanmak, yayınlamak, izlemek, seyretmek, televizyon izlemek, televizyon seyretmek, fotoğraf, gazete, dergi, televizyon kanalı, televizyon programı, komedi, yüklemek, mesaj atmak, telefon etmek, e-posta adresi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, kahvaltı haberleri, tekerleme, görüntülü, sesi, kılıf, kumanda, anten, tuş
+bilgisayar, telefon, cep telefonu, televizyon, radyo, internet, kanal, dizi, haber, program, yayın akışı, çizgi film, magazin, komedi filmi, ana haber, spor programı, yemek programı, yarışma, çocuk programı, müzik programı, sinema filmi, yabancı sinema, tekrar, yayında, yayınlanmak, yayınlamak, izlemek, seyretmek, televizyon izlemek, televizyon seyretmek, fotoğraf, gazete, dergi, televizyon kanalı, televizyon programı, komedi, yüklemek, mesaj atmak, telefon etmek, e-posta adresi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, kahvaltı haberleri, tekerleme, görüntülü, sesi, kılıf, kumanda, anten, tuş, elektrik, şarkı
 
 Personality & Appearance
 ------------------------
@@ -1844,7 +1871,7 @@ takılar, özel takılar, küpe, yüzük, alyans, kolye, bileklik, bilezik, halh
 
 Nature & Outdoors
 -----------------
-hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, çiçekler, bitki, toprak, kum, hayvan, boğa, yakmak, ateşi yakmak, söndürmek, beslemek, koklamak, ıslanmak, üşümek, buhar, dalga, dal, sivrisinek, kelebek, akmak, ada, yaprak
+hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, çiçekler, bitki, toprak, kum, hayvan, boğa, yakmak, ateşi yakmak, söndürmek, beslemek, koklamak, ıslanmak, üşümek, buhar, dalga, dal, sivrisinek, kelebek, akmak, ada, yaprak, dünya
 
 Here, There & Directions
 ------------------------
@@ -1876,7 +1903,7 @@ açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, 
 
 Thinking & Deciding
 -------------------
-bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir, sanmak, mantık, vazgeçmek
+bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir, sanmak, mantık, vazgeçmek, fırsat
 
 Describing Things
 -----------------
@@ -1884,7 +1911,7 @@ eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geni�
 
 Little Words
 ------------
-bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani, nihayet, asla, kendi, beraber, birden
+bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani, nihayet, asla, kendi, beraber, birden, hepsi
 
 Cities & Countries
 ------------------
@@ -1900,7 +1927,7 @@ sinema, sinemada, sinema salonu, sinema filmi, yabancı sinema, komedi, komedi f
 
 Tastes & Dishes
 ---------------
-tuzlu, tatlı, acı, ekşi, lezzetli, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, yemek, çorba, aç, tok, tatmak, pişirmek, yağlı yemek, hazır yemek, taze yemek, sıcacık, çıtır
+tuzlu, tatlı, acı, ekşi, lezzetli, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, yemek, çorba, aç, tok, tatmak, pişirmek, yağlı yemek, hazır yemek, taze yemek, sıcacık, çıtır, çikolata, dondurma
 
 Character Traits
 ----------------
