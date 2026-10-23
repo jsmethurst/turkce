@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-280 verbs · 1083 non-verbs · 40 topics
+287 verbs · 1083 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -509,7 +509,7 @@ acıkmak                   to get hungry
 yakalamak                 to catch
     akuzatif: Topu yakalıyor.  (He is catching the ball.)
 
-COMMON 1-19
+COMMON 1-25
 -----------
 uçmak                     to fly
     örnek: Kuş uçuyor.  (The bird is flying.)
@@ -549,6 +549,23 @@ imzalamak                 to sign
     akuzatif: Sözleşmeyi imzalıyor.  (She is signing the contract.)
 bastırmak                 to print
     akuzatif: Sayfayı bastırıyorum.  (I'm printing the page.)
+saldırmak                 to attack
+    datif: Köpek adama saldırıyor.  (The dog is attacking the man.)
+savunmak                  to defend
+    akuzatif: Ülkesini savunuyor.  (He is defending his country.)
+korumak                   to protect
+    akuzatif: Anne çocuğunu koruyor.  (The mother is protecting her child.)
+hızlanmak                 to accelerate
+    örnek: Araba hızlanıyor.  (The car is accelerating.)
+yavaşlamak                to slow down
+    örnek: Tren yavaşlıyor.  (The train is slowing down.)
+emretmek                  to command
+    datif: Kaptan askerlere emrediyor.  (The captain is commanding the soldiers.)
+
+COMMON 26-26
+------------
+engellemek                to prevent / to hinder
+    akuzatif: Kazayı engelliyorlar.  (They are preventing the accident.)
 
 BIBLE 1-25
 ----------
@@ -1933,15 +1950,15 @@ hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş ol
 
 Talking & Communicating
 -----------------------
-konuşmak, söylemek, demek, sormak, soru sormak, cevaplamak, anlatmak, açıklamak, bahsetmek, dinlemek, duymak, anlamak, tekrar etmek, telefon etmek, mesaj atmak, göndermek, mektup, e-posta adresi, davet etmek, teklif etmek, yardım etmek, paylaşmak, tanışmak, görüşmek, buluşmak, buluşma, cümle, şaka, izin
+konuşmak, söylemek, demek, sormak, soru sormak, cevaplamak, anlatmak, açıklamak, bahsetmek, dinlemek, duymak, anlamak, tekrar etmek, telefon etmek, mesaj atmak, göndermek, mektup, e-posta adresi, davet etmek, teklif etmek, yardım etmek, paylaşmak, tanışmak, görüşmek, buluşmak, buluşma, cümle, şaka, izin, emretmek
 
 Coming & Going
 --------------
-gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, geçmek, yürümek, koşmak, binmek, inmek, durmak, oturmak, kalkmak, uğramak, tırmanmak, düşmek, taşınmak, ayrılmak, katılmak, gecikmek, yetişmek, uğurlamak, uzanmak, kaçmak, dağılmak, görünmek, kaybolmak
+gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, geçmek, yürümek, koşmak, binmek, inmek, durmak, oturmak, kalkmak, uğramak, tırmanmak, düşmek, taşınmak, ayrılmak, katılmak, gecikmek, yetişmek, uğurlamak, uzanmak, kaçmak, dağılmak, görünmek, kaybolmak, hızlanmak, yavaşlamak
 
 Everyday Actions
 ----------------
-açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek
+açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek, saldırmak, savunmak, korumak, engellemek
 
 Thinking & Deciding
 -------------------
