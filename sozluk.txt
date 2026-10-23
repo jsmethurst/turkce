@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-261 verbs · 1082 non-verbs · 40 topics
+280 verbs · 1083 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -508,6 +508,47 @@ acıkmak                   to get hungry
     örnek: Acıkıyorum.  (I'm getting hungry.)
 yakalamak                 to catch
     akuzatif: Topu yakalıyor.  (He is catching the ball.)
+
+COMMON 1-19
+-----------
+uçmak                     to fly
+    örnek: Kuş uçuyor.  (The bird is flying.)
+reddetmek                 to refuse / to reject
+    akuzatif: Teklifi reddediyor.  (She is rejecting the offer.)
+tavsiye etmek             to recommend
+    akuzatif: Bu kitabı tavsiye ediyorum.  (I recommend this book.)
+vurmak                    to hit / to strike
+    datif: Topa vuruyor.  (He is hitting the ball.)
+düşürmek                  to drop / to cause to fall
+    akuzatif: Bardağı düşürüyorum.  (I'm dropping the glass.)
+boşaltmak                 to empty
+    akuzatif: Çantayı boşaltıyor.  (He is emptying the bag.)
+karıştırmak               to mix / to stir
+    akuzatif: Çorbayı karıştırıyorum.  (I'm stirring the soup.)
+birleştirmek              to combine / to unite
+    akuzatif: İki grubu birleştiriyoruz.  (We are combining the two groups.)
+bölmek                    to divide / to split
+    akuzatif: Pastayı bölüyorum.  (I'm dividing the cake.)
+çarpmak                   to multiply
+    akuzatif: Sayıları çarpıyor.  (He is multiplying the numbers.)
+ölçmek                    to measure
+    akuzatif: Masayı ölçüyorum.  (I'm measuring the table.)
+tartmak                   to weigh
+    akuzatif: Elmaları tartıyor.  (She is weighing the apples.)
+saklamak                  to hide / to conceal
+    akuzatif: Anahtarı saklıyor.  (He is hiding the key.)
+görünmek                  to show up / to appear
+    lokatif: Ay gökyüzünde görünüyor.  (The moon is appearing in the sky.)
+kaybolmak                 to disappear
+    örnek: Kedi kayboluyor.  (The cat is disappearing.)
+küçülmek                  to shrink / to decrease
+    örnek: Kazak küçülüyor.  (The sweater is shrinking.)
+onaylamak                 to confirm
+    akuzatif: Rezervasyonu onaylıyorum.  (I'm confirming the reservation.)
+imzalamak                 to sign
+    akuzatif: Sözleşmeyi imzalıyor.  (She is signing the contract.)
+bastırmak                 to print
+    akuzatif: Sayfayı bastırıyorum.  (I'm printing the page.)
 
 BIBLE 1-25
 ----------
@@ -1656,7 +1697,7 @@ bal                       honey
 çikolata                  chocolate
 dondurma                  ice cream
 
-COMMON 76-88
+COMMON 76-89
 ------------
 meydan                    square / plaza
 köprü                     bridge
@@ -1671,6 +1712,7 @@ elektrik                  electricity
 fırsat                    opportunity
 santimetre                centimeter
 şarkı                     song
+ders                      lesson / class
 
 BIBLE 1-25
 ----------
@@ -1795,7 +1837,7 @@ ne, kim, neresi, nerede, kimde, ne var, ne yok, açık mı, kapalı mı, kaç ke
 
 Numbers & Ordering
 ------------------
-birinci, ikinci, üçüncü, dördüncü, altıncı, yedinci, dokuzuncu, sonuncu, numaralı, ilk, sıra, sıradaki, sırada, üçüncü kişi, numara, toplam, kilo, sıralama, milyonlarca, artı, yüzde yüz, santimetre
+birinci, ikinci, üçüncü, dördüncü, altıncı, yedinci, dokuzuncu, sonuncu, numaralı, ilk, sıra, sıradaki, sırada, üçüncü kişi, numara, toplam, kilo, sıralama, milyonlarca, artı, yüzde yüz, santimetre, birleştirmek, bölmek, çarpmak, ölçmek, tartmak
 
 Time & Schedule
 ---------------
@@ -1819,7 +1861,7 @@ masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitapl
 
 Kitchen & Food
 --------------
-mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak, tabak, kaşık, çatal, bıçak, yumurta, tavuk, balık, salata, elma, armut, limon, karpuz, kavun, kiraz, şeftali, erik, incir, patates, salatalık, soğan, sarımsak, biber, patlıcan, havuç, kabak, ıspanak, fasulye, tuz, şeker, karabiber, baharat, un, bal
+mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak, tabak, kaşık, çatal, bıçak, yumurta, tavuk, balık, salata, elma, armut, limon, karpuz, kavun, kiraz, şeftali, erik, incir, patates, salatalık, soğan, sarımsak, biber, patlıcan, havuç, kabak, ıspanak, fasulye, tuz, şeker, karabiber, baharat, un, bal, karıştırmak
 
 Transportation & Travel
 -----------------------
@@ -1835,7 +1877,7 @@ Personality & Appearance
 
 School & Study
 --------------
-sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, kitaplar, kitap, kalem, tahta, defter, çanta, sözlük, kağıt, kareli kağıt, çizgili kağıt, cümle, fiil, isim, sıfat, fotokopi, okumak, yazmak, öğrenmek, öğretmek, anlamak, cevaplamak, tekrar etmek, tamamlamak, düzeltmek, açıklamak, çözmek, sırt çantası, doğru, yanlış, mezuniyet, tören, hata, hece, kapak
+sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, kitaplar, kitap, kalem, tahta, defter, çanta, sözlük, kağıt, kareli kağıt, çizgili kağıt, cümle, fiil, isim, sıfat, fotokopi, okumak, yazmak, öğrenmek, öğretmek, anlamak, cevaplamak, tekrar etmek, tamamlamak, düzeltmek, açıklamak, çözmek, sırt çantası, doğru, yanlış, mezuniyet, tören, hata, hece, kapak, ders
 
 Shopping & Money
 ----------------
@@ -1895,11 +1937,11 @@ konuşmak, söylemek, demek, sormak, soru sormak, cevaplamak, anlatmak, açıkla
 
 Coming & Going
 --------------
-gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, geçmek, yürümek, koşmak, binmek, inmek, durmak, oturmak, kalkmak, uğramak, tırmanmak, düşmek, taşınmak, ayrılmak, katılmak, gecikmek, yetişmek, uğurlamak, uzanmak, kaçmak, dağılmak
+gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, geçmek, yürümek, koşmak, binmek, inmek, durmak, oturmak, kalkmak, uğramak, tırmanmak, düşmek, taşınmak, ayrılmak, katılmak, gecikmek, yetişmek, uğurlamak, uzanmak, kaçmak, dağılmak, görünmek, kaybolmak
 
 Everyday Actions
 ----------------
-açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, eşleştirmek, dirsek atmak, ayırmak, yakalamak
+açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek
 
 Thinking & Deciding
 -------------------
@@ -1907,7 +1949,7 @@ bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, pl
 
 Describing Things
 -----------------
-eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı, kesik, korkutucu, ürkütücü, mümkün, tuhaf, yoğun, eksik, fazla
+eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı, kesik, korkutucu, ürkütücü, mümkün, tuhaf, yoğun, eksik, fazla, küçülmek
 
 Little Words
 ------------

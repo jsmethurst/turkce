@@ -62,7 +62,7 @@ def main():
         if items:
             groups.append((f"{page}. SAYFA {n + 1}-{n + len(items)}", items))
             n += len(items)
-    for page, name in (("other", "DERSTE"), ("bible", "BIBLE")):
+    for page, name in (("other", "DERSTE"), ("common", "COMMON"), ("bible", "BIBLE")):
         items = [v for v in verbs if v["page"] == page]
         for a, b, chunk in chunks(items):
             groups.append((f"{name} {a}-{b}", chunk))

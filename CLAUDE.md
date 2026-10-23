@@ -60,6 +60,7 @@ When Jacob says "add <turkish> - <english>":
   - `c` is the case label: `akuzatif`, `datif`, `lokatif`, `ablatif`, `ile`, or `örnek` for a plain example.
   - Wrap the case suffix in `<b>…</b>`.
   - Use the present continuous where natural.
+- **Common verbs** (verbs Jacob knows or wants to know that weren't in class): `"page":"common"`, `order` 204.97 and up (below 205), placed after the last `page:"common"` or Derste row; they appear as "Common 1-25" etc. in the Sözlük.
 - **New Derste verbs:** `"page":"other"`, with an `order` greater than the last `page:"other"` verb's and below 205 (the Bible verbs start at 205), e.g. 204.3, then 204.4. Put the row right after the last `page:"other"` row.
 - **Check the conjugation:** load the page and run `conjugateFull(verb, tenseKey, personIdx, false, false, false)` for each key in `TENSES`. This catches Turkish verbs with unusual stems.
 
