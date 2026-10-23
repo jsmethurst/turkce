@@ -299,6 +299,8 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .settings-group{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
 .settings-group h3{margin:0 0 10px;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-soft);}
 .chip-row{display:flex;flex-wrap:wrap;gap:7px;}
+.chip-sub{flex:0 0 100%;margin:6px 0 -2px;font-size:0.72rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
+.chip-sub:first-child{margin-top:0;}
 .chip{
   font-size:0.83rem;padding:7px 12px;border-radius:99px;border:1.5px solid var(--line);
   cursor:pointer;user-select:none;background:#fff;color:var(--ink-soft);transition:all .12s;
@@ -2888,8 +2890,14 @@ personLabels.forEach((label,i)=>{
   personChips.appendChild(c);
 });
 const pageChips = document.getElementById("pageChips");
+function chipSub(box, text){
+  const h = document.createElement("div");
+  h.className = "chip-sub"; h.textContent = text;
+  box.appendChild(h);
+}
 function renderPageChips(){
   pageChips.innerHTML = "";
+  chipSub(pageChips, "Listede");
   VERB_PAGES.forEach(p=>{
     const c = document.createElement("div");
     c.className = "chip" + (state.pages.has(p.key) ? " on" : "");
@@ -2902,17 +2910,22 @@ function renderPageChips(){
     };
     pageChips.appendChild(c);
   });
-  VERB_BONUS_CHUNKS.forEach(bc=>{
-    const c = document.createElement("div");
-    c.className = "chip" + (state.bonusVerbChunks.has(bc.key) ? " on" : "");
-    setChipLabel(c, bc.label, bc.key);
-    c.onclick = ()=>{
-      toggleSetMember(state.bonusVerbChunks, bc.key, c);
-      applyPageSelection();
-      refreshCurrentQuestion();
-      refreshVocabCard();
-    };
-    pageChips.appendChild(c);
+  [["Derste", bc=>bc.key.startsWith("bonusg")], ["Bible", bc=>bc.key.startsWith("biblevg")]].forEach(([title, test])=>{
+    const group = VERB_BONUS_CHUNKS.filter(test);
+    if(!group.length) return;
+    chipSub(pageChips, title);
+    group.forEach(bc=>{
+      const c = document.createElement("div");
+      c.className = "chip" + (state.bonusVerbChunks.has(bc.key) ? " on" : "");
+      setChipLabel(c, bc.label, bc.key);
+      c.onclick = ()=>{
+        toggleSetMember(state.bonusVerbChunks, bc.key, c);
+        applyPageSelection();
+        refreshCurrentQuestion();
+        refreshVocabCard();
+      };
+      pageChips.appendChild(c);
+    });
   });
 }
 renderPageChips();
@@ -3022,28 +3035,33 @@ function renderSelectionChips(){
 const nonverbChunkChips = document.getElementById("nonverbChunkChips");
 function renderNonverbChunkChips(){
   nonverbChunkChips.innerHTML = "";
-  NONVERB_CHUNKS.forEach(c=>{
-    const el = document.createElement("div");
-    el.className = "chip" + (state.nonverbChunks.has(c.key) ? " on" : "");
-    setChipLabel(el, c.label, c.key);
-    el.onclick = ()=>{
-      toggleSetMember(state.nonverbChunks, c.key, el);
-      refreshVocabCard();
-    };
-    nonverbChunkChips.appendChild(el);
+  [["Listede", c=>c.unit===1 || c.unit===2 || c.unit==="sifatlar"], ["Derste", c=>c.unit==="other"], ["Bible", c=>c.unit==="bible"]].forEach(([title, test])=>{
+    const group = NONVERB_CHUNKS.filter(test);
+    if(!group.length) return;
+    chipSub(nonverbChunkChips, title);
+    group.forEach(c=>{
+      const el = document.createElement("div");
+      el.className = "chip" + (state.nonverbChunks.has(c.key) ? " on" : "");
+      setChipLabel(el, c.label, c.key);
+      el.onclick = ()=>{
+        toggleSetMember(state.nonverbChunks, c.key, el);
+        refreshVocabCard();
+      };
+      nonverbChunkChips.appendChild(el);
+    });
   });
 }
 renderNonverbChunkChips();
 document.getElementById("nonverbAll").onclick = ()=>{
   state.nonverbChunks = new Set(NONVERB_CHUNKS.map(c=>c.key));
-  [...nonverbChunkChips.children].forEach(c=>c.classList.add("on"));
+  [...nonverbChunkChips.querySelectorAll(".chip")].forEach(c=>c.classList.add("on"));
   refreshVocabCard();
   saveSettings();
   updateSelectionCount();
 };
 document.getElementById("nonverbNone").onclick = ()=>{
   state.nonverbChunks = new Set();
-  [...nonverbChunkChips.children].forEach(c=>c.classList.remove("on"));
+  [...nonverbChunkChips.querySelectorAll(".chip")].forEach(c=>c.classList.remove("on"));
   refreshVocabCard();
   saveSettings();
   updateSelectionCount();
