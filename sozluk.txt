@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-258 verbs · 958 non-verbs · 40 topics
+258 verbs · 959 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1355,7 +1355,7 @@ eczaneci                  pharmacist
 nezle                     common cold
 teşhiş                    diagnosis
 
-DERSTE 351-356
+DERSTE 351-357
 --------------
 halsiz                    sluggish (because of sickness)
 şikayet                   complaint
@@ -1363,6 +1363,7 @@ reçete                    prescription
 tedavi                    treatment
 nihayet                   finally (at long last)
 ne alaka                  what's that got to do with it?
+peynir                    cheese
 
 SIFATLAR 1-25
 -------------
@@ -1674,7 +1675,7 @@ masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitapl
 
 Kitchen & Food
 --------------
-mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz
+mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir
 
 Transportation & Travel
 -----------------------
