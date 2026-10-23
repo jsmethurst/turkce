@@ -47,7 +47,7 @@ When Jacob says "add <turkish> - <english>":
 
 ### Non-verb rows (`nonverbs` array)
 `{"tr":"usta","en":"expert","unit":"other","order":771}`
-- `unit` is one of `1`, `2` (Ünite sheets), `"other"`, `"sifatlar"` or `"bible"`.
+- `unit` is one of `1`, `2` (Ünite sheets), `"other"`, `"sifatlar"`, `"common"` (words Jacob knows or wants to know that weren't in class; lists named "Common 1-25" etc.) or `"bible"`.
 - New Derste words: set `order` to one more than the highest `order` in the whole `nonverbs` array, and put the row at the end of the array (just before `],` / `topics: [`).
 - Groups of 25 ("Derste 151-175") are made automatically from the order. A part-filled last group is fine.
 

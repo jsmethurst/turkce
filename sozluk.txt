@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-261 verbs · 994 non-verbs · 40 topics
+261 verbs · 1058 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1572,6 +1572,79 @@ yaralı                    injured / wounded
 misafirperver             hospitable
 yaramaz                   naughty / mischievous
 
+COMMON 1-25
+-----------
+kendi                     self / own
+beraber                   together (collaborative)
+eksik                     missing / lacking
+fazla                     excessive / too much
+birden                    all of a sudden
+asır                      century
+Pazartesi                 Monday
+Salı                      Tuesday
+Çarşamba                  Wednesday
+Perşembe                  Thursday
+Cuma                      Friday
+Cumartesi                 Saturday
+Pazar                     Sunday
+Ocak                      January
+Şubat                     February
+Mart                      March
+Nisan                     April
+Mayıs                     May
+Haziran                   June
+Temmuz                    July
+Ağustos                   August
+Eylül                     September
+Ekim                      October
+Kasım                     November
+Aralık                    December
+
+COMMON 26-50
+------------
+balkon                    balcony
+yatak odası               bedroom
+asansör                   elevator
+kilit                     lock
+battaniye                 blanket
+gardırop                  wardrobe
+bulaşık makinesi          dishwasher
+çamaşır makinesi          washing machine
+süpürge                   broom / vacuum
+ütü                       iron (for clothes)
+sabun                     soap
+tarak                     comb
+tabak                     plate / dish
+kaşık                     spoon
+çatal                     fork
+bıçak                     knife
+çöp                       trash / garbage
+poşet                     plastic bag
+yumurta                   egg
+tavuk                     chicken
+balık                     fish
+salata                    salad
+elma                      apple
+armut                     pear
+limon                     lemon
+
+COMMON 51-64
+------------
+karpuz                    watermelon
+kavun                     melon
+kiraz                     cherry
+şeftali                   peach
+erik                      plum
+incir                     fig
+patates                   potato
+salatalık                 cucumber
+soğan                     onion
+sarımsak                  garlic
+biber                     pepper
+patlıcan                  eggplant
+havuç                     carrot
+kabak                     zucchini
+
 BIBLE 1-25
 ----------
 RAB                       the LORD (YHWH)
@@ -1699,7 +1772,7 @@ birinci, ikinci, üçüncü, dördüncü, altıncı, yedinci, dokuzuncu, sonuncu
 
 Time & Schedule
 ---------------
-şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik, saniye, dakikalarca, saatlerce, günlerce, haftalarca, aylarca, yıllarca
+şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik, saniye, dakikalarca, saatlerce, günlerce, haftalarca, aylarca, yıllarca, asır, Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar, Ocak, Şubat, Mart, Nisan, Mayıs, Haziran, Temmuz, Ağustos, Eylül, Ekim, Kasım, Aralık
 
 Politeness & Fillers
 --------------------
@@ -1715,11 +1788,11 @@ okul, sınıf, kütüphane, hastane, cami, banka, sinema, kafe, kafeterya, kanti
 
 House & Furniture
 -----------------
-masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitaplık, vazo, şamdan, avize, ayna, evde, odada, masada, kitaplıkta, eşya, piyano, anahtar, kilitlemek, temizlemek, taşınmak, kiralamak, zemin kat, bodrum kat, mum, tavan, kalorifer, cam
+masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitaplık, vazo, şamdan, avize, ayna, evde, odada, masada, kitaplıkta, eşya, piyano, anahtar, kilitlemek, temizlemek, taşınmak, kiralamak, zemin kat, bodrum kat, mum, tavan, kalorifer, cam, balkon, yatak odası, asansör, kilit, battaniye, gardırop, bulaşık makinesi, çamaşır makinesi, süpürge, ütü, çöp
 
 Kitchen & Food
 --------------
-mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak
+mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak, tabak, kaşık, çatal, bıçak, yumurta, tavuk, balık, salata, elma, armut, limon, karpuz, kavun, kiraz, şeftali, erik, incir, patates, salatalık, soğan, sarımsak, biber, patlıcan, havuç, kabak
 
 Transportation & Travel
 -----------------------
@@ -1739,7 +1812,7 @@ sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, k
 
 Shopping & Money
 ----------------
-para çekmek, alışveriş, alışveriş yapmak, ucuz, pahalı, bilet almak, kilo, numara, manav, müşteri, almak, satmak, ödemek, harcamak, biriktirmek, kumbara, cüzdan, beden, pazar, seçmek, denemek, fakir, zengin, kıymetli, ücretsiz, bedava, indirim, zam, ürün, bağış vermek, borç, hediye, vitrin
+para çekmek, alışveriş, alışveriş yapmak, ucuz, pahalı, bilet almak, kilo, numara, manav, müşteri, almak, satmak, ödemek, harcamak, biriktirmek, kumbara, cüzdan, beden, pazar, seçmek, denemek, fakir, zengin, kıymetli, ücretsiz, bedava, indirim, zam, ürün, bağış vermek, borç, hediye, vitrin, poşet
 
 Hobbies & Free Time
 -------------------
@@ -1783,7 +1856,7 @@ sevmek, beğenmek, hoşlanmak, korkmak, üzülmek, sevinmek, kızmak, şaşırma
 
 Daily Routine
 -------------
-fırçalamak, uyanmak, kalkmak, yıkamak, diş fırçalamak, taramak, kurulanmak, giymek, hazırlanmak, çalışmak, ders çalışmak, dinlenmek, yatmak, uyumak, sabah, öğlen, akşam, gece, genellikle, sık sık, uyku
+fırçalamak, uyanmak, kalkmak, yıkamak, diş fırçalamak, taramak, kurulanmak, giymek, hazırlanmak, çalışmak, ders çalışmak, dinlenmek, yatmak, uyumak, sabah, öğlen, akşam, gece, genellikle, sık sık, uyku, sabun, tarak
 
 Health & Body
 -------------
@@ -1807,11 +1880,11 @@ bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, pl
 
 Describing Things
 -----------------
-eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı, kesik, korkutucu, ürkütücü, mümkün, tuhaf, yoğun
+eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı, kesik, korkutucu, ürkütücü, mümkün, tuhaf, yoğun, eksik, fazla
 
 Little Words
 ------------
-bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani, nihayet, asla
+bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani, nihayet, asla, kendi, beraber, birden
 
 Cities & Countries
 ------------------

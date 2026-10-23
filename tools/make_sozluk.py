@@ -72,7 +72,7 @@ def main():
             out += verb_lines(v)
         out.append("")
     out += ["", RULE, "NON-VERBS", RULE, ""]
-    units = [(1, "1. Ünite"), (2, "2. Ünite"), ("other", "Derste"), ("sifatlar", "Sıfatlar"), ("bible", "Bible")]
+    units = [(1, "1. Ünite"), (2, "2. Ünite"), ("other", "Derste"), ("sifatlar", "Sıfatlar"), ("common", "Common"), ("bible", "Bible")]
     for unit, name in units:
         items = [x for x in nonverbs if x["unit"] == unit]
         for a, b, chunk in chunks(items):
