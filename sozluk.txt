@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-261 verbs · 972 non-verbs · 40 topics
+261 verbs · 974 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -648,7 +648,7 @@ radyo                     radio
 saat                      hour / time (of day) / clock / watch
 halı                      carpet
 koltuk                    armchair
-bardak                    glass
+bardak                    drinking glass
 telefon                   telephone
 
 1. ÜNİTE 76-100
@@ -1361,7 +1361,7 @@ eczaneci                  pharmacist
 nezle                     common cold
 teşhiş                    diagnosis
 
-DERSTE 351-370
+DERSTE 351-372
 --------------
 halsiz                    sluggish (because of sickness)
 şikayet                   complaint
@@ -1383,6 +1383,8 @@ başkan                    president / chairman
 yaprak                    leaf
 yönetmen                  director
 anten                     antenna
+tuş                       button (never for clothes)
+cam                       glass (material)
 
 SIFATLAR 1-25
 -------------
@@ -1690,7 +1692,7 @@ okul, sınıf, kütüphane, hastane, cami, banka, sinema, kafe, kafeterya, kanti
 
 House & Furniture
 -----------------
-masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitaplık, vazo, şamdan, avize, ayna, evde, odada, masada, kitaplıkta, eşya, piyano, anahtar, kilitlemek, temizlemek, taşınmak, kiralamak, zemin kat, bodrum kat, mum, tavan, kalorifer
+masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitaplık, vazo, şamdan, avize, ayna, evde, odada, masada, kitaplıkta, eşya, piyano, anahtar, kilitlemek, temizlemek, taşınmak, kiralamak, zemin kat, bodrum kat, mum, tavan, kalorifer, cam
 
 Kitchen & Food
 --------------
@@ -1702,7 +1704,7 @@ araba, uçak, dolmuş, vapur, motosiklet, trafik, yolculuk, tur, sahil, havaalan
 
 Electronics & Media
 -------------------
-bilgisayar, telefon, cep telefonu, televizyon, radyo, internet, kanal, dizi, haber, program, yayın akışı, çizgi film, magazin, komedi filmi, ana haber, spor programı, yemek programı, yarışma, çocuk programı, müzik programı, sinema filmi, yabancı sinema, tekrar, yayında, yayınlanmak, yayınlamak, izlemek, seyretmek, televizyon izlemek, televizyon seyretmek, fotoğraf, gazete, dergi, televizyon kanalı, televizyon programı, komedi, yüklemek, mesaj atmak, telefon etmek, e-posta adresi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, kahvaltı haberleri, tekerleme, görüntülü, sesi, kılıf, kumanda, anten
+bilgisayar, telefon, cep telefonu, televizyon, radyo, internet, kanal, dizi, haber, program, yayın akışı, çizgi film, magazin, komedi filmi, ana haber, spor programı, yemek programı, yarışma, çocuk programı, müzik programı, sinema filmi, yabancı sinema, tekrar, yayında, yayınlanmak, yayınlamak, izlemek, seyretmek, televizyon izlemek, televizyon seyretmek, fotoğraf, gazete, dergi, televizyon kanalı, televizyon programı, komedi, yüklemek, mesaj atmak, telefon etmek, e-posta adresi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, kahvaltı haberleri, tekerleme, görüntülü, sesi, kılıf, kumanda, anten, tuş
 
 Personality & Appearance
 ------------------------
