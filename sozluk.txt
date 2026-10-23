@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-261 verbs · 977 non-verbs · 40 topics
+261 verbs · 994 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1389,6 +1389,26 @@ hediye                    gift
 vitrin                    storefront / display window
 kenar                     edge
 
+DERSTE 376-392
+--------------
+polis                     police
+hemşire                   nurse
+mühendis                  engineer
+asker                     soldier
+aşçı                      chef
+çiftçi                    farmer
+kasiyer                   cashier
+terzi                     tailor
+mimar                     architect
+sekreter                  secretary
+esnaf                     shopkeeper / small business owner
+fırıncı                   baker
+kasap                     butcher
+ressam                    painter
+müzisyen                  musician
+yazılımcı                 software developer
+fotoğrafçı                photographer
+
 SIFATLAR 1-25
 -------------
 iyi                       good
@@ -1687,7 +1707,7 @@ buyurun, geçmiş olsun, affedersiniz, rica ederim, teşekkürler, lütfen, afiy
 
 People & Professions
 --------------------
-insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi, hala, anne tarafı, teyze, dayı, anneanne, baba tarafı, amca, babaanne, dede, enişte, yenge, kuzen, kız, erkek kardeş, soy, karı-koca, onlar kardeş, abla, kız kardeş, komşu, akraba, yeğen, herkes, görümce, kayınço, balıkçı, veteriner, yazar, başkan
+insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi, hala, anne tarafı, teyze, dayı, anneanne, baba tarafı, amca, babaanne, dede, enişte, yenge, kuzen, kız, erkek kardeş, soy, karı-koca, onlar kardeş, abla, kız kardeş, komşu, akraba, yeğen, herkes, görümce, kayınço, balıkçı, veteriner, yazar, başkan, polis, hemşire, mühendis, asker, aşçı, çiftçi, kasiyer, terzi, mimar, sekreter, esnaf, fırıncı, kasap, ressam, müzisyen, yazılımcı, fotoğrafçı
 
 Places & Buildings
 ------------------
