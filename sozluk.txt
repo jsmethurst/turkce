@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-261 verbs · 976 non-verbs · 40 topics
+261 verbs · 977 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1361,7 +1361,7 @@ eczaneci                  pharmacist
 nezle                     common cold
 teşhiş                    diagnosis
 
-DERSTE 351-374
+DERSTE 351-375
 --------------
 halsiz                    sluggish (because of sickness)
 şikayet                   complaint
@@ -1387,6 +1387,7 @@ tuş                       button (never for clothes)
 cam                       glass (material)
 hediye                    gift
 vitrin                    storefront / display window
+kenar                     edge
 
 SIFATLAR 1-25
 -------------
@@ -1754,7 +1755,7 @@ hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, ç
 
 Here, There & Directions
 ------------------------
-burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön, arka, arası, uzak, kuzey, güney, doğu, batı, harita, metre, kat, zemin kat, bodrum kat, birinci katta, ikinci kat, altıncı kat, yan
+burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön, arka, arası, uzak, kuzey, güney, doğu, batı, harita, metre, kat, zemin kat, bodrum kat, birinci katta, ikinci kat, altıncı kat, yan, kenar
 
 Feelings
 --------
