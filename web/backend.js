@@ -388,6 +388,8 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
           <li><b>Sözlük: choose your words.</b> Select the word lists or topics you want to study. Forms and Vocab only use what you select here. Colors show how well you know each word.</li>
           <li><b>Forms: conjugate verbs.</b> Type the Turkish form that matches the English sentence. Select the grammars you want to practice: tenses, persons, negatives, questions, and more.</li>
           <li><b>Vocab: learn words.</b> Type your answers, or flip through flashcards.<span class="help-para">Or, select one word group and take a test. If you score below 90%, or it's been a week since your last test, that word group will be circled in red on the Sözlük.</span></li>
+          <li><b>Tekrar: review at the right time.</b> Words you've practiced come back just as you're about to forget them. A word you miss returns after a few cards, and the "Coming up" list shows what's due next. When nothing is due, you can practice ahead.</li>
+          <li><b>Cases: build whole sentences.</b> Type the Turkish for the English sentence, using the right case endings. Choose which cases to practice. The sentences use nouns you already know well, so keep practicing in Vocab and Tekrar to unlock more.</li>
           <li><b>Sign in</b> to sync across devices and track your progress through tests.</li>
           <li><b>Something wrong?</b> Use the speech-bubble button to suggest a change.</li>
         </ol>
