@@ -489,6 +489,15 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     </div>
     <p class="hint" style="text-align:center;margin-top:14px;margin-bottom:22px;"><kbd>Enter</kbd>: Check/next &nbsp; <kbd>Left arrow</kbd>: Back &nbsp; <kbd>Right arrow</kbd>: Skip &nbsp; <kbd>H</kbd>: Hint &nbsp; <kbd>P</kbd>: Play audio</p>
 
+    <div class="section-title">Selection</div>
+    <div class="settings-group">
+      <div class="chip-row sel-chips" id="formsSelectionChips"></div>
+      <div class="chip-row" id="formsPoolChips" style="margin-top:6px;">
+        <div class="chip on" data-pool="all">All verbs</div>
+        <div class="chip" data-pool="solid">Only my solid verbs</div>
+      </div>
+    </div>
+
     <div class="section-title">Direction</div>
     <div class="settings-group">
       <div class="chip-row" id="modeChips">
@@ -2857,6 +2866,12 @@ function nonverbEnabled(nv){
 function applyPageSelection(){
   state.verbs = new Set(VERBS.map((v,i)=>i).filter(i=>isSimpleVerb(VERBS[i]) && pageEnabled(VERBS[i])));
 }
+// A solid verb is light or dark green on the Sözlük (its last answers were mostly right).
+function isSolidVerb(v){ const lv = wordFormLevel(`verb:${v.inf}`); return lv!==null && lv>=4; }
+function formsVerbIdxs(){
+  const all = [...state.verbs];
+  return state.formsSolidOnly ? all.filter(i=>isSolidVerb(VERBS[i])) : all;
+}
 
 const state = {
   mode: "en2tr",
@@ -2874,6 +2889,7 @@ const state = {
   lenient: false,
   autoSpeak: false,
   autoSpeakEn: false,
+  formsSolidOnly: false,   // Forms: only verbs that are light or dark green on the Sözlük
   hidden: new Set(),   // words excluded from Vocab and Tekrar for good ("verb:x" / "nonverb:x"); shown again from the Sözlük
   wiktionary: true,   // search falls back to Wiktionary when the Sözlük has no match
   formsTests: [],   // recent timed-test results, newest first (kept with the settings so they sync)
@@ -2901,6 +2917,7 @@ function collectSettings(){
       lenient: state.lenient,
       autoSpeak: state.autoSpeak,
       autoSpeakEn: state.autoSpeakEn,
+      formsSolidOnly: state.formsSolidOnly,
       wiktionary: state.wiktionary,
       hiddenWords: [...state.hidden],
       formsTests: state.formsTests,
@@ -3010,6 +3027,7 @@ function applyFormsSettings(S){
   if(typeof S.lenient==="boolean") state.lenient = S.lenient;
   if(typeof S.autoSpeak==="boolean") state.autoSpeak = S.autoSpeak;
   if(typeof S.autoSpeakEn==="boolean") state.autoSpeakEn = S.autoSpeakEn;
+  if(typeof S.formsSolidOnly==="boolean") state.formsSolidOnly = S.formsSolidOnly;
   if(typeof S.wiktionary==="boolean") state.wiktionary = S.wiktionary;
   if(Array.isArray(S.hiddenWords)) state.hidden = new Set(S.hiddenWords.filter(k=>typeof k==="string"));
   if(Array.isArray(S.formsTests)) state.formsTests = S.formsTests.filter(r=>r && typeof r.ms==="number").slice(0, 10);
@@ -3140,12 +3158,25 @@ function updateSelectionCount(){
   el.textContent = `${roots.size} unique Turkish words selected  (from ${verbEntries} verb entries, ${nonverbEntries} non-verb entries)`;
   renderSelectionChips();
 }
+// Forms: all selected verbs, or only the solid ones (light or dark green on the Sözlük).
+function syncFormsPoolChips(){
+  document.querySelectorAll("#formsPoolChips .chip").forEach(c=>c.classList.toggle("on", (c.dataset.pool==="solid")===!!state.formsSolidOnly));
+}
+document.querySelectorAll("#formsPoolChips .chip").forEach(c=>{
+  c.onclick = ()=>{
+    const solid = c.dataset.pool==="solid";
+    if(solid===!!state.formsSolidOnly || ftest) return;
+    state.formsSolidOnly = solid;
+    syncFormsPoolChips();
+    saveSettings();
+    nextQuestion();
+  };
+});
 // Vocab tab: the current Sözlük selection as chips; clicking one removes it.
 // A fully selected category shows as one chip ("All verbs" / "All non-verbs").
 function renderSelectionChips(){
-  const box = document.getElementById("vocabSelectionChips");
-  if(!box) return;
-  box.innerHTML = "";
+  const boxes = ["vocabSelectionChips","formsSelectionChips"].map(id=>document.getElementById(id)).filter(Boolean);
+  if(!boxes.length) return;
   const chips = [];
   const allVerbs = VERB_PAGES.every(p=>state.pages.has(p.key)) && VERB_BONUS_CHUNKS.every(c=>state.bonusVerbChunks.has(c.key));
   if(allVerbs) chips.push({label:"All verbs", remove(){ state.pages.clear(); state.bonusVerbChunks.clear(); }});
@@ -3157,33 +3188,36 @@ function renderSelectionChips(){
   if(allNonverbs) chips.push({label:"All non-verbs", remove(){ state.nonverbChunks.clear(); }});
   else NONVERB_CHUNKS.filter(c=>state.nonverbChunks.has(c.key)).forEach(c=>chips.push({label:c.label, remove(){ state.nonverbChunks.delete(c.key); }}));
   TOPICS.filter(t=>state.topics.has(t.key)).forEach(t=>chips.push({label:t.label, remove(){ state.topics.delete(t.key); }}));
-  if(!chips.length){
-    box.innerHTML = '<span class="hint">Nothing selected. Choose words on the Sözlük tab.</span>';
-    return;
-  }
-  chips.forEach(ch=>{
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "sel-chip";
-    b.title = `Remove ${ch.label}`;
-    b.innerHTML = `<span></span><span class="sel-x" aria-hidden="true">×</span>`;
-    b.firstChild.textContent = ch.label;
-    b.onclick = ()=>{
-      const y = window.scrollY;
-      ch.remove();
-      saveSettings();
-      renderPageChips();
-      renderNonverbChunkChips();
-      renderTopicChips();
-      applyPageSelection();
-      refreshCurrentQuestion();
-      refreshVocabCard();
-      updateSelectionCount();
-      window.scrollTo(0, y);   // stay where you were
-      const input = document.getElementById("vocabAnswerInput");
-      if(document.activeElement===input) input.blur();   // no phone keyboard popping up
-    };
-    box.appendChild(b);
+  boxes.forEach(box=>{
+    box.innerHTML = "";
+    if(!chips.length){
+      box.innerHTML = '<span class="hint">Nothing selected. Choose words on the Sözlük tab.</span>';
+      return;
+    }
+    chips.forEach(ch=>{
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "sel-chip";
+      b.title = `Remove ${ch.label}`;
+      b.innerHTML = `<span></span><span class="sel-x" aria-hidden="true">×</span>`;
+      b.firstChild.textContent = ch.label;
+      b.onclick = ()=>{
+        const y = window.scrollY;
+        ch.remove();
+        saveSettings();
+        renderPageChips();
+        renderNonverbChunkChips();
+        renderTopicChips();
+        applyPageSelection();
+        refreshCurrentQuestion();
+        refreshVocabCard();
+        updateSelectionCount();
+        window.scrollTo(0, y);   // stay where you were
+        const input = document.getElementById("vocabAnswerInput");
+        if(document.activeElement===input) input.blur();   // no phone keyboard popping up
+      };
+      box.appendChild(b);
+    });
   });
 }
 
@@ -5394,11 +5428,11 @@ function nextQuestion(){
   else if(ftest){ ftest.answered = false; ftest.runStart = Date.now(); }
   const tenseKeys = allActiveTenseKeys();
   const personIdxs = [...state.persons];
-  const verbIdxs = [...state.verbs];
+  const verbIdxs = formsVerbIdxs();
   if(tenseKeys.length===0 || personIdxs.length===0 || verbIdxs.length===0){
     // Verbs come from the Sözlük tab; tenses and persons are chosen on this tab.
     document.getElementById("promptWord").textContent = verbIdxs.length===0
-      ? "Make a selection on the Sözlük tab."
+      ? (state.formsSolidOnly && state.verbs.size ? "None of your selected verbs are solid yet." : "Make a selection on the Sözlük tab.")
       : "Pick at least one tense and person below.";
     document.getElementById("promptSub").textContent = "";
     document.getElementById("promptEyebrow").style.display = "none";
@@ -5442,7 +5476,7 @@ function refreshCurrentQuestion(){
   if(!state.current){ nextQuestion(); return; }
   const tenseKeys = allActiveTenseKeys();
   const personIdxs = [...state.persons];
-  const verbIdxs = [...state.verbs];
+  const verbIdxs = formsVerbIdxs();
   if(tenseKeys.length===0 || personIdxs.length===0 || verbIdxs.length===0){
     nextQuestion();
     return;
@@ -5870,6 +5904,7 @@ function syncSettingsUI(){
   renderNonverbChunkChips();
   renderTopicChips();
   syncVocabSettingChips();
+  syncFormsPoolChips();
   applyPageSelection();
   updateSelectionCount();
   refreshCurrentQuestion();
