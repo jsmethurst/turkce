@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-289 verbs · 1094 non-verbs · 40 topics
+289 verbs · 1095 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1479,11 +1479,12 @@ aslında                   actually
 ferah                     airy / roomy
 sağ                       right (direction)
 
-DERSTE 401-403
+DERSTE 401-404
 --------------
 kural                     rule
 etraf                     surroundings
 karşı                     against / opposite
+leke                      stain
 
 SIFATLAR 1-25
 -------------
@@ -1892,7 +1893,7 @@ okul, sınıf, kütüphane, hastane, cami, banka, sinema, kafe, kafeterya, kanti
 
 House & Furniture
 -----------------
-masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitaplık, vazo, şamdan, avize, ayna, evde, odada, masada, kitaplıkta, eşya, piyano, anahtar, kilitlemek, temizlemek, taşınmak, kiralamak, zemin kat, bodrum kat, mum, tavan, kalorifer, cam, balkon, yatak odası, asansör, kilit, battaniye, gardırop, bulaşık makinesi, çamaşır makinesi, süpürge, ütü, çöp
+masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitaplık, vazo, şamdan, avize, ayna, evde, odada, masada, kitaplıkta, eşya, piyano, anahtar, kilitlemek, temizlemek, taşınmak, kiralamak, zemin kat, bodrum kat, mum, tavan, kalorifer, cam, balkon, yatak odası, asansör, kilit, battaniye, gardırop, bulaşık makinesi, çamaşır makinesi, süpürge, ütü, çöp, leke
 
 Kitchen & Food
 --------------
