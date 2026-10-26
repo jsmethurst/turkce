@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-289 verbs · 1083 non-verbs · 40 topics
+289 verbs · 1089 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1451,7 +1451,7 @@ hediye                    gift
 vitrin                    storefront / display window
 kenar                     edge
 
-DERSTE 376-392
+DERSTE 376-398
 --------------
 polis                     police
 hemşire                   nurse
@@ -1470,6 +1470,12 @@ ressam                    painter
 müzisyen                  musician
 yazılımcı                 software developer
 fotoğrafçı                photographer
+tamlama                   phrase
+her şey yolunda           everything is fine
+dominant                  dominant
+çift                      couple
+sol                       left
+aslında                   actually
 
 SIFATLAR 1-25
 -------------
@@ -1866,11 +1872,11 @@ Time & Schedule
 
 Politeness & Fillers
 --------------------
-buyurun, geçmiş olsun, affedersiniz, rica ederim, teşekkürler, lütfen, afiyet olsun, sağol, bir şey değil, hoş geldiniz, hoş bulduk, güle güle, iyi günler, maalesef, acaba, görüşürüz, ne haber, teşekkür ederim, sıhhatler olsun
+buyurun, geçmiş olsun, affedersiniz, rica ederim, teşekkürler, lütfen, afiyet olsun, sağol, bir şey değil, hoş geldiniz, hoş bulduk, güle güle, iyi günler, maalesef, acaba, görüşürüz, ne haber, teşekkür ederim, sıhhatler olsun, her şey yolunda
 
 People & Professions
 --------------------
-insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi, hala, anne tarafı, teyze, dayı, anneanne, baba tarafı, amca, babaanne, dede, enişte, yenge, kuzen, kız, erkek kardeş, soy, karı-koca, onlar kardeş, abla, kız kardeş, komşu, akraba, yeğen, herkes, görümce, kayınço, balıkçı, veteriner, yazar, başkan, polis, hemşire, mühendis, asker, aşçı, çiftçi, kasiyer, terzi, mimar, sekreter, esnaf, fırıncı, kasap, ressam, müzisyen, yazılımcı, fotoğrafçı
+insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi, hala, anne tarafı, teyze, dayı, anneanne, baba tarafı, amca, babaanne, dede, enişte, yenge, kuzen, kız, erkek kardeş, soy, karı-koca, onlar kardeş, abla, kız kardeş, komşu, akraba, yeğen, herkes, görümce, kayınço, balıkçı, veteriner, yazar, başkan, polis, hemşire, mühendis, asker, aşçı, çiftçi, kasiyer, terzi, mimar, sekreter, esnaf, fırıncı, kasap, ressam, müzisyen, yazılımcı, fotoğrafçı, çift
 
 Places & Buildings
 ------------------
@@ -1894,11 +1900,11 @@ bilgisayar, telefon, cep telefonu, televizyon, radyo, internet, kanal, dizi, hab
 
 Personality & Appearance
 ------------------------
-çalışkan, tembel, komik, yakışıklı, yardımsever, neşeli, sakin, kısa saçlı, şişman, güzel, genç, uzun, kısa, zayıf, çirkin, ünlü, dünyaca ünlü, ülkece ünlü
+çalışkan, tembel, komik, yakışıklı, yardımsever, neşeli, sakin, kısa saçlı, şişman, güzel, genç, uzun, kısa, zayıf, çirkin, ünlü, dünyaca ünlü, ülkece ünlü, dominant
 
 School & Study
 --------------
-sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, kitaplar, kitap, kalem, tahta, defter, çanta, sözlük, kağıt, kareli kağıt, çizgili kağıt, cümle, fiil, isim, sıfat, fotokopi, okumak, yazmak, öğrenmek, öğretmek, anlamak, cevaplamak, tekrar etmek, tamamlamak, düzeltmek, açıklamak, çözmek, sırt çantası, doğru, yanlış, mezuniyet, tören, hata, hece, kapak, ders
+sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, kitaplar, kitap, kalem, tahta, defter, çanta, sözlük, kağıt, kareli kağıt, çizgili kağıt, cümle, fiil, isim, sıfat, fotokopi, okumak, yazmak, öğrenmek, öğretmek, anlamak, cevaplamak, tekrar etmek, tamamlamak, düzeltmek, açıklamak, çözmek, sırt çantası, doğru, yanlış, mezuniyet, tören, hata, hece, kapak, ders, tamlama
 
 Shopping & Money
 ----------------
@@ -1938,7 +1944,7 @@ hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, ç
 
 Here, There & Directions
 ------------------------
-burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön, arka, arası, uzak, kuzey, güney, doğu, batı, harita, metre, kat, zemin kat, bodrum kat, birinci katta, ikinci kat, altıncı kat, yan, kenar
+burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön, arka, arası, uzak, kuzey, güney, doğu, batı, harita, metre, kat, zemin kat, bodrum kat, birinci katta, ikinci kat, altıncı kat, yan, kenar, sol
 
 Feelings
 --------
@@ -1974,7 +1980,7 @@ eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geni�
 
 Little Words
 ------------
-bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani, nihayet, asla, kendi, beraber, birden, hepsi
+bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani, nihayet, asla, kendi, beraber, birden, hepsi, aslında
 
 Cities & Countries
 ------------------
