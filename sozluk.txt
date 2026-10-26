@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-289 verbs · 1093 non-verbs · 40 topics
+289 verbs · 1094 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1479,10 +1479,11 @@ aslında                   actually
 ferah                     airy / roomy
 sağ                       right (direction)
 
-DERSTE 401-402
+DERSTE 401-403
 --------------
 kural                     rule
 etraf                     surroundings
+karşı                     against / opposite
 
 SIFATLAR 1-25
 -------------
@@ -1951,7 +1952,7 @@ hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, ç
 
 Here, There & Directions
 ------------------------
-burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön, arka, arası, uzak, kuzey, güney, doğu, batı, harita, metre, kat, zemin kat, bodrum kat, birinci katta, ikinci kat, altıncı kat, yan, kenar, sol, sağ, etraf
+burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön, arka, arası, uzak, kuzey, güney, doğu, batı, harita, metre, kat, zemin kat, bodrum kat, birinci katta, ikinci kat, altıncı kat, yan, kenar, sol, sağ, etraf, karşı
 
 Feelings
 --------
