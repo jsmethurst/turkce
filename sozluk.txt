@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-289 verbs · 1089 non-verbs · 40 topics
+289 verbs · 1091 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1451,7 +1451,7 @@ hediye                    gift
 vitrin                    storefront / display window
 kenar                     edge
 
-DERSTE 376-398
+DERSTE 376-400
 --------------
 polis                     police
 hemşire                   nurse
@@ -1476,6 +1476,8 @@ dominant                  dominant
 çift                      couple
 sol                       left
 aslında                   actually
+ferah                     airy / roomy
+sağ                       right (direction)
 
 SIFATLAR 1-25
 -------------
@@ -1944,7 +1946,7 @@ hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, ç
 
 Here, There & Directions
 ------------------------
-burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön, arka, arası, uzak, kuzey, güney, doğu, batı, harita, metre, kat, zemin kat, bodrum kat, birinci katta, ikinci kat, altıncı kat, yan, kenar, sol
+burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön, arka, arası, uzak, kuzey, güney, doğu, batı, harita, metre, kat, zemin kat, bodrum kat, birinci katta, ikinci kat, altıncı kat, yan, kenar, sol, sağ
 
 Feelings
 --------
@@ -1976,7 +1978,7 @@ bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, pl
 
 Describing Things
 -----------------
-eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı, kesik, korkutucu, ürkütücü, mümkün, tuhaf, yoğun, eksik, fazla, küçülmek
+eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı, kesik, korkutucu, ürkütücü, mümkün, tuhaf, yoğun, eksik, fazla, küçülmek, ferah
 
 Little Words
 ------------
