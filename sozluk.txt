@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-289 verbs · 1095 non-verbs · 40 topics
+289 verbs · 1096 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1479,12 +1479,13 @@ aslında                   actually
 ferah                     airy / roomy
 sağ                       right (direction)
 
-DERSTE 401-404
+DERSTE 401-405
 --------------
 kural                     rule
 etraf                     surroundings
 karşı                     against / opposite
 leke                      stain
+marka                     brand
 
 SIFATLAR 1-25
 -------------
@@ -1917,7 +1918,7 @@ sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, k
 
 Shopping & Money
 ----------------
-para çekmek, alışveriş, alışveriş yapmak, ucuz, pahalı, bilet almak, kilo, numara, manav, müşteri, almak, satmak, ödemek, harcamak, biriktirmek, kumbara, cüzdan, beden, pazar, seçmek, denemek, fakir, zengin, kıymetli, ücretsiz, bedava, indirim, zam, ürün, bağış vermek, borç, hediye, vitrin, poşet
+para çekmek, alışveriş, alışveriş yapmak, ucuz, pahalı, bilet almak, kilo, numara, manav, müşteri, almak, satmak, ödemek, harcamak, biriktirmek, kumbara, cüzdan, beden, pazar, seçmek, denemek, fakir, zengin, kıymetli, ücretsiz, bedava, indirim, zam, ürün, bağış vermek, borç, hediye, vitrin, poşet, marka
 
 Hobbies & Free Time
 -------------------
