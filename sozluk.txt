@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-289 verbs · 1096 non-verbs · 40 topics
+289 verbs · 1097 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1479,13 +1479,14 @@ aslında                   actually
 ferah                     airy / roomy
 sağ                       right (direction)
 
-DERSTE 401-405
+DERSTE 401-406
 --------------
 kural                     rule
 etraf                     surroundings
 karşı                     against / opposite
 leke                      stain
 marka                     brand
+postane                   post office
 
 SIFATLAR 1-25
 -------------
@@ -1890,7 +1891,7 @@ insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avu
 
 Places & Buildings
 ------------------
-okul, sınıf, kütüphane, hastane, cami, banka, sinema, kafe, kafeterya, kantin, park, bahçe, şehir, üniversite, havaalanı, havalimanı, durak, market, manav, idari amirlik, halkla ilişkiler, okuma salonu, öğrenci işleri, bina, metropol, müze, okulda, sınıfta, hastanede, sinemada, sinema salonu, cadde, sokak, bu sokak, büfe, şirket, memleket, köy, yer, yerler, sur, devlet, meydan, köprü, tünel, kaldırım
+okul, sınıf, kütüphane, hastane, cami, banka, sinema, kafe, kafeterya, kantin, park, bahçe, şehir, üniversite, havaalanı, havalimanı, durak, market, manav, idari amirlik, halkla ilişkiler, okuma salonu, öğrenci işleri, bina, metropol, müze, okulda, sınıfta, hastanede, sinemada, sinema salonu, cadde, sokak, bu sokak, büfe, şirket, memleket, köy, yer, yerler, sur, devlet, meydan, köprü, tünel, kaldırım, postane
 
 House & Furniture
 -----------------
