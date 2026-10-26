@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-289 verbs · 1097 non-verbs · 40 topics
+289 verbs · 1098 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -1479,7 +1479,7 @@ aslında                   actually
 ferah                     airy / roomy
 sağ                       right (direction)
 
-DERSTE 401-406
+DERSTE 401-407
 --------------
 kural                     rule
 etraf                     surroundings
@@ -1487,6 +1487,7 @@ karşı                     against / opposite
 leke                      stain
 marka                     brand
 postane                   post office
+benzin                    gasoline
 
 SIFATLAR 1-25
 -------------
@@ -1903,7 +1904,7 @@ mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, z
 
 Transportation & Travel
 -----------------------
-araba, uçak, dolmuş, vapur, motosiklet, trafik, yolculuk, tur, sahil, havaalanı, havalimanı, bilet almak, seyahat etmek, sürmek, binmek, indirmek, arabada, tatil planı, gezmek, keşfetmek, ziyaret etmek, bavul hazırlamak, harita, geri dönmek, inmek, yat, uzak, gezgin, köy, pist, aktarma, istasyon, otogar, pasaport, vize
+araba, uçak, dolmuş, vapur, motosiklet, trafik, yolculuk, tur, sahil, havaalanı, havalimanı, bilet almak, seyahat etmek, sürmek, binmek, indirmek, arabada, tatil planı, gezmek, keşfetmek, ziyaret etmek, bavul hazırlamak, harita, geri dönmek, inmek, yat, uzak, gezgin, köy, pist, aktarma, istasyon, otogar, pasaport, vize, benzin
 
 Electronics & Media
 -------------------
