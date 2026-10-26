@@ -494,7 +494,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <div class="chip-row sel-chips" id="formsSelectionChips"></div>
       <div class="chip-row" id="formsPoolChips" style="margin-top:6px;">
         <div class="chip on" data-pool="all">All verbs</div>
-        <div class="chip" data-pool="solid">Only my solid verbs</div>
+        <div class="chip" data-pool="solid">Only dark green verbs</div>
       </div>
     </div>
 
@@ -2866,8 +2866,8 @@ function nonverbEnabled(nv){
 function applyPageSelection(){
   state.verbs = new Set(VERBS.map((v,i)=>i).filter(i=>isSimpleVerb(VERBS[i]) && pageEnabled(VERBS[i])));
 }
-// A solid verb is light or dark green on the Sözlük (its last answers were mostly right).
-function isSolidVerb(v){ const lv = wordFormLevel(`verb:${v.inf}`); return lv!==null && lv>=4; }
+// Dark green on the Sözlük: every one of the last answers was right.
+function isSolidVerb(v){ return wordFormLevel(`verb:${v.inf}`)===5; }
 function formsVerbIdxs(){
   const all = [...state.verbs];
   return state.formsSolidOnly ? all.filter(i=>isSolidVerb(VERBS[i])) : all;
@@ -2889,7 +2889,7 @@ const state = {
   lenient: false,
   autoSpeak: false,
   autoSpeakEn: false,
-  formsSolidOnly: false,   // Forms: only verbs that are light or dark green on the Sözlük
+  formsSolidOnly: false,   // Forms: only verbs that are dark green on the Sözlük
   hidden: new Set(),   // words excluded from Vocab and Tekrar for good ("verb:x" / "nonverb:x"); shown again from the Sözlük
   wiktionary: true,   // search falls back to Wiktionary when the Sözlük has no match
   formsTests: [],   // recent timed-test results, newest first (kept with the settings so they sync)
@@ -3158,7 +3158,7 @@ function updateSelectionCount(){
   el.textContent = `${roots.size} unique Turkish words selected  (from ${verbEntries} verb entries, ${nonverbEntries} non-verb entries)`;
   renderSelectionChips();
 }
-// Forms: all selected verbs, or only the solid ones (light or dark green on the Sözlük).
+// Forms: all selected verbs, or only the dark green ones on the Sözlük.
 function syncFormsPoolChips(){
   document.querySelectorAll("#formsPoolChips .chip").forEach(c=>c.classList.toggle("on", (c.dataset.pool==="solid")===!!state.formsSolidOnly));
 }
@@ -5432,7 +5432,7 @@ function nextQuestion(){
   if(tenseKeys.length===0 || personIdxs.length===0 || verbIdxs.length===0){
     // Verbs come from the Sözlük tab; tenses and persons are chosen on this tab.
     document.getElementById("promptWord").textContent = verbIdxs.length===0
-      ? (state.formsSolidOnly && state.verbs.size ? "None of your selected verbs are solid yet." : "Make a selection on the Sözlük tab.")
+      ? (state.formsSolidOnly && state.verbs.size ? "None of your selected verbs are dark green yet." : "Make a selection on the Sözlük tab.")
       : "Pick at least one tense and person below.";
     document.getElementById("promptSub").textContent = "";
     document.getElementById("promptEyebrow").style.display = "none";
