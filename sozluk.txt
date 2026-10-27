@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-289 verbs · 1100 non-verbs · 40 topics
+290 verbs · 1100 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -484,7 +484,7 @@ ava çıkmak                to go hunting
 yaramazlık yapmak         to misbehave
     örnek: Çocuklar yaramazlık yapıyor.  (The children are misbehaving.)
 
-DERSTE 76-86
+DERSTE 76-87
 ------------
 dirsek atmak              to elbow someone
     datif: Oyuncu rakibe dirsek atıyor.  (The player is elbowing his opponent.)
@@ -508,6 +508,8 @@ acıkmak                   to get hungry
     örnek: Acıkıyorum.  (I'm getting hungry.)
 yakalamak                 to catch
     akuzatif: Topu yakalıyor.  (He is catching the ball.)
+dökmek                    to pour / to spill out
+    akuzatif: Çayı döküyor.  (She is pouring the tea.)
 
 COMMON 1-25
 -----------
@@ -1902,7 +1904,7 @@ masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitapl
 
 Kitchen & Food
 --------------
-mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak, tabak, kaşık, çatal, bıçak, yumurta, tavuk, balık, salata, elma, armut, limon, karpuz, kavun, kiraz, şeftali, erik, incir, patates, salatalık, soğan, sarımsak, biber, patlıcan, havuç, kabak, ıspanak, fasulye, tuz, şeker, karabiber, baharat, un, bal, karıştırmak
+mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak, tabak, kaşık, çatal, bıçak, yumurta, tavuk, balık, salata, elma, armut, limon, karpuz, kavun, kiraz, şeftali, erik, incir, patates, salatalık, soğan, sarımsak, biber, patlıcan, havuç, kabak, ıspanak, fasulye, tuz, şeker, karabiber, baharat, un, bal, karıştırmak, dökmek
 
 Transportation & Travel
 -----------------------
