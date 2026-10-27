@@ -2923,7 +2923,7 @@ const state = {
   formsSolidOnly: false,   // Forms: only verbs that are dark green on the Sözlük
   hidden: new Set(),   // words excluded from Vocab and Tekrar for good ("verb:x" / "nonverb:x"); shown again from the Sözlük
   wiktionary: true,   // search falls back to Wiktionary when the Sözlük has no match
-  formsTestLog: [],   // every finished timed test, compact, for the progress graph: {s: selection, t: time, n, c, cms}
+  formsTestLog: [],   // every finished timed test, kept for good (never trimmed): the full result plus s (its selection key) and t (when, in ms)
   formsTests: [],   // recent timed-test results, newest first (kept with the settings so they sync)
   hintUsed: false,
   current: null,
@@ -3046,6 +3046,11 @@ function onRemoteSettings(snap){
   try{ localStorage.setItem(SETTINGS_KEY, JSON.stringify(lastLocalSettings)); }catch(e){}
   syncSettingsUI();
 }
+function mergeTestLogs(a, b){
+  const byTime = new Map();
+  [...(a||[]), ...(b||[])].forEach(r=>{ if(r && typeof r.s==="string" && typeof r.t==="number" && !byTime.has(r.t)) byTime.set(r.t, r); });
+  return [...byTime.values()].sort((x,y)=>x.t-y.t);
+}
 function applyFormsSettings(S){
   if(S.mode) state.mode = S.mode;
   if(Array.isArray(S.tenses)) state.tenses = new Set(S.tenses);
@@ -3064,8 +3069,14 @@ function applyFormsSettings(S){
   if(typeof S.formsSolidOnly==="boolean") state.formsSolidOnly = S.formsSolidOnly;
   if(typeof S.wiktionary==="boolean") state.wiktionary = S.wiktionary;
   if(Array.isArray(S.hiddenWords)) state.hidden = new Set(S.hiddenWords.filter(k=>typeof k==="string"));
-  if(Array.isArray(S.formsTestLog)) state.formsTestLog = S.formsTestLog.filter(r=>r && typeof r.s==='string' && typeof r.cms==='number').slice(-500);
+  // The log only ever grows: results from this device and from the synced copy are merged, never replaced.
+  if(Array.isArray(S.formsTestLog)) state.formsTestLog = mergeTestLogs(state.formsTestLog, S.formsTestLog);
   if(Array.isArray(S.formsTests)) state.formsTests = S.formsTests.filter(r=>r && typeof r.ms==="number").slice(0, 10);
+  // Tests saved before the full log existed (the recent ten) are kept in it too.
+  state.formsTests.forEach(r=>{
+    const t = new Date(r.at).getTime();
+    if(t && !state.formsTestLog.some(x=>x.t===t)) state.formsTestLog = mergeTestLogs(state.formsTestLog, [{...r, s:ftestSelectionKey(r), t}]);
+  });
 }
 if(SAVED_SETTINGS) applyFormsSettings(SAVED_SETTINGS);
 applyPageSelection();
@@ -5713,7 +5724,7 @@ function renderFtestChart(){
   const box = document.getElementById("ftestChart");
   if(!box) return;
   const key = ftestSelectionKey({mode:state.mode, persons:state.persons, negatives:state.negatives, questions:state.questions, ability:state.ability, tenses:state.tenses, compounds:state.compounds});
-  const tests = state.formsTestLog.filter(r=>r.s===key && r.c>0 && r.c/r.n>=0.8).map(r=>r.cms/r.c/1000);
+  const tests = state.formsTestLog.filter(r=>r.s===key && typeof r.cms==="number" && r.correct>0 && r.correct/r.n>=0.8).map(r=>r.cms/r.correct/1000);
   if(!tests.length){ box.innerHTML = '<p class="hint" style="margin:6px 0 0;">No tests with 80% or more correct for this selection yet.</p>'; return; }
   const avg = tests.map((_,i)=>{ const w = tests.slice(Math.max(0, i-4), i+1); return w.reduce((a,b)=>a+b,0)/w.length; });
   const W = 320, H = 170, L = 34, R = 10, T = 10, B = 28;
@@ -5836,7 +5847,7 @@ function ftestRecord(correct){
   document.getElementById("ftestTime").textContent = fmtClock(ms);   // the clock stays, stopped, while you look at the last answer
   const result = {at:new Date().toISOString(), n:ftest.n, correct:ftest.correct, ms, cms:ftest.correctMs, ...ftest.cfg};
   state.formsTests = [result, ...state.formsTests].slice(0, 10);
-  state.formsTestLog = [...state.formsTestLog, {s:ftestSelectionKey(ftest.cfg), t:Date.now(), n:ftest.n, c:ftest.correct, cms:ftest.correctMs}].slice(-500);
+  state.formsTestLog = mergeTestLogs(state.formsTestLog, [{...result, s:ftestSelectionKey(ftest.cfg), t:new Date(result.at).getTime()}]);   // kept for good
   saveSettings();
   renderFtestResults();
   renderFtestChart();
