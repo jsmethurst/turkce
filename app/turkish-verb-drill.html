@@ -329,6 +329,10 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .ftest-chart .avg{fill:none;stroke:var(--tile-blue);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;}
 .ftest-chart .raw{fill:var(--tile-turquoise);opacity:.4;}
 .ftest-chart .dot{fill:var(--tile-blue);}
+.ftest-chart{position:relative;}
+.ftest-chart .hit{fill:transparent;cursor:pointer;}
+.ftest-chart .ftest-tip{position:absolute;z-index:5;pointer-events:none;max-width:240px;padding:6px 9px;border-radius:8px;background:var(--tile-blue-deep);color:#fff;font-size:.74rem;line-height:1.35;box-shadow:0 6px 16px -6px rgba(18,65,77,.55);white-space:nowrap;}
+.ftest-chart .ftest-tip[hidden]{display:none;}
 .ftest-chart .cap{margin:2px 0 0;font-size:.78rem;color:var(--ink-soft);}
 .ftest-result{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:10px 12px;margin-top:8px;}
 .ftest-result .top{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;}
@@ -5724,7 +5728,8 @@ function renderFtestChart(){
   const box = document.getElementById("ftestChart");
   if(!box) return;
   const key = ftestSelectionKey({mode:state.mode, persons:state.persons, negatives:state.negatives, questions:state.questions, ability:state.ability, tenses:state.tenses, compounds:state.compounds});
-  const tests = state.formsTestLog.filter(r=>r.s===key && typeof r.cms==="number" && r.correct>0 && r.correct/r.n>=0.8).map(r=>r.cms/r.correct/1000);
+  const rows = state.formsTestLog.filter(r=>r.s===key && typeof r.cms==="number" && r.correct>0 && r.correct/r.n>=0.8);
+  const tests = rows.map(r=>r.cms/r.correct/1000);
   if(!tests.length){ box.innerHTML = '<p class="hint" style="margin:6px 0 0;">No tests with 80% or more correct for this selection yet.</p>'; return; }
   const avg = tests.map((_,i)=>{ const w = tests.slice(Math.max(0, i-4), i+1); return w.reduce((a,b)=>a+b,0)/w.length; });
   const W = 320, H = 170, L = 34, R = 10, T = 10, B = 28;
@@ -5742,10 +5747,30 @@ function renderFtestChart(){
   const step = Math.max(1, Math.ceil(tests.length/8));
   tests.forEach((_,i)=>{ if(i%step===0 || i===tests.length-1) svg += `<text x="${x(i)}" y="${H-B+14}" text-anchor="middle">${i+1}</text>`; });
   svg += `<text x="${(L+W-R)/2}" y="${H-3}" text-anchor="middle">test number</text>`;
-  tests.forEach((v,i)=>{ svg += `<circle class="raw" cx="${x(i)}" cy="${y(v)}" r="2.6"><title>Test ${i+1}: ${v.toFixed(1)} s per correct answer</title></circle>`; });
+  tests.forEach((v,i)=>{ svg += `<circle class="raw" cx="${x(i)}" cy="${y(v)}" r="2.6"/>`; });
   if(tests.length>1) svg += `<polyline class="avg" points="${avg.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ")}"/>`;
-  svg += `<circle class="dot" cx="${x(tests.length-1)}" cy="${y(avg[avg.length-1])}" r="3.4"><title>Average of the latest 5: ${avg[avg.length-1].toFixed(1)} s</title></circle></svg>`;
-  box.innerHTML = `<div class="ftest-chart">${svg}<p class="cap">Seconds per correct answer. Line: average of the latest 5 tests. Tests under 80% correct are left out.</p></div>`;
+  avg.forEach((v,i)=>{ svg += `<circle class="dot" cx="${x(i)}" cy="${y(v)}" r="${i===avg.length-1 ? 3.4 : 2.2}"/>`; });
+  // Wide invisible circles catch the pointer: tests first, averages on top.
+  tests.forEach((v,i)=>{ svg += `<circle class="hit" data-k="raw" data-i="${i}" cx="${x(i)}" cy="${y(v)}" r="7"/>`; });
+  avg.forEach((v,i)=>{ svg += `<circle class="hit" data-k="avg" data-i="${i}" cx="${x(i)}" cy="${y(v)}" r="6"/>`; });
+  svg += "</svg>";
+  box.innerHTML = `<div class="ftest-chart">${svg}<div class="ftest-tip" hidden></div><p class="cap">Seconds per correct answer. Line: average of the latest 5 tests. Tests under 80% correct are left out.</p></div>`;
+  const wrap = box.firstChild, tip = wrap.querySelector(".ftest-tip");
+  const show = c=>{
+    const i = Number(c.dataset.i), r = rows[i];
+    const when = new Date(r.t).toLocaleDateString([], {month:"short", day:"numeric"});
+    tip.innerHTML = c.dataset.k==="raw"
+      ? `<b>Test ${i+1}</b>: ${tests[i].toFixed(1)} s per correct answer<br>${Math.round(100*r.correct/r.n)}% correct · ${when}`
+      : `<b>Average of tests ${Math.max(1, i-3)}–${i+1}</b>: ${avg[i].toFixed(1)} s`;
+    tip.hidden = false;
+    const cb = c.getBoundingClientRect(), wb = wrap.getBoundingClientRect();
+    const cx = cb.left + cb.width/2 - wb.left;
+    tip.style.left = Math.min(Math.max(cx - tip.offsetWidth/2, 0), wb.width - tip.offsetWidth) + "px";
+    tip.style.top = Math.max(cb.top - wb.top - tip.offsetHeight - 6, 0) + "px";
+  };
+  wrap.addEventListener("mouseover", e=>{ const c = e.target.closest(".hit"); if(c) show(c); else tip.hidden = true; });
+  wrap.addEventListener("mouseleave", ()=>{ tip.hidden = true; });
+  wrap.addEventListener("click", e=>{ const c = e.target.closest(".hit"); if(c) show(c); else tip.hidden = true; });   // touch
 }
 function renderFtestResults(){
   const box = document.getElementById("ftestResults");
