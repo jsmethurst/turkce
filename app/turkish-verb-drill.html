@@ -321,6 +321,15 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 @keyframes ftest-pop{from{opacity:0;transform:scale(.96);}to{opacity:1;transform:none;}}
 @media (prefers-reduced-motion: reduce){.ftest-done{animation:none;}}
 .ftest-clock .count{font-weight:600;font-size:0.8rem;color:var(--ink-soft);}
+.ftest-chart{margin:4px 0 0;}
+.ftest-chart svg{display:block;width:100%;height:auto;}
+.ftest-chart .ax{stroke:var(--line);stroke-width:1;}
+.ftest-chart .grid{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3;}
+.ftest-chart text{font:10px 'Inter',system-ui,sans-serif;fill:var(--ink-soft);}
+.ftest-chart .avg{fill:none;stroke:var(--tile-blue);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;}
+.ftest-chart .raw{fill:var(--tile-turquoise);opacity:.4;}
+.ftest-chart .dot{fill:var(--tile-blue);}
+.ftest-chart .cap{margin:2px 0 0;font-size:.78rem;color:var(--ink-soft);}
 .ftest-result{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:10px 12px;margin-top:8px;}
 .ftest-result .top{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;}
 .ftest-result .meta{font-size:0.82rem;color:var(--ink-soft);font-weight:500;}
@@ -538,6 +547,8 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
         <button class="btn btn-ghost" id="ftestEndBtn" hidden>End test</button>
       </div>
       <p class="hint" id="ftestStatus"></p>
+      <h3 style="margin-top:14px;">Performance over time for this selection</h3>
+      <div id="ftestChart"></div>
       <h3 style="margin-top:14px;">Recent test results</h3>
       <div id="ftestResults"></div>
     </div>
@@ -2912,6 +2923,7 @@ const state = {
   formsSolidOnly: false,   // Forms: only verbs that are dark green on the Sözlük
   hidden: new Set(),   // words excluded from Vocab and Tekrar for good ("verb:x" / "nonverb:x"); shown again from the Sözlük
   wiktionary: true,   // search falls back to Wiktionary when the Sözlük has no match
+  formsTestLog: [],   // every finished timed test, compact, for the progress graph: {s: selection, t: time, n, c, cms}
   formsTests: [],   // recent timed-test results, newest first (kept with the settings so they sync)
   hintUsed: false,
   current: null,
@@ -2941,6 +2953,7 @@ function collectSettings(){
       wiktionary: state.wiktionary,
       hiddenWords: [...state.hidden],
       formsTests: state.formsTests,
+      formsTestLog: state.formsTestLog,
       vocabMode: vocabState.mode,
       vocabUnknownOnly: vocabState.unknownOnly,
       vocabTypingMode: vocabState.typingBeforeTest ?? vocabState.typingMode,
@@ -2957,6 +2970,7 @@ function saveSettings(){
   try{ localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); }catch(e){}
   if(lastLocalSettings) settingsDiff(s, lastLocalSettings).forEach(k=>dirtySettings.set(k, s[k]));
   lastLocalSettings = s;
+  if(typeof renderFtestChart==="function") renderFtestChart();   // the graph follows the current selection
   queueRemoteSettingsSave();
   voiceSync();
 }
@@ -3050,6 +3064,7 @@ function applyFormsSettings(S){
   if(typeof S.formsSolidOnly==="boolean") state.formsSolidOnly = S.formsSolidOnly;
   if(typeof S.wiktionary==="boolean") state.wiktionary = S.wiktionary;
   if(Array.isArray(S.hiddenWords)) state.hidden = new Set(S.hiddenWords.filter(k=>typeof k==="string"));
+  if(Array.isArray(S.formsTestLog)) state.formsTestLog = S.formsTestLog.filter(r=>r && typeof r.s==='string' && typeof r.cms==='number').slice(-500);
   if(Array.isArray(S.formsTests)) state.formsTests = S.formsTests.filter(r=>r && typeof r.ms==="number").slice(0, 10);
 }
 if(SAVED_SETTINGS) applyFormsSettings(SAVED_SETTINGS);
@@ -5687,6 +5702,40 @@ function ftestSettingsLine(r){
   const dir = {en2tr:"English → Turkish", tr:"Infinitive → Turkish", tr2en:"Turkish → English"}[r.mode] || r.mode;
   return {dir, tenses: tenses.length ? tenses.join(", ") : "none", forms: forms.length ? forms.join(", ") : "plain affirmative only"};
 }
+// Which tests count as the same selection: direction, persons, forms and tenses (not the verbs).
+function ftestSelectionKey(c){
+  const arr = a=>[...(a||[])].sort((x,y)=>String(x).localeCompare(String(y))).join(",");
+  return [c.mode, arr(c.persons), c.negatives?1:0, c.questions?1:0, c.ability?1:0, arr(c.tenses), arr(c.compounds)].join("|");
+}
+// A simple line graph: seconds per correct answer by test number, tests under 80% correct left out,
+// the line is the average of the latest five.
+function renderFtestChart(){
+  const box = document.getElementById("ftestChart");
+  if(!box) return;
+  const key = ftestSelectionKey({mode:state.mode, persons:state.persons, negatives:state.negatives, questions:state.questions, ability:state.ability, tenses:state.tenses, compounds:state.compounds});
+  const tests = state.formsTestLog.filter(r=>r.s===key && r.c>0 && r.c/r.n>=0.8).map(r=>r.cms/r.c/1000);
+  if(!tests.length){ box.innerHTML = '<p class="hint" style="margin:6px 0 0;">No tests with 80% or more correct for this selection yet.</p>'; return; }
+  const avg = tests.map((_,i)=>{ const w = tests.slice(Math.max(0, i-4), i+1); return w.reduce((a,b)=>a+b,0)/w.length; });
+  const W = 320, H = 170, L = 34, R = 10, T = 10, B = 28;
+  const max = Math.max(...tests, ...avg), min = Math.min(...tests, ...avg);
+  const top = Math.ceil(max + (max-min)*0.1 + 0.2), bot = Math.max(0, Math.floor(min - (max-min)*0.1));
+  const lo = bot, hi = top > lo ? top : lo + 1;
+  const x = i=> tests.length===1 ? (L + W - R)/2 : L + (W-L-R) * i/(tests.length-1);
+  const y = v=> T + (H-T-B) * (1 - (v-lo)/(hi-lo));
+  let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Seconds per correct answer by test number">`;
+  const ticks = 4;
+  for(let k=0;k<=ticks;k++){
+    const v = lo + (hi-lo)*k/ticks, yy = y(v);
+    svg += `<line class="${k===0?"ax":"grid"}" x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}"/><text x="${L-5}" y="${yy+3}" text-anchor="end">${v.toFixed(v%1 ? 1 : 0)}s</text>`;
+  }
+  const step = Math.max(1, Math.ceil(tests.length/8));
+  tests.forEach((_,i)=>{ if(i%step===0 || i===tests.length-1) svg += `<text x="${x(i)}" y="${H-B+14}" text-anchor="middle">${i+1}</text>`; });
+  svg += `<text x="${(L+W-R)/2}" y="${H-3}" text-anchor="middle">test number</text>`;
+  tests.forEach((v,i)=>{ svg += `<circle class="raw" cx="${x(i)}" cy="${y(v)}" r="2.6"><title>Test ${i+1}: ${v.toFixed(1)} s per correct answer</title></circle>`; });
+  if(tests.length>1) svg += `<polyline class="avg" points="${avg.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ")}"/>`;
+  svg += `<circle class="dot" cx="${x(tests.length-1)}" cy="${y(avg[avg.length-1])}" r="3.4"><title>Average of the latest 5: ${avg[avg.length-1].toFixed(1)} s</title></circle></svg>`;
+  box.innerHTML = `<div class="ftest-chart">${svg}<p class="cap">Seconds per correct answer. Line: average of the latest 5 tests. Tests under 80% correct are left out.</p></div>`;
+}
 function renderFtestResults(){
   const box = document.getElementById("ftestResults");
   if(!box) return;
@@ -5727,7 +5776,7 @@ function startFtest(){
   status.textContent = "";
   clearInterval(ftestTimer);
   ftest = {n:0, correct:0, correctMs:0, answered:false, accum:0, runStart:Date.now(),
-    cfg:{mode:state.mode, tenses:[...state.tenses], compounds:[...state.compounds], negatives:state.negatives, questions:state.questions, ability:state.ability}};
+    cfg:{mode:state.mode, persons:[...state.persons], tenses:[...state.tenses], compounds:[...state.compounds], negatives:state.negatives, questions:state.questions, ability:state.ability}};
   const clock = document.getElementById("ftestClock");
   hideFtestDone();
   clock.hidden = false;
@@ -5787,8 +5836,10 @@ function ftestRecord(correct){
   document.getElementById("ftestTime").textContent = fmtClock(ms);   // the clock stays, stopped, while you look at the last answer
   const result = {at:new Date().toISOString(), n:ftest.n, correct:ftest.correct, ms, cms:ftest.correctMs, ...ftest.cfg};
   state.formsTests = [result, ...state.formsTests].slice(0, 10);
+  state.formsTestLog = [...state.formsTestLog, {s:ftestSelectionKey(ftest.cfg), t:Date.now(), n:ftest.n, c:ftest.correct, cms:ftest.correctMs}].slice(-500);
   saveSettings();
   renderFtestResults();
+  renderFtestChart();
   document.getElementById("ftestStatus").textContent = "";
   // The test is over and saved, but the card stays as it is until you advance: then "Test complete!" plays.
   ftest.finished = true;
@@ -5915,6 +5966,7 @@ nextQuestion();
 
 function syncSettingsUI(){
   renderFtestResults();
+  renderFtestChart();
   [...tenseChips.children].forEach(c=>c.classList.toggle("on", state.tenses.has(c.dataset.key)));
   [...compoundChips.children].forEach(c=>c.classList.toggle("on", state.compounds.has(c.dataset.key)));
   [...personChips.children].forEach((c,i)=>c.classList.toggle("on", state.persons.has(i)));
