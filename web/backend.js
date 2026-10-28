@@ -148,17 +148,21 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
 .feedback-msg{margin:8px 0 0;font-size:12.5px;}
 .feedback-msg.good{color:var(--good);}
 .feedback-msg.bad{color:var(--bad);}
-.help-wrap .feedback-btn svg{width:20px;height:20px;}
 .settings-wrap .feedback-btn svg{width:21px;height:21px;}
 .settings-pop{width:300px;}
 .settings-pop .gs-row{display:flex;align-items:flex-start;gap:10px;padding:9px 2px;font-size:13px;line-height:1.4;color:var(--ink);cursor:pointer;}
 .settings-pop .gs-row input{margin-top:2px;width:17px;height:17px;flex:none;accent-color:var(--tile-blue-deep);cursor:pointer;}
 .settings-pop .gs-row small{display:block;margin-top:2px;font-size:12px;color:var(--ink-soft);}
-.help-pop{width:330px;max-height:calc(100vh - 120px);overflow-y:auto;}
-.help-pop ol{margin:0;padding-left:20px;display:grid;gap:9px;font-size:13px;line-height:1.45;color:var(--ink-soft);}
-.help-pop li b{color:var(--ink);}
+.settings-pop{max-height:calc(100vh - 120px);overflow-y:auto;}
+.gs-help{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);}
+.gs-help summary{cursor:pointer;font-size:13px;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;}
+.gs-help summary::-webkit-details-marker{display:none;}
+.gs-help summary::after{content:"+";font-size:16px;color:var(--ink-soft);}
+.gs-help[open] summary::after{content:"–";}
+.gs-help ol{margin:10px 0 0;padding-left:20px;display:grid;gap:9px;font-size:13px;line-height:1.45;color:var(--ink-soft);}
+.gs-help li b{color:var(--ink);}
 .help-para{display:block;margin-top:6px;}
-.help-pop kbd{font:inherit;font-size:11.5px;padding:0 4px;border:1px solid var(--line);border-radius:4px;background:var(--paper);}
+.gs-help kbd{font:inherit;font-size:11.5px;padding:0 4px;border:1px solid var(--line);border-radius:4px;background:var(--paper);}
 
 .account-menu{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:250px;max-width:calc(100vw - 32px);padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow);}
 .account-email{margin:0 0 8px;padding-bottom:8px;border-bottom:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink);overflow-wrap:anywhere;}
@@ -382,29 +386,8 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     return w;
   }
   // ---------- "How to use Türkçe": a short guide next to "Suggest a change" ----------
-  var HELP_ICON = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><mask id="helpQ" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M7.6 8.8C7.6 4.4 16.4 4.4 16.4 9C16.4 12 12 12.2 12 15" stroke="#fff" stroke-width="6.2"/><circle cx="12" cy="20.2" r="3.3" fill="#fff" stroke="none"/><path d="M7.6 8.8C7.6 4.4 16.4 4.4 16.4 9C16.4 12 12 12.2 12 15" stroke="#000" stroke-width="2.6"/><circle cx="12" cy="20.2" r="1.6" fill="#000" stroke="none"/></g></mask></defs><rect width="24" height="24" fill="currentColor" mask="url(#helpQ)"/></svg>';
-  var help = null;
-  function buildHelp(){
-    var w = el(`<div class="feedback-wrap help-wrap">
-      <button class="feedback-btn" id="helpBtn" type="button" title="How to use Türkçe" aria-label="How to use Türkçe" aria-haspopup="true" aria-expanded="false">${HELP_ICON}</button>
-      <div class="feedback-pop help-pop" id="helpPop" role="dialog" aria-label="How to use Türkçe" hidden>
-        <div class="feedback-title">How to use Türkçe</div>
-        <ol>
-          <li><b>Sözlük: choose your words.</b> Select the word lists or topics you want to study. Forms and Vocab only use what you select here. Colors show how well you know each word.</li>
-          <li><b>Forms: conjugate verbs.</b> Type the Turkish form that matches the English sentence. Select the grammars you want to practice: tenses, persons, negatives, questions, and more.</li>
-          <li><b>Vocab: learn words.</b> Type your answers, or flip through flashcards.<span class="help-para">Or, select one word group and take a test. If you score below 90%, or it's been a week since your last test, that word group will be circled in red on the Sözlük.</span></li>
-          <li><b>Tekrar: review at the right time.</b> Words you've practiced come back just as you're about to forget them. A word you miss returns after a few cards, and the "Coming up" list shows what's due next. When nothing is due, you can practice ahead.</li>
-          <li><b>Cases: build whole sentences.</b> Type the Turkish for the English sentence, using the right case endings. Choose which cases to practice. The sentences use nouns you already know well, so keep practicing in Vocab and Tekrar to unlock more.</li>
-          <li><b>Sign in</b> to sync across devices and track your progress through tests.</li>
-          <li><b>Something wrong?</b> Use the speech-bubble button to suggest a change.</li>
-        </ol>
-      </div>
-    </div>`);
-    help = {wrap: w, btn: w.querySelector("#helpBtn"), pop: w.querySelector("#helpPop")};
-    help.btn.onclick = function(){ if(menu) toggleMenu(false); if(fb) toggleFeedback(false); if(gear) toggleSettings(false); toggleHelp(); };
-    help.pop.addEventListener("keydown", function(ev){ ev.stopPropagation(); if(ev.key === "Escape"){ toggleHelp(false); help.btn.focus(); } });
-    return w;
-  }
+  var help = null;   // the guide now lives at the bottom of the settings menu
+  function toggleHelp(){}
   // ---------- Global settings: a gear next to the guide and suggestion buttons ----------
   var GEAR_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
   var gear = null;
@@ -418,6 +401,17 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
         <label class="gs-row"><input type="checkbox" id="gsAutoPlayEn"><span>Auto-play English prompts and answers</span></label>
         <label class="gs-row"><input type="checkbox" id="gsWiktionary"><span>Look up unknown words on Wiktionary</span></label>
         <div class="gs-theme"><span class="gs-theme-label" id="gsThemeLabel">Theme</span><div class="gs-seg" role="radiogroup" aria-labelledby="gsThemeLabel"><button type="button" role="radio" data-theme="light">Light</button><button type="button" role="radio" data-theme="dark">Dark</button><button type="button" role="radio" data-theme="device">Device</button></div></div>
+        <details class="gs-help"><summary>How to use Türkçe</summary>
+<ol>
+          <li><b>Sözlük: choose your words.</b> Select the word lists or topics you want to study. Forms and Vocab only use what you select here. Colors show how well you know each word.</li>
+          <li><b>Forms: conjugate verbs.</b> Type the Turkish form that matches the English sentence. Select the grammars you want to practice: tenses, persons, negatives, questions, and more.</li>
+          <li><b>Vocab: learn words.</b> Type your answers, or flip through flashcards.<span class="help-para">Or, select one word group and take a test. If you score below 90%, or it's been a week since your last test, that word group will be circled in red on the Sözlük.</span></li>
+          <li><b>Tekrar: review at the right time.</b> Words you've practiced come back just as you're about to forget them. A word you miss returns after a few cards, and the "Coming up" list shows what's due next. When nothing is due, you can practice ahead.</li>
+          <li><b>Cases: build whole sentences.</b> Type the Turkish for the English sentence, using the right case endings. Choose which cases to practice. The sentences use nouns you already know well, so keep practicing in Vocab and Tekrar to unlock more.</li>
+          <li><b>Sign in</b> to sync across devices and track your progress through tests.</li>
+          <li><b>Something wrong?</b> Use the speech-bubble button to suggest a change.</li>
+        </ol>
+        </details>
       </div>
     </div>`);
     gear = {wrap: w, btn: w.querySelector("#settingsBtn"), pop: w.querySelector("#settingsPop"),
@@ -617,7 +611,6 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
       }catch(e){}
       location.reload();
     };
-    actions.appendChild(buildHelp());
     actions.appendChild(buildFeedback());
     actions.appendChild(buildSettings());
     var wrap = document.createElement("div");

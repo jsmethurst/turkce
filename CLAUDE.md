@@ -106,7 +106,7 @@ To change the database:
 The app has a light theme (default, "Stone") and a dark theme ("Slate"), chosen in the gear menu: Light, Dark or Device (follows the phone or computer). All colors are CSS variables in `:root` and `:root[data-theme="dark"]` at the top of `app/turkish-verb-drill.html`; use `var(--surface)`, `var(--heading)` and the other variables, not hard-coded colors, so both themes keep working. The choice is saved with the learner's settings (`theme`) and in `localStorage` (`turkce_theme`) so the page paints in the right theme at once.
 
 ## Guide and feedback buttons
-The "?" button in the header opens "How to use Türkçe", a short guide written by Jacob (`buildHelp` in `web/backend.js`). Keep its wording as he wrote it.
+"How to use Türkçe" is a short guide written by Jacob. It sits in an expandable section at the bottom of the gear (Global Settings) menu, in `buildSettings` in `web/backend.js` (the "?" button was removed from the header). Keep its wording as he wrote it.
 
 ## Feedback ("Suggest a change")
 The "Suggest a change" button in the header (a speech bubble) saves a suggestion into the Supabase `feedback` table. People can send suggestions whether or not they're signed in, and the public can't read them back. They can attach a screenshot: the camera button dims the page, they drag over an area (or tap for the whole screen), and html2canvas (loaded from jsDelivr only when needed) renders it into a PNG or JPEG stored in the row's `screenshot` column. A signed-in sender's email is stored too.
