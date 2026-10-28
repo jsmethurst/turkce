@@ -356,6 +356,8 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 input:checked + .slider{background:var(--tile-turquoise);}
 input:checked + .slider::before{transform:translateX(17px);}
 
+.sec-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;}
+.sec-links{font-family:'Inter',system-ui,sans-serif;font-size:0.82rem;font-weight:400;color:var(--ink-soft);white-space:nowrap;}
 .section-title{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;margin:26px 0 10px;color:var(--tile-blue-deep);}
 .section-title:first-child{margin-top:4px;}
 .hint{font-size:0.82rem;color:var(--ink-soft);line-height:1.5;margin-top:4px;}
@@ -633,22 +635,20 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     <div class="settings-group" style="text-align:center;padding:14px 16px;">
       <span class="hint" id="selectionCount" style="font-weight:600;color:var(--tile-blue-deep);"></span>
     </div>
-    <div class="section-title">Selected Verbs</div>
+    <div class="section-title sec-row"><span>Verbs</span><span class="sec-links">
+      <span class="link-btn" style="cursor:pointer;" id="pagesAll">Select all</span> ·
+      <span class="link-btn" style="cursor:pointer;" id="pagesNone">Select none</span>
+    </span></div>
     <div class="settings-group sel-box">
       <div class="chip-row" id="pageChips" style="margin-top:8px;"></div>
-      <p class="hint" style="margin-top:10px;">
-        <span class="link-btn" style="cursor:pointer;" id="pagesAll">Select all</span> ·
-        <span class="link-btn" style="cursor:pointer;" id="pagesNone">Select none</span>
-      </p>
     </div>
 
-    <div class="section-title">Selected Non-verbs</div>
+    <div class="section-title sec-row"><span>Non-verbs</span><span class="sec-links">
+      <span class="link-btn" style="cursor:pointer;" id="nonverbAll">Select all</span> ·
+      <span class="link-btn" style="cursor:pointer;" id="nonverbNone">Select none</span>
+    </span></div>
     <div class="settings-group sel-box">
       <div class="chip-row" id="nonverbChunkChips" style="margin-top:8px;"></div>
-      <p class="hint" style="margin-top:10px;">
-        <span class="link-btn" style="cursor:pointer;" id="nonverbAll">Select all</span> ·
-        <span class="link-btn" style="cursor:pointer;" id="nonverbNone">Select none</span>
-      </p>
     </div>
 
     <div class="section-title">Topics</div>
