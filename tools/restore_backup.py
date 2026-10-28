@@ -61,6 +61,27 @@ def main():
                 f"from auth.users u, jsonb_array_elements($restore${body}$restore$::jsonb) e where lower(u.email) = lower('{email}')\n"
                 "and not exists (select 1 from public.answer_events x where x.user_id = u.id and x.at = (e->>0)::timestamptz\n"
                 "  and x.tab = e->>1 and coalesce(x.key, '') = coalesce(e->>2, '') and x.correct = (e->>3)::boolean);")
+        # Personal lists and terms (newer backups only). Lists first: terms point at them.
+        for kind, table in (("lists", "user_lists"), ("terms", "user_terms")):
+            rows = user.get(kind) or []
+            if not rows:
+                continue
+            body = json.dumps(rows, ensure_ascii=False)
+            if "$restore$" in body:
+                sys.exit("unexpected delimiter in data")
+            if kind == "lists":
+                out.append(
+                    "insert into public.user_lists (id, user_id, kind, name, seed, created_at, updated_at, deleted_at)\n"
+                    "select (e->>'id')::uuid, u.id, e->>'kind', e->>'name', e->>'seed', (e->>'created_at')::timestamptz, (e->>'updated_at')::timestamptz, (e->>'deleted_at')::timestamptz\n"
+                    f"from auth.users u, jsonb_array_elements($restore${body}$restore$::jsonb) e where lower(u.email) = lower('{email}')\n"
+                    "on conflict (id) do update set name = excluded.name, deleted_at = excluded.deleted_at;")
+            else:
+                out.append(
+                    "insert into public.user_terms (id, user_id, list_id, kind, pkey, tr, en, forms, position, created_at, updated_at, deleted_at)\n"
+                    "select (e->>'id')::uuid, u.id, (e->>'list_id')::uuid, e->>'kind', e->>'pkey', e->>'tr', e->>'en', e->'forms', (e->>'position')::int,\n"
+                    "  (e->>'created_at')::timestamptz, (e->>'updated_at')::timestamptz, (e->>'deleted_at')::timestamptz\n"
+                    f"from auth.users u, jsonb_array_elements($restore${body}$restore$::jsonb) e where lower(u.email) = lower('{email}')\n"
+                    "on conflict (id) do update set tr = excluded.tr, en = excluded.en, forms = excluded.forms, position = excluded.position, deleted_at = excluded.deleted_at;")
     out.append("commit;")
     out.append("-- Accounts in the backup with no matching account now (they need to sign up, then re-run):")
     out.append("select b.email from (values " +

@@ -3,7 +3,7 @@
 What lives where:
 - **Website and word list:** this repo. It rebuilds on every push.
 - **Database structure** (table, privacy rules, functions): `supabase/migrations/`.
-- **Learners' saved data:** in Supabase (`user_docs`, `word_stats`, `answer_events`), plus a nightly encrypted backup (*Nightly backup* workflow). Each backup is kept for 30 days and needs Jacob's passphrase to open.
+- **Learners' saved data:** in Supabase (`user_docs`, `word_stats`, `answer_events`, `user_lists`, `user_terms`), plus a nightly encrypted backup (*Nightly backup* workflow). Each backup is kept for 30 days and needs Jacob's passphrase to open.
 - **Undo for a bad change:** the database keeps one snapshot a day for 14 days, in the `private` schema: `private.user_docs_history` (settings, progress, wordstats) and `private.word_stats_history` (each learner's whole word history). Restoring from them is a few lines of SQL in the Supabase SQL editor, no passphrase needed. `backups.user_docs_20261019` and `backups.feedback_20261019` are plain copies taken just before the 19 Oct 2026 data-layer upgrade.
 
 ## If the Supabase project is lost
