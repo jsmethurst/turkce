@@ -439,7 +439,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:8px;mar
   font-size:0.83rem;padding:7px 12px;border-radius:99px;border:1.5px solid var(--line);
   cursor:pointer;user-select:none;background:var(--surface);color:var(--ink-soft);transition:all .12s;
 }
-.chip{-webkit-touch-callout:none;}
+.chip,.chip *{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;}
 /* Selected: a light tint of the accent, an accent outline and a check; nothing heavy. */
 .chip.on{background:color-mix(in srgb, var(--tile-blue) 12%, var(--surface));border-color:var(--tile-blue);color:var(--ink);}
 .chip.on::before{content:"✓";color:var(--tile-blue);font-weight:700;margin-right:6px;}
@@ -3191,7 +3191,7 @@ function previewOnHover(chip, getItems){
   };
   chip.addEventListener("touchend", end, {passive:false});
   chip.addEventListener("touchcancel", ()=>{ stop(); if(shown) hideListPreview(); });
-  chip.addEventListener("contextmenu", e=>{ if(shown || timer) e.preventDefault(); });   // no phone menu over a long press
+  chip.addEventListener("contextmenu", e=>{ e.preventDefault(); });   // no phone menu over a long press
 }
 window.addEventListener("scroll", hideListPreview, {passive:true});
 function chipGroup(box, legend, kind, action){
