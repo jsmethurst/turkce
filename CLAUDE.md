@@ -33,7 +33,7 @@ Browsers may reuse the page for up to 10 minutes. Pages that are already open no
 | `supabase/migrations/` | Database changes as numbered SQL files. They're applied by `.github/workflows/database.yml` after Jacob approves (see below). `20261007000000_user_docs.sql` is the original setup, already applied. |
 
 ## Word lists: A1 (frozen) and Personal
-In the Sözlük the lists sit in two dotted boxes. **A1 - not editable** holds Listede (the Sayfa and Ünite lists, Sıfatlar) and Derste. Jacob will not ask for more words to be added to A1 lists; he may ask for a gloss edit here and there. **Personal - editable** holds the Bible lists, alphabetical, with no subsections; the editing feature for it is still to be designed with Jacob. Don't add new words anywhere until he says where they go.
+In the Sözlük the lists sit in two separate boxes: a solid one for A1 and a dotted one for Personal. **A1 - not editable** holds Listede (the Sayfa and Ünite lists, Sıfatlar) and Derste. Jacob will not ask for more words to be added to A1 lists; he may ask for a gloss edit here and there. **Personal - editable** holds the Bible lists, alphabetical, with no subsections; the editing feature for it is still to be designed with Jacob. Don't add new words anywhere until he says where they go.
 
 ## Adding words (Jacob's standing rules)
 When Jacob says "add <turkish> - <english>":
