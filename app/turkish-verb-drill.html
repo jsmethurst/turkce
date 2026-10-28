@@ -435,6 +435,10 @@ header{display:flex;align-items:center;justify-content:space-between;gap:8px;mar
   font-size:0.83rem;padding:7px 12px;border-radius:99px;border:1.5px solid var(--line);
   cursor:pointer;user-select:none;background:var(--surface);color:var(--ink-soft);transition:all .12s;
 }
+#tab-sozluk .chip-group{gap:5px;}
+#tab-sozluk .chip-group .chip{font-size:0.76rem;padding:5px 10px;}
+#tab-sozluk .chip-group .chip.on::before{margin-right:4px;}
+#tab-sozluk .chip-group .chip .chip-meta{font-size:0.64rem;margin-top:1px;}
 .chip,.chip *{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;}
 /* Selected: a light tint of the accent, an accent outline and a check; nothing heavy. */
 .chip.on{background:color-mix(in srgb, var(--tile-blue) 12%, var(--surface));border-color:var(--tile-blue);color:var(--ink);}
