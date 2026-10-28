@@ -516,7 +516,6 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
 .tag.arm{background:#E5191C;color:#fff;white-space:nowrap;overflow:hidden;box-shadow:0 0 0 2px rgba(229,25,28,.25);}
 .prompt-tags.armed{flex-wrap:nowrap;}
 .prompt-tags.armed .tag:not(.arm){display:none;}
-.upnext-hidden{margin-top:10px;font-size:0.82rem;color:var(--ink-soft);}
 .ref-list{columns:2;column-gap:20px;}
 @media(max-width:560px){.ref-list{columns:1;}}
 .ref-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:0.82rem;break-inside:avoid;}
@@ -5383,9 +5382,7 @@ function renderTekrarUpcoming(words){
     if(!inRange.length) return;
     rows.push(`<div class="upnext-row"><div class="upnext-when">${label}</div><div class="upnext-words">${wordList(inRange)}</div></div>`);
   });
-  const hid = [...state.hidden].map(k=>k.slice(k.indexOf(":")+1)).sort((a,b)=>a.localeCompare(b,"tr"));
-  box.innerHTML = (rows.length ? rows.join("") : '<span class="hint">Nothing scheduled yet. Words show up here once you answer them.</span>')
-    + (hid.length ? `<div class="upnext-hidden"><b>Excluded:</b> ${hid.join(", ")}</div>` : "");
+  box.innerHTML = rows.length ? rows.join("") : '<span class="hint">Nothing scheduled yet. Words show up here once you answer them.</span>';
 }
 function tekrarWaitText(ms){
   const m = Math.max(1, Math.round(ms/60000));
