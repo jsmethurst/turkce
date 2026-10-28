@@ -484,8 +484,8 @@ ava çıkmak                to go hunting
 yaramazlık yapmak         to misbehave
     örnek: Çocuklar yaramazlık yapıyor.  (The children are misbehaving.)
 
-DERSTE 76-87
-------------
+DERSTE 76-100
+-------------
 dirsek atmak              to elbow someone
     datif: Oyuncu rakibe dirsek atıyor.  (The player is elbowing his opponent.)
 ağrımak                   to ache
@@ -510,9 +510,6 @@ yakalamak                 to catch
     akuzatif: Topu yakalıyor.  (He is catching the ball.)
 dökmek                    to pour / to spill out
     akuzatif: Çayı döküyor.  (She is pouring the tea.)
-
-COMMON 1-25
------------
 uçmak                     to fly
     örnek: Kuş uçuyor.  (The bird is flying.)
 reddetmek                 to refuse / to reject
@@ -539,6 +536,9 @@ tartmak                   to weigh
     akuzatif: Elmaları tartıyor.  (She is weighing the apples.)
 saklamak                  to hide / to conceal
     akuzatif: Anahtarı saklıyor.  (He is hiding the key.)
+
+DERSTE 101-115
+--------------
 görünmek                  to show up / to appear
     lokatif: Ay gökyüzünde görünüyor.  (The moon is appearing in the sky.)
 kaybolmak                 to disappear
@@ -563,9 +563,6 @@ yavaşlamak                to slow down
     örnek: Tren yavaşlıyor.  (The train is slowing down.)
 emretmek                  to command
     datif: Kaptan askerlere emrediyor.  (The captain is commanding the soldiers.)
-
-COMMON 26-28
-------------
 engellemek                to prevent / to hinder
     akuzatif: Kazayı engelliyorlar.  (They are preventing the accident.)
 tamir etmek               to repair / to fix (something broken)
@@ -1481,7 +1478,7 @@ aslında                   actually
 ferah                     airy / roomy
 sağ                       right (direction)
 
-DERSTE 401-411
+DERSTE 401-425
 --------------
 kural                     rule
 etraf                     surroundings
@@ -1494,6 +1491,104 @@ hız                       speed
 paspas                    doormat
 virgül                    comma
 hırsız                    thief
+kendi                     self / own
+beraber                   together (collaborative)
+eksik                     missing / lacking
+fazla                     excessive / too much
+birden                    all of a sudden
+asır                      century
+Pazartesi                 Monday
+Salı                      Tuesday
+Çarşamba                  Wednesday
+Perşembe                  Thursday
+Cuma                      Friday
+Cumartesi                 Saturday
+Pazar                     Sunday
+Ocak                      January
+
+DERSTE 426-450
+--------------
+Şubat                     February
+Mart                      March
+Nisan                     April
+Mayıs                     May
+Haziran                   June
+Temmuz                    July
+Ağustos                   August
+Eylül                     September
+Ekim                      October
+Kasım                     November
+Aralık                    December
+balkon                    balcony
+yatak odası               bedroom
+asansör                   elevator
+kilit                     lock
+battaniye                 blanket
+gardırop                  wardrobe
+bulaşık makinesi          dishwasher
+çamaşır makinesi          washing machine
+süpürge                   broom / vacuum
+ütü                       iron (for clothes)
+sabun                     soap
+tarak                     comb
+tabak                     plate / dish
+kaşık                     spoon
+
+DERSTE 451-475
+--------------
+çatal                     fork
+bıçak                     knife
+çöp                       trash / garbage
+poşet                     plastic bag
+yumurta                   egg
+tavuk                     chicken
+balık                     fish
+salata                    salad
+elma                      apple
+armut                     pear
+limon                     lemon
+karpuz                    watermelon
+kavun                     melon
+kiraz                     cherry
+şeftali                   peach
+erik                      plum
+incir                     fig
+patates                   potato
+salatalık                 cucumber
+soğan                     onion
+sarımsak                  garlic
+biber                     pepper
+patlıcan                  eggplant
+havuç                     carrot
+kabak                     zucchini
+
+DERSTE 476-500
+--------------
+hepsi                     all of them
+ıspanak                   spinach
+fasulye                   bean
+tuz                       salt
+şeker                     sugar
+karabiber                 black pepper
+baharat                   spice
+un                        flour
+bal                       honey
+çikolata                  chocolate
+dondurma                  ice cream
+meydan                    square / plaza
+köprü                     bridge
+tünel                     tunnel
+kaldırım                  sidewalk
+istasyon                  station
+otogar                    bus station
+pasaport                  passport
+vize                      visa
+dünya                     world / earth
+elektrik                  electricity
+fırsat                    opportunity
+santimetre                centimeter
+şarkı                     song
+ders                      lesson / class
 
 SIFATLAR 1-25
 -------------
@@ -1657,107 +1752,6 @@ kuru                      dry
 yaralı                    injured / wounded
 misafirperver             hospitable
 yaramaz                   naughty / mischievous
-
-COMMON 1-25
------------
-kendi                     self / own
-beraber                   together (collaborative)
-eksik                     missing / lacking
-fazla                     excessive / too much
-birden                    all of a sudden
-asır                      century
-Pazartesi                 Monday
-Salı                      Tuesday
-Çarşamba                  Wednesday
-Perşembe                  Thursday
-Cuma                      Friday
-Cumartesi                 Saturday
-Pazar                     Sunday
-Ocak                      January
-Şubat                     February
-Mart                      March
-Nisan                     April
-Mayıs                     May
-Haziran                   June
-Temmuz                    July
-Ağustos                   August
-Eylül                     September
-Ekim                      October
-Kasım                     November
-Aralık                    December
-
-COMMON 26-50
-------------
-balkon                    balcony
-yatak odası               bedroom
-asansör                   elevator
-kilit                     lock
-battaniye                 blanket
-gardırop                  wardrobe
-bulaşık makinesi          dishwasher
-çamaşır makinesi          washing machine
-süpürge                   broom / vacuum
-ütü                       iron (for clothes)
-sabun                     soap
-tarak                     comb
-tabak                     plate / dish
-kaşık                     spoon
-çatal                     fork
-bıçak                     knife
-çöp                       trash / garbage
-poşet                     plastic bag
-yumurta                   egg
-tavuk                     chicken
-balık                     fish
-salata                    salad
-elma                      apple
-armut                     pear
-limon                     lemon
-
-COMMON 51-75
-------------
-karpuz                    watermelon
-kavun                     melon
-kiraz                     cherry
-şeftali                   peach
-erik                      plum
-incir                     fig
-patates                   potato
-salatalık                 cucumber
-soğan                     onion
-sarımsak                  garlic
-biber                     pepper
-patlıcan                  eggplant
-havuç                     carrot
-kabak                     zucchini
-hepsi                     all of them
-ıspanak                   spinach
-fasulye                   bean
-tuz                       salt
-şeker                     sugar
-karabiber                 black pepper
-baharat                   spice
-un                        flour
-bal                       honey
-çikolata                  chocolate
-dondurma                  ice cream
-
-COMMON 76-89
-------------
-meydan                    square / plaza
-köprü                     bridge
-tünel                     tunnel
-kaldırım                  sidewalk
-istasyon                  station
-otogar                    bus station
-pasaport                  passport
-vize                      visa
-dünya                     world / earth
-elektrik                  electricity
-fırsat                    opportunity
-santimetre                centimeter
-şarkı                     song
-ders                      lesson / class
 
 BIBLE 1-25
 ----------
