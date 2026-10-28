@@ -162,7 +162,6 @@ header{display:flex;align-items:center;justify-content:space-between;gap:8px;mar
 .sr-item{position:relative;}
 .xpill{position:absolute;top:50%;transform:translateY(-50%);height:20px;box-sizing:border-box;display:inline-flex;align-items:center;padding:0 10px;border:none;border-radius:10px;background:#E5191C;color:#fff;font:inherit;font-size:.72rem;font-weight:700;white-space:nowrap;overflow:hidden;cursor:pointer;transition:width .2s ease;}
 .xpill.incl{background:var(--tile-blue-deep);}
-.sr-item.is-excl .gs-tr{text-decoration:line-through;opacity:.55;}
 .sr-row.verb:hover,.sr-row.active{background:var(--paper-2);}
 .gs-tr{font-weight:700;color:var(--heading);}
 .gs-tag{margin-left:6px;font-size:0.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--tile-turquoise);}
@@ -3848,7 +3847,7 @@ document.addEventListener("click", e=>{
     afterExcludeChange();
     return;
   }
-  const row = e.target.closest && e.target.closest("#refPanel .ref-row:not(.is-hidden), #nonverbRefPanel .ref-row:not(.is-hidden), #gsearchResults .sr-item");
+  const row = e.target.closest && e.target.closest("#refPanel .ref-row:not(.is-hidden), #nonverbRefPanel .ref-row:not(.is-hidden)");
   if(!row || !row.dataset.key){ disarmX(); return; }
   const r = row.getBoundingClientRect();
   if(e.clientX < r.right - 44){ disarmX(); return; }
@@ -3982,7 +3981,7 @@ function renderSearchResults(){
           : `${turkish}<span class="gs-en">${esc(it.en)}</span>`;     // typed Turkish: bold Turkish on the left, English on the right
         const el = it.kind==="verb" ? 'button type="button"' : "div";
         const key = it.key;
-        return `<div class="sr-item${state.hidden.has(key) ? " is-excl" : ""}" data-key="${key.replace(/"/g,"&quot;")}"><${el} class="sr-row ${it.kind==="verb" ? "verb" : ""}" role="option" data-i="${i}">${body}</${it.kind==="verb" ? "button" : "div"}></div>`;
+        return `<div class="sr-item"><${el} class="sr-row ${it.kind==="verb" ? "verb" : ""}" role="option" data-i="${i}">${body}</${it.kind==="verb" ? "button" : "div"}></div>`;
       }).join("")
     : "";
   if(!gs.items.length) startWiktionarySearch(input.value.trim());
