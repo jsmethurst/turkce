@@ -670,9 +670,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 
   <!-- ============ SÖZLÜK ============ -->
   <div id="tab-sozluk" style="display:none;">
-    <div class="settings-group" style="text-align:center;padding:14px 16px;">
-      <span class="hint" id="selectionCount" style="font-weight:600;color:var(--heading);"></span>
-    </div>
+    <div class="hint" id="selectionCount" style="margin:2px 2px 14px;font-weight:600;color:var(--heading);line-height:1.5;"></div>
     <div class="section-title sec-row"><span>Verbs</span><span class="sec-links">
       <span class="link-btn" style="cursor:pointer;" id="pagesAll">Select all</span> ·
       <span class="link-btn" style="cursor:pointer;" id="pagesNone">Select none</span>
@@ -3256,24 +3254,21 @@ function stripKnownSuffix(token, tokenSet){
   }
   return token;
 }
+let uniqueWordTotal = null;   // the dictionary doesn't change while the page is open
+function countUniqueWords(entries){
+  const tokenSet = new Set();
+  entries.forEach(w=>w.trim().split(/\s+/).forEach(tok=>tokenSet.add(tok.toLowerCase())));
+  const roots = new Set();
+  tokenSet.forEach(tok=>{ roots.add(stripKnownSuffix(tok, tokenSet)); });
+  return roots.size;
+}
 function updateSelectionCount(){
   const el = document.getElementById("selectionCount");
   if(!el) return;
-  const tokenSet = new Set();
-  let verbEntries = 0, nonverbEntries = 0;
-  VERBS.forEach(v=>{
-    if(!pageEnabled(v)) return;
-    verbEntries++;
-    v.inf.trim().split(/\s+/).forEach(tok=>tokenSet.add(tok.toLowerCase()));
-  });
-  NONVERBS.forEach(nv=>{
-    if(!nonverbEnabled(nv)) return;
-    nonverbEntries++;
-    nv.tr.trim().split(/\s+/).forEach(tok=>tokenSet.add(tok.toLowerCase()));
-  });
-  const roots = new Set();
-  tokenSet.forEach(tok=>{ roots.add(stripKnownSuffix(tok, tokenSet)); });
-  el.textContent = `${roots.size} unique Turkish words selected  (from ${verbEntries} verb entries, ${nonverbEntries} non-verb entries)`;
+  if(uniqueWordTotal===null) uniqueWordTotal = countUniqueWords([...VERBS.map(v=>v.inf), ...NONVERBS.map(n=>n.tr)]);
+  const selected = VERBS.filter(pageEnabled).length + NONVERBS.filter(nonverbEnabled).length;
+  const total = VERBS.length + NONVERBS.length;
+  el.innerHTML = `<div>${total.toLocaleString()} entries, ${uniqueWordTotal.toLocaleString()} unique words</div><div>${selected.toLocaleString()} entries selected</div>`;
   renderSelectionChips();
 }
 // Forms: all selected verbs, or only the dark green ones on the Sözlük.
