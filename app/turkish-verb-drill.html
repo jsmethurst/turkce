@@ -301,7 +301,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .chip-row{display:flex;flex-wrap:wrap;gap:7px;}
 .chip-sub{flex:0 0 100%;margin:6px 0 -2px;font-size:0.72rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
 .chip-sub:first-child{margin-top:0;}
-.sel-box{border:2.5px solid var(--tile-blue-deep);}
+#tab-sozluk .settings-group{border:2.5px solid var(--tile-blue-deep);}   /* every box on the Sözlük tab */
 .chip-group{flex:0 0 100%;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:7px;}
 .chip-group + .chip-group{flex:0 0 calc(100% + 32px);margin:6px -16px 0;padding:10px 16px 0;border-top:2.5px solid var(--tile-blue-deep);}   /* edge to edge, same weight as the outer line */
 .chip-group .legend{flex:0 0 100%;font-size:0.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
@@ -639,7 +639,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <span class="link-btn" style="cursor:pointer;" id="pagesAll">Select all</span> ·
       <span class="link-btn" style="cursor:pointer;" id="pagesNone">Select none</span>
     </span></div>
-    <div class="settings-group sel-box">
+    <div class="settings-group">
       <div class="chip-row" id="pageChips" style="margin-top:8px;"></div>
     </div>
 
@@ -647,7 +647,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <span class="link-btn" style="cursor:pointer;" id="nonverbAll">Select all</span> ·
       <span class="link-btn" style="cursor:pointer;" id="nonverbNone">Select none</span>
     </span></div>
-    <div class="settings-group sel-box">
+    <div class="settings-group">
       <div class="chip-row" id="nonverbChunkChips" style="margin-top:8px;"></div>
     </div>
 
