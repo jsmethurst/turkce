@@ -431,6 +431,10 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 input:checked + .slider{background:var(--tile-turquoise);}
 input:checked + .slider::before{transform:translateX(17px);}
 
+.subtabs{display:flex;gap:6px;margin:0 0 16px;background:var(--paper-2);padding:4px;border-radius:12px;}
+.subtab{flex:1;font:inherit;font-size:0.88rem;font-weight:600;padding:9px 10px;border:none;border-radius:9px;background:transparent;color:var(--ink-soft);cursor:pointer;}
+.subtab.active{background:var(--tab-on-bg);color:var(--tab-on-ink);box-shadow:var(--shadow);}
+#sozProgress .section-title:first-child,#sozSelect .section-title:first-child{margin-top:4px;}
 .sec-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;}
 .sec-links{font-family:'Inter',system-ui,sans-serif;font-size:0.82rem;font-weight:400;color:var(--ink-soft);white-space:nowrap;}
 .section-title{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;margin:26px 0 10px;color:var(--heading);}
@@ -707,6 +711,11 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 
   <!-- ============ SÖZLÜK ============ -->
   <div id="tab-sozluk" style="display:none;">
+    <div class="subtabs" id="sozSubtabs" role="tablist">
+      <button type="button" class="subtab active" data-sub="select" role="tab" aria-selected="true">List selection</button>
+      <button type="button" class="subtab" data-sub="progress" role="tab" aria-selected="false">Progress</button>
+    </div>
+    <div id="sozSelect">
     <div class="hint" id="selectionCount" style="margin:2px 2px 14px;font-weight:600;color:var(--heading);line-height:1.5;"></div>
     <div class="section-title sec-row"><span>Verbs</span><span class="sec-links">
       <span class="link-btn" style="cursor:pointer;" id="pagesAll">Select all</span> ·
@@ -723,17 +732,8 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     <div class="settings-group sel-wrap">
       <div class="chip-row" id="nonverbChunkChips"></div>
     </div>
-
-    <div class="section-title">Topics</div>
-    <div class="settings-group">
-      <p class="hint">Select topic groups spanning both verbs and non-verbs.</p>
-      <div class="chip-row" id="topicChips" style="margin-top:8px;"></div>
-      <p class="hint" style="margin-top:10px;">
-        <span class="link-btn" style="cursor:pointer;" id="topicsNone">Clear topics</span>
-      </p>
     </div>
-
-    <div class="section-title">Sözlük progress</div>
+    <div id="sozProgress" hidden>
     <div class="settings-group form-key" aria-label="Highlight key">
       <span class="form-key-title">Form on last 5 reviews:</span>
       <button type="button" class="form-swatch form-5" data-level="5" aria-pressed="false">5/5 <b></b></button>
@@ -747,13 +747,21 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     </div>
 
     <div class="section-title">All verbs</div>
-    <div class="settings-group">
-      <div id="refPanel"></div>
-    </div>
+    <div id="refPanel"></div>
 
     <div class="section-title">All non-verbs</div>
+    <div id="nonverbRefPanel"></div>
+    </div>
+    <!-- Topics are switched off for now (TOPICS_ON in the script); kept here so they can come back. -->
+    <div id="sozTopics" hidden>
+    <div class="section-title">Topics</div>
     <div class="settings-group">
-      <div id="nonverbRefPanel"></div>
+      <p class="hint">Select topic groups spanning both verbs and non-verbs.</p>
+      <div class="chip-row" id="topicChips" style="margin-top:8px;"></div>
+      <p class="hint" style="margin-top:10px;">
+        <span class="link-btn" style="cursor:pointer;" id="topicsNone">Clear topics</span>
+      </p>
+    </div>
     </div>
   </div>
 
@@ -1496,6 +1504,7 @@ const NONVERB_CHUNKS = buildNonverbChunks();
 const TOPICS = [];
 const VERB_INF_SET = new Set(VERBS.map(v=>v.inf));
 const NONVERB_TERM_SET = new Set(NONVERBS.map(n=>n.tr));
+const TOPICS_ON = false;   // the Topics section is hidden for now; its code stays so it can come back
 const TOPIC_VERB_SET = {};
 const TOPIC_NONVERB_SET = {};
 function rebuildTopicSets(){
@@ -2856,12 +2865,12 @@ function pageEnabled(v){
   } else if(state.pages.has(v.page)){
     return true;
   }
-  for(const tk of state.topics){ if(TOPIC_VERB_SET[tk] && TOPIC_VERB_SET[tk].has(v.inf)) return true; }
+  if(TOPICS_ON) for(const tk of state.topics){ if(TOPIC_VERB_SET[tk] && TOPIC_VERB_SET[tk].has(v.inf)) return true; }
   return false;
 }
 function nonverbEnabled(nv){
   if(state.nonverbChunks.has(nv.chunkKey)) return true;
-  for(const tk of state.topics){ if(TOPIC_NONVERB_SET[tk] && TOPIC_NONVERB_SET[tk].has(nv.tr)) return true; }
+  if(TOPICS_ON) for(const tk of state.topics){ if(TOPIC_NONVERB_SET[tk] && TOPIC_NONVERB_SET[tk].has(nv.tr)) return true; }
   return false;
 }
 function applyPageSelection(){
@@ -3230,7 +3239,7 @@ function renderSelectionChips(){
   const allNonverbs = NONVERB_CHUNKS.length && NONVERB_CHUNKS.every(c=>state.nonverbChunks.has(c.key));
   if(allNonverbs) chips.push({label:"All non-verbs", remove(){ state.nonverbChunks.clear(); }});
   else NONVERB_CHUNKS.filter(c=>state.nonverbChunks.has(c.key)).forEach(c=>chips.push({label:c.label, remove(){ state.nonverbChunks.delete(c.key); }}));
-  TOPICS.filter(t=>state.topics.has(t.key)).forEach(t=>chips.push({label:t.label, remove(){ state.topics.delete(t.key); }}));
+  if(TOPICS_ON) TOPICS.filter(t=>state.topics.has(t.key)).forEach(t=>chips.push({label:t.label, remove(){ state.topics.delete(t.key); }}));
   boxes.forEach(box=>{
     box.innerHTML = "";
     if(!chips.length){
@@ -3286,6 +3295,15 @@ function renderNonverbChunkChips(){
   });
 }
 renderNonverbChunkChips();
+// Sözlük has two views: the list selection (default) and the progress colors.
+document.querySelectorAll("#sozSubtabs .subtab").forEach(b=>{
+  b.onclick = ()=>{
+    document.querySelectorAll("#sozSubtabs .subtab").forEach(x=>{ const on = x===b; x.classList.toggle("active", on); x.setAttribute("aria-selected", String(on)); });
+    document.getElementById("sozSelect").hidden = b.dataset.sub!=="select";
+    document.getElementById("sozProgress").hidden = b.dataset.sub!=="progress";
+    if(b.dataset.sub==="progress"){ renderReferencePanel(); renderNonverbReferencePanel(); }
+  };
+});
 document.getElementById("nonverbAll").onclick = ()=>{
   state.nonverbChunks = new Set(NONVERB_CHUNKS.map(c=>c.key));
   [...nonverbChunkChips.querySelectorAll(".chip")].forEach(c=>c.classList.add("on"));
@@ -3333,9 +3351,12 @@ const showHiddenIn = new Set();   // Sözlük lists whose hidden words are curre
 function renderReferencePanel(){
   const box = document.getElementById("refPanel");
   box.innerHTML = "";
+  // The same order as on the List selection view: personal lists first, then Listede, then Derste.
+  const byName = (a,b)=>a.label.localeCompare(b.label, "tr", {numeric:true});
   const groups = [
+    ...VERB_BONUS_CHUNKS.filter(c=>c.personal).sort(byName).map(c=>({label:c.label, rows:c.items})),
     ...VERB_PAGES.map(p=>({label:p.label, rows: VERBS.filter(v=>v.page===p.key)})),
-    ...VERB_BONUS_CHUNKS.map(c=>({label:c.label, rows: c.items})),
+    ...VERB_BONUS_CHUNKS.filter(c=>!c.personal).map(c=>({label:c.label, rows: c.items})),
   ];
   groups.forEach(g=>{
     if(g.rows.length===0) return;
@@ -4086,7 +4107,11 @@ function chooseSearchResult(i){
 function renderNonverbReferencePanel(){
   const box = document.getElementById("nonverbRefPanel");
   box.innerHTML = "";
-  NONVERB_CHUNKS.forEach(c=>{
+  // Personal lists first, then the Ünite and Sıfatlar lists, then Derste (as on the List selection view).
+  const byName = (a,b)=>a.label.localeCompare(b.label, "tr", {numeric:true});
+  const a1 = NONVERB_CHUNKS.filter(c=>!c.personal);
+  [...NONVERB_CHUNKS.filter(c=>c.personal).sort(byName), ...a1.filter(c=>c.unit!=="other"), ...a1.filter(c=>c.unit==="other")].forEach(c=>{
+    if(!c.items.length) return;
     const title = document.createElement("div");
     title.className = "ref-page-title";
     title.textContent = c.label;

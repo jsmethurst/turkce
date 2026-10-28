@@ -3,7 +3,7 @@
 Live site: https://jsmethurst.github.io/turkce/ (owner: Jacob, jsmethurst). It's a single-page app with three tabs:
 - **Forms:** conjugation drills.
 - **Vocab:** flashcards and tests.
-- **Sözlük:** the word list, with group and topic chips.
+- **Sözlük:** the word lists, in two views: *List selection* (default: choose which lists to practice) and *Progress* (the color summary and every word in the same list order). Topics are switched off for now (`TOPICS_ON = false` in the page; the code and data stay).
 
 Learners sign in with email and password through Supabase so their progress syncs between devices.
 
