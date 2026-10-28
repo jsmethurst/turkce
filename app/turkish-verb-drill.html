@@ -343,9 +343,10 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .chip-group{flex:0 0 100%;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:7px;border-radius:12px;padding:12px 12px 12px;}
 .chip-group.personal{position:relative;}
 /* Longer dashes with wider gaps than a plain CSS dashed border allows: a dashed outline drawn as a mask. */
-.chip-group.personal::before{content:"";position:absolute;inset:0;border-radius:12px;pointer-events:none;background:var(--line);
-  -webkit-mask:var(--dash-mask) 0 0/100% 100% no-repeat;mask:var(--dash-mask) 0 0/100% 100% no-repeat;}
-.chip-group.a1{border:2.5px solid var(--line);margin-top:6px;}
+.chip-group.personal::before{content:"";position:absolute;inset:0;border-radius:12px;pointer-events:none;background:var(--ink-soft);
+  -webkit-mask:var(--dash-mask) 0 0/var(--dash-size) no-repeat;mask:var(--dash-mask) 0 0/var(--dash-size) no-repeat;}
+.chip-group.a1{border:2.5px solid var(--ink-soft);margin-top:6px;}
+#tab-sozluk .settings-group{border-color:var(--ink-soft);}   /* every box on the Sözlk tab uses the label text color */
 .chip-group .legend{flex:0 0 100%;font-size:0.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
 .chip{
   font-size:0.83rem;padding:7px 12px;border-radius:99px;border:1.5px solid var(--line);
@@ -3190,10 +3191,14 @@ function chipGroup(box, legend, kind){
 // The dashed outline is drawn at the box's exact pixel size, so every side is the same weight.
 function dashedOutline(g){
   const paint = ()=>{
-    const w = g.offsetWidth, h = g.offsetHeight;
+    // Sizes snapped to whole device pixels, so the line is crisp on every side (a fractional edge blurs and looks faded).
+    const dpr = window.devicePixelRatio || 1, r = g.getBoundingClientRect();
+    const w = Math.round(r.width*dpr)/dpr, h = Math.round(r.height*dpr)/dpr;
     if(!w || !h) return;
-    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}' viewBox='0 0 ${w} ${h}'><rect x='0.75' y='0.75' width='${w-1.5}' height='${h-1.5}' rx='12' ry='12' fill='none' stroke='black' stroke-width='1.5' stroke-dasharray='14 10'/></svg>`;
+    const sw = Math.max(1, Math.round(1.5*dpr))/dpr;
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}' viewBox='0 0 ${w} ${h}'><rect x='${sw/2}' y='${sw/2}' width='${w-sw}' height='${h-sw}' rx='12' ry='12' fill='none' stroke='black' stroke-width='${sw}' stroke-dasharray='14 10'/></svg>`;
     g.style.setProperty("--dash-mask", `url("data:image/svg+xml,${encodeURIComponent(svg)}")`);
+    g.style.setProperty("--dash-size", `${w}px ${h}px`);
   };
   if(window.ResizeObserver) new ResizeObserver(paint).observe(g); else paint();
   requestAnimationFrame(paint);
