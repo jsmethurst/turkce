@@ -3191,12 +3191,16 @@ function chipGroup(box, legend, kind){
 // The dashed outline is drawn at the box's exact pixel size, so every side is the same weight.
 function dashedOutline(g){
   const paint = ()=>{
-    // Sizes snapped to whole device pixels, so the line is crisp on every side (a fractional edge blurs and looks faded).
+    // Straight sides use crisp edges (snapped to whole device pixels, so none of them can look faded);
+    // only the four small corners are smoothed.
     const dpr = window.devicePixelRatio || 1, r = g.getBoundingClientRect();
     const w = Math.round(r.width*dpr)/dpr, h = Math.round(r.height*dpr)/dpr;
     if(!w || !h) return;
-    const sw = Math.max(1, Math.round(1.5*dpr))/dpr;
-    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}' viewBox='0 0 ${w} ${h}'><rect x='${sw/2}' y='${sw/2}' width='${w-sw}' height='${h-sw}' rx='12' ry='12' fill='none' stroke='black' stroke-width='${sw}' stroke-dasharray='14 10'/></svg>`;
+    const sw = Math.max(1, Math.round(1.5*dpr))/dpr, i = sw/2, R = 12, d = "14 10";
+    const line = (x1,y1,x2,y2)=>`<line x1='${x1}' y1='${y1}' x2='${x2}' y2='${y2}' stroke-dasharray='${d}'/>`;
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}' viewBox='0 0 ${w} ${h}' fill='none' stroke='black' stroke-width='${sw}'>`
+      + `<g shape-rendering='crispEdges'>${line(R,i,w-R,i)}${line(w-i,R,w-i,h-R)}${line(w-R,h-i,R,h-i)}${line(i,h-R,i,R)}</g>`
+      + `<path d='M${i},${R} A${R-i},${R-i} 0 0 1 ${R},${i} M${w-R},${i} A${R-i},${R-i} 0 0 1 ${w-i},${R} M${w-i},${h-R} A${R-i},${R-i} 0 0 1 ${w-R},${h-i} M${R},${h-i} A${R-i},${R-i} 0 0 1 ${i},${h-R}'/></svg>`;
     g.style.setProperty("--dash-mask", `url("data:image/svg+xml,${encodeURIComponent(svg)}")`);
     g.style.setProperty("--dash-size", `${w}px ${h}px`);
   };
