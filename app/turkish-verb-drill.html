@@ -137,8 +137,8 @@ body{
 .wrap{max-width:760px;margin:0 auto;padding:28px 18px 80px;}
 @media(min-width:640px){.wrap{padding:44px 24px 100px;}}
 
-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:22px;}
-.sync-status{display:flex;align-items:center;gap:6px;height:42px;box-sizing:border-box;padding:0 14px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:var(--ink-soft);white-space:nowrap;}
+header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:16px;}
+.sync-status{display:flex;align-items:center;gap:6px;height:34px;box-sizing:border-box;padding:0 11px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:var(--ink-soft);white-space:nowrap;}
 .sync-status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--good);}
 .sync-status.local::before{background:var(--bad);}
 .export-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:-8px 0 20px;font-size:13px;color:var(--ink-soft);}
@@ -146,12 +146,12 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .export-msg.good{color:var(--good);}
 .export-msg.bad{color:var(--bad);}
 .sync-note{margin:-8px 0 20px;padding:10px 14px;border-radius:10px;background:var(--fb-bad);color:var(--bad);font-size:13px;line-height:1.5;}
-.brand{display:flex;align-items:center;gap:12px;}
+.brand{display:flex;align-items:center;flex:none;}
 .gsearch{position:relative;flex:1 1 0;min-width:0;}
-.gsearch input{width:100%;box-sizing:border-box;height:42px;font:inherit;font-size:0.92rem;padding:0 32px 0 34px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);outline:none;}
+.gsearch input{width:100%;box-sizing:border-box;height:34px;font:inherit;font-size:0.88rem;padding:0 28px 0 31px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);outline:none;}
 .gsearch input:focus{border-color:var(--tile-turquoise);}
-.gsearch .mag{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--ink-soft);pointer-events:none;}
-.gsearch .clr{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:26px;height:26px;border:none;border-radius:50%;background:none;font-size:1.15rem;line-height:1;color:var(--ink-soft);cursor:pointer;}
+.gsearch .mag{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--ink-soft);pointer-events:none;}
+.gsearch .clr{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:24px;height:24px;border:none;border-radius:50%;background:none;font-size:1.15rem;line-height:1;color:var(--ink-soft);cursor:pointer;}
 .gsearch .clr:hover{background:var(--paper-2);}
 .gsearch-results{position:fixed;z-index:70;max-height:min(60vh,420px);overflow-y:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 40px -12px rgba(18,65,77,.5);padding:6px;}
 .gsearch-results[hidden]{display:none;}
@@ -178,7 +178,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .gs-wk .gs-pos{margin-left:6px;font-size:0.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
 .gs-foot{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;justify-content:space-between;padding:6px 10px 4px;font-size:0.82rem;color:var(--ink-soft);}
 .gs-foot a,.gs-foot button{font:inherit;background:none;border:none;padding:0;color:var(--tile-blue);font-weight:400;text-decoration:underline;cursor:pointer;}
-.brand-mark{width:42px;height:42px;flex:none;display:block;filter:drop-shadow(0 1px 1px rgba(18,65,77,0.12)) drop-shadow(0 6px 10px rgba(18,65,77,0.22));}
+.brand-mark{width:34px;height:34px;flex:none;display:block;filter:drop-shadow(0 1px 1px rgba(0,0,0,0.12)) drop-shadow(0 4px 8px rgba(0,0,0,0.18));}
 /* Logo: a glass of çay; the steam drifts gently. */
 .brand-steam{animation:steam 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:bottom center;}
 @keyframes steam{0%,100%{transform:translateY(0);opacity:.9;}50%{transform:translateY(-1.5px);opacity:.55;}}
@@ -561,40 +561,7 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
 
   <header>
     <div class="brand">
-      <svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true">
-      <defs>
-      <linearGradient id="lg-bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#1F5C6B"/>
-      <stop offset="1" stop-color="#12414D"/>
-      </linearGradient>
-      <linearGradient id="lg-tea" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#E0662E"/>
-      <stop offset="1" stop-color="#A8321A"/>
-      </linearGradient>
-      <clipPath id="lg-tile"><rect width="64" height="64" rx="15"/></clipPath>
-      <clipPath id="lg-glass"><path d="M21 20H43C42.5 28 36.5 31 36.5 36C36.5 40.5 42.5 43 41.8 49C41.2 53.5 37.5 55.5 32 55.5C26.5 55.5 22.8 53.5 22.2 49C21.5 43 27.5 40.5 27.5 36C27.5 31 21.5 28 21 20Z"/></clipPath>
-      </defs>
-      <g clip-path="url(#lg-tile)">
-      <rect width="64" height="64" fill="url(#lg-bg)"/>
-      <circle cx="3" cy="3" r="15" fill="#2E9C97"/>
-      <circle cx="63" cy="63" r="11" fill="#C9932E"/>
-      </g>
-      <g class="brand-steam" fill="none" stroke="#FBF5E9" stroke-width="2.6" stroke-linecap="round" opacity="0.9">
-      <path d="M28 16C25 13.2 31 10.8 28 7"/>
-      <path d="M36 16C33 13.2 39 10.8 36 7"/>
-      </g>
-      <ellipse cx="32" cy="56.5" rx="15.5" ry="3.8" fill="#C1442B"/>
-      <g clip-path="url(#lg-glass)">
-      <rect x="18" y="20" width="28" height="40" fill="#FBF5E9" opacity="0.22"/>
-      <rect x="18" y="25.5" width="28" height="34" fill="url(#lg-tea)"/>
-      <rect x="18" y="25.5" width="28" height="2.2" fill="#F2A15A"/>
-      </g>
-      <path d="M21 20H43C42.5 28 36.5 31 36.5 36C36.5 40.5 42.5 43 41.8 49C41.2 53.5 37.5 55.5 32 55.5C26.5 55.5 22.8 53.5 22.2 49C21.5 43 27.5 40.5 27.5 36C27.5 31 21.5 28 21 20Z" fill="none" stroke="#FBF5E9" stroke-width="2.4" stroke-linejoin="round"/>
-      <path d="M24.6 44.5C24.4 47.5 25.6 50.3 27.6 51.6" fill="none" stroke="#FBF5E9" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/>
-      <circle cx="29.3" cy="44.2" r="1.35" fill="#21323A"/>
-      <circle cx="34.7" cy="44.2" r="1.35" fill="#21323A"/>
-      <path d="M29.4 47.4Q32 49.6 34.6 47.4" fill="none" stroke="#21323A" stroke-width="1.4" stroke-linecap="round"/>
-      </svg>
+      <span id="brandMark" style="display:block;line-height:0;"></span>
       <h1>Türkçe</h1>
     </div>
     <div class="gsearch" id="gsearch">
@@ -1520,6 +1487,15 @@ const VERB_PAGES = [
 ];
 const VERB_PAGE_TAG = {1:"1. Sayfa", 2:"2. Sayfa", 3:"3. Sayfa", 4:"4. Sayfa", bible:"Bible"};
 
+const LOGO = {
+  chalk:  {a:'#3F78F0', b:'#1F4FC2', glass:'#FFFFFF', glassFill:'rgba(255,255,255,.20)', tea1:'#F6B04F', tea2:'#DD7B1E', saucer:'#FFFFFF', saucerShade:'#C9D6F5', steam:'#FFFFFF', face:'#4A2A12', blush:'#FF8F9C', accent:'#0E8FA6'},
+  meadow: {a:'#2FAE78', b:'#17704A', glass:'#FFFFFF', glassFill:'rgba(255,255,255,.20)', tea1:'#F6B04F', tea2:'#DD7B1E', saucer:'#FFFFFF', saucerShade:'#CBE6D8', steam:'#FFFFFF', face:'#4A2A12', blush:'#FF8F9C', accent:'#E3B341'},
+  ember:  {a:'#F28A3A', b:'#B8460A', glass:'#FFFFFF', glassFill:'rgba(255,255,255,.20)', tea1:'#F7B24E', tea2:'#C9560F', saucer:'#FFFFFF', saucerShade:'#F4D5BE', steam:'#FFFFFF', face:'#4A2A12', blush:'#FF8F9C', accent:'#14808A'},
+  night:  {a:'#273048', b:'#12151D', glass:'#A9C4FF', glassFill:'rgba(126,166,255,.16)', tea1:'#FFB95F', tea2:'#E8832B', saucer:'#7EA6FF', saucerShade:'#4C71C9', steam:'#C3D6FF', face:'#3A200C', blush:'#FF9AA2', accent:'#5BCBDB'},
+  moss:   {a:'#1F3B30', b:'#0F1713', glass:'#A8EBCB', glassFill:'rgba(98,211,155,.16)', tea1:'#FFB95F', tea2:'#E8832B', saucer:'#62D39B', saucerShade:'#34906A', steam:'#CFF5E2', face:'#3A200C', blush:'#FF9AA2', accent:'#E9BE62'},
+  coal:   {a:'#3A2A22', b:'#16100D', glass:'#FFCFB0', glassFill:'rgba(255,154,102,.16)', tea1:'#FFB95F', tea2:'#E8832B', saucer:'#FF9A66', saucerShade:'#C45F2A', steam:'#FFDCC7', face:'#3A200C', blush:'#FF9AA2', accent:'#5BCBDB'},
+};
+const THEMES = ["chalk","meadow","ember","night","moss","coal"];
 const VERBS = [];
 // The signed-in learner's own lists (loaded from the database; see "Personal lists" further down).
 const personal = {lists:[], terms:[], ready:false};
@@ -3319,7 +3295,7 @@ function updateSelectionCount(){
   if(uniqueWordTotal===null) uniqueWordTotal = countUniqueWords([...VERBS.map(v=>v.inf), ...NONVERBS.map(n=>n.tr)]);
   const selected = VERBS.filter(pageEnabled).length + NONVERBS.filter(nonverbEnabled).length;
   const total = VERBS.length + NONVERBS.length;
-  el.textContent = `${total.toLocaleString()} terms, ${uniqueWordTotal.toLocaleString()} unique words · ${selected.toLocaleString()} terms selected`;
+  el.textContent = `${total.toLocaleString()} terms · ${uniqueWordTotal.toLocaleString()} unique words · ${selected.toLocaleString()} terms selected`;
   renderSelectionChips();
 }
 // Forms: all selected verbs, or only the dark green ones on the Sözlük.
@@ -4355,8 +4331,35 @@ if(SAVED_SETTINGS) applyVocabSettings(SAVED_SETTINGS);
 // Global settings (the gear in the header): one spelling rule and one auto-play choice for every tab.
 // Spelling used to be a separate switch on Forms and on Vocab, so either one being on counts as on.
 function globalLenient(){ return !!(state.lenient || vocabState.lenientTyping); }
+// The çay glass logo, coloured to match the theme. Used in the header and for the browser-tab icon.
+function turkceLogoSVG(theme, uid, cls){
+  const c = LOGO[theme] || LOGO.chalk, id = 'lg' + (uid||'');
+  const glass = 'M23.4,17 C24.2,23 25.9,27 25.9,31 C25.9,34.5 24.3,37 24.3,41.4 C24.3,45 27,46.6 32,46.6 C37,46.6 39.7,45 39.7,41.4 C39.7,37 38.1,34.5 38.1,31 C38.1,27 39.8,23 40.6,17 Z';
+  return `<svg class="${cls||'brand-mark'}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true">
+<defs><linearGradient id="${id}b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c.a}"/><stop offset="1" stop-color="${c.b}"/></linearGradient>
+<linearGradient id="${id}t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c.tea1}"/><stop offset="1" stop-color="${c.tea2}"/></linearGradient>
+<clipPath id="${id}k"><rect width="64" height="64" rx="15"/></clipPath><clipPath id="${id}g"><path d="${glass}"/></clipPath></defs>
+<g clip-path="url(#${id}k)"><rect width="64" height="64" fill="url(#${id}b)"/><circle cx="4" cy="4" r="14" fill="${c.accent}" opacity=".35"/></g>
+<g class="brand-steam" fill="none" stroke="${c.steam}" stroke-width="2.2" stroke-linecap="round" opacity=".92"><path d="M29.2,14.4C26.6,12 31.6,10.2 29.2,7.2"/><path d="M34.8,14.4C32.2,12 37.2,10.2 34.8,7.2"/></g>
+<ellipse cx="32" cy="49.4" rx="14.2" ry="3.2" fill="${c.saucerShade}"/><ellipse cx="32" cy="48.3" rx="14.2" ry="3" fill="${c.saucer}"/>
+<g clip-path="url(#${id}g)"><rect x="20" y="17" width="24" height="31" fill="${c.glassFill}"/><rect x="20" y="22" width="24" height="26" fill="url(#${id}t)"/><rect x="20" y="22" width="24" height="1.6" fill="${c.tea1}"/></g>
+<path d="${glass}" fill="none" stroke="${c.glass}" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M25.6,23.5 C26.2,26 26.9,27.6 26.9,30" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+<circle cx="29.6" cy="39.2" r="1.3" fill="${c.face}"/><circle cx="34.4" cy="39.2" r="1.3" fill="${c.face}"/>
+<path d="M29.9,41.7Q32,43.8 34.1,41.7" fill="none" stroke="${c.face}" stroke-width="1.2" stroke-linecap="round"/>
+<ellipse cx="27.4" cy="41.5" rx="1.5" ry="1" fill="${c.blush}" opacity=".7"/><ellipse cx="36.6" cy="41.5" rx="1.5" ry="1" fill="${c.blush}" opacity=".7"/>
+</svg>`;
+}
+function renderLogo(){
+  const mark = document.getElementById("brandMark");
+  if(mark) mark.innerHTML = turkceLogoSVG(state.theme, "h", "brand-mark");
+  const link = document.querySelector('link[rel="icon"][type="image/svg+xml"]');
+  if(link){
+    const svg = turkceLogoSVG(state.theme, "f", "").replace('class=""', "").replace('aria-hidden="true"', "");
+    link.href = "data:image/svg+xml," + encodeURIComponent(svg);
+  }
+}
 // Six themes (three light, three dark). The choice is also kept in localStorage so the next load paints right away.
-const THEMES = ["chalk","meadow","ember","night","moss","coal"];
 function normalizeTheme(t){
   if(t==="light") return "chalk";
   if(t==="dark") return "night";
@@ -4365,8 +4368,10 @@ function normalizeTheme(t){
 }
 function applyTheme(){
   document.documentElement.setAttribute("data-theme", state.theme);
+  renderLogo();
   try{ localStorage.setItem("turkce_theme", state.theme); }catch(e){}
 }
+renderLogo();   // draw the header logo and tab icon for the saved theme
 window.turkceSettings = {
   get: ()=>({lenient: globalLenient(), autoSpeak: !!state.autoSpeak, autoSpeakEn: !!state.autoSpeakEn, theme: state.theme, wiktionary: state.wiktionary!==false}),
   set: (key, value)=>{

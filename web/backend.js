@@ -98,10 +98,12 @@
 
   // ---------- sign in / sign out ----------
   var css = `
-header{flex-wrap:wrap;}
-.sync-status.clickable{display:flex;gap:6px;align-items:center;flex:none;cursor:pointer;font:inherit;font-size:14px;font-weight:500;padding:0 18px;background:transparent;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;}
+header{flex-wrap:nowrap;}
+header:has(.testmode-badge){flex-wrap:wrap;}
+.sync-status.clickable{display:flex;gap:6px;align-items:center;flex:none;cursor:pointer;font:inherit;font-size:12.5px;font-weight:500;padding:0 11px;background:transparent;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;}
 .sync-status.clickable::before{flex:none;width:10px;height:10px;margin-right:0;}
 .account-wrap{position:relative;min-width:0;max-width:100%;}
+@media (max-width:560px){.sync-status.clickable:not(.local){font-size:0;gap:0;padding:0 11px;}}
 .update-bar{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:12px;max-width:calc(100vw - 32px);padding:10px 10px 10px 16px;border-radius:12px;background:var(--tile-blue-deep);color:#fff;font-size:14px;box-shadow:0 8px 24px -8px rgba(18,65,77,.5);}
 .update-bar .btn{padding:8px 14px;font-size:0.85rem;background:#fff;color:var(--tile-blue-deep);}
 .update-bar .btn:hover{background:var(--paper);}
@@ -111,16 +113,16 @@ header{flex-wrap:wrap;}
 .auth-testmode{position:absolute;right:8px;top:8px;display:flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;border:none;border-radius:6px;background:transparent;color:var(--ink-soft);opacity:.35;cursor:pointer;}
 .auth-testmode:hover,.auth-testmode:focus-visible{opacity:.8;background:var(--paper-2);}
 .auth-testmode svg{width:13px;height:13px;}
-.testmode-badge{display:flex;align-items:center;height:42px;box-sizing:border-box;padding:0 14px;border:none;border-radius:999px;background:#FBE3CF;color:#8A3D0E;font:inherit;font-size:11.5px;font-weight:700;white-space:nowrap;}
+.testmode-badge{display:flex;align-items:center;height:34px;box-sizing:border-box;padding:0 10px;border:none;border-radius:999px;background:#FBE3CF;color:#8A3D0E;font:inherit;font-size:11.5px;font-weight:700;white-space:nowrap;}
 button.testmode-badge{cursor:pointer;}
 button.testmode-badge:hover{background:#F7D2B4;}
 button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
-.header-actions{display:flex;align-items:flex-start;gap:8px;min-width:0;max-width:100%;}
+.header-actions{display:flex;align-items:center;gap:6px;flex:none;min-width:0;max-width:100%;}
 .feedback-wrap{position:relative;flex:none;}
-.feedback-btn{display:flex;align-items:center;justify-content:center;width:42px;height:42px;margin-top:0;padding:0;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink-soft);cursor:pointer;}
+.feedback-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;margin-top:0;padding:0;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink-soft);cursor:pointer;}
 .feedback-btn:hover,.feedback-btn[aria-expanded="true"]{background:var(--paper-2);color:var(--ink);}
 .feedback-btn:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
-.feedback-btn svg{width:19px;height:19px;}
+.feedback-btn svg{width:16px;height:16px;}
 .feedback-pop{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:300px;max-width:calc(100vw - 32px);padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow);}
 .gs-theme{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);}
 .gs-theme-label{display:block;font-size:13px;color:var(--ink);margin-bottom:6px;}
@@ -152,7 +154,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
 .feedback-msg{margin:8px 0 0;font-size:12.5px;}
 .feedback-msg.good{color:var(--good);}
 .feedback-msg.bad{color:var(--bad);}
-.settings-wrap .feedback-btn svg{width:21px;height:21px;}
+.settings-wrap .feedback-btn svg{width:18px;height:18px;}
 .settings-pop{width:300px;}
 .settings-pop .gs-row{display:flex;align-items:flex-start;gap:10px;padding:9px 2px;font-size:13px;line-height:1.4;color:var(--ink);cursor:pointer;}
 .settings-pop .gs-row input{margin-top:2px;width:17px;height:17px;flex:none;accent-color:var(--tile-blue-deep);cursor:pointer;}
@@ -603,6 +605,9 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     var pill = document.getElementById("syncStatus");
     pill.classList.add("clickable");
     pill.setAttribute("role", "button");
+    // On phones only a dot shows, so keep an accessible name that follows the text.
+    new MutationObserver(function(){ pill.setAttribute("aria-label", pill.textContent.trim()); })
+      .observe(pill, {childList: true, characterData: true, subtree: true});
     pill.tabIndex = 0;
     // Header right side: [guide button] [suggest button] [status pill]. Each wrap anchors its own popover.
     var actions = document.createElement("div");
