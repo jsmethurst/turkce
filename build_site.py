@@ -33,6 +33,7 @@ head_extra = (
     '<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">\n'
     '<link rel="apple-touch-icon" href="apple-touch-icon.jpg">\n'
     '<meta name="theme-color" content="#12414D">\n'
+    '<link rel="stylesheet" href="fonts/fonts.css">\n'
     f'<script src="{SUPABASE_JS}"></script>\n'
     f'<script src="testmode.js?v={TESTMODE_VERSION}"></script>\n'
     f'<script src="backend.js?v={BACKEND_VERSION}"></script>\n'

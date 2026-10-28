@@ -102,8 +102,10 @@ To change the database:
 - **Sign-in settings** (Authentication config). Those need the Supabase CLI on Jacob's Mac.
 - **Moving a learner's progress from the old Claude site.** That needs a Claude session with access to that site.
 
-## Theme
-The app has a light theme (default, "Stone") and a dark theme ("Slate"), chosen in the gear menu: Light, Dark or Device (follows the phone or computer). All colors are CSS variables in `:root` and `:root[data-theme="dark"]` at the top of `app/turkish-verb-drill.html`; use `var(--surface)`, `var(--heading)` and the other variables, not hard-coded colors, so both themes keep working. The choice is saved with the learner's settings (`theme`) and in `localStorage` (`turkce_theme`) so the page paints in the right theme at once.
+## Theme and typeface
+Six themes, chosen as little color chips at the bottom of the gear (Global Settings) menu: three light (**Chalk** = default, **Meadow**, **Ember**) and three dark (**Night**, **Moss**, **Coal**). Light themes are white and very light grey, dark themes near-black and dark grey; color is only an accent (selected lists and chips get a light tint, an accent outline and a check; buttons and the active tab use the solid accent; a list whose test is due gets a small red dot). Each theme also sets the typeface (`--font`): Chalk and Moss use Figtree, Meadow and Coal Atkinson Hyperlegible, Ember Lexend, Night Nunito Sans. The typefaces are self-hosted in `web/fonts/` (latin and latin-ext, so every Turkish letter works; see `web/fonts/fonts.css`), no Google Fonts.
+
+All colors are CSS variables set per theme at the top of `app/turkish-verb-drill.html` (`:root[data-theme="..."]`); use `var(--surface)`, `var(--heading)`, `var(--font)` and the other variables, not hard-coded colors or font names, so every theme keeps working. The choice is saved with the learner's settings (`theme`) and in `localStorage` (`turkce_theme`) so the page paints in the right theme at once. Old saved values `light`/`dark`/`device` are mapped to Chalk/Night/(device preference) on load. The chip swatch colors in `web/backend.js` (`gs-theme-chip`) repeat each theme's main colors.
 
 ## Guide and feedback buttons
 "How to use Türkçe" is a short guide written by Jacob. It sits in an expandable section at the bottom of the gear (Global Settings) menu, in `buildSettings` in `web/backend.js` (the "?" button was removed from the header). Keep its wording as he wrote it.

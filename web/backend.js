@@ -122,12 +122,16 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
 .feedback-btn:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
 .feedback-btn svg{width:19px;height:19px;}
 .feedback-pop{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:300px;max-width:calc(100vw - 32px);padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow);}
-.gs-theme{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);}
-.gs-theme-label{font-size:13px;color:var(--ink);}
-.gs-seg{display:inline-flex;padding:2px;border-radius:999px;background:var(--paper-2);}
-.gs-seg button{font:inherit;font-size:12.5px;padding:5px 11px;border:none;border-radius:999px;background:transparent;color:var(--ink-soft);cursor:pointer;}
-.gs-seg button.on{background:var(--tab-on-bg);color:var(--tab-on-ink);box-shadow:0 1px 2px rgba(0,0,0,.15);}
-.feedback-title{font-family:'Fraunces',serif;font-weight:600;font-size:1rem;color:var(--ink);margin-bottom:10px;}
+.gs-theme{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);}
+.gs-theme-label{display:block;font-size:13px;color:var(--ink);margin-bottom:6px;}
+.gs-theme-cap{display:block;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin:8px 0 5px;}
+.gs-theme-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.gs-theme-chip{display:flex;flex-direction:column;align-items:center;gap:5px;padding:6px 4px 5px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);cursor:pointer;font:inherit;font-size:12px;}
+.gs-theme-chip:hover{background:var(--paper-2);}
+.gs-theme-chip.on{border-color:var(--tile-blue);box-shadow:0 0 0 1px var(--tile-blue);font-weight:600;}
+.gs-sw{display:flex;width:100%;height:22px;border-radius:7px;overflow:hidden;border:1px solid rgba(128,128,128,.35);}
+.gs-sw i{flex:1;display:block;}
+.feedback-title{font-family:var(--font);font-weight:600;font-size:1rem;color:var(--ink);margin-bottom:10px;}
 .feedback-label{display:block;font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:4px;}
 #feedbackText{width:100%;box-sizing:border-box;font:inherit;font-size:14px;line-height:1.45;padding:9px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);resize:vertical;outline:none;}
 #feedbackText:focus{border-color:var(--tile-turquoise);background:var(--surface);}
@@ -171,7 +175,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
 .sync-status.clickable:hover{background:var(--paper-2);}
 .sync-status.clickable:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
 .auth-panel{margin:-8px 0 22px;padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);}
-.auth-panel h2{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;margin:0 0 4px;color:var(--ink);}
+.auth-panel h2{font-family:var(--font);font-weight:600;font-size:1.15rem;margin:0 0 4px;color:var(--ink);}
 .auth-panel p{margin:0 0 14px;font-size:13px;line-height:1.5;color:var(--ink-soft);}
 .auth-fields{display:grid;gap:10px;margin-bottom:12px;}
 .auth-fields label{display:grid;gap:4px;font-size:12px;font-weight:600;color:var(--ink-soft);}
@@ -400,7 +404,13 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
         <label class="gs-row"><input type="checkbox" id="gsAutoPlay"><span>Auto-play Turkish prompts and answers</span></label>
         <label class="gs-row"><input type="checkbox" id="gsAutoPlayEn"><span>Auto-play English prompts and answers</span></label>
         <label class="gs-row"><input type="checkbox" id="gsWiktionary"><span>Look up unknown words on Wiktionary</span></label>
-        <div class="gs-theme"><span class="gs-theme-label" id="gsThemeLabel">Theme</span><div class="gs-seg" role="radiogroup" aria-labelledby="gsThemeLabel"><button type="button" role="radio" data-theme="light">Light</button><button type="button" role="radio" data-theme="dark">Dark</button><button type="button" role="radio" data-theme="device">Device</button></div></div>
+        <div class="gs-theme"><span class="gs-theme-label" id="gsThemeLabel">Theme</span>
+          <div class="gs-theme-grid" role="radiogroup" aria-labelledby="gsThemeLabel">
+            <span class="gs-theme-cap">Light</span>
+            <div class="gs-theme-row"><button type="button" class="gs-theme-chip" role="radio" aria-checked="false" data-theme="chalk" aria-label="Chalk theme"><span class="gs-sw"><i style="background:#F5F6F8"></i><i style="background:#FFFFFF"></i><i style="background:#2F64E0"></i><i style="background:#0F1318"></i></span><span class="gs-tn">Chalk</span></button><button type="button" class="gs-theme-chip" role="radio" aria-checked="false" data-theme="meadow" aria-label="Meadow theme"><span class="gs-sw"><i style="background:#F6F7F6"></i><i style="background:#FFFFFF"></i><i style="background:#1F8A5B"></i><i style="background:#101411"></i></span><span class="gs-tn">Meadow</span></button><button type="button" class="gs-theme-chip" role="radio" aria-checked="false" data-theme="ember" aria-label="Ember theme"><span class="gs-sw"><i style="background:#F7F6F5"></i><i style="background:#FFFFFF"></i><i style="background:#D95A12"></i><i style="background:#15120F"></i></span><span class="gs-tn">Ember</span></button></div>
+            <span class="gs-theme-cap">Dark</span>
+            <div class="gs-theme-row"><button type="button" class="gs-theme-chip" role="radio" aria-checked="false" data-theme="night" aria-label="Night theme"><span class="gs-sw"><i style="background:#0E1013"></i><i style="background:#16191D"></i><i style="background:#7EA6FF"></i><i style="background:#F4F6F8"></i></span><span class="gs-tn">Night</span></button><button type="button" class="gs-theme-chip" role="radio" aria-checked="false" data-theme="moss" aria-label="Moss theme"><span class="gs-sw"><i style="background:#0E1110"></i><i style="background:#161A18"></i><i style="background:#62D39B"></i><i style="background:#F3F6F4"></i></span><span class="gs-tn">Moss</span></button><button type="button" class="gs-theme-chip" role="radio" aria-checked="false" data-theme="coal" aria-label="Coal theme"><span class="gs-sw"><i style="background:#110F0E"></i><i style="background:#191614"></i><i style="background:#FF9A66"></i><i style="background:#F7F4F1"></i></span><span class="gs-tn">Coal</span></button></div>
+          </div></div>
         <details class="gs-help"><summary>How to use Türkçe</summary>
 <ol>
           <li><b>Sözlük: choose your words.</b> Select the word lists you want to study. Forms and Vocab only use what you select here. Colors show how well you know each word. When you're signed in, tap Manage in the Personal box to make your own lists and add your own words.</li>
@@ -415,7 +425,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
       </div>
     </div>`);
     gear = {wrap: w, btn: w.querySelector("#settingsBtn"), pop: w.querySelector("#settingsPop"),
-            lenient: w.querySelector("#gsLenient"), autoPlay: w.querySelector("#gsAutoPlay"), autoPlayEn: w.querySelector("#gsAutoPlayEn"), wiktionary: w.querySelector("#gsWiktionary"), themeBtns: [].slice.call(w.querySelectorAll(".gs-seg button"))};
+            lenient: w.querySelector("#gsLenient"), autoPlay: w.querySelector("#gsAutoPlay"), autoPlayEn: w.querySelector("#gsAutoPlayEn"), wiktionary: w.querySelector("#gsWiktionary"), themeBtns: [].slice.call(w.querySelectorAll(".gs-theme-chip"))};
     gear.btn.onclick = function(){ if(menu) toggleMenu(false); if(fb) toggleFeedback(false); if(help) toggleHelp(false); toggleSettings(); };
     gear.pop.addEventListener("keydown", function(ev){ ev.stopPropagation(); if(ev.key === "Escape"){ toggleSettings(false); gear.btn.focus(); } });
     // The app owns the values (window.turkceSettings); this only shows and changes them.
@@ -437,7 +447,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
       gear.autoPlay.checked = !!v.autoSpeak;
       gear.autoPlayEn.checked = !!v.autoSpeakEn;
       gear.wiktionary.checked = v.wiktionary !== false;   // on unless turned off
-      paintTheme(v.theme || "light");
+      paintTheme(v.theme || "chalk");
     }
     gear.pop.hidden = !open;
     if(open) placePopover(gear.pop);
