@@ -3313,23 +3313,26 @@ function renderSelectionChips(){
   const boxes = ["vocabSelectionChips","formsSelectionChips"].map(id=>document.getElementById(id)).filter(Boolean);
   if(!boxes.length) return;
   const chips = [];
+  let verbChipCount = 0;   // the Forms tab only drills verbs, so it shows just these
   const allVerbs = VERB_PAGES.every(p=>state.pages.has(p.key)) && VERB_BONUS_CHUNKS.every(c=>state.bonusVerbChunks.has(c.key));
   if(allVerbs) chips.push({label:"All verbs", remove(){ state.pages.clear(); state.bonusVerbChunks.clear(); }});
   else {
     VERB_PAGES.filter(p=>state.pages.has(p.key)).forEach(p=>chips.push({label:p.label, remove(){ state.pages.delete(p.key); }}));
     VERB_BONUS_CHUNKS.filter(c=>state.bonusVerbChunks.has(c.key)).forEach(c=>chips.push({label:c.label + " (verbs)", remove(){ state.bonusVerbChunks.delete(c.key); }}));
   }
+  verbChipCount = chips.length;
   const allNonverbs = NONVERB_CHUNKS.length && NONVERB_CHUNKS.every(c=>state.nonverbChunks.has(c.key));
   if(allNonverbs) chips.push({label:"All non-verbs", remove(){ state.nonverbChunks.clear(); }});
   else NONVERB_CHUNKS.filter(c=>state.nonverbChunks.has(c.key)).forEach(c=>chips.push({label:c.label, remove(){ state.nonverbChunks.delete(c.key); }}));
   if(TOPICS_ON) TOPICS.filter(t=>state.topics.has(t.key)).forEach(t=>chips.push({label:t.label, remove(){ state.topics.delete(t.key); }}));
   boxes.forEach(box=>{
     box.innerHTML = "";
-    if(!chips.length){
-      box.innerHTML = '<span class="hint">Nothing selected. Choose words on the Sözlük tab.</span>';
+    const mine = box.id==="formsSelectionChips" ? chips.slice(0, verbChipCount) : chips;
+    if(!mine.length){
+      box.innerHTML = '<span class="hint">' + (box.id==="formsSelectionChips" ? "No verbs selected. Choose verbs on the Sözlük tab." : "Nothing selected. Choose words on the Sözlük tab.") + '</span>';
       return;
     }
-    chips.forEach(ch=>{
+    mine.forEach(ch=>{
       const b = document.createElement("button");
       b.type = "button";
       b.className = "sel-chip";
