@@ -301,9 +301,10 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .chip-row{display:flex;flex-wrap:wrap;gap:7px;}
 .chip-sub{flex:0 0 100%;margin:6px 0 -2px;font-size:0.72rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
 .chip-sub:first-child{margin-top:0;}
-.chip-group{flex:0 0 100%;box-sizing:border-box;position:relative;display:flex;flex-wrap:wrap;gap:7px;border:1.5px dashed var(--line);border-radius:12px;padding:16px 10px 10px;margin-top:10px;}
-.chip-group:first-child{margin-top:8px;}
-.chip-group .legend{position:absolute;top:-9px;left:12px;padding:0 6px;background:var(--paper);font-size:0.72rem;letter-spacing:.04em;color:var(--ink-soft);}
+.sel-box{border:2.5px solid var(--tile-blue-deep);}
+.chip-group{flex:0 0 100%;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:7px;}
+.chip-group + .chip-group{border-top:3px solid var(--tile-blue-deep);margin-top:6px;padding-top:10px;}
+.chip-group .legend{flex:0 0 100%;font-size:0.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
 .chip{
   font-size:0.83rem;padding:7px 12px;border-radius:99px;border:1.5px solid var(--line);
   cursor:pointer;user-select:none;background:#fff;color:var(--ink-soft);transition:all .12s;
@@ -633,7 +634,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
       <span class="hint" id="selectionCount" style="font-weight:600;color:var(--tile-blue-deep);"></span>
     </div>
     <div class="section-title">Selected Verbs</div>
-    <div class="settings-group">
+    <div class="settings-group sel-box">
       <div class="chip-row" id="pageChips" style="margin-top:8px;"></div>
       <p class="hint" style="margin-top:10px;">
         <span class="link-btn" style="cursor:pointer;" id="pagesAll">Select all</span> ·
@@ -642,7 +643,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     </div>
 
     <div class="section-title">Selected Non-verbs</div>
-    <div class="settings-group">
+    <div class="settings-group sel-box">
       <div class="chip-row" id="nonverbChunkChips" style="margin-top:8px;"></div>
       <p class="hint" style="margin-top:10px;">
         <span class="link-btn" style="cursor:pointer;" id="nonverbAll">Select all</span> ·
