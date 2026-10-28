@@ -1477,11 +1477,12 @@ function setDictionary(verbRows, nonverbRows, topicRows){
   const verbs = verbRows.map(r=>{
     const v = makeVerb(r.inf, r.base, r.ing, r.past, r.pp, r.gloss, r.num ?? null);
     v.page = r.page==="other" ? "bonus" : r.page;
+    v.key = r.k || `verb:${r.inf}`;   // permanent progress key: it never changes, even if the Turkish is respelled
     return v;
   });
   VERBS.splice(0, VERBS.length, ...verbs);
   VERB_BONUS_CHUNKS.splice(0, VERB_BONUS_CHUNKS.length, ...buildVerbBonusChunks());
-  NONVERBS.splice(0, NONVERBS.length, ...nonverbRows.map(r=>({tr:r.tr, en:r.en, unit:r.unit})));
+  NONVERBS.splice(0, NONVERBS.length, ...nonverbRows.map(r=>({tr:r.tr, en:r.en, unit:r.unit, key:r.k || `nonverb:${r.tr}`})));
   NONVERB_CHUNKS.splice(0, NONVERB_CHUNKS.length, ...buildNonverbChunks());
   if(topicRows.length) TOPICS.splice(0, TOPICS.length, ...topicRows.map(r=>({key:r.key, label:r.label, terms:r.terms||[]})));
   rebuildTopicSets();
@@ -2955,7 +2956,7 @@ function applyPageSelection(){
   state.verbs = new Set(VERBS.map((v,i)=>i).filter(i=>isSimpleVerb(VERBS[i]) && pageEnabled(VERBS[i])));
 }
 // Dark green on the Sözlük: every one of the last answers was right.
-function isSolidVerb(v){ return wordFormLevel(`verb:${v.inf}`)===5; }
+function isSolidVerb(v){ return wordFormLevel(v.key)===5; }
 function formsVerbIdxs(){
   const all = [...state.verbs];
   return state.formsSolidOnly ? all.filter(i=>isSolidVerb(VERBS[i])) : all;
@@ -3434,7 +3435,7 @@ function renderReferencePanel(){
     list.className = "ref-list";
     g.rows.forEach(v=>{
       const row = document.createElement("div");
-      const key = `verb:${v.inf}`;
+      const key = v.key;
       const hid = state.hidden.has(key);
       row.className = "ref-row verb-row" + (hid ? " is-hidden" : wordFormClass(key));
       row.dataset.key = key;
@@ -3609,9 +3610,9 @@ function searchWords(query){
     const sc = Math.max(st, se);
     if(sc>0) out.push({kind, tr, en, sc, key, dir: st>=se ? "tr" : "en"});
   };
-  VERBS.forEach(v=>add("verb", v.inf, v.vocabGloss, v.inf));
+  VERBS.forEach(v=>add("verb", v.inf, v.vocabGloss, v.key));
   const seen = new Set();
-  NONVERBS.forEach(nv=>{ if(seen.has(nv.tr)) return; seen.add(nv.tr); add("word", nv.tr, nv.en, nv.tr); });
+  NONVERBS.forEach(nv=>{ if(seen.has(nv.tr)) return; seen.add(nv.tr); add("word", nv.tr, nv.en, nv.key); });
   out.sort((a,b)=> b.sc-a.sc || a.tr.length-b.tr.length || a.tr.localeCompare(b.tr, "tr"));
   return out.slice(0, 12);
 }
@@ -3647,7 +3648,7 @@ function renderSearchResults(){
           ? `<span class="gs-left">${esc(it.en)}</span>${turkish}`   // typed English: English on the left, bold Turkish on the right
           : `${turkish}<span class="gs-en">${esc(it.en)}</span>`;     // typed Turkish: bold Turkish on the left, English on the right
         const el = it.kind==="verb" ? 'button type="button"' : "div";
-        const key = `${it.kind==="verb" ? "verb" : "nonverb"}:${it.tr}`;
+        const key = it.key;
         return `<div class="sr-item${state.hidden.has(key) ? " is-excl" : ""}" data-key="${key.replace(/"/g,"&quot;")}"><${el} class="sr-row ${it.kind==="verb" ? "verb" : ""}" role="option" data-i="${i}">${body}</${it.kind==="verb" ? "button" : "div"}></div>`;
       }).join("")
     : "";
@@ -3870,7 +3871,7 @@ function renderNonverbReferencePanel(){
     list.className = "ref-list";
     c.items.forEach(nv=>{
       const row = document.createElement("div");
-      const key = `nonverb:${nv.tr}`;
+      const key = nv.key;
       const hid = state.hidden.has(key);
       row.className = "ref-row" + (hid ? " is-hidden" : wordFormClass(key));
       row.dataset.key = key;
@@ -3893,8 +3894,8 @@ function updateFormKey(){
     const level = wordFormLevel(key);
     counts[level===null ? "none" : level]++;
   };
-  VERBS.forEach(v=>add(`verb:${v.inf}`));
-  NONVERBS.forEach(nv=>add(`nonverb:${nv.tr}`));
+  VERBS.forEach(v=>add(v.key));
+  NONVERBS.forEach(nv=>add(nv.key));
   document.querySelectorAll(".form-swatch[data-level]").forEach(btn=>{
     const n = counts[btn.dataset.level];
     btn.querySelector("b").textContent = n.toLocaleString();
@@ -4132,7 +4133,7 @@ function onRemoteProgress(snap){
   saveVocabKnown();
   updateVocabProgress();
 }
-function vocabKnownKey(item){ return `${item.kind}:${item.tr}`; }
+function vocabKnownKey(item){ return item.key || `${item.kind}:${item.tr}`; }
 
 // ---- Per-word answer history: the last 25 results are kept, the last 5 are shown ("1" right, "0" wrong, newest last) and when last seen ----
 var FORM_LENGTH = 5;      // how many results are shown as the form guide
@@ -4173,8 +4174,8 @@ function isWeakWord(key){
 // "Reset progress filter" or switching to "All words" and back. Newly weak words still join.
 function weakSnapshot(){
   const keys = new Set();
-  VERBS.forEach(v=>{ const k = `verb:${v.inf}`; if(isWeakWord(k)) keys.add(k); });
-  NONVERBS.forEach(nv=>{ const k = `nonverb:${nv.tr}`; if(isWeakWord(k)) keys.add(k); });
+  VERBS.forEach(v=>{ const k = v.key; if(isWeakWord(k)) keys.add(k); });
+  NONVERBS.forEach(nv=>{ const k = nv.key; if(isWeakWord(k)) keys.add(k); });
   return keys;
 }
 function inWeakSelection(key){
@@ -4306,12 +4307,12 @@ function vocabPool(){
   };
   VERBS.forEach((v,i)=>{
     if(!pageEnabled(v)) return;
-    const item = {kind:"verb", idx:i, tr:v.inf, en:v.vocabGloss};
+    const item = {kind:"verb", idx:i, tr:v.inf, en:v.vocabGloss, key:v.key};
     if(keep(item)) items.push(item);
   });
   NONVERBS.forEach((nv,i)=>{
     if(!nonverbEnabled(nv)) return;
-    const item = {kind:"nonverb", idx:i, tr:nv.tr, en:nv.en};
+    const item = {kind:"nonverb", idx:i, tr:nv.tr, en:nv.en, key:nv.key};
     if(keep(item)) items.push(item);
   });
   return items;
@@ -4628,8 +4629,8 @@ function vocabSelectionCounts(){
     total++;
     if(vocabState.known.has(key)) known++;
   };
-  VERBS.forEach(v=>{ if(pageEnabled(v)) count(`verb:${v.inf}`); });
-  NONVERBS.forEach(nv=>{ if(nonverbEnabled(nv)) count(`nonverb:${nv.tr}`); });
+  VERBS.forEach(v=>{ if(pageEnabled(v)) count(v.key); });
+  NONVERBS.forEach(nv=>{ if(nonverbEnabled(nv)) count(nv.key); });
   return {total, known};
 }
 function updateVocabProgress(){
@@ -4652,12 +4653,12 @@ document.getElementById("vocabDontKnowBtn").onclick = ()=>{
   nextVocabCard();
 };
 function testLists(){
-  const verbItem = v=>({kind:"verb", idx:VERBS.indexOf(v), tr:v.inf, en:v.vocabGloss});
-  const shown = it=>!state.hidden.has(`${it.kind}:${it.tr}`);
+  const verbItem = v=>({kind:"verb", idx:VERBS.indexOf(v), tr:v.inf, en:v.vocabGloss, key:v.key});
+  const shown = it=>!state.hidden.has(it.key);
   return [
     ...VERB_PAGES.map(p=>({key:`page${p.key}`, label:p.label, group:"Verbs", items:VERBS.filter(v=>v.page===p.key).map(verbItem).filter(shown)})),
     ...VERB_BONUS_CHUNKS.map(c=>({key:c.key, label:c.label, group:"Verbs", items:c.items.map(verbItem).filter(shown)})),
-    ...NONVERB_CHUNKS.map(c=>({key:c.key, label:c.label, group:"Non-verbs", items:c.items.map(n=>({kind:"nonverb", idx:NONVERBS.indexOf(n), tr:n.tr, en:n.en})).filter(shown)})),
+    ...NONVERB_CHUNKS.map(c=>({key:c.key, label:c.label, group:"Non-verbs", items:c.items.map(n=>({kind:"nonverb", idx:NONVERBS.indexOf(n), tr:n.tr, en:n.en, key:n.key})).filter(shown)})),
   ];
 }
 // Lists that are part of the learner's Sözlük selection (the starting point for a test).
@@ -5025,8 +5026,8 @@ function tekrarWords(){
     const last = new Date(wordStats[key].at).getTime() || 0;
     words.push({key, item, dueAt:last+wait, overdue:(now-last)/Math.max(wait, TEKRAR_RETRY_MS)});
   };
-  VERBS.forEach((v,i)=>add(`verb:${v.inf}`, {kind:"verb", idx:i, tr:v.inf, en:v.vocabGloss}));
-  NONVERBS.forEach((nv,i)=>add(`nonverb:${nv.tr}`, {kind:"nonverb", idx:i, tr:nv.tr, en:nv.en}));
+  VERBS.forEach((v,i)=>add(v.key, {kind:"verb", idx:i, tr:v.inf, en:v.vocabGloss, key:v.key}));
+  NONVERBS.forEach((nv,i)=>add(nv.key, {kind:"nonverb", idx:i, tr:nv.tr, en:nv.en, key:nv.key}));
   return words;
 }
 const TEKRAR_UPCOMING = [
@@ -5346,7 +5347,8 @@ function gpJoin(parts){ return parts.map(p=>p[0]+p[1]).join(" "); }
 function gpMarked(parts){ return parts.map(p=>p[1] ? `${p[0]}<b>${p[1]}</b>` : p[0]).join(" "); }
 // Every sensible phrase from the nouns the learner knows well (light or dark green on the Sözlük).
 function genitifIyelikItems(){
-  const known = tr=>{ const lvl = wordFormLevel(`nonverb:${tr}`); return lvl!==null && lvl>=4; };
+  const keyByTr = new Map(); NONVERBS.forEach(n=>{ if(!keyByTr.has(n.tr)) keyByTr.set(n.tr, n.key); });
+  const known = tr=>{ const lvl = wordFormLevel(keyByTr.get(tr) || `nonverb:${tr}`); return lvl!==null && lvl>=4; };
   const noun = spec=>{ const [tr, en] = spec.split(":"); const n = GP_NOUNS[tr]; return n ? {...n, en:en||n.en} : null; };
   const out = [];
   const item = (en, parts, alts, pron)=>out.push({inf:"", c:"genitif+iyelik", en, ex:gpMarked(parts), alts:(alts||[]).map(gpJoin), strict:true, pron:!!pron});

@@ -35,6 +35,9 @@ Browsers may reuse the page for up to 10 minutes. Pages that are already open no
 ## Word lists: A1 (frozen) and Personal
 In the Sözlük the lists sit in two separate boxes: a solid one for A1 and a dotted one for Personal. **A1 - not editable** holds Listede (the Sayfa and Ünite lists, Sıfatlar) and Derste. Jacob will not ask for more words to be added to A1 lists; he may ask for a gloss edit here and there. **Personal - editable** holds the Bible lists, alphabetical, with no subsections; the editing feature for it is still to be designed with Jacob. Don't add new words anywhere until he says where they go.
 
+## Term keys: changing a word's Turkish without losing progress
+Learners' progress is saved under each term's **permanent key**, not its spelling. For a built-in term the key is the row's `"k"` field, or `nonverb:<turkish>` / `verb:<infinitive>` when there is no `"k"`. To change the Turkish of a built-in term, keep its old key by adding `"k":"nonverb:<old spelling>"` (or `"verb:..."`) to the row, then change `tr`/`inf`. The English gloss can always change freely. `tools/term_keys.json` remembers every key ever used and `tools/check_term_keys.py` (run by `build_site.py`, so also by the deploy) fails the build if one of them no longer resolves to a term; that stops an accidental respelling from orphaning anyone's history. Personal-list terms (see below) have a uuid and a stored progress key of their own.
+
 ## Adding words (Jacob's standing rules)
 When Jacob says "add <turkish> - <english>":
 1. **Use his gloss exactly as written.** Don't correct or extend it.
@@ -45,8 +48,9 @@ When Jacob says "add <turkish> - <english>":
 6. **Glosses of existing words** only change when he asks.
 7. After the edits:
    1. Run `python3 tools/make_sozluk.py`.
-   2. Run `python3 build_site.py` to check that it builds.
-   3. Commit and push.
+   2. Run `python3 tools/check_term_keys.py --update` (remembers the new words' progress keys).
+   3. Run `python3 build_site.py` to check that it builds.
+   4. Commit and push.
 
 ### Non-verb rows (`nonverbs` array)
 `{"tr":"usta","en":"expert","unit":"other","order":771}`

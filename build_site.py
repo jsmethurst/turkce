@@ -16,6 +16,11 @@ ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "_site"
 SUPABASE_JS = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"
 
+# Learners' saved progress is keyed by each term's permanent key: refuse to build if one has gone missing.
+import subprocess, sys
+if subprocess.run([sys.executable, str(ROOT / "tools" / "check_term_keys.py")]).returncode != 0:
+    sys.exit("build stopped: see tools/check_term_keys.py")
+
 src = (ROOT / "app" / "turkish-verb-drill.html").read_text(encoding="utf-8")
 # Changes whenever backend.js changes, so browsers don't keep a stale cached copy.
 BACKEND_VERSION = hashlib.sha1((ROOT / "web" / "backend.js").read_bytes()).hexdigest()[:8]
