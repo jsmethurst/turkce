@@ -303,7 +303,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .chip-sub:first-child{margin-top:0;}
 .sel-box{border:2.5px solid var(--tile-blue-deep);}
 .chip-group{flex:0 0 100%;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:7px;}
-.chip-group + .chip-group{border-top:3px solid var(--tile-blue-deep);margin-top:6px;padding-top:10px;}
+.chip-group + .chip-group{flex:0 0 calc(100% + 32px);margin:6px -16px 0;padding:10px 16px 0;border-top:2.5px solid var(--tile-blue-deep);}   /* edge to edge, same weight as the outer line */
 .chip-group .legend{flex:0 0 100%;font-size:0.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
 .chip{
   font-size:0.83rem;padding:7px 12px;border-radius:99px;border:1.5px solid var(--line);
