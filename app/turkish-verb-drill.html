@@ -341,7 +341,11 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .chip-sub:first-child{margin-top:0;}
 .sel-wrap{background:transparent !important;border:none !important;padding:0 !important;}   /* the Verbs / Non-verbs wrappers: the boxes are the two groups inside */
 .chip-group{flex:0 0 100%;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:7px;border-radius:12px;padding:12px 12px 12px;}
-.chip-group.personal{border:1.5px dashed var(--line);}
+.chip-group.personal{position:relative;}
+/* Longer dashes with wider gaps than a plain CSS dashed border allows: a dashed outline drawn as a mask. */
+.chip-group.personal::before{content:"";position:absolute;inset:0;border-radius:12px;pointer-events:none;background:var(--line);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Crect width='100%25' height='100%25' rx='12' ry='12' fill='none' stroke='black' stroke-width='3' stroke-dasharray='14 10'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Crect width='100%25' height='100%25' rx='12' ry='12' fill='none' stroke='black' stroke-width='3' stroke-dasharray='14 10'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;}
 .chip-group.a1{border:2.5px solid var(--line);margin-top:6px;}
 .chip-group .legend{flex:0 0 100%;font-size:0.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
 .chip{
