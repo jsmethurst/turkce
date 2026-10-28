@@ -386,7 +386,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .chip-group.a1{border:2.5px solid var(--ink-soft);margin-top:6px;}
 #tab-sozluk .settings-group{border-color:var(--ink-soft);}   /* every box on the Sözlk tab uses the label text color */
 .chip-group .legend{flex:0 0 100%;font-size:0.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
-.chip{
+.chip{-webkit-touch-callout:none;
   font-size:0.83rem;padding:7px 12px;border-radius:99px;border:1.5px solid var(--line);
   cursor:pointer;user-select:none;background:var(--surface);color:var(--ink-soft);transition:all .12s;
 }
@@ -476,7 +476,9 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
 .ref-row.form-2,.form-swatch.form-2{background:var(--f2);}
 .ref-row.form-0,.form-swatch.form-0{background:var(--f0);}
 /* Sözlük key for the row tints above. */
-.form-key{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;}
+.form-key{display:flex;flex-direction:column;gap:8px;}
+.fk-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;}
+@media (max-width:460px){.fk-row{gap:5px 5px;}.fk-row .form-swatch{font-size:11.5px;padding:3px 6px;}}
 #tab-sozluk .settings-group.form-key{border:none;background:transparent;padding:0 0 4px;}
 .form-key-title{font-size:0.82rem;color:var(--ink-soft);margin-right:4px;}   /* same as the .hint notes in other sections */
 .form-swatch{display:inline-block;padding:3px 9px;border-radius:4px;border:1.5px solid transparent;font:inherit;font-size:12.5px;color:var(--ink);font-variant-numeric:tabular-nums;cursor:pointer;transition:opacity .15s;}
@@ -742,15 +744,19 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     </div>
     <div id="sozProgress" hidden>
     <div class="settings-group form-key" aria-label="Highlight key">
-      <span class="form-key-title">Form on last 5 reviews:</span>
-      <button type="button" class="form-swatch form-5" data-level="5" aria-pressed="false">5/5 <b></b></button>
-      <button type="button" class="form-swatch form-4" data-level="4" aria-pressed="false">4/5 <b></b></button>
-      <button type="button" class="form-swatch form-3" data-level="3" aria-pressed="false">3/5 <b></b></button>
-      <button type="button" class="form-swatch form-2" data-level="2" aria-pressed="false">2/5 <b></b></button>
-      <button type="button" class="form-swatch form-0" data-level="0" aria-pressed="false">1/5 or 0/5 <b></b></button>
-      <button type="button" class="form-swatch none" data-level="none" aria-pressed="false">never reviewed <b></b></button>
-      <button type="button" class="form-swatch excl" data-level="excluded" aria-pressed="false"><s>excluded</s> <b></b></button>
-      <span class="form-key-hint" id="formKeyHint">Tap colors to show only those words below.</span>
+      <div class="fk-row"><span class="form-key-title">Form on last 5 reviews:</span></div>
+      <div class="fk-row">
+        <button type="button" class="form-swatch form-5" data-level="5" aria-pressed="false">5/5 <b></b></button>
+        <button type="button" class="form-swatch form-4" data-level="4" aria-pressed="false">4/5 <b></b></button>
+        <button type="button" class="form-swatch form-3" data-level="3" aria-pressed="false">3/5 <b></b></button>
+        <button type="button" class="form-swatch form-2" data-level="2" aria-pressed="false">2/5 <b></b></button>
+        <button type="button" class="form-swatch form-0" data-level="0" aria-pressed="false">1/5 or 0/5 <b></b></button>
+      </div>
+      <div class="fk-row">
+        <button type="button" class="form-swatch none" data-level="none" aria-pressed="false">never reviewed <b></b></button>
+        <button type="button" class="form-swatch excl" data-level="excluded" aria-pressed="false"><s>excluded</s> <b></b></button>
+      </div>
+      <div class="fk-row"><span class="form-key-hint" id="formKeyHint">Tap colors to show only those words below.</span></div>
     </div>
 
     <div class="section-title">All verbs</div>
@@ -3117,8 +3123,8 @@ const byTitle = (a,b)=>a.label.localeCompare(b.label, "tr", {numeric:true});
 // A dotted box around a set of lists, labeled on its top edge.
 // Hovering a list shows the words in it (mouse only).
 let listPreviewEl = null;
-function showListPreview(chip, items){
-  if(!window.matchMedia("(hover: hover)").matches || !items || !items.length) return;
+function showListPreview(chip, items, touch){
+  if((!touch && !window.matchMedia("(hover: hover)").matches) || !items || !items.length) return;
   if(!listPreviewEl){ listPreviewEl = document.createElement("div"); listPreviewEl.className = "list-preview"; document.body.appendChild(listPreviewEl); }
   const esc = t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;");
   listPreviewEl.className = "list-preview" + (items.length>14 ? " two" : "");
@@ -3127,12 +3133,33 @@ function showListPreview(chip, items){
   const r = chip.getBoundingClientRect(), w = listPreviewEl.offsetWidth, h = listPreviewEl.offsetHeight;
   listPreviewEl.style.left = Math.max(12, Math.min(r.left, window.innerWidth - w - 12)) + "px";
   const below = r.bottom + 8, above = r.top - h - 8;
-  listPreviewEl.style.top = (below + h <= window.innerHeight - 8 || above < 8 ? below : above) + "px";
+  // A finger covers what is below the chip, so on touch the panel goes above when there is room.
+  const useBelow = touch ? (above < 8 && below + h <= window.innerHeight - 8) : (below + h <= window.innerHeight - 8 || above < 8);
+  listPreviewEl.style.top = Math.max(8, useBelow ? below : above) + "px";
 }
 function hideListPreview(){ if(listPreviewEl) listPreviewEl.hidden = true; }
 function previewOnHover(chip, getItems){
   chip.addEventListener("mouseenter", ()=>showListPreview(chip, getItems()));
   chip.addEventListener("mouseleave", hideListPreview);
+  // Touch: press and hold (about half a second) to look inside; a quick tap still selects or deselects.
+  let timer = null, shown = false, sx = 0, sy = 0;
+  const stop = ()=>{ clearTimeout(timer); timer = null; };
+  chip.addEventListener("touchstart", e=>{
+    shown = false; sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+    stop();
+    timer = setTimeout(()=>{ shown = true; showListPreview(chip, getItems(), true); }, 450);
+  }, {passive:true});
+  chip.addEventListener("touchmove", e=>{
+    const t = e.touches[0];
+    if(!shown && Math.hypot(t.clientX - sx, t.clientY - sy) > 10) stop();   // scrolling, not pressing
+  }, {passive:true});
+  const end = e=>{
+    stop();
+    if(shown){ hideListPreview(); if(e.cancelable) e.preventDefault(); }   // the release after a long press is not a tap
+  };
+  chip.addEventListener("touchend", end, {passive:false});
+  chip.addEventListener("touchcancel", ()=>{ stop(); if(shown) hideListPreview(); });
+  chip.addEventListener("contextmenu", e=>{ if(shown || timer) e.preventDefault(); });   // no phone menu over a long press
 }
 window.addEventListener("scroll", hideListPreview, {passive:true});
 function chipGroup(box, legend, kind, action){
