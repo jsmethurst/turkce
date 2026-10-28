@@ -340,6 +340,30 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .chip-sub{flex:0 0 100%;margin:6px 0 -2px;font-size:0.72rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
 .chip-sub:first-child{margin-top:0;}
 .sel-wrap{background:transparent !important;border:none !important;padding:0 !important;}   /* the Verbs / Non-verbs wrappers: the boxes are the two groups inside */
+/* Personal lists: manage lists and terms */
+.legend-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.legend-btn{font:inherit;font-size:0.78rem;background:none;border:none;padding:0;color:var(--ink-soft);text-decoration:underline;cursor:pointer;text-transform:none;letter-spacing:0;font-weight:500;}
+.lm-body{overflow-y:auto;padding:6px 18px 18px;flex:1;min-height:160px;}
+.lm-body h3{margin:16px 0 8px;font-size:0.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);font-weight:600;}
+.lm-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);}
+.lm-row .lm-name{flex:1;min-width:0;text-align:left;font:inherit;font-weight:600;color:var(--heading);background:none;border:none;padding:0;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.lm-row .lm-count{font-size:0.8rem;color:var(--ink-soft);white-space:nowrap;}
+.lm-mini{font:inherit;font-size:0.8rem;padding:4px 10px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink-soft);cursor:pointer;white-space:nowrap;}
+.lm-mini:hover{background:var(--paper-2);}
+.lm-mini.arm{background:#C0392B;border-color:#C0392B;color:#fff;}
+.lm-line{display:flex;gap:8px;align-items:center;margin-top:10px;}
+.lm-line input,.lm-grid input,.lm-term input,.lm-body textarea{font:inherit;font-size:0.9rem;padding:8px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);min-width:0;}
+.lm-line input{flex:1;}
+.lm-body textarea{width:100%;box-sizing:border-box;min-height:120px;resize:vertical;line-height:1.5;}
+.lm-term{display:flex;gap:6px;align-items:center;margin-bottom:6px;}
+.lm-term input{flex:1 1 0;}
+.lm-term .lm-x{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);cursor:pointer;font-size:1.1rem;line-height:1;}
+.lm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
+.lm-grid label{display:grid;gap:3px;font-size:0.74rem;color:var(--ink-soft);}
+.lm-grid label.wide{grid-column:1 / -1;}
+.lm-msg{margin:10px 0 0;font-size:0.85rem;color:var(--ink-soft);white-space:pre-line;}
+.lm-msg.bad{color:var(--bad);}
+.lm-back{font:inherit;font-size:0.85rem;background:none;border:none;padding:0;color:var(--ink-soft);text-decoration:underline;cursor:pointer;margin-bottom:2px;}
 .chip-group{flex:0 0 100%;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:7px;border-radius:12px;padding:12px 12px 12px;}
 .chip-group.personal{position:relative;--dc:var(--ink-soft);--dw:1.5px;}
 /* Dashed outline with long dashes: the four straight sides are repeating gradients and the corners are real
@@ -821,6 +845,15 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
     </div>
   </div>
 
+  <div class="modal-backdrop" id="listsModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="lmTitle">
+      <div class="modal-head vm-head">
+        <div><button type="button" class="lm-back" id="lmBack" hidden>← All lists</button><h2 id="lmTitle"></h2></div>
+        <button type="button" class="vm-x" id="lmX" aria-label="Close">&times;</button>
+      </div>
+      <div class="lm-body" id="lmBody"></div>
+    </div>
+  </div>
   <div class="modal-backdrop" id="verbModal" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="verbModalTitle">
       <div class="modal-head vm-head">
@@ -1411,10 +1444,14 @@ const VERB_PAGES = [
 const VERB_PAGE_TAG = {1:"1. Sayfa", 2:"2. Sayfa", 3:"3. Sayfa", 4:"4. Sayfa", bible:"Bible"};
 
 const VERBS = [];
+// The signed-in learner's own lists (loaded from the database; see "Personal lists" further down).
+const personal = {lists:[], terms:[], ready:false};
+const personalChunkKey = id=>"u_" + String(id).replace(/-/g, "");   // letters, digits and _ only (used in document names)
+const personalSignedIn = ()=>!!(window.turkceBackend && window.turkceBackend.lists) && personal.ready;
 
 function buildVerbBonusChunks(){
   const chunks = [];
-  [["bonus","bonusg","Derste"],["bible","biblevg","Bible"]].forEach(([page, prefix, name])=>{
+  [["bonus","bonusg","Derste"]].forEach(([page, prefix, name])=>{
     const items = VERBS.filter(v=>v.page===page);
     for(let i=0;i<items.length;i+=25){
       const key = `${prefix}${Math.floor(i/25)+1}`;
@@ -1430,7 +1467,7 @@ const VERB_BONUS_CHUNKS = buildVerbBonusChunks();
 // ---- Non-verb vocabulary (from Turkish Now Ünite 1 & 2 word sheets) ----
 const NONVERBS = [];
 // Non-verb groups beyond the Ünite sheets: [unit, chunk key prefix, label]
-const NONVERB_EXTRA_UNITS = [["other","otherg","Derste"],["sifatlar","sifatg","Sıfatlar"],["bible","biblenvg","Bible"]];
+const NONVERB_EXTRA_UNITS = [["other","otherg","Derste"],["sifatlar","sifatg","Sıfatlar"]];
 function buildNonverbChunks(){
   const chunks = [];
   [1,2].forEach(unit=>{
@@ -1756,32 +1793,7 @@ verbs: [
 {"inf":"emretmek","base":"command","ing":"commanding","past":"commanded","pp":"commanded","gloss":"to command","num":null,"page":"other","order":204.994,"cases":[{"c":"datif","en":"The captain is commanding the soldiers.","ex":"Kaptan asker<b>lere</b> emrediyor."}]},
 {"inf":"engellemek","base":"prevent / hinder","ing":"preventing / hindering","past":"prevented / hindered","pp":"prevented / hindered","gloss":"to prevent / to hinder","num":null,"page":"other","order":204.995,"cases":[{"c":"akuzatif","en":"They are preventing the accident.","ex":"Kaza<b>yı</b> engelliyorlar."}]},
 {"inf":"tamir etmek","base":"repair / fix","ing":"repairing / fixing","past":"repaired / fixed","pp":"repaired / fixed","gloss":"to repair / to fix (something broken)","num":null,"page":"other","order":204.996,"cases":[{"c":"akuzatif","en":"He is repairing the car.","ex":"Araba<b>yı</b> tamir ediyor."}]},
-{"inf":"yollamak","base":"dispatch / post","ing":"dispatching / posting","past":"dispatched / posted","pp":"dispatched / posted","gloss":"to dispatch / to post","num":null,"page":"other","order":204.997,"cases":[{"c":"akuzatif + datif","en":"I'm posting the letter to my friend.","ex":"Mektub<b>u</b> arkadaşım<b>a</b> yolluyorum."}]},
-{"inf":"kurtarmak","base":"save / deliver / rescue","ing":"saving / delivering / rescuing","past":"saved / delivered / rescued","pp":"saved / delivered / rescued","gloss":"to save / to deliver / to rescue","page":"bible","order":205,"cases":[{"c":"akuzatif","en":"God is saving us.","ex":"Tanrı biz<b>i</b> kurtarıyor."}]},
-{"inf":"kutsamak","base":"bless","ing":"blessing","past":"blessed","pp":"blessed","gloss":"to bless","page":"bible","order":206,"cases":[{"c":"akuzatif","en":"May the LORD bless you.","ex":"RAB sen<b>i</b> kutsasın."}]},
-{"inf":"kurtulmak","base":"be saved / be freed","ing":"being saved / being freed","past":"was saved / was freed","pp":"been saved / been freed","gloss":"to be saved / to be freed","page":"bible","order":207,"cases":[{"c":"ablatif","en":"We were saved from sin.","ex":"Günah<b>tan</b> kurtulduk."}]},
-{"inf":"bağışlamak","base":"forgive / grant","ing":"forgiving / granting","past":"forgave / granted","pp":"forgiven / granted","gloss":"to forgive / to grant","page":"bible","order":208,"cases":[{"c":"akuzatif","en":"God forgives our sins.","ex":"Tanrı günahlarımız<b>ı</b> bağışlıyor."}]},
-{"inf":"sapmak","base":"turn aside / stray","ing":"turning aside / straying","past":"turned aside / strayed","pp":"turned aside / strayed","gloss":"to turn aside / to stray","page":"bible","order":209,"cases":[{"c":"ablatif","en":"Don't stray from the right path.","ex":"Doğru yol<b>dan</b> sapmayın."}]},
-{"inf":"dirilmek","base":"rise from the dead","ing":"rising from the dead","past":"rose from the dead","pp":"risen from the dead","gloss":"to rise from the dead","page":"bible","order":210,"cases":[{"c":"ablatif","en":"Jesus rose from the dead.","ex":"İsa ölüler<b>den</b> dirildi."}]},
-{"inf":"kirletmek","base":"defile / make unclean","ing":"defiling / making unclean","past":"defiled / made unclean","pp":"defiled / made unclean","gloss":"to defile / to make unclean","page":"bible","order":211,"cases":[{"c":"akuzatif","en":"They defiled the temple.","ex":"Tapınağ<b>ı</b> kirlettiler."}]},
-{"inf":"yükselmek","base":"rise / ascend","ing":"rising / ascending","past":"rose / ascended","pp":"risen / ascended","gloss":"to rise / to ascend","page":"bible","order":212,"cases":[{"c":"datif","en":"Jesus ascended to heaven.","ex":"İsa göğ<b>e</b> yükseldi."}]},
-{"inf":"tapınmak","base":"worship (God)","ing":"worshiping (God)","past":"worshiped (God)","pp":"worshiped (God)","gloss":"to worship (God)","page":"bible","order":213,"cases":[{"c":"datif","en":"We worship only God.","ex":"Yalnız Tanrı'<b>ya</b> tapınıyoruz."}]},
-{"inf":"yaratmak","base":"create","ing":"creating","past":"created","pp":"created","gloss":"to create","page":"bible","order":214,"cases":[{"c":"akuzatif","en":"God created the heavens and the earth.","ex":"Tanrı gökler<b>i</b> ve yer<b>i</b> yarattı."}]},
-{"inf":"yargılamak","base":"judge","ing":"judging","past":"judged","pp":"judged","gloss":"to judge","page":"bible","order":215,"cases":[{"c":"akuzatif","en":"God will judge the world.","ex":"Tanrı dünya<b>yı</b> yargılayacak."}]},
-{"inf":"övmek","base":"praise","ing":"praising","past":"praised","pp":"praised","gloss":"to praise","page":"bible","order":216,"cases":[{"c":"akuzatif","en":"We praise the LORD.","ex":"RAB'b<b>i</b> övüyoruz."}]},
-{"inf":"meshetmek","base":"anoint","ing":"anointing","past":"anointed","pp":"anointed","gloss":"to anoint","page":"bible","order":217,"cases":[{"c":"akuzatif","en":"The prophet anointed the king.","ex":"Peygamber kral<b>ı</b> meshetti."}]},
-{"inf":"adamak","base":"dedicate / vow","ing":"dedicating / vowing","past":"dedicated / vowed","pp":"dedicated / vowed","gloss":"to dedicate / to vow","page":"bible","order":218,"cases":[{"c":"datif","en":"I'm dedicating my life to God.","ex":"Hayatımı Tanrı'<b>ya</b> adıyorum."}]},
-{"inf":"arınmak","base":"be cleansed / be purified","ing":"being cleansed / being purified","past":"was cleansed / was purified","pp":"been cleansed / been purified","gloss":"to be cleansed / to be purified","page":"bible","order":219,"cases":[{"c":"ablatif","en":"We are being cleansed of our sins.","ex":"Günahlarımız<b>dan</b> arınıyoruz."}]},
-{"inf":"alçaltmak","base":"humble / lower","ing":"humbling / lowering","past":"humbled / lowered","pp":"humbled / lowered","gloss":"to humble / to lower","page":"bible","order":220,"cases":[{"c":"akuzatif","en":"God humbles the proud.","ex":"Tanrı gururlular<b>ı</b> alçaltır."}]},
-{"inf":"suçlamak","base":"accuse / blame","ing":"accusing / blaming","past":"accused / blamed","pp":"accused / blamed","gloss":"to accuse / to blame","page":"bible","order":221,"cases":[{"c":"akuzatif","en":"They are accusing me.","ex":"Onlar ben<b>i</b> suçluyor."}]},
-{"inf":"tapmak","base":"worship (idols) / adore","ing":"worshiping (idols) / adoring","past":"worshiped (idols) / adored","pp":"worshiped (idols) / adored","gloss":"to worship (idols) / to adore","page":"bible","order":222,"cases":[{"c":"datif","en":"Do not worship idols.","ex":"Putlar<b>a</b> tapmayın."}]},
-{"inf":"küfretmek","base":"curse / blaspheme","ing":"cursing / blaspheming","past":"cursed / blasphemed","pp":"cursed / blasphemed","gloss":"to curse / to blaspheme","page":"bible","order":223,"cases":[{"c":"datif","en":"Do not blaspheme God.","ex":"Tanrı'<b>ya</b> küfretmeyin."}]},
-{"inf":"lanetlemek","base":"curse","ing":"cursing","past":"cursed","pp":"cursed","gloss":"to curse","page":"bible","order":224,"cases":[{"c":"akuzatif","en":"God cursed the serpent.","ex":"Tanrı yılan<b>ı</b> lanetledi."}]},
-{"inf":"kirlenmek","base":"become unclean / be defiled","ing":"becoming unclean / being defiled","past":"became unclean / was defiled","pp":"become unclean / been defiled","gloss":"to become unclean / to be defiled","page":"bible","order":225,"cases":[{"c":"örnek","en":"The vessel became unclean.","ex":"Kap kirlendi."}]},
-{"inf":"aldatmak","base":"deceive","ing":"deceiving","past":"deceived","pp":"deceived","gloss":"to deceive","page":"bible","order":226,"cases":[{"c":"akuzatif","en":"The serpent deceived the woman.","ex":"Yılan kadın<b>ı</b> aldattı."}]},
-{"inf":"şükretmek","base":"give thanks","ing":"giving thanks","past":"gave thanks","pp":"given thanks","gloss":"to give thanks","page":"bible","order":227,"cases":[{"c":"datif","en":"We give thanks to God.","ex":"Tanrı'<b>ya</b> şükrediyoruz."}]},
-{"inf":"aklanmak","base":"be justified","ing":"being justified","past":"was justified","pp":"been justified","gloss":"to be justified","page":"bible","order":228,"cases":[{"c":"ile","en":"We are justified by faith.","ex":"İman<b>la</b> aklanıyoruz."}]},
-{"inf":"aklamak","base":"justify / acquit","ing":"justifying / acquitting","past":"justified / acquitted","pp":"justified / acquitted","gloss":"to justify / to acquit","page":"bible","order":229,"cases":[{"c":"akuzatif","en":"God justifies the believer.","ex":"Tanrı imanlı<b>yı</b> aklar."}]}
+{"inf":"yollamak","base":"dispatch / post","ing":"dispatching / posting","past":"dispatched / posted","pp":"dispatched / posted","gloss":"to dispatch / to post","num":null,"page":"other","order":204.997,"cases":[{"c":"akuzatif + datif","en":"I'm posting the letter to my friend.","ex":"Mektub<b>u</b> arkadaşım<b>a</b> yolluyorum."}]}
 ],
 nonverbs: [
 {"tr":"nesne","en":"object","unit":1,"order":1},
@@ -2266,106 +2278,6 @@ nonverbs: [
 {"tr":"geçen ay","en":"last month","unit":"other","order":479},
 {"tr":"vardı","en":"there was","unit":"other","order":480},
 {"tr":"yoktu","en":"there was not","unit":"other","order":481},
-{"tr":"RAB","en":"the LORD (YHWH)","unit":"bible","order":482},
-{"tr":"tanrı","en":"God","unit":"bible","order":483},
-{"tr":"İsa","en":"Jesus","unit":"bible","order":484},
-{"tr":"kutsal","en":"holy","unit":"bible","order":485},
-{"tr":"iblis","en":"the devil","unit":"bible","order":486},
-{"tr":"yürek","en":"heart","unit":"bible","order":487},
-{"tr":"günah","en":"sin","unit":"bible","order":488},
-{"tr":"ruh","en":"spirit / Spirit","unit":"bible","order":489},
-{"tr":"kötülük","en":"evil / wickedness","unit":"bible","order":490},
-{"tr":"gök","en":"sky / heaven","unit":"bible","order":491},
-{"tr":"Mesih","en":"Christ / Messiah","unit":"bible","order":492},
-{"tr":"can","en":"soul / life","unit":"bible","order":493},
-{"tr":"gerçek","en":"truth / real","unit":"bible","order":494},
-{"tr":"krallık","en":"kingdom","unit":"bible","order":495},
-{"tr":"iman","en":"faith","unit":"bible","order":496},
-{"tr":"yasa","en":"law","unit":"bible","order":497},
-{"tr":"yücelik","en":"glory / majesty","unit":"bible","order":498},
-{"tr":"buyruk","en":"command / decree","unit":"bible","order":499},
-{"tr":"sonsuz","en":"eternal / endless","unit":"bible","order":500},
-{"tr":"antlaşma","en":"covenant","unit":"bible","order":501},
-{"tr":"suç","en":"guilt / crime / offense","unit":"bible","order":502},
-{"tr":"sevgi","en":"love","unit":"bible","order":503},
-{"tr":"hak","en":"right / justice / due","unit":"bible","order":504},
-{"tr":"elçi","en":"apostle / messenger","unit":"bible","order":505},
-{"tr":"ölüm","en":"death","unit":"bible","order":506},
-{"tr":"doğruluk","en":"righteousness","unit":"bible","order":507},
-{"tr":"esenlik","en":"peace / well-being","unit":"bible","order":508},
-{"tr":"hüküm","en":"judgment / decree / rule","unit":"bible","order":509},
-{"tr":"öfke","en":"anger / wrath","unit":"bible","order":510},
-{"tr":"ant","en":"oath","unit":"bible","order":511},
-{"tr":"oruç","en":"fasting / fast","unit":"bible","order":512},
-{"tr":"merhamet","en":"mercy / compassion","unit":"bible","order":513},
-{"tr":"ışık","en":"light","unit":"bible","order":514},
-{"tr":"lütuf","en":"grace / favor","unit":"bible","order":515},
-{"tr":"taht","en":"throne","unit":"bible","order":516},
-{"tr":"karanlık","en":"darkness","unit":"bible","order":517},
-{"tr":"yargı","en":"judgment","unit":"bible","order":518},
-{"tr":"görkem","en":"splendor / magnificence","unit":"bible","order":519},
-{"tr":"lanet","en":"curse","unit":"bible","order":520},
-{"tr":"gazap","en":"wrath","unit":"bible","order":521},
-{"tr":"duyunç","en":"conscience (biblical)","unit":"bible","order":522},
-{"tr":"kurtuluş","en":"salvation / deliverance","unit":"bible","order":523},
-{"tr":"itaat","en":"obedience","unit":"bible","order":524},
-{"tr":"umut","en":"hope","unit":"bible","order":525},
-{"tr":"müjde","en":"good news / gospel","unit":"bible","order":526},
-{"tr":"kefaret","en":"atonement","unit":"bible","order":527},
-{"tr":"günahkâr","en":"sinner / sinful","unit":"bible","order":528},
-{"tr":"vaat","en":"promise","unit":"bible","order":529},
-{"tr":"tövbe","en":"repentance","unit":"bible","order":530},
-{"tr":"sadakat","en":"faithfulness / loyalty","unit":"bible","order":531},
-{"tr":"kurtarıcı","en":"savior / deliverer","unit":"bible","order":532},
-{"tr":"din","en":"religion / faith","unit":"bible","order":533},
-{"tr":"fidye","en":"ransom","unit":"bible","order":534},
-{"tr":"bereket","en":"blessing / abundance","unit":"bible","order":535},
-{"tr":"sır","en":"secret / mystery","unit":"bible","order":536},
-{"tr":"diriliş","en":"resurrection","unit":"bible","order":537},
-{"tr":"vicdan","en":"conscience","unit":"bible","order":538},
-{"tr":"ebedî","en":"eternal / everlasting","unit":"bible","order":539},
-{"tr":"kul","en":"servant / bondservant","unit":"bible","order":540},
-{"tr":"inanç","en":"belief / faith","unit":"bible","order":541},
-{"tr":"kutsallık","en":"holiness","unit":"bible","order":542},
-{"tr":"vahiy","en":"revelation","unit":"bible","order":543},
-{"tr":"cennet","en":"paradise / heaven","unit":"bible","order":544},
-{"tr":"gizem","en":"mystery","unit":"bible","order":545},
-{"tr":"yaşam","en":"life","unit":"bible","order":546},
-{"tr":"söz","en":"word / saying","unit":"bible","order":547},
-{"tr":"sunu","en":"offering","unit":"bible","order":548},
-{"tr":"kâhin","en":"priest","unit":"bible","order":549},
-{"tr":"peygamber","en":"prophet","unit":"bible","order":550},
-{"tr":"sunak","en":"altar","unit":"bible","order":551},
-{"tr":"çadır","en":"tent / tabernacle","unit":"bible","order":552},
-{"tr":"topluluk","en":"assembly / congregation","unit":"bible","order":553},
-{"tr":"kurban","en":"sacrifice / offering","unit":"bible","order":554},
-{"tr":"dua","en":"prayer","unit":"bible","order":555},
-{"tr":"ilâh","en":"god (deity) / idol","unit":"bible","order":556},
-{"tr":"Üçlü Birlik","en":"Trinity (triple unity)","unit":"bible","order":557},
-{"tr":"melek","en":"angel","unit":"bible","order":558},
-{"tr":"tapınak","en":"temple","unit":"bible","order":559},
-{"tr":"miras","en":"inheritance","unit":"bible","order":560},
-{"tr":"tanıklık","en":"testimony / witness","unit":"bible","order":561},
-{"tr":"bilgelik","en":"wisdom","unit":"bible","order":562},
-{"tr":"sandık","en":"chest / ark","unit":"bible","order":563},
-{"tr":"sürü","en":"flock / herd","unit":"bible","order":564},
-{"tr":"kuzu","en":"lamb","unit":"bible","order":565},
-{"tr":"bilge","en":"wise / a wise person","unit":"bible","order":566},
-{"tr":"iğrenç","en":"detestable / abominable","unit":"bible","order":567},
-{"tr":"peygamberlik","en":"prophecy","unit":"bible","order":568},
-{"tr":"sürgün","en":"exile","unit":"bible","order":569},
-{"tr":"Şabat","en":"Sabbath","unit":"bible","order":570},
-{"tr":"kusur","en":"fault / defect / blemish","unit":"bible","order":571},
-{"tr":"put","en":"idol","unit":"bible","order":572},
-{"tr":"sünnet","en":"circumcision","unit":"bible","order":573},
-{"tr":"belirti","en":"sign","unit":"bible","order":574},
-{"tr":"buhur","en":"incense","unit":"bible","order":575},
-{"tr":"konut","en":"dwelling / tabernacle","unit":"bible","order":576},
-{"tr":"bayram","en":"feast / festival","unit":"bible","order":577},
-{"tr":"övgü","en":"praise","unit":"bible","order":578},
-{"tr":"çarmıh","en":"cross","unit":"bible","order":579},
-{"tr":"kilise","en":"church","unit":"bible","order":580},
-{"tr":"şeytan","en":"Satan","unit":"bible","order":581},
 {"tr":"iyi","en":"good","unit":"sifatlar","order":582},
 {"tr":"kötü","en":"bad","unit":"sifatlar","order":583},
 {"tr":"nazik","en":"kind / gentle","unit":"sifatlar","order":584},
@@ -2939,7 +2851,7 @@ function caseTagsHTML(inf){
 function isSimpleVerb(v){ return v.inf.indexOf(" ")===-1; }
 function pageEnabled(v){
   if(v.page==null) return true;
-  if(v.page==="bonus" || v.page==="bible"){
+  if(v.page==="bonus" || v.page==="mine" || v.page==="bible"){
     if(state.bonusVerbChunks.has(v.bonusChunkKey)) return true;
   } else if(state.pages.has(v.page)){
     return true;
@@ -3187,11 +3099,17 @@ function chipSub(box, text){
 // Lists in alphabetical order by title (numbers in order: "Bible 2-…" before "Bible 10-…").
 const byTitle = (a,b)=>a.label.localeCompare(b.label, "tr", {numeric:true});
 // A dotted box around a set of lists, labeled on its top edge.
-function chipGroup(box, legend, kind){
+function chipGroup(box, legend, kind, action){
   const g = document.createElement("div");
   g.className = "chip-group " + kind;
   const l = document.createElement("span");
-  l.className = "legend"; l.textContent = legend;
+  l.className = "legend legend-row";
+  const t = document.createElement("span"); t.textContent = legend; l.appendChild(t);
+  if(action){
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "legend-btn"; b.textContent = action.label; b.onclick = action.run;
+    l.appendChild(b);
+  }
   g.appendChild(l);
   box.appendChild(g);
   return g;
@@ -3210,11 +3128,9 @@ function renderPageChips(){
     };
     into.appendChild(c);
   };
-  const bible = VERB_BONUS_CHUNKS.filter(bc=>bc.key.startsWith("biblevg"));
-  if(bible.length){
-    const g = chipGroup(pageChips, "Personal - editable", "personal");
-    [...bible].sort(byTitle).forEach(bc=>addVerbChunk(g, bc));
-  }
+  // Personal lists live in the learner's account: a signed-out visitor sees an empty box.
+  const mine = chipGroup(pageChips, "Personal - editable", "personal", personalSignedIn() ? {label:"Manage", run:()=>openListsModal("verb")} : null);
+  VERB_BONUS_CHUNKS.filter(bc=>bc.personal).sort(byTitle).forEach(bc=>addVerbChunk(mine, bc));
   const a1 = chipGroup(pageChips, "A1 - not editable", "a1");
   VERB_PAGES.forEach(p=>{
     const c = document.createElement("div");
@@ -3361,11 +3277,8 @@ function renderNonverbChunkChips(){
     };
     into.appendChild(el);
   };
-  const bible = NONVERB_CHUNKS.filter(c=>c.unit==="bible");
-  if(bible.length){
-    const g = chipGroup(nonverbChunkChips, "Personal - editable", "personal");
-    [...bible].sort(byTitle).forEach(c=>addChunk(g, c));
-  }
+  const mine = chipGroup(nonverbChunkChips, "Personal - editable", "personal", personalSignedIn() ? {label:"Manage", run:()=>openListsModal("nonverb")} : null);
+  NONVERB_CHUNKS.filter(c=>c.personal).sort(byTitle).forEach(c=>addChunk(mine, c));
   const a1 = chipGroup(nonverbChunkChips, "A1 - not editable", "a1");
   // Ünite and Sıfatlar lists first, then Derste (the same order as before, just without headings).
   [c=>c.unit===1 || c.unit===2 || c.unit==="sifatlar", c=>c.unit==="other"].forEach(test=>{
@@ -3450,6 +3363,318 @@ function renderReferencePanel(){
     box.appendChild(list);
   });
 }
+// ---- Personal lists: each learner's own lists and terms, kept in the database ----
+// A personal list becomes a chunk like the built-in lists, so selecting, practicing, testing and the progress colors
+// all work the same. Each term has a permanent progress key (pkey): editing its Turkish or English never loses progress.
+function applyPersonal(){
+  for(let i=VERBS.length-1;i>=0;i--) if(VERBS[i].personal) VERBS.splice(i,1);
+  for(let i=NONVERBS.length-1;i>=0;i--) if(NONVERBS[i].personal) NONVERBS.splice(i,1);
+  [VERB_BONUS_CHUNKS, NONVERB_CHUNKS].forEach(arr=>{ for(let i=arr.length-1;i>=0;i--) if(arr[i].personal) arr.splice(i,1); });
+  const termsByList = new Map();
+  personal.terms.forEach(t=>{ if(!termsByList.has(t.list_id)) termsByList.set(t.list_id, []); termsByList.get(t.list_id).push(t); });
+  [...personal.lists].sort((a,b)=>a.name.localeCompare(b.name, "tr", {numeric:true})).forEach(list=>{
+    const key = personalChunkKey(list.id);
+    const terms = (termsByList.get(list.id) || []).sort((a,b)=>(a.position-b.position) || String(a.id).localeCompare(String(b.id)));
+    const items = [];
+    terms.forEach(t=>{
+      if(list.kind==="nonverb"){
+        const nv = {tr:t.tr, en:t.en, unit:"personal", key:t.pkey, chunkKey:key, personal:true, termId:t.id, listId:list.id};
+        NONVERBS.push(nv); items.push(nv);
+      } else {
+        const f = t.forms || {};
+        const base = f.base || String(t.en).replace(/^to\s+/i, "");
+        const v = makeVerb(t.tr, base, f.ing || base + "ing", f.past || base + "ed", f.pp || f.past || base + "ed", t.en, null);
+        v.page = "mine"; v.key = t.pkey; v.bonusChunkKey = key; v.personal = true; v.termId = t.id; v.listId = list.id;
+        VERBS.push(v); items.push(v);
+      }
+    });
+    (list.kind==="verb" ? VERB_BONUS_CHUNKS : NONVERB_CHUNKS).push({key, label:list.name, items, personal:true, listId:list.id, unit:"personal"});
+  });
+  // The old built-in Bible lists became personal lists: a saved selection of one selects its personal copy.
+  const bySeed = {};
+  personal.lists.forEach(l=>{ if(l.seed) bySeed[l.seed] = personalChunkKey(l.id); });
+  [[state.nonverbChunks, /^biblenvg(\d+)$/, "bible-n-"], [state.bonusVerbChunks, /^biblevg(\d+)$/, "bible-v-"]].forEach(([set, re, seed])=>{
+    [...set].forEach(k=>{ const m = re.exec(k); if(!m) return; set.delete(k); if(bySeed[seed + m[1]]) set.add(bySeed[seed + m[1]]); });
+  });
+  rebuildTopicSets();
+}
+// Redraw everything that shows or uses the word lists.
+function refreshPersonalUI(){
+  renderPageChips();
+  renderNonverbChunkChips();
+  applyPageSelection();
+  refreshCurrentQuestion();
+  refreshVocabCard();
+  updateSelectionCount();
+  renderReferencePanel();
+  renderNonverbReferencePanel();
+  if(typeof refreshTestDisplays==="function") try{ refreshTestDisplays(); }catch(e){}
+}
+async function loadPersonal(){
+  const bk = window.turkceBackend;
+  if(!bk || !bk.lists) return;
+  try{
+    const d = await bk.lists.load();
+    personal.lists = d.lists; personal.terms = d.terms; personal.ready = true;
+  }catch(e){ personal.ready = false; }
+  applyPersonal();
+  refreshPersonalUI();
+  saveSettings();   // a migrated selection is saved
+}
+
+// ---- English forms for a new verb: suggested from the meaning ("to fix / to repair") ----
+const IRREGULAR_VERBS = {
+  be:["being","was","been"], have:["having","had","had"], do:["doing","did","done"], go:["going","went","gone"], come:["coming","came","come"],
+  see:["seeing","saw","seen"], get:["getting","got","got"], give:["giving","gave","given"], take:["taking","took","taken"], make:["making","made","made"],
+  know:["knowing","knew","known"], think:["thinking","thought","thought"], say:["saying","said","said"], tell:["telling","told","told"], find:["finding","found","found"],
+  run:["running","ran","run"], eat:["eating","ate","eaten"], drink:["drinking","drank","drunk"], write:["writing","wrote","written"], read:["reading","read","read"],
+  speak:["speaking","spoke","spoken"], break:["breaking","broke","broken"], bring:["bringing","brought","brought"], buy:["buying","bought","bought"], catch:["catching","caught","caught"],
+  choose:["choosing","chose","chosen"], drive:["driving","drove","driven"], fall:["falling","fell","fallen"], feel:["feeling","felt","felt"], fly:["flying","flew","flown"],
+  forget:["forgetting","forgot","forgotten"], forgive:["forgiving","forgave","forgiven"], hear:["hearing","heard","heard"], hide:["hiding","hid","hidden"], hit:["hitting","hit","hit"],
+  hold:["holding","held","held"], keep:["keeping","kept","kept"], leave:["leaving","left","left"], lose:["losing","lost","lost"], meet:["meeting","met","met"],
+  pay:["paying","paid","paid"], put:["putting","put","put"], ride:["riding","rode","ridden"], ring:["ringing","rang","rung"], rise:["rising","rose","risen"],
+  sell:["selling","sold","sold"], send:["sending","sent","sent"], sit:["sitting","sat","sat"], sleep:["sleeping","slept","slept"], stand:["standing","stood","stood"],
+  steal:["stealing","stole","stolen"], swim:["swimming","swam","swum"], teach:["teaching","taught","taught"], throw:["throwing","threw","thrown"], understand:["understanding","understood","understood"],
+  wake:["waking","woke","woken"], wear:["wearing","wore","worn"], win:["winning","won","won"], begin:["beginning","began","begun"], build:["building","built","built"],
+  cut:["cutting","cut","cut"], let:["letting","let","let"], set:["setting","set","set"], shut:["shutting","shut","shut"], hurt:["hurting","hurt","hurt"],
+  lead:["leading","led","led"], lend:["lending","lent","lent"], light:["lighting","lit","lit"], mean:["meaning","meant","meant"], sing:["singing","sang","sung"],
+  shake:["shaking","shook","shaken"], shoot:["shooting","shot","shot"], spend:["spending","spent","spent"], spread:["spreading","spread","spread"], strike:["striking","struck","struck"],
+  swear:["swearing","swore","sworn"], tear:["tearing","tore","torn"], bend:["bending","bent","bent"], bite:["biting","bit","bitten"], blow:["blowing","blew","blown"],
+  burn:["burning","burned","burned"], dig:["digging","dug","dug"], draw:["drawing","drew","drawn"], dream:["dreaming","dreamed","dreamed"], feed:["feeding","fed","fed"],
+  fight:["fighting","fought","fought"], grow:["growing","grew","grown"], hang:["hanging","hung","hung"], lay:["laying","laid","laid"], lie:["lying","lay","lain"],
+  quit:["quitting","quit","quit"], seek:["seeking","sought","sought"], shine:["shining","shone","shone"], slide:["sliding","slid","slid"], split:["splitting","split","split"],
+  spin:["spinning","spun","spun"], stick:["sticking","stuck","stuck"], sweep:["sweeping","swept","swept"], wind:["winding","wound","wound"], bet:["betting","bet","bet"],
+  bind:["binding","bound","bound"], bleed:["bleeding","bled","bled"], breed:["breeding","bred","bred"], cost:["costing","cost","cost"], deal:["dealing","dealt","dealt"],
+  freeze:["freezing","froze","frozen"], forbid:["forbidding","forbade","forbidden"], lead2:["leading","led","led"]
+};
+const DOUBLE_ENDINGS = new Set(["begin","forget","prefer","refer","admit","commit","permit","regret","occur","control","equip","expel","upset","submit","transfer","compel","omit","patrol","rebel","propel"]);
+function englishVerbForms(verb){
+  // verb: "fix", "slow down", "get full": only the first word changes.
+  const parts = verb.trim().split(/\s+/), w = parts[0].toLowerCase(), rest = parts.slice(1).join(" ");
+  const join = x=>(x + (rest ? " " + rest : "")).trim();
+  if(IRREGULAR_VERBS[w]){ const [ing, past, pp] = IRREGULAR_VERBS[w]; return {base:join(w), ing:join(ing), past:join(past), pp:join(pp)}; }
+  const vowel = c=>"aeiou".includes(c);
+  const last = w[w.length-1], prev = w[w.length-2] || "", prev2 = w[w.length-3] || "";
+  const oneSyllable = (w.match(/[aeiouy]+/g) || []).length===1;   // only short, one-beat words double the last letter (stop -> stopped, open -> opened)
+  const doubles = DOUBLE_ENDINGS.has(w) || (oneSyllable && w.length>=3 && !vowel(last) && !"wxy".includes(last) && vowel(prev) && !vowel(prev2));
+  let ing, ed;
+  if(w.endsWith("ie")){ ing = w.slice(0,-2) + "ying"; ed = w + "d"; }
+  else if(w.endsWith("e") && !w.endsWith("ee") && !w.endsWith("ye") && !w.endsWith("oe")){ ing = w.slice(0,-1) + "ing"; ed = w + "d"; }
+  else if(w.endsWith("e")){ ing = w + "ing"; ed = w + "d"; }
+  else if(last==="y" && !vowel(prev)){ ing = w + "ing"; ed = w.slice(0,-1) + "ied"; }
+  else if(doubles){ ing = w + last + "ing"; ed = w + last + "ed"; }
+  else { ing = w + "ing"; ed = w + "ed"; }
+  return {base:join(w), ing:join(ing), past:join(ed), pp:join(ed)};
+}
+// "to fix / to repair" -> base "fix / repair", ing "fixing / repairing", ...
+function suggestEnglishForms(gloss){
+  const senses = String(gloss).split("/").map(x=>x.trim().replace(/^to\s+/i, "")).filter(Boolean);
+  const out = {base:[], ing:[], past:[], pp:[]};
+  senses.forEach(sn=>{ const f = englishVerbForms(sn); Object.keys(out).forEach(k=>out[k].push(f[k])); });
+  return Object.fromEntries(Object.entries(out).map(([k,v])=>[k, v.join(" / ")]));
+}
+
+// ---- The lists window: add, rename and delete lists; add, edit and remove terms ----
+const lm = {kind:null, listId:null, editing:null, flags:{}};
+const lmEsc = t=>String(t==null ? "" : t).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+const lmBody = ()=>document.getElementById("lmBody");
+function lmMsg(text, bad){
+  const m = document.getElementById("lmMsg");
+  if(m){ m.textContent = text || ""; m.classList.toggle("bad", !!bad); }
+}
+function openListsModal(kind, listId){
+  lm.kind = kind; lm.listId = listId || null; lm.editing = null;
+  document.getElementById("listsModal").hidden = false;
+  renderListsModal();
+}
+function closeListsModal(){ document.getElementById("listsModal").hidden = true; }
+function lmFail(e){ lmMsg(e && e.code==="unavailable" ? "Couldn't reach your account. Check your connection and try again." : "That didn't save" + (e && e.message ? ": " + e.message : "."), true); }
+// After any change: rebuild the app's word lists (progress is untouched) and redraw the window.
+function lmChanged(rerender){
+  applyPersonal();
+  refreshPersonalUI();
+  saveSettings();
+  if(rerender!==false) renderListsModal();
+}
+function renderListsModal(){
+  const list = lm.listId ? personal.lists.find(l=>l.id===lm.listId) : null;
+  if(lm.listId && !list){ lm.listId = null; }
+  document.getElementById("lmBack").hidden = !lm.listId;
+  if(!lm.listId) renderListsView(); else renderTermsView(list);
+}
+function renderListsView(){
+  const kindName = lm.kind==="verb" ? "verb" : "non-verb";
+  document.getElementById("lmTitle").textContent = `My ${kindName} lists`;
+  const mine = personal.lists.filter(l=>l.kind===lm.kind).sort((a,b)=>a.name.localeCompare(b.name, "tr", {numeric:true}));
+  const count = id=>personal.terms.filter(t=>t.list_id===id).length;
+  lmBody().innerHTML = `<div class="lm-line"><input id="lmNewName" type="text" maxlength="80" placeholder="New list name" autocomplete="off"><button type="button" class="btn btn-primary" id="lmNewBtn">Add list</button></div><p class="lm-msg" id="lmMsg" role="status"></p>`
+    + `<div id="lmRows">${mine.length ? mine.map(l=>`<div class="lm-row" data-id="${l.id}"><button type="button" class="lm-name" data-act="open">${lmEsc(l.name)}</button><span class="lm-count">${count(l.id)}</span><button type="button" class="lm-mini" data-act="rename">Rename</button><button type="button" class="lm-mini" data-act="delete">Delete</button></div>`).join("") : ""}</div>`;
+  const input = document.getElementById("lmNewName");
+  const add = async ()=>{
+    const name = input.value.trim();
+    if(!name) return lmMsg("Give the list a name first.", true);
+    if(mine.some(l=>l.name.toLowerCase()===name.toLowerCase())) return lmMsg("You already have a list with that name.", true);
+    try{ const row = await window.turkceBackend.lists.createList(lm.kind, name); personal.lists.push(row); lmChanged(); lm.listId = row.id; renderListsModal(); }
+    catch(e){ lmFail(e); }
+  };
+  document.getElementById("lmNewBtn").onclick = add;
+  input.onkeydown = e=>{ if(e.key==="Enter"){ e.preventDefault(); add(); } };
+  document.getElementById("lmRows").onclick = async e=>{
+    const b = e.target.closest("button[data-act]"); if(!b) return;
+    const row = b.closest(".lm-row"), id = row.dataset.id, l = personal.lists.find(x=>x.id===id);
+    if(b.dataset.act==="open"){ lm.listId = id; renderListsModal(); return; }
+    if(b.dataset.act==="rename"){
+      row.innerHTML = `<input type="text" maxlength="80" value="${lmEsc(l.name)}" style="flex:1;font:inherit;padding:6px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);"><button type="button" class="lm-mini" data-act="save">Save</button><button type="button" class="lm-mini" data-act="cancel">Cancel</button>`;
+      row.querySelector("input").focus(); row.querySelector("input").select(); return;
+    }
+    if(b.dataset.act==="cancel"){ renderListsModal(); return; }
+    if(b.dataset.act==="save"){
+      const name = row.querySelector("input").value.trim();
+      if(!name) return lmMsg("A list needs a name.", true);
+      if(personal.lists.some(x=>x.kind===lm.kind && x.id!==id && x.name.toLowerCase()===name.toLowerCase())) return lmMsg("You already have a list with that name.", true);
+      try{ await window.turkceBackend.lists.renameList(id, name); l.name = name; lmChanged(); }catch(err){ lmFail(err); }
+      return;
+    }
+    if(b.dataset.act==="delete"){
+      if(!b.classList.contains("arm")){ document.querySelectorAll("#lmRows .lm-mini.arm").forEach(x=>{ x.classList.remove("arm"); x.textContent = "Delete"; }); b.classList.add("arm"); b.textContent = "Delete list?"; return; }
+      try{
+        await window.turkceBackend.lists.deleteList(id);
+        personal.lists = personal.lists.filter(x=>x.id!==id);
+        personal.terms = personal.terms.filter(t=>t.list_id!==id);
+        [state.nonverbChunks, state.bonusVerbChunks].forEach(set=>set.delete(personalChunkKey(id)));
+        lmChanged();
+      }catch(err){ lmFail(err); }
+    }
+  };
+}
+function renderTermsView(list){
+  document.getElementById("lmTitle").textContent = list.name;
+  const terms = personal.terms.filter(t=>t.list_id===list.id).sort((a,b)=>(a.position-b.position) || String(a.id).localeCompare(String(b.id)));
+  const rows = terms.map(t=>list.kind==="nonverb"
+    ? `<div class="lm-term" data-id="${t.id}"><input data-f="tr" type="text" maxlength="100" value="${lmEsc(t.tr)}" aria-label="Turkish"><input data-f="en" type="text" maxlength="300" value="${lmEsc(t.en)}" aria-label="English"><button type="button" class="lm-x" data-act="del" aria-label="Remove">&times;</button></div>`
+    : `<div class="lm-row" data-id="${t.id}"><span class="lm-name" style="cursor:default;">${lmEsc(t.tr)}</span><span class="lm-count" style="flex:2;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${lmEsc(t.en)}</span><button type="button" class="lm-mini" data-act="edit">Edit</button><button type="button" class="lm-mini" data-act="del">Remove</button></div>`).join("");
+  if(list.kind==="nonverb"){
+    lmBody().innerHTML = `<h3>Add terms</h3><textarea id="lmBulk" placeholder="kitap, book&#10;kalem, pen&#10;güzel, beautiful" spellcheck="false" autocapitalize="off"></textarea>`
+      + `<div class="lm-line"><button type="button" class="btn btn-primary" id="lmBulkAdd">Add</button></div><p class="lm-msg" id="lmMsg" role="status"></p>`
+      + `<h3>Terms (${terms.length})</h3><div id="lmTerms">${rows}</div>`;
+    document.getElementById("lmBulkAdd").onclick = ()=>lmBulkAdd(list);
+  } else {
+    const e = lm.editing ? personal.terms.find(t=>t.id===lm.editing) : null;
+    const f = (e && e.forms) || {};
+    lmBody().innerHTML = `<h3>${e ? "Edit verb" : "Add a verb"}</h3><div class="lm-grid">`
+      + `<label>Turkish (infinitive)<input id="lmVTr" type="text" maxlength="100" value="${lmEsc(e ? e.tr : "")}" placeholder="tamir etmek" autocomplete="off" autocapitalize="off" spellcheck="false"></label>`
+      + `<label>English meaning<input id="lmVEn" type="text" maxlength="300" value="${lmEsc(e ? e.en : "")}" placeholder="to repair / to fix" autocomplete="off" autocapitalize="off" spellcheck="false"></label>`
+      + `<label>Base<input id="lmVBase" type="text" value="${lmEsc(f.base || "")}" placeholder="repair / fix" autocapitalize="off"></label>`
+      + `<label>-ing<input id="lmVIng" type="text" value="${lmEsc(f.ing || "")}" placeholder="repairing / fixing" autocapitalize="off"></label>`
+      + `<label>Past<input id="lmVPast" type="text" value="${lmEsc(f.past || "")}" placeholder="repaired / fixed" autocapitalize="off"></label>`
+      + `<label>Past participle<input id="lmVPp" type="text" value="${lmEsc(f.pp || "")}" placeholder="repaired / fixed" autocapitalize="off"></label></div>`
+      + `<div class="lm-line"><button type="button" class="btn btn-primary" id="lmVSave">${e ? "Save changes" : "Add verb"}</button>${e ? '<button type="button" class="btn btn-ghost" id="lmVCancel">Cancel</button>' : ""}<button type="button" class="lm-mini" id="lmVSuggest">Suggest English forms</button></div><p class="lm-msg" id="lmMsg" role="status"></p>`
+      + `<h3>Verbs (${terms.length})</h3><div id="lmTerms">${rows}</div>`;
+    lm.flags.formsTouched = !!e;
+    ["lmVBase","lmVIng","lmVPast","lmVPp"].forEach(id=>document.getElementById(id).oninput = ()=>{ lm.flags.formsTouched = true; });
+    const suggest = ()=>{
+      const gloss = document.getElementById("lmVEn").value.trim();
+      if(!gloss) return;
+      const s = suggestEnglishForms(gloss);
+      document.getElementById("lmVBase").value = s.base; document.getElementById("lmVIng").value = s.ing;
+      document.getElementById("lmVPast").value = s.past; document.getElementById("lmVPp").value = s.pp;
+    };
+    document.getElementById("lmVEn").onchange = ()=>{ if(!lm.flags.formsTouched) suggest(); };
+    document.getElementById("lmVSuggest").onclick = ()=>{ suggest(); lm.flags.formsTouched = false; };
+    document.getElementById("lmVSave").onclick = ()=>lmVerbSave(list, e);
+    if(e) document.getElementById("lmVCancel").onclick = ()=>{ lm.editing = null; renderListsModal(); };
+  }
+  document.getElementById("lmTerms").onclick = async ev=>{
+    const b = ev.target.closest("button[data-act]"); if(!b) return;
+    const id = b.closest("[data-id]").dataset.id;
+    if(b.dataset.act==="edit"){ lm.editing = id; renderListsModal(); document.getElementById("lmVTr").focus(); return; }
+    if(b.dataset.act==="del"){
+      try{ await window.turkceBackend.lists.deleteTerm(id); personal.terms = personal.terms.filter(t=>t.id!==id); if(lm.editing===id) lm.editing = null; lmChanged(); }
+      catch(err){ lmFail(err); }
+    }
+  };
+  document.getElementById("lmTerms").onchange = async ev=>{
+    const inp = ev.target.closest("input[data-f]"); if(!inp) return;
+    const t = personal.terms.find(x=>x.id===inp.closest("[data-id]").dataset.id);
+    const val = inp.value.trim();
+    if(!t) return;
+    if(!val){ inp.value = t[inp.dataset.f]; return lmMsg("A term can't be empty.", true); }
+    try{ await window.turkceBackend.lists.updateTerm(t.id, {[inp.dataset.f]: val}); t[inp.dataset.f] = val; lmChanged(false); lmMsg("Saved."); }
+    catch(err){ inp.value = t[inp.dataset.f]; lmFail(err); }
+  };
+}
+// Where a Turkish word already lives (built-in lists or your own), so a duplicate can be skipped.
+function lmWhereIs(kind, tr){
+  const low = tr.toLocaleLowerCase("tr");
+  const pool = kind==="verb" ? VERBS : NONVERBS;
+  const hit = pool.find(x=>(kind==="verb" ? x.inf : x.tr).toLocaleLowerCase("tr")===low);
+  if(!hit) return null;
+  if(hit.personal){ const l = personal.lists.find(x=>x.id===hit.listId); return l ? `in your list "${l.name}"` : "in your lists"; }
+  const chunk = kind==="verb" ? VERB_BONUS_CHUNKS.find(c=>c.key===hit.bonusChunkKey) : NONVERB_CHUNKS.find(c=>c.key===hit.chunkKey);
+  return `in ${chunk ? chunk.label : (kind==="verb" ? VERB_PAGE_TAG[hit.page] : "the A1 lists") || "the A1 lists"}`;
+}
+// Bulk add (non-verbs): one term per line, "Turkish, English". A dash or a tab works too.
+function parseBulkTerms(text){
+  const good = [], bad = [];
+  text.split(/\r?\n/).forEach(raw=>{
+    const line = raw.trim();
+    if(!line) return;
+    const m = line.match(/^(.*?)\s*(?:\t|\s-\s|,|;)\s*(.+)$/);
+    if(!m || !m[1].trim() || !m[2].trim()) bad.push(line); else good.push({tr:m[1].trim(), en:m[2].trim()});
+  });
+  return {good, bad};
+}
+async function lmBulkAdd(list){
+  const box = document.getElementById("lmBulk");
+  const {good, bad} = parseBulkTerms(box.value);
+  if(!good.length && !bad.length) return lmMsg("Type or paste some terms first.", true);
+  const seen = new Set(), add = [], skipped = [];
+  good.forEach(t=>{
+    const low = t.tr.toLocaleLowerCase("tr");
+    const where = lmWhereIs("nonverb", t.tr) || (seen.has(low) ? "twice in this text" : null);
+    if(where) skipped.push(`${t.tr} (${where})`); else { seen.add(low); add.push(t); }
+  });
+  if(!add.length) return lmMsg(["Nothing new to add." , skipped.length ? "Already there: " + skipped.join(", ") : "", bad.length ? "Couldn't read: " + bad.join(" | ") : ""].filter(Boolean).join("\n"), true);
+  try{
+    const start = personal.terms.filter(t=>t.list_id===list.id).reduce((m,t)=>Math.max(m, t.position), -1) + 1;
+    const rows = await window.turkceBackend.lists.addTerms(list.id, "nonverb", add.map((t,i)=>({...t, position:start+i})));
+    personal.terms.push(...rows);
+    lmChanged();
+    lmMsg([`Added ${rows.length} term${rows.length===1 ? "" : "s"}.`, skipped.length ? "Skipped, already there: " + skipped.join(", ") : "", bad.length ? "Couldn't read: " + bad.join(" | ") : ""].filter(Boolean).join("\n"));
+  }catch(e){ lmFail(e); }
+}
+async function lmVerbSave(list, editing){
+  const val = id=>document.getElementById(id).value.trim();
+  const tr = val("lmVTr"), en = val("lmVEn");
+  const forms = {base:val("lmVBase"), ing:val("lmVIng"), past:val("lmVPast"), pp:val("lmVPp")};
+  if(!tr || !en) return lmMsg("Add the Turkish infinitive and the English meaning.", true);
+  if(!/(mak|mek)$/i.test(tr)) return lmMsg("A Turkish verb infinitive ends in -mak or -mek.", true);
+  if(!forms.base || !forms.ing || !forms.past || !forms.pp){
+    const s = suggestEnglishForms(en);
+    Object.keys(s).forEach(k=>{ if(!forms[k]) forms[k] = s[k]; });
+  }
+  const where = lmWhereIs("verb", tr);
+  if(where && !(editing && editing.tr.toLocaleLowerCase("tr")===tr.toLocaleLowerCase("tr"))) return lmMsg(`${tr} is already ${where}.`, true);
+  forms.gloss = en;
+  try{
+    if(editing){
+      await window.turkceBackend.lists.updateTerm(editing.id, {tr, en, forms});
+      Object.assign(editing, {tr, en, forms});
+      lm.editing = null;
+    } else {
+      const start = personal.terms.filter(t=>t.list_id===list.id).reduce((m,t)=>Math.max(m, t.position), -1) + 1;
+      const rows = await window.turkceBackend.lists.addTerms(list.id, "verb", [{tr, en, forms, position:start}]);
+      personal.terms.push(...rows);
+    }
+    lmChanged();
+    lmMsg("Saved.");
+  }catch(e){ lmFail(e); }
+}
+document.getElementById("lmX").onclick = closeListsModal;
+document.getElementById("lmBack").onclick = ()=>{ lm.listId = null; lm.editing = null; renderListsModal(); };
+document.getElementById("listsModal").addEventListener("click", e=>{ if(e.target.id==="listsModal") closeListsModal(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && !document.getElementById("listsModal").hidden){ e.preventDefault(); closeListsModal(); } });
+
 // ---- Verb forms: tap a verb in the Sözlük to see every tense, for reference ----
 const vm = {verb:null, neg:false, q:false, ability:false, en:false};
 function renderVerbModal(){
@@ -6441,6 +6666,7 @@ async function initRemote(){
         progressRef.onSnapshot(onRemoteProgress, ()=>{});
       }catch(e){ remoteProgress = null; syncLost(); }
       const bk = window.turkceBackend;
+      loadPersonal();   // the learner's own lists (a failure just leaves the Personal box empty)
       let tableMode = false;
       if(bk && bk.stats){
         // Word history lives in its own table (one row per word); if the database doesn't have it yet, use the old document.

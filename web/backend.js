@@ -695,6 +695,65 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     }
   };
 
+  // ---------- personal lists: each learner's own lists and terms (public.user_lists / public.user_terms) ----------
+  // Rows are never really deleted: deleting sets deleted_at, so a mistake can be undone from the database.
+  // Terms keep an id and a permanent progress key (pkey) that the database fills in, so the Turkish and English can
+  // change without losing saved progress.
+  function listsError(error){ var e = dbError(error); if(isMissing(error)) e.missing = true; return e; }
+  var lists = {
+    load: async function(){
+      var l = await client.from("user_lists").select("*").order("created_at");
+      if(l.error) throw listsError(l.error);
+      var terms = [], from = 0, size = 1000;
+      for(;;){
+        var t = await client.from("user_terms").select("*").order("id").range(from, from + size - 1);
+        if(t.error) throw listsError(t.error);
+        terms = terms.concat(t.data || []);
+        if(!t.data || t.data.length < size) break;
+        from += size;
+      }
+      return {lists: (l.data || []).filter(function(x){ return !x.deleted_at; }), terms: terms.filter(function(x){ return !x.deleted_at; })};
+    },
+    createList: async function(kind, name){
+      var r = await client.from("user_lists").insert({kind: kind, name: String(name).trim()}).select().single();
+      if(r.error) throw listsError(r.error);
+      return r.data;
+    },
+    renameList: async function(id, name){
+      var r = await client.from("user_lists").update({name: String(name).trim()}).eq("id", id);
+      if(r.error) throw listsError(r.error);
+    },
+    deleteList: async function(id){
+      var r = await client.from("user_lists").update({deleted_at: new Date().toISOString()}).eq("id", id);
+      if(r.error) throw listsError(r.error);
+    },
+    // items: [{tr, en, forms?, position?}] -> the saved rows (with id and pkey)
+    addTerms: async function(listId, kind, items){
+      var out = [];
+      for(var i = 0; i < items.length; i += 300){
+        var rows = items.slice(i, i + 300).map(function(it, j){
+          return {list_id: listId, kind: kind, tr: String(it.tr).trim(), en: String(it.en).trim(), forms: it.forms || null, position: it.position != null ? it.position : i + j};
+        });
+        var r = await client.from("user_terms").insert(rows).select();
+        if(r.error) throw listsError(r.error);
+        out = out.concat(r.data || []);
+      }
+      return out;
+    },
+    updateTerm: async function(id, patch){
+      var body = {};
+      if(patch.tr != null) body.tr = String(patch.tr).trim();
+      if(patch.en != null) body.en = String(patch.en).trim();
+      if(patch.forms !== undefined) body.forms = patch.forms;
+      var r = await client.from("user_terms").update(body).eq("id", id);
+      if(r.error) throw listsError(r.error);
+    },
+    deleteTerm: async function(id){
+      var r = await client.from("user_terms").update({deleted_at: new Date().toISOString()}).eq("id", id);
+      if(r.error) throw listsError(r.error);
+    }
+  };
+
   // A short note into the same private queue as "Suggest a change" (used by the search box's "Suggest a gloss?").
   async function sendSuggestion(message, context){
     var r = await client.from("feedback").insert({kind: "idea", message: String(message).slice(0, 4000), context: String(context || "").slice(0, 1000), user_agent: navigator.userAgent.slice(0, 400)});
@@ -702,6 +761,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
   }
   window.turkceBackend = {
     stats: stats,
+    lists: lists,
     sendSuggestion: sendSuggestion,
     accountName: "your account",
     // The page shows this in the status pill once saving to the account works.

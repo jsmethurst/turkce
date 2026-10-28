@@ -32,7 +32,102 @@
   var denied = {message: "permission denied (not signed in)", code: "42501"};
   var ok = function(data){ return Promise.resolve({data: data === undefined ? null : data, error: null}); };
 
+  // The two personal-list tables, kept in localStorage like everything else here (the database also fills in
+  // ids, the permanent progress key and timestamps, and refuses a term whose list is of the other kind).
+  function uuid(){ return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : "xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx".replace(/x/g, function(){ return (Math.random() * 16 | 0).toString(16); }); }
+  function listTable(name){
+    var KEY = "turkce_testmode_" + name;
+    function all(){
+      var v = read(KEY, null);
+      if(v === null){
+        v = [];
+        if(name === "user_lists"){   // a starter list of each kind, like the real database gives every learner
+          v.push({id: "00000000-0000-4000-8000-0000000000a1", user_id: USER.id, kind: "nonverb", name: "Bible 1-25", seed: "bible-n-1", created_at: new Date().toISOString(), updated_at: new Date().toISOString(), deleted_at: null});
+          v.push({id: "00000000-0000-4000-8000-0000000000a2", user_id: USER.id, kind: "verb", name: "Bible 1-25", seed: "bible-v-1", created_at: new Date().toISOString(), updated_at: new Date().toISOString(), deleted_at: null});
+        } else {
+          [["nonverb:RAB", "RAB", "the LORD (YHWH)"], ["nonverb:tanrı", "tanrı", "god"], ["nonverb:yücelik", "yücelik", "glory / majesty"]].forEach(function(w, i){
+            v.push({id: uuid(), user_id: USER.id, list_id: "00000000-0000-4000-8000-0000000000a1", kind: "nonverb", pkey: w[0], tr: w[1], en: w[2], forms: null, position: i, created_at: new Date().toISOString(), updated_at: new Date().toISOString(), deleted_at: null});
+          });
+          v.push({id: uuid(), user_id: USER.id, list_id: "00000000-0000-4000-8000-0000000000a2", kind: "verb", pkey: "verb:kurtarmak", tr: "kurtarmak", en: "to save / to rescue", forms: {base: "save / rescue", ing: "saving / rescuing", past: "saved / rescued", pp: "saved / rescued", gloss: "to save / to rescue"}, position: 0, created_at: new Date().toISOString(), updated_at: new Date().toISOString(), deleted_at: null});
+        }
+        write(KEY, v);
+      }
+      return v;
+    }
+    function mine(){ return all().filter(function(r){ return r.user_id === USER.id; }); }
+    function guard(row, rows){
+      if(name === "user_terms"){
+        var list = read("turkce_testmode_user_lists", []).filter(function(l){ return l.id === row.list_id && l.user_id === USER.id && l.kind === row.kind; })[0];
+        if(!list) return {message: "the list must be yours and of the same kind (verb / non-verb)"};
+        if(!row.pkey) row.pkey = row.kind + ":u_" + row.id.replace(/-/g, "").slice(0, 12);
+        if(rows.some(function(r){ return r.user_id === row.user_id && r.pkey === row.pkey; })) return {message: "duplicate progress key"};
+      }
+      return null;
+    }
+    return {
+      select: function(){
+        var f = [], ord = null, rng = null;
+        var q = {
+          eq: function(c, v){ f.push(function(r){ return r[c] === v; }); return q; },
+          order: function(c){ ord = c; return q; },
+          range: function(a, b){ rng = [a, b]; return q; },
+          then: function(resolve, reject){
+            if(!session()) return Promise.resolve({data: [], error: denied}).then(resolve, reject);
+            var rows = mine().filter(function(r){ return f.every(function(x){ return x(r); }); });
+            if(ord) rows.sort(function(a, b){ return a[ord] < b[ord] ? -1 : a[ord] > b[ord] ? 1 : 0; });
+            if(rng) rows = rows.slice(rng[0], rng[1] + 1);
+            return ok(clone(rows)).then(resolve, reject);
+          }
+        };
+        return q;
+      },
+      insert: function(input){
+        var wantRows = false, one = false;
+        function run(){
+          if(!session()) return {error: denied};
+          var data = all(), made = [];
+          var list = Array.isArray(input) ? input : [input];
+          for(var i = 0; i < list.length; i++){
+            var row = Object.assign({id: uuid(), user_id: USER.id, seed: null, forms: null, position: 0, created_at: new Date().toISOString(), updated_at: new Date().toISOString(), deleted_at: null}, clone(list[i]));
+            var bad = guard(row, data.concat(made));
+            if(bad) return {error: bad};
+            made.push(row);
+          }
+          write(KEY, data.concat(made));
+          return {data: made};
+        }
+        var chain = {
+          select: function(){ wantRows = true; return chain; },
+          single: function(){ one = true; return chain; },
+          then: function(resolve, reject){
+            var r = run();
+            if(r.error) return Promise.resolve({data: null, error: r.error}).then(resolve, reject);
+            return ok(wantRows ? (one ? clone(r.data[0]) : clone(r.data)) : null).then(resolve, reject);
+          }
+        };
+        return chain;
+      },
+      update: function(patch){
+        var f = [];
+        var q = {
+          eq: function(c, v){ f.push(function(r){ return r[c] === v; }); return q; },
+          then: function(resolve, reject){
+            if(!session()) return Promise.resolve({error: denied}).then(resolve, reject);
+            var data = all();
+            data.forEach(function(r){
+              if(r.user_id === USER.id && f.every(function(x){ return x(r); })){ Object.assign(r, clone(patch)); r.updated_at = new Date().toISOString(); }
+            });
+            write(KEY, data);
+            return ok().then(resolve, reject);
+          }
+        };
+        return q;
+      }
+    };
+  }
+
   function from(table){
+    if(table === "user_lists" || table === "user_terms") return listTable(table);
     if(table === "feedback"){
       return {insert: function(row){
         var list = read(FEEDBACK_KEY, []);
@@ -153,7 +248,7 @@
     wordStats: function(){ return read(STATS_KEY, {}); },
     events: function(){ return read(EVENTS_KEY, []); },
     // Start over: signed in as the Test learner with nothing saved.
-    reset: function(){ [DB_KEY, SESSION_KEY, FEEDBACK_KEY, STATS_KEY, EVENTS_KEY, BATCHES_KEY].forEach(function(k){ localStorage.removeItem(k); });
+    reset: function(){ [DB_KEY, SESSION_KEY, FEEDBACK_KEY, STATS_KEY, EVENTS_KEY, BATCHES_KEY, "turkce_testmode_user_lists", "turkce_testmode_user_terms"].forEach(function(k){ localStorage.removeItem(k); });
       Object.keys(localStorage).filter(function(k){ return k.indexOf("fiil_") === 0; }).forEach(function(k){ localStorage.removeItem(k); }); }
   };
 })();

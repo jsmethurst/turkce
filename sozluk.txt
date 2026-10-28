@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-290 verbs · 1102 non-verbs · 40 topics
+265 verbs · 1002 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -569,59 +569,6 @@ tamir etmek               to repair / to fix (something broken)
     akuzatif: Arabayı tamir ediyor.  (He is repairing the car.)
 yollamak                  to dispatch / to post
     akuzatif + datif: Mektubu arkadaşıma yolluyorum.  (I'm posting the letter to my friend.)
-
-BIBLE 1-25
-----------
-kurtarmak                 to save / to deliver / to rescue
-    akuzatif: Tanrı bizi kurtarıyor.  (God is saving us.)
-kutsamak                  to bless
-    akuzatif: RAB seni kutsasın.  (May the LORD bless you.)
-kurtulmak                 to be saved / to be freed
-    ablatif: Günahtan kurtulduk.  (We were saved from sin.)
-bağışlamak                to forgive / to grant
-    akuzatif: Tanrı günahlarımızı bağışlıyor.  (God forgives our sins.)
-sapmak                    to turn aside / to stray
-    ablatif: Doğru yoldan sapmayın.  (Don't stray from the right path.)
-dirilmek                  to rise from the dead
-    ablatif: İsa ölülerden dirildi.  (Jesus rose from the dead.)
-kirletmek                 to defile / to make unclean
-    akuzatif: Tapınağı kirlettiler.  (They defiled the temple.)
-yükselmek                 to rise / to ascend
-    datif: İsa göğe yükseldi.  (Jesus ascended to heaven.)
-tapınmak                  to worship (God)
-    datif: Yalnız Tanrı'ya tapınıyoruz.  (We worship only God.)
-yaratmak                  to create
-    akuzatif: Tanrı gökleri ve yeri yarattı.  (God created the heavens and the earth.)
-yargılamak                to judge
-    akuzatif: Tanrı dünyayı yargılayacak.  (God will judge the world.)
-övmek                     to praise
-    akuzatif: RAB'bi övüyoruz.  (We praise the LORD.)
-meshetmek                 to anoint
-    akuzatif: Peygamber kralı meshetti.  (The prophet anointed the king.)
-adamak                    to dedicate / to vow
-    datif: Hayatımı Tanrı'ya adıyorum.  (I'm dedicating my life to God.)
-arınmak                   to be cleansed / to be purified
-    ablatif: Günahlarımızdan arınıyoruz.  (We are being cleansed of our sins.)
-alçaltmak                 to humble / to lower
-    akuzatif: Tanrı gururluları alçaltır.  (God humbles the proud.)
-suçlamak                  to accuse / to blame
-    akuzatif: Onlar beni suçluyor.  (They are accusing me.)
-tapmak                    to worship (idols) / to adore
-    datif: Putlara tapmayın.  (Do not worship idols.)
-küfretmek                 to curse / to blaspheme
-    datif: Tanrı'ya küfretmeyin.  (Do not blaspheme God.)
-lanetlemek                to curse
-    akuzatif: Tanrı yılanı lanetledi.  (God cursed the serpent.)
-kirlenmek                 to become unclean / to be defiled
-    örnek: Kap kirlendi.  (The vessel became unclean.)
-aldatmak                  to deceive
-    akuzatif: Yılan kadını aldattı.  (The serpent deceived the woman.)
-şükretmek                 to give thanks
-    datif: Tanrı'ya şükrediyoruz.  (We give thanks to God.)
-aklanmak                  to be justified
-    ile: İmanla aklanıyoruz.  (We are justified by faith.)
-aklamak                   to justify / to acquit
-    akuzatif: Tanrı imanlıyı aklar.  (God justifies the believer.)
 
 
 ============================================================
@@ -1752,118 +1699,6 @@ kuru                      dry
 yaralı                    injured / wounded
 misafirperver             hospitable
 yaramaz                   naughty / mischievous
-
-BIBLE 1-25
-----------
-RAB                       the LORD (YHWH)
-tanrı                     God
-İsa                       Jesus
-kutsal                    holy
-iblis                     the devil
-yürek                     heart
-günah                     sin
-ruh                       spirit / Spirit
-kötülük                   evil / wickedness
-gök                       sky / heaven
-Mesih                     Christ / Messiah
-can                       soul / life
-gerçek                    truth / real
-krallık                   kingdom
-iman                      faith
-yasa                      law
-yücelik                   glory / majesty
-buyruk                    command / decree
-sonsuz                    eternal / endless
-antlaşma                  covenant
-suç                       guilt / crime / offense
-sevgi                     love
-hak                       right / justice / due
-elçi                      apostle / messenger
-ölüm                      death
-
-BIBLE 26-50
------------
-doğruluk                  righteousness
-esenlik                   peace / well-being
-hüküm                     judgment / decree / rule
-öfke                      anger / wrath
-ant                       oath
-oruç                      fasting / fast
-merhamet                  mercy / compassion
-ışık                      light
-lütuf                     grace / favor
-taht                      throne
-karanlık                  darkness
-yargı                     judgment
-görkem                    splendor / magnificence
-lanet                     curse
-gazap                     wrath
-duyunç                    conscience (biblical)
-kurtuluş                  salvation / deliverance
-itaat                     obedience
-umut                      hope
-müjde                     good news / gospel
-kefaret                   atonement
-günahkâr                  sinner / sinful
-vaat                      promise
-tövbe                     repentance
-sadakat                   faithfulness / loyalty
-
-BIBLE 51-75
------------
-kurtarıcı                 savior / deliverer
-din                       religion / faith
-fidye                     ransom
-bereket                   blessing / abundance
-sır                       secret / mystery
-diriliş                   resurrection
-vicdan                    conscience
-ebedî                     eternal / everlasting
-kul                       servant / bondservant
-inanç                     belief / faith
-kutsallık                 holiness
-vahiy                     revelation
-cennet                    paradise / heaven
-gizem                     mystery
-yaşam                     life
-söz                       word / saying
-sunu                      offering
-kâhin                     priest
-peygamber                 prophet
-sunak                     altar
-çadır                     tent / tabernacle
-topluluk                  assembly / congregation
-kurban                    sacrifice / offering
-dua                       prayer
-ilâh                      god (deity) / idol
-
-BIBLE 76-100
-------------
-Üçlü Birlik               Trinity (triple unity)
-melek                     angel
-tapınak                   temple
-miras                     inheritance
-tanıklık                  testimony / witness
-bilgelik                  wisdom
-sandık                    chest / ark
-sürü                      flock / herd
-kuzu                      lamb
-bilge                     wise / a wise person
-iğrenç                    detestable / abominable
-peygamberlik              prophecy
-sürgün                    exile
-Şabat                     Sabbath
-kusur                     fault / defect / blemish
-put                       idol
-sünnet                    circumcision
-belirti                   sign
-buhur                     incense
-konut                     dwelling / tabernacle
-bayram                    feast / festival
-övgü                      praise
-çarmıh                    cross
-kilise                    church
-şeytan                    Satan
 
 
 ============================================================
