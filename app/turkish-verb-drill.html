@@ -756,7 +756,7 @@ kbd{font-family:'JetBrains Mono',monospace;background:var(--paper-2);border-radi
         <button type="button" class="form-swatch none" data-level="none" aria-pressed="false">never reviewed <b></b></button>
         <button type="button" class="form-swatch excl" data-level="excluded" aria-pressed="false"><s>excluded</s> <b></b></button>
       </div>
-      <div class="fk-row"><span class="form-key-hint" id="formKeyHint">Tap colors to show only those words below.</span></div>
+      <div class="fk-row"><span class="form-key-hint" id="formKeyHint">Tap colors to show only those terms below.</span></div>
     </div>
 
     <div class="section-title">All verbs</div>
@@ -4226,7 +4226,7 @@ function applyFormFilter(){
   const hint = document.getElementById("formKeyHint");
   hint.innerHTML = active
     ? `Showing only the selected colors. <span class="link-btn" id="formFilterClear" role="button" tabindex="0">Show all</span>`
-    : "Tap colors to show only those words below.";
+    : "Tap colors to show only those terms below.";
   const clear = document.getElementById("formFilterClear");
   if(clear){
     clear.onclick = ()=>{ formFilter.clear(); applyFormFilter(); };
