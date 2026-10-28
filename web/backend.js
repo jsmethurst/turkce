@@ -754,15 +754,9 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
     }
   };
 
-  // A short note into the same private queue as "Suggest a change" (used by the search box's "Suggest a gloss?").
-  async function sendSuggestion(message, context){
-    var r = await client.from("feedback").insert({kind: "idea", message: String(message).slice(0, 4000), context: String(context || "").slice(0, 1000), user_agent: navigator.userAgent.slice(0, 400)});
-    if(r.error) throw dbError(r.error);
-  }
   window.turkceBackend = {
     stats: stats,
     lists: lists,
-    sendSuggestion: sendSuggestion,
     accountName: "your account",
     // The page shows this in the status pill once saving to the account works.
     signedInLabel: signedInLabel,

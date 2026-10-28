@@ -112,15 +112,6 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .gs-main{text-align:right;white-space:nowrap;}
 .sr-row .gs-main:first-child{text-align:left;}
 .gs-empty{padding:10px;font-size:0.88rem;color:var(--ink-soft);}
-.gs-empty button{font:inherit;background:none;border:none;padding:0;color:var(--tile-blue);font-weight:400;text-decoration:underline;cursor:pointer;}
-.gs-form{padding:10px;display:grid;gap:8px;}
-.gs-form h4{margin:0;font-family:'Fraunces',serif;font-size:1rem;font-weight:400;color:var(--heading);}
-.gs-form label{display:grid;gap:3px;font-size:0.78rem;font-weight:400;color:var(--ink-soft);}
-.gs-form input{font:inherit;font-size:0.92rem;font-weight:400;letter-spacing:0;text-transform:none;height:38px;box-sizing:border-box;padding:0 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);outline:none;}
-.gs-form input:focus{border-color:var(--tile-turquoise);background:var(--surface);}
-.gs-form-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;}
-.gs-form-actions .btn{padding:9px 16px;}
-.gs-form-msg{margin:0;font-size:0.82rem;color:var(--bad);}
 .gs-source{padding:6px 10px 2px;font-size:0.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--tile-gold);}
 .gs-wk .sr-row{cursor:default;}
 .gs-wk a.gs-tr{text-decoration:none;}
@@ -128,7 +119,6 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .gs-wk .gs-pos{margin-left:6px;font-size:0.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
 .gs-foot{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;justify-content:space-between;padding:6px 10px 4px;font-size:0.82rem;color:var(--ink-soft);}
 .gs-foot a,.gs-foot button{font:inherit;background:none;border:none;padding:0;color:var(--tile-blue);font-weight:400;text-decoration:underline;cursor:pointer;}
-.gs-thanks{padding:14px 12px;font-size:0.92rem;color:var(--good);font-weight:600;}
 .brand-mark{width:42px;height:42px;flex:none;display:block;filter:drop-shadow(0 1px 1px rgba(18,65,77,0.12)) drop-shadow(0 6px 10px rgba(18,65,77,0.22));}
 /* Logo: a glass of çay; the steam drifts gently. */
 .brand-steam{animation:steam 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:bottom center;}
@@ -3963,7 +3953,7 @@ function renderSearchResults(){
 }
 // ---- Nothing in the Sözlük matched: look it up on Wiktionary, and say clearly that is where it came from ----
 const wk = {timer:null, ctrl:null, cache:new Map()};
-const NO_RESULTS_HTML = '<div class="gs-empty">No results. <button type="button" id="gsSuggest">Suggest a gloss?</button></div>';
+const NO_RESULTS_HTML = '<div class="gs-empty">No results.</div>';
 function wkText(html){ const d = document.createElement("div"); d.innerHTML = html; return (d.textContent || "").replace(/\s+/g, " ").trim(); }
 async function wkGet(url, signal){
   const r = await fetch(url, {signal});
@@ -4043,7 +4033,7 @@ function renderWiktionary(q, rows){
         const turkish = `<span class="gs-main">${r.words.map(link).join(", ")}${r.pos ? `<span class="gs-pos">${esc(r.pos)}</span>` : ""}</span>`;
         return `<div class="sr-row">${r.dir==="en" ? `<span class="gs-left">${esc(r.en)}</span>${turkish}` : `${turkish}<span class="gs-en">${esc(r.en)}</span>`}</div>`;
       }).join("")
-    + `<div class="gs-foot"><a href="${entry(firstWord)}" target="_blank" rel="noopener">Open ${esc(firstWord)} on Wiktionary ›</a><button type="button" id="gsSuggest">Suggest a gloss?</button></div></div>`;
+    + `<div class="gs-foot"><a href="${entry(firstWord)}" target="_blank" rel="noopener">Open ${esc(firstWord)} on Wiktionary ›</a></div></div>`;
   placeSearchResults();
 }
 function startWiktionarySearch(q){
@@ -4064,62 +4054,18 @@ function startWiktionarySearch(q){
       if(e && e.name==="AbortError") return;
       console.warn("Wiktionary lookup failed:", e);
       if(document.getElementById("gsWk") && document.getElementById("gsearchInput").value.trim()===q){
-        box.innerHTML = '<div class="gs-empty">No results. Wiktionary couldn\'t be reached. <button type="button" id="gsSuggest">Suggest a gloss?</button></div>';
+        box.innerHTML = '<div class="gs-empty">No results. Wiktionary couldn\'t be reached.</div>';
         placeSearchResults();
       }
     }
   }, 450);
-}
-// "No results. Suggest a gloss?" opens a small form that goes into Jacob's suggestion queue.
-function openSuggestForm(){
-  const typed = document.getElementById("gsearchInput").value.trim();
-  const box = document.getElementById("gsearchResults");
-  const esc = t=>String(t).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
-  // Prefill from the top Wiktionary result; otherwise the typed text goes in one field and the other stays blank.
-  let tr = "", en = "";
-  const hit = wk.cache.get(typed.toLocaleLowerCase("tr"));
-  if(state.wiktionary!==false && hit && hit.length){
-    const r = hit[0];
-    tr = (r.words||[]).join(", ");
-    en = r.en || "";
-  }else if(/[a-zA-Z]/.test(typed) && !/[çğıöşüÇĞİÖŞÜ]/.test(typed) && /\s/.test(typed)) en = typed;   // several plain words: probably English
-  else tr = typed;
-  box.innerHTML = `<form class="gs-form" id="gsForm" novalidate>
-    <h4>Suggest a gloss</h4>
-    <label>Turkish<input id="gsWord" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(tr)}"></label>
-    <label>English<input id="gsGloss" type="text" maxlength="300" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(en)}"></label>
-    <p class="gs-form-msg" id="gsMsg" role="status" hidden></p>
-    <div class="gs-form-actions"><button type="button" class="btn btn-ghost" id="gsCancel">Cancel</button><button type="submit" class="btn btn-primary" id="gsSend">Submit</button></div>
-  </form>`;
-  placeSearchResults();
-  document.getElementById(tr && !en ? "gsGloss" : "gsWord").focus();
-}
-async function sendGlossSuggestion(){
-  const word = document.getElementById("gsWord").value.trim(), gloss = document.getElementById("gsGloss").value.trim();
-  const msg = document.getElementById("gsMsg"), send = document.getElementById("gsSend");
-  const problem = t=>{ msg.textContent = t; msg.hidden = false; };
-  if(!word) return problem("Add the Turkish first.");
-  if(!gloss) return problem("Add the English first.");
-  if(!window.turkceBackend || !window.turkceBackend.sendSuggestion) return problem("Suggestions can't be sent from here.");
-  send.disabled = true; msg.hidden = true;
-  try{
-    await window.turkceBackend.sendSuggestion(`Gloss suggestion: ${word} - ${gloss}`, "search box: no results");
-  }catch(e){
-    send.disabled = false;
-    return problem("Couldn't send it. Check your connection and try again.");
-  }
-  document.getElementById("gsearchResults").innerHTML = '<div class="gs-thanks">Thank you. Your response will go in Jacob\'s queue.</div>';
-  setTimeout(()=>{
-    if(!document.querySelector("#gsearchResults .gs-thanks")) return;   // they've moved on to another search
-    const inp = document.getElementById("gsearchInput"); inp.value = ""; renderSearchResults();
-  }, 3200);
 }
 function chooseSearchResult(i){
   const it = gs.items[i];
   if(!it || it.kind!=="verb") return;
   closeSearchResults();
   document.getElementById("gsearchInput").blur();
-  openVerbModal(it.key);
+  openVerbModal(it.tr);
 }
 (function setupSearch(){
   const input = document.getElementById("gsearchInput"), box = document.getElementById("gsearchResults");
@@ -4148,12 +4094,8 @@ function chooseSearchResult(i){
   box.addEventListener("click", e=>{
     const row = e.target.closest(".sr-row.verb");
     if(row) chooseSearchResult(Number(row.dataset.i));
-    if(e.target.id==="gsSuggest") openSuggestForm();
-    if(e.target.id==="gsCancel") renderSearchResults();
   });
-  // Typing in the suggestion form must not trigger the drill's keyboard shortcuts either.
   box.addEventListener("keydown", e=>{ e.stopPropagation(); if(e.key==="Escape") closeSearchResults(); });
-  box.addEventListener("submit", e=>{ e.preventDefault(); sendGlossSuggestion(); });
   document.getElementById("gsearchClear").onclick = ()=>{ input.value = ""; renderSearchResults(); input.focus(); };
   document.addEventListener("pointerdown", e=>{
     if(!box.hidden && !box.contains(e.target) && !document.getElementById("gsearch").contains(e.target)) closeSearchResults();
