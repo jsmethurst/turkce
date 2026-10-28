@@ -344,8 +344,7 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .chip-group.personal{position:relative;}
 /* Longer dashes with wider gaps than a plain CSS dashed border allows: a dashed outline drawn as a mask. */
 .chip-group.personal::before{content:"";position:absolute;inset:0;border-radius:12px;pointer-events:none;background:var(--line);
-  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Crect width='100%25' height='100%25' rx='12' ry='12' fill='none' stroke='black' stroke-width='3' stroke-dasharray='14 10'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;
-  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Crect width='100%25' height='100%25' rx='12' ry='12' fill='none' stroke='black' stroke-width='3' stroke-dasharray='14 10'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;}
+  -webkit-mask:var(--dash-mask) 0 0/100% 100% no-repeat;mask:var(--dash-mask) 0 0/100% 100% no-repeat;}
 .chip-group.a1{border:2.5px solid var(--line);margin-top:6px;}
 .chip-group .legend{flex:0 0 100%;font-size:0.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
 .chip{
@@ -3185,7 +3184,19 @@ function chipGroup(box, legend, kind){
   l.className = "legend"; l.textContent = legend;
   g.appendChild(l);
   box.appendChild(g);
+  if(kind==="personal") dashedOutline(g);
   return g;
+}
+// The dashed outline is drawn at the box's exact pixel size, so every side is the same weight.
+function dashedOutline(g){
+  const paint = ()=>{
+    const w = g.offsetWidth, h = g.offsetHeight;
+    if(!w || !h) return;
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}' viewBox='0 0 ${w} ${h}'><rect x='0.75' y='0.75' width='${w-1.5}' height='${h-1.5}' rx='12' ry='12' fill='none' stroke='black' stroke-width='1.5' stroke-dasharray='14 10'/></svg>`;
+    g.style.setProperty("--dash-mask", `url("data:image/svg+xml,${encodeURIComponent(svg)}")`);
+  };
+  if(window.ResizeObserver) new ResizeObserver(paint).observe(g); else paint();
+  requestAnimationFrame(paint);
 }
 function renderPageChips(){
   pageChips.innerHTML = "";
