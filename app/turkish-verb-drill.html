@@ -3130,6 +3130,8 @@ function chipSub(box, text){
   h.className = "chip-sub"; h.textContent = text;
   box.appendChild(h);
 }
+// Lists in alphabetical order by title (numbers in order: "Bible 2-…" before "Bible 10-…").
+const byTitle = (a,b)=>a.label.localeCompare(b.label, "tr", {numeric:true});
 // A dotted box around a set of lists, labeled on its top edge.
 function chipGroup(box, legend){
   const g = document.createElement("div");
@@ -3157,8 +3159,7 @@ function renderPageChips(){
   const bible = VERB_BONUS_CHUNKS.filter(bc=>bc.key.startsWith("biblevg"));
   if(bible.length){
     const g = chipGroup(pageChips, "Personal - editable");
-    chipSub(g, "Bible");
-    bible.forEach(bc=>addVerbChunk(g, bc));
+    [...bible].sort(byTitle).forEach(bc=>addVerbChunk(g, bc));
   }
   const a1 = chipGroup(pageChips, "A1 - not editable");
   chipSub(a1, "Listede");
@@ -3316,8 +3317,7 @@ function renderNonverbChunkChips(){
   const bible = NONVERB_CHUNKS.filter(c=>c.unit==="bible");
   if(bible.length){
     const g = chipGroup(nonverbChunkChips, "Personal - editable");
-    chipSub(g, "Bible");
-    bible.forEach(c=>addChunk(g, c));
+    [...bible].sort(byTitle).forEach(c=>addChunk(g, c));
   }
   const a1 = chipGroup(nonverbChunkChips, "A1 - not editable");
   [["Listede", c=>c.unit===1 || c.unit===2 || c.unit==="sifatlar"], ["Derste", c=>c.unit==="other"]].forEach(([title, test])=>{
