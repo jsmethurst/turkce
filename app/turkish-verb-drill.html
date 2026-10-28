@@ -341,10 +341,18 @@ header{display:flex;align-items:flex-start;justify-content:space-between;gap:16p
 .chip-sub:first-child{margin-top:0;}
 .sel-wrap{background:transparent !important;border:none !important;padding:0 !important;}   /* the Verbs / Non-verbs wrappers: the boxes are the two groups inside */
 .chip-group{flex:0 0 100%;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:7px;border-radius:12px;padding:12px 12px 12px;}
-.chip-group.personal{position:relative;}
-/* Longer dashes with wider gaps than a plain CSS dashed border allows: a dashed outline drawn as a mask. */
-.chip-group.personal::before{content:"";position:absolute;inset:0;border-radius:12px;pointer-events:none;background:var(--ink-soft);
-  -webkit-mask:var(--dash-mask) 0 0/var(--dash-size) no-repeat;mask:var(--dash-mask) 0 0/var(--dash-size) no-repeat;}
+.chip-group.personal{position:relative;--dc:var(--ink-soft);--dw:1.5px;}
+/* Dashed outline with long dashes: the four straight sides are repeating gradients and the corners are real
+   borders, so the browser snaps every edge to whole device pixels and none of them can look faded. */
+.chip-group.personal::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    repeating-linear-gradient(90deg,var(--dc) 0 14px,transparent 14px 24px) 12px 0/calc(100% - 24px) var(--dw) no-repeat,
+    repeating-linear-gradient(90deg,var(--dc) 0 14px,transparent 14px 24px) 12px 100%/calc(100% - 24px) var(--dw) no-repeat,
+    repeating-linear-gradient(0deg,var(--dc) 0 14px,transparent 14px 24px) 0 12px/var(--dw) calc(100% - 24px) no-repeat,
+    repeating-linear-gradient(0deg,var(--dc) 0 14px,transparent 14px 24px) 100% 12px/var(--dw) calc(100% - 24px) no-repeat;}
+.chip-group.personal::after{content:"";position:absolute;inset:0;pointer-events:none;border:var(--dw) solid var(--dc);border-radius:12px;
+  -webkit-mask:linear-gradient(#000 0 0) 0 0/13px 13px no-repeat,linear-gradient(#000 0 0) 100% 0/13px 13px no-repeat,linear-gradient(#000 0 0) 0 100%/13px 13px no-repeat,linear-gradient(#000 0 0) 100% 100%/13px 13px no-repeat;
+  mask:linear-gradient(#000 0 0) 0 0/13px 13px no-repeat,linear-gradient(#000 0 0) 100% 0/13px 13px no-repeat,linear-gradient(#000 0 0) 0 100%/13px 13px no-repeat,linear-gradient(#000 0 0) 100% 100%/13px 13px no-repeat;}
 .chip-group.a1{border:2.5px solid var(--ink-soft);margin-top:6px;}
 #tab-sozluk .settings-group{border-color:var(--ink-soft);}   /* every box on the Sözlk tab uses the label text color */
 .chip-group .legend{flex:0 0 100%;font-size:0.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
@@ -3185,27 +3193,7 @@ function chipGroup(box, legend, kind){
   l.className = "legend"; l.textContent = legend;
   g.appendChild(l);
   box.appendChild(g);
-  if(kind==="personal") dashedOutline(g);
   return g;
-}
-// The dashed outline is drawn at the box's exact pixel size, so every side is the same weight.
-function dashedOutline(g){
-  const paint = ()=>{
-    // Straight sides use crisp edges (snapped to whole device pixels, so none of them can look faded);
-    // only the four small corners are smoothed.
-    const dpr = window.devicePixelRatio || 1, r = g.getBoundingClientRect();
-    const w = Math.round(r.width*dpr)/dpr, h = Math.round(r.height*dpr)/dpr;
-    if(!w || !h) return;
-    const sw = Math.max(1, Math.round(1.5*dpr))/dpr, i = sw/2, R = 12, d = "14 10";
-    const line = (x1,y1,x2,y2)=>`<line x1='${x1}' y1='${y1}' x2='${x2}' y2='${y2}' stroke-dasharray='${d}'/>`;
-    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}' viewBox='0 0 ${w} ${h}' fill='none' stroke='black' stroke-width='${sw}'>`
-      + `<g shape-rendering='crispEdges'>${line(R,i,w-R,i)}${line(w-i,R,w-i,h-R)}${line(w-R,h-i,R,h-i)}${line(i,h-R,i,R)}</g>`
-      + `<path d='M${i},${R} A${R-i},${R-i} 0 0 1 ${R},${i} M${w-R},${i} A${R-i},${R-i} 0 0 1 ${w-i},${R} M${w-i},${h-R} A${R-i},${R-i} 0 0 1 ${w-R},${h-i} M${R},${h-i} A${R-i},${R-i} 0 0 1 ${i},${h-R}'/></svg>`;
-    g.style.setProperty("--dash-mask", `url("data:image/svg+xml,${encodeURIComponent(svg)}")`);
-    g.style.setProperty("--dash-size", `${w}px ${h}px`);
-  };
-  if(window.ResizeObserver) new ResizeObserver(paint).observe(g); else paint();
-  requestAnimationFrame(paint);
 }
 function renderPageChips(){
   pageChips.innerHTML = "";
