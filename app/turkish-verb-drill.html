@@ -3162,7 +3162,6 @@ function renderPageChips(){
     [...bible].sort(byTitle).forEach(bc=>addVerbChunk(g, bc));
   }
   const a1 = chipGroup(pageChips, "A1 - not editable");
-  chipSub(a1, "Listede");
   VERB_PAGES.forEach(p=>{
     const c = document.createElement("div");
     c.className = "chip" + (state.pages.has(p.key) ? " on" : "");
@@ -3176,10 +3175,7 @@ function renderPageChips(){
     a1.appendChild(c);
   });
   const derste = VERB_BONUS_CHUNKS.filter(bc=>bc.key.startsWith("bonusg"));
-  if(derste.length){
-    chipSub(a1, "Derste");
-    derste.forEach(bc=>addVerbChunk(a1, bc));
-  }
+  derste.forEach(bc=>addVerbChunk(a1, bc));
 }
 renderPageChips();
 document.getElementById("pagesAll").onclick = ()=>{
@@ -3320,11 +3316,9 @@ function renderNonverbChunkChips(){
     [...bible].sort(byTitle).forEach(c=>addChunk(g, c));
   }
   const a1 = chipGroup(nonverbChunkChips, "A1 - not editable");
-  [["Listede", c=>c.unit===1 || c.unit===2 || c.unit==="sifatlar"], ["Derste", c=>c.unit==="other"]].forEach(([title, test])=>{
-    const group = NONVERB_CHUNKS.filter(test);
-    if(!group.length) return;
-    chipSub(a1, title);
-    group.forEach(c=>addChunk(a1, c));
+  // Ünite and Sıfatlar lists first, then Derste (the same order as before, just without headings).
+  [c=>c.unit===1 || c.unit===2 || c.unit==="sifatlar", c=>c.unit==="other"].forEach(test=>{
+    NONVERB_CHUNKS.filter(test).forEach(c=>addChunk(a1, c));
   });
 }
 renderNonverbChunkChips();
