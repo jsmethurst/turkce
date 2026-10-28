@@ -3,11 +3,13 @@
 <linearGradient id="lgft" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6B04F"/><stop offset="1" stop-color="#DD7B1E"/></linearGradient>
 <clipPath id="lgfg"><path d="M16,10 C17,18 21.4,22 21.4,28 C21.4,33 18,36 18,42 C18,48 20.5,51 21.5,55 L42.5,55 C43.5,51 46,48 46,42 C46,36 42.6,33 42.6,28 C42.6,22 47,18 48,10 Z"/></clipPath></defs>
 <rect width="64" height="64" rx="16" fill="url(#lgfb)"/>
-<g class="brand-steam" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" opacity=".92"><path d="M28,9q-3,-2.4 0,-5"/><path d="M36,9q-3,-2.4 0,-5"/></g>
+<g class="brand-steam" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" opacity=".95"><path d="M26.5,9.2c-3.8,-2.6 3.8,-5.2 0,-8"/><path d="M37.5,9.2c-3.8,-2.6 3.8,-5.2 0,-8"/></g>
+<g transform="translate(32 34) scale(.88) translate(-32 -34)">
 <ellipse cx="32" cy="56.4" rx="21" ry="3" fill="#FFFFFF"/><ellipse cx="32" cy="55.6" rx="18" ry="1.6" fill="#C9D6F5"/>
 <g clip-path="url(#lgfg)"><rect width="64" height="64" fill="rgba(255,255,255,.20)"/><rect y="19" width="64" height="50" fill="url(#lgft)"/><rect y="19" width="64" height="1.8" fill="#F6B04F"/></g>
 <path d="M16,10 C17,18 21.4,22 21.4,28 C21.4,33 18,36 18,42 C18,48 20.5,51 21.5,55 L42.5,55 C43.5,51 46,48 46,42 C46,36 42.6,33 42.6,28 C42.6,22 47,18 48,10 Z" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linejoin="round"/>
 <circle cx="27" cy="44" r="1.7" fill="#4A2A12"/><circle cx="37" cy="44" r="1.7" fill="#4A2A12"/>
 <path d="M29.2,47.4q2.8,3 5.6,0" fill="none" stroke="#4A2A12" stroke-width="1.5" stroke-linecap="round"/>
 <ellipse cx="23.5" cy="47" rx="1.9" ry="1.1" fill="#FF8F9C" opacity=".85"/><ellipse cx="40.5" cy="47" rx="1.9" ry="1.1" fill="#FF8F9C" opacity=".85"/>
+</g>
 </svg>
