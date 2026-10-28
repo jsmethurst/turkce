@@ -121,11 +121,16 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
 .feedback-btn:hover,.feedback-btn[aria-expanded="true"]{background:var(--paper-2);color:var(--ink);}
 .feedback-btn:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
 .feedback-btn svg{width:19px;height:19px;}
-.feedback-pop{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:300px;max-width:calc(100vw - 32px);padding:14px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow);}
+.feedback-pop{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:300px;max-width:calc(100vw - 32px);padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow);}
+.gs-theme{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);}
+.gs-theme-label{font-size:13px;color:var(--ink);}
+.gs-seg{display:inline-flex;padding:2px;border-radius:999px;background:var(--paper-2);}
+.gs-seg button{font:inherit;font-size:12.5px;padding:5px 11px;border:none;border-radius:999px;background:transparent;color:var(--ink-soft);cursor:pointer;}
+.gs-seg button.on{background:var(--tab-on-bg);color:var(--tab-on-ink);box-shadow:0 1px 2px rgba(0,0,0,.15);}
 .feedback-title{font-family:'Fraunces',serif;font-weight:600;font-size:1rem;color:var(--ink);margin-bottom:10px;}
 .feedback-label{display:block;font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:4px;}
 #feedbackText{width:100%;box-sizing:border-box;font:inherit;font-size:14px;line-height:1.45;padding:9px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);resize:vertical;outline:none;}
-#feedbackText:focus{border-color:var(--tile-turquoise);background:#fff;}
+#feedbackText:focus{border-color:var(--tile-turquoise);background:var(--surface);}
 .feedback-shot-btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font:inherit;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink-soft);cursor:pointer;}
 .feedback-shot-btn:hover{background:var(--paper-2);color:var(--ink);}
 .feedback-shot-btn:disabled{opacity:.6;cursor:default;}
@@ -155,19 +160,19 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
 .help-para{display:block;margin-top:6px;}
 .help-pop kbd{font:inherit;font-size:11.5px;padding:0 4px;border:1px solid var(--line);border-radius:4px;background:var(--paper);}
 
-.account-menu{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:250px;max-width:calc(100vw - 32px);padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow);}
+.account-menu{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:250px;max-width:calc(100vw - 32px);padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow);}
 .account-email{margin:0 0 8px;padding-bottom:8px;border-bottom:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink);overflow-wrap:anywhere;}
 .account-menu p{margin:0 0 10px;font-size:12.5px;line-height:1.45;color:var(--ink-soft);}
 .account-menu .btn{width:100%;padding:9px 14px;font-size:0.85rem;}
 .sync-status.clickable:hover{background:var(--paper-2);}
 .sync-status.clickable:focus-visible{outline:2px solid var(--tile-turquoise);outline-offset:2px;}
-.auth-panel{margin:-8px 0 22px;padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);}
+.auth-panel{margin:-8px 0 22px;padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);}
 .auth-panel h2{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;margin:0 0 4px;color:var(--ink);}
 .auth-panel p{margin:0 0 14px;font-size:13px;line-height:1.5;color:var(--ink-soft);}
 .auth-fields{display:grid;gap:10px;margin-bottom:12px;}
 .auth-fields label{display:grid;gap:4px;font-size:12px;font-weight:600;color:var(--ink-soft);}
 .auth-fields input{font:inherit;font-size:15px;padding:11px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);outline:none;}
-.auth-fields input:focus{border-color:var(--tile-turquoise);background:#fff;}
+.auth-fields input:focus{border-color:var(--tile-turquoise);background:var(--surface);}
 .auth-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
 .auth-actions .btn{padding:10px 16px;}
 .auth-link{background:none;border:none;padding:4px 2px;font:inherit;font-size:13px;color:var(--tile-blue);text-decoration:underline;cursor:pointer;margin-left:auto;}
@@ -412,18 +417,23 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
         <label class="gs-row"><input type="checkbox" id="gsAutoPlay"><span>Auto-play Turkish prompts and answers</span></label>
         <label class="gs-row"><input type="checkbox" id="gsAutoPlayEn"><span>Auto-play English prompts and answers</span></label>
         <label class="gs-row"><input type="checkbox" id="gsWiktionary"><span>Look up unknown words on Wiktionary</span></label>
+        <div class="gs-theme"><span class="gs-theme-label" id="gsThemeLabel">Theme</span><div class="gs-seg" role="radiogroup" aria-labelledby="gsThemeLabel"><button type="button" role="radio" data-theme="light">Light</button><button type="button" role="radio" data-theme="dark">Dark</button><button type="button" role="radio" data-theme="device">Device</button></div></div>
       </div>
     </div>`);
     gear = {wrap: w, btn: w.querySelector("#settingsBtn"), pop: w.querySelector("#settingsPop"),
-            lenient: w.querySelector("#gsLenient"), autoPlay: w.querySelector("#gsAutoPlay"), autoPlayEn: w.querySelector("#gsAutoPlayEn"), wiktionary: w.querySelector("#gsWiktionary")};
+            lenient: w.querySelector("#gsLenient"), autoPlay: w.querySelector("#gsAutoPlay"), autoPlayEn: w.querySelector("#gsAutoPlayEn"), wiktionary: w.querySelector("#gsWiktionary"), themeBtns: [].slice.call(w.querySelectorAll(".gs-seg button"))};
     gear.btn.onclick = function(){ if(menu) toggleMenu(false); if(fb) toggleFeedback(false); if(help) toggleHelp(false); toggleSettings(); };
     gear.pop.addEventListener("keydown", function(ev){ ev.stopPropagation(); if(ev.key === "Escape"){ toggleSettings(false); gear.btn.focus(); } });
     // The app owns the values (window.turkceSettings); this only shows and changes them.
     gear.lenient.onchange = function(){ if(window.turkceSettings) window.turkceSettings.set("lenient", gear.lenient.checked); };
     gear.autoPlay.onchange = function(){ if(window.turkceSettings) window.turkceSettings.set("autoSpeak", gear.autoPlay.checked); };
     gear.autoPlayEn.onchange = function(){ if(window.turkceSettings) window.turkceSettings.set("autoSpeakEn", gear.autoPlayEn.checked); };
+    gear.themeBtns.forEach(function(btn){ btn.onclick = function(){ if(window.turkceSettings){ window.turkceSettings.set("theme", btn.dataset.theme); paintTheme(btn.dataset.theme); } }; });
     gear.wiktionary.onchange = function(){ if(window.turkceSettings) window.turkceSettings.set("wiktionary", gear.wiktionary.checked); };
     return w;
+  }
+  function paintTheme(t){
+    gear.themeBtns.forEach(function(btn){ var on = btn.dataset.theme === t; btn.classList.toggle("on", on); btn.setAttribute("aria-checked", on ? "true" : "false"); });
   }
   function toggleSettings(force){
     var open = typeof force === "boolean" ? force : gear.pop.hidden;
@@ -433,6 +443,7 @@ button.testmode-badge:focus-visible{outline:2px solid var(--tile-turquoise);outl
       gear.autoPlay.checked = !!v.autoSpeak;
       gear.autoPlayEn.checked = !!v.autoSpeakEn;
       gear.wiktionary.checked = v.wiktionary !== false;   // on unless turned off
+      paintTheme(v.theme || "light");
     }
     gear.pop.hidden = !open;
     if(open) placePopover(gear.pop);

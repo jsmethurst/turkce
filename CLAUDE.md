@@ -95,6 +95,9 @@ To change the database:
 - **Sign-in settings** (Authentication config). Those need the Supabase CLI on Jacob's Mac.
 - **Moving a learner's progress from the old Claude site.** That needs a Claude session with access to that site.
 
+## Theme
+The app has a light theme (default, "Stone") and a dark theme ("Slate"), chosen in the gear menu: Light, Dark or Device (follows the phone or computer). All colors are CSS variables in `:root` and `:root[data-theme="dark"]` at the top of `app/turkish-verb-drill.html`; use `var(--surface)`, `var(--heading)` and the other variables, not hard-coded colors, so both themes keep working. The choice is saved with the learner's settings (`theme`) and in `localStorage` (`turkce_theme`) so the page paints in the right theme at once.
+
 ## Guide and feedback buttons
 The "?" button in the header opens "How to use Türkçe", a short guide written by Jacob (`buildHelp` in `web/backend.js`). Keep its wording as he wrote it.
 
