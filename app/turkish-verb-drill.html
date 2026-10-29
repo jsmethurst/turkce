@@ -3257,6 +3257,7 @@ function renderPageChips(){
   });
   const derste = VERB_BONUS_CHUNKS.filter(bc=>bc.key.startsWith("bonusg"));
   derste.forEach(bc=>addVerbChunk(a1, bc));
+  chipGroup(pageChips, "A2 - not editable", "a1 a2");   // empty for now; A2 lists will go here
 }
 renderPageChips();
 function allVerbsSelected(){ return VERB_PAGES.every(p=>state.pages.has(p.key)) && VERB_BONUS_CHUNKS.every(c=>state.bonusVerbChunks.has(c.key)); }
@@ -3401,6 +3402,7 @@ function renderNonverbChunkChips(){
   [c=>c.unit===1 || c.unit===2 || c.unit==="sifatlar", c=>c.unit==="other"].forEach(test=>{
     NONVERB_CHUNKS.filter(test).forEach(c=>addChunk(a1, c));
   });
+  chipGroup(nonverbChunkChips, "A2 - not editable", "a1 a2");   // empty for now; A2 lists will go here
 }
 renderNonverbChunkChips();
 // Sözlük has two views: the list selection (default) and the progress colors.
