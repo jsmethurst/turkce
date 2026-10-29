@@ -160,8 +160,6 @@ header{display:flex;align-items:center;justify-content:space-between;gap:8px;mar
 .sr-item{display:flex;align-items:center;position:relative;}
 .sr-item .sr-row{flex:1;min-width:0;}
 .sr-item{position:relative;}
-.xpill{position:absolute;top:50%;transform:translateY(-50%);height:20px;box-sizing:border-box;display:inline-flex;align-items:center;padding:0 10px;border:none;border-radius:10px;background:#E5191C;color:#fff;font:inherit;font-size:.72rem;font-weight:700;white-space:nowrap;overflow:hidden;cursor:pointer;transition:width .2s ease;}
-.xpill.incl{background:var(--tile-blue-deep);}
 .sr-row.verb:hover,.sr-row.active{background:var(--paper-2);}
 .gs-tr{font-weight:700;color:var(--heading);}
 .gs-tag{margin-left:6px;font-size:0.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--tile-turquoise);}
@@ -926,7 +924,21 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
       </div>
       <div class="vm-body" id="verbModalBody"></div>
       <div class="modal-foot">
+        <button class="btn btn-ghost" id="verbModalExclude" type="button"></button>
         <button class="btn btn-primary" id="verbModalClose" type="button" style="margin-left:auto;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="wordModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="wordModalTitle" style="max-width:420px;">
+      <div class="modal-head vm-head">
+        <div><h2 id="wordModalTitle"></h2><p class="hint" id="wordModalGloss" style="margin:0;"></p></div>
+        <button type="button" class="vm-x" id="wordModalX" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-ghost" id="wordModalExclude" type="button"></button>
+        <button class="btn btn-primary" id="wordModalClose" type="button" style="margin-left:auto;">Close</button>
       </div>
     </div>
   </div>
@@ -3857,7 +3869,7 @@ function renderVerbModal(){
 function openVerbModal(inf){
   const v = VERBS.find(x=>x.inf===inf);
   if(!v) return;
-  vm.verb = v; vm.neg = false; vm.q = false; vm.ability = false; vm.en = false;
+  vm.verb = v; paintExcludeButton(); vm.neg = false; vm.q = false; vm.ability = false; vm.en = false;
   document.getElementById("verbModalTitle").textContent = v.inf;
   document.getElementById("verbModalGloss").textContent = v.vocabGloss;
   paintVerbSwitches();
@@ -3868,62 +3880,52 @@ function openVerbModal(inf){
   document.getElementById("verbModal").hidden = false;
 }
 function closeVerbModal(){ document.getElementById("verbModal").hidden = true; }
+// Excluding a word happens only inside its detail card (the forms popup for verbs, a small card for non-verbs),
+// so it can't be done by a stray tap on the list.
+function excludeLabel(key){ return state.hidden.has(key) ? "Include in practice" : "Exclude from practice"; }
+function paintExcludeButton(){ if(vm.verb) document.getElementById("verbModalExclude").textContent = excludeLabel(vm.verb.key); }
+document.getElementById("verbModalExclude").onclick = ()=>{
+  if(!vm.verb) return;
+  const key = vm.verb.key;
+  if(state.hidden.has(key)) state.hidden.delete(key); else state.hidden.add(key);
+  afterExcludeChange(); paintExcludeButton();
+};
+const wordModal = {key:null};
+function openWordModal(row){
+  wordModal.key = row.dataset.key;
+  document.getElementById("wordModalTitle").textContent = row.querySelector(".ref-tr").textContent;
+  document.getElementById("wordModalGloss").textContent = row.querySelector(".ref-en").textContent;
+  document.getElementById("wordModalExclude").textContent = excludeLabel(wordModal.key);
+  document.getElementById("wordModal").hidden = false;
+}
+function closeWordModal(){ document.getElementById("wordModal").hidden = true; }
+document.getElementById("wordModalExclude").onclick = ()=>{
+  const key = wordModal.key; if(!key) return;
+  if(state.hidden.has(key)) state.hidden.delete(key); else state.hidden.add(key);
+  afterExcludeChange();
+  document.getElementById("wordModalExclude").textContent = excludeLabel(key);
+};
+document.getElementById("wordModalClose").onclick = closeWordModal;
+document.getElementById("wordModalX").onclick = closeWordModal;
+document.getElementById("wordModal").addEventListener("click", e=>{ if(e.target.id==="wordModal") closeWordModal(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && !document.getElementById("wordModal").hidden){ e.preventDefault(); closeWordModal(); } });
 document.getElementById("refPanel").addEventListener("click", e=>{
   const title = e.target.closest(".ref-page-title");
   if(title){ toggleHiddenList(title.dataset.group); return; }
   const row = e.target.closest(".verb-row");
   if(!row) return;
-  if(row.classList.contains("is-hidden")) unhideWord(row.dataset.key);
-  else openVerbModal(row.dataset.inf);
+  openVerbModal(row.dataset.inf);
 });
 document.getElementById("nonverbRefPanel").addEventListener("click", e=>{
   const title = e.target.closest(".ref-page-title");
   if(title){ toggleHiddenList(title.dataset.group); return; }
-  const row = e.target.closest(".ref-row.is-hidden");
-  if(row) unhideWord(row.dataset.key);
+  const row = e.target.closest(".ref-row");
+  if(row && row.dataset.key) openWordModal(row);
 });
-// Tap the far right of a word's row: its gloss turns into a red "Exclude?" pill. Tap the pill to exclude the word.
-function disarmX(){
-  document.querySelectorAll(".xpill").forEach(p=>{
-    const hid = p.__hid; if(hid) hid.style.visibility = "";
-    p.remove();
-  });
-}
-document.addEventListener("click", e=>{
-  const pill = e.target.closest && e.target.closest(".xpill");
-  if(pill){
-    e.stopImmediatePropagation();
-    const key = pill.dataset.key;
-    if(pill.classList.contains("incl")) state.hidden.delete(key); else state.hidden.add(key);
-    afterExcludeChange();
-    return;
-  }
-  const row = e.target.closest && e.target.closest("#refPanel .ref-row:not(.is-hidden), #nonverbRefPanel .ref-row:not(.is-hidden)");
-  if(!row || !row.dataset.key){ disarmX(); return; }
-  const r = row.getBoundingClientRect();
-  if(e.clientX < r.right - 44){ disarmX(); return; }
-  e.stopImmediatePropagation();
-  e.preventDefault();
-  disarmX();
-  const box = row.querySelector(".sr-row") || row;
-  const target = [...box.children].filter(x=>!x.classList.contains("xpill")).pop();
-  const tr = target.getBoundingClientRect(), rr = row.getBoundingClientRect();
-  const pillEl = document.createElement("button");
-  pillEl.type = "button";
-  pillEl.className = "xpill" + (state.hidden.has(row.dataset.key) ? " incl" : "");
-  pillEl.dataset.key = row.dataset.key;
-  pillEl.textContent = state.hidden.has(row.dataset.key) ? "Include?" : "Exclude?";
-  pillEl.style.right = (rr.right - tr.right) + "px";
-  row.appendChild(pillEl);
-  const to = pillEl.offsetWidth;
-  pillEl.style.width = Math.max(tr.width, 20) + "px";
-  pillEl.getBoundingClientRect();
-  pillEl.style.width = to + "px";
-  target.style.visibility = "hidden";
-  pillEl.__hid = target;
-}, true);
 function afterExcludeChange(){
+  const y = window.scrollY;
   refreshAfterHiddenChange();
+  window.scrollTo(0, y);   // the list shrinks or grows; stay where you were
   if(!document.getElementById("gsearchResults").hidden && gs.items.length){
     const sel = document.getElementById("gsearchResults").scrollTop;
     renderSearchResults();
@@ -3942,7 +3944,7 @@ function refreshAfterHiddenChange(){
 function unhideWord(key){ state.hidden.delete(key); refreshAfterHiddenChange(); }
 document.getElementById("refPanel").addEventListener("keydown", e=>{
   const row = e.target.closest && e.target.closest(".verb-row");
-  if(row && (e.key==="Enter" || e.key===" ")){ e.preventDefault(); row.classList.contains("is-hidden") ? unhideWord(row.dataset.key) : openVerbModal(row.dataset.inf); }
+  if(row && (e.key==="Enter" || e.key===" ")){ e.preventDefault(); openVerbModal(row.dataset.inf); }
 });
 // Positive / Negative is a side-to-side switch. Question and Ability: each on or off, together if you like.
 function paintVerbSwitches(){
