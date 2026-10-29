@@ -493,8 +493,11 @@ input:checked + .slider::before{transform:translateX(17px);}
 .subtab{flex:1;font:inherit;font-size:0.88rem;font-weight:600;padding:9px 10px;border:none;border-radius:9px;background:transparent;color:var(--ink-soft);cursor:pointer;}
 .subtab.active{background:var(--tab-on-bg);color:var(--tab-on-ink);box-shadow:var(--shadow);}
 #sozProgress .section-title:first-child,#sozSelect .section-title:first-child{margin-top:4px;}
-.sec-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;}
-.sec-links{font-family:var(--font);font-size:0.82rem;font-weight:400;color:var(--ink-soft);white-space:nowrap;}
+.sec-row{display:flex;align-items:center;gap:10px;}
+.all-check{flex:none;width:24px;height:24px;padding:0;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);color:transparent;font:700 14px/1 var(--font);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all .12s;-webkit-tap-highlight-color:transparent;}
+.all-check::before{content:"✓";}
+.all-check:hover{border-color:var(--tile-blue);color:var(--tile-blue);}
+.all-check[aria-pressed="true"]{background:var(--tile-blue);border-color:var(--tile-blue);color:#fff;}
 .section-title{font-family:var(--font);font-size:1.05rem;font-weight:600;margin:26px 0 10px;color:var(--heading);}
 .section-title:first-child{margin-top:4px;}
 .hint{font-size:0.82rem;color:var(--ink-soft);line-height:1.5;margin-top:4px;}
@@ -753,18 +756,12 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
     </div>
     <div id="sozSelect">
     <div class="hint" id="selectionCount" style="margin:2px 2px 16px;text-align:center;font-weight:500;color:var(--ink-soft);line-height:1.5;"></div>
-    <div class="section-title sec-row"><span>Verbs</span><span class="sec-links">
-      <span class="link-btn" style="cursor:pointer;" id="pagesAll">Select all</span> ·
-      <span class="link-btn" style="cursor:pointer;" id="pagesNone">Select none</span>
-    </span></div>
+    <div class="section-title sec-row"><span>Verbs</span><button type="button" class="all-check" id="pagesToggle" aria-pressed="false" aria-label="Select all verb lists" title="Select all / none"></button></div>
     <div class="settings-group sel-wrap">
       <div class="chip-row" id="pageChips"></div>
     </div>
 
-    <div class="section-title sec-row"><span>Non-verbs</span><span class="sec-links">
-      <span class="link-btn" style="cursor:pointer;" id="nonverbAll">Select all</span> ·
-      <span class="link-btn" style="cursor:pointer;" id="nonverbNone">Select none</span>
-    </span></div>
+    <div class="section-title sec-row"><span>Non-verbs</span><button type="button" class="all-check" id="nonverbToggle" aria-pressed="false" aria-label="Select all non-verb lists" title="Select all / none"></button></div>
     <div class="settings-group sel-wrap">
       <div class="chip-row" id="nonverbChunkChips"></div>
     </div>
@@ -3263,19 +3260,20 @@ function renderPageChips(){
   derste.forEach(bc=>addVerbChunk(a1, bc));
 }
 renderPageChips();
-document.getElementById("pagesAll").onclick = ()=>{
-  state.pages = new Set(VERB_PAGES.map(p=>p.key));
-  state.bonusVerbChunks = new Set(VERB_BONUS_CHUNKS.map(c=>c.key));
-  renderPageChips();
-  applyPageSelection();
-  refreshCurrentQuestion();
-  refreshVocabCard();
-  saveSettings();
-  updateSelectionCount();
-};
-document.getElementById("pagesNone").onclick = ()=>{
-  state.pages = new Set();
-  state.bonusVerbChunks = new Set();
+function allVerbsSelected(){ return VERB_PAGES.every(p=>state.pages.has(p.key)) && VERB_BONUS_CHUNKS.every(c=>state.bonusVerbChunks.has(c.key)); }
+function allNonverbsSelected(){ return NONVERB_CHUNKS.length>0 && NONVERB_CHUNKS.every(c=>state.nonverbChunks.has(c.key)); }
+// One round check next to "Verbs" / "Non-verbs": filled when everything is selected; tap to select all, or to clear when all are selected.
+function syncAllButtons(){
+  [["pagesToggle", allVerbsSelected(), "verb"], ["nonverbToggle", allNonverbsSelected(), "non-verb"]].forEach(([id, on, what])=>{
+    const b = document.getElementById(id); if(!b) return;
+    b.setAttribute("aria-pressed", String(on));
+    b.setAttribute("aria-label", (on ? "Clear all " : "Select all ") + what + " lists");
+  });
+}
+document.getElementById("pagesToggle").onclick = ()=>{
+  const on = allVerbsSelected();
+  state.pages = on ? new Set() : new Set(VERB_PAGES.map(p=>p.key));
+  state.bonusVerbChunks = on ? new Set() : new Set(VERB_BONUS_CHUNKS.map(c=>c.key));
   renderPageChips();
   applyPageSelection();
   refreshCurrentQuestion();
@@ -3308,6 +3306,7 @@ function countUniqueWords(entries){
   return roots.size;
 }
 function updateSelectionCount(){
+  syncAllButtons();
   const el = document.getElementById("selectionCount");
   if(!el) return;
   if(uniqueWordTotal===null) uniqueWordTotal = countUniqueWords([...VERBS.map(v=>v.inf), ...NONVERBS.map(n=>n.tr)]);
@@ -3453,16 +3452,10 @@ document.querySelectorAll("#sozSubtabs .subtab").forEach(b=>{
   rail.addEventListener("pointercancel", end);
   later();
 })();
-document.getElementById("nonverbAll").onclick = ()=>{
-  state.nonverbChunks = new Set(NONVERB_CHUNKS.map(c=>c.key));
-  [...nonverbChunkChips.querySelectorAll(".chip")].forEach(c=>c.classList.add("on"));
-  refreshVocabCard();
-  saveSettings();
-  updateSelectionCount();
-};
-document.getElementById("nonverbNone").onclick = ()=>{
-  state.nonverbChunks = new Set();
-  [...nonverbChunkChips.querySelectorAll(".chip")].forEach(c=>c.classList.remove("on"));
+document.getElementById("nonverbToggle").onclick = ()=>{
+  const on = allNonverbsSelected();
+  state.nonverbChunks = on ? new Set() : new Set(NONVERB_CHUNKS.map(c=>c.key));
+  [...nonverbChunkChips.querySelectorAll(".chip")].forEach(c=>c.classList.toggle("on", !on));
   refreshVocabCard();
   saveSettings();
   updateSelectionCount();
