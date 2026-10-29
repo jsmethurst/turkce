@@ -189,10 +189,6 @@ header{display:flex;align-items:center;justify-content:space-between;gap:8px;mar
 }
 .tab.active{background:var(--tab-on-bg);color:var(--tab-on-ink);box-shadow:var(--shadow);}
 
-.construction{margin:0 0 16px;text-align:center;}
-.construction .tape{height:16px;border-radius:8px;background:repeating-linear-gradient(-45deg,#f6c500 0 14px,#26231f 14px 28px);}
-.construction .label{margin:10px 0 2px;font-weight:800;font-size:0.95rem;letter-spacing:0.14em;text-transform:uppercase;color:#26231f;}
-.construction .note{margin:0;font-size:0.82rem;color:var(--ink-soft);}
 .how-list{margin:0;padding-left:20px;display:grid;gap:8px;font-size:0.9rem;line-height:1.45;color:var(--ink-soft);}
 .how-list b{color:var(--ink);}
 .modal-backdrop{position:fixed;inset:0;z-index:60;background:rgba(18,40,46,.5);display:flex;align-items:center;justify-content:center;padding:14px;}
@@ -860,13 +856,8 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
     </div>
   </div>
 
-  <!-- ============ CASES (experimental) ============ -->
+  <!-- ============ CASES ============ -->
   <div id="tab-cases" style="display:none;">
-    <div class="construction">
-      <div class="tape" aria-hidden="true"></div>
-      <div class="label">Under construction</div>
-      <p class="note">Experimental: it may change, reset or break while it's being built.</p>
-    </div>
     <div class="card">
       <div class="prompt-header">
         <div class="card-top-actions" style="margin-left:auto;">
