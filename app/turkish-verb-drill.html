@@ -443,9 +443,8 @@ header{display:flex;align-items:center;justify-content:space-between;gap:8px;mar
 /* The check sits on the chip's top-left corner (like the red due dot on the top right), so a selected chip never gets wider. */
 .chip.on::before{content:"✓";position:absolute;top:-6px;left:-4px;width:16px;height:16px;box-sizing:border-box;border-radius:50%;background:var(--tile-blue);color:#fff;border:2px solid var(--paper);font-size:9px;font-weight:700;line-height:12px;text-align:center;}
 :root[data-theme="night"] .chip.on,:root[data-theme="moss"] .chip.on,:root[data-theme="coal"] .chip.on{background:color-mix(in srgb, var(--tile-blue) 22%, var(--surface));}
-/* A list whose test is due: a small red dot on its corner and the score line in red. */
+/* A list whose test is due: the score line turns red. */
 .chip.chip-due{position:relative;}
-.chip.chip-due::after{content:"";position:absolute;top:-3px;right:-3px;width:10px;height:10px;border-radius:50%;background:var(--tile-red);border:2px solid var(--paper);}
 .chip.chip-due .chip-meta{color:var(--tile-red);font-weight:600;opacity:1;}
 .chip-meta{display:block;font-size:0.7rem;margin-top:2px;opacity:0.75;font-variant-numeric:tabular-nums;}
 .tag-test{background:var(--tile-gold);color:#fff;margin-left:6px;}
@@ -512,7 +511,8 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
 #sozProgList{display:flex;align-items:flex-start;gap:6px;}
 #sozProgList .ss-main{flex:1;min-width:0;}
 #sozProgList .ss-col{flex:none;width:34px;align-self:stretch;}
-#sozScrub{position:sticky;top:96px;height:min(62vh,520px);width:34px;z-index:5;touch-action:none;user-select:none;-webkit-user-select:none;cursor:ns-resize;opacity:.55;transition:opacity .2s;}
+#sozScrub{position:fixed;top:var(--ss-top,40vh);bottom:12px;width:34px;z-index:5;touch-action:none;user-select:none;-webkit-user-select:none;cursor:ns-resize;opacity:.55;transition:opacity .2s;}
+#sozProgList{overflow-anchor:none;}
 #sozScrub.drag,#sozScrub:hover{opacity:1;}
 #sozScrub[hidden]{display:none;}
 #sozScrub .ss-track{position:absolute;left:13px;top:0;bottom:0;width:8px;border-radius:4px;background:var(--line);}
@@ -3429,7 +3429,10 @@ document.querySelectorAll("#sozSubtabs .subtab").forEach(b=>{
   const active = ()=>{ const p = document.getElementById("sozProgress"); return !!p && p.offsetParent!==null; };
   function place(){
     rail.hidden = !active();
-    if(rail.hidden) return;
+    if(rail.hidden || rail.classList.contains("drag")) return;
+    // Fixed in place: it starts level with the "All verbs" heading and runs to the bottom of the screen.
+    const h = document.querySelector("#sozProgList .section-title");
+    if(h) rail.style.setProperty("--ss-top", Math.round(Math.min(h.getBoundingClientRect().top + window.scrollY, window.innerHeight * .5)) + "px");
     const ts = titles(); if(!ts.length) return;
     let cur = 0;
     ts.forEach((t,i)=>{ if(t.getBoundingClientRect().top <= 90) cur = i; });
