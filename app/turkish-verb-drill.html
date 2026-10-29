@@ -3466,7 +3466,7 @@ document.querySelectorAll("#sozSubtabs .subtab").forEach(b=>{
     const i = Math.floor(f * ts.length);
     if(i !== lastDragIdx){   // only move the page when the finger reaches a different list
       lastDragIdx = i;
-      window.scrollTo(0, ts[i].getBoundingClientRect().top + window.scrollY - 12);
+      window.scrollTo(0, i === 0 ? 0 : ts[i].getBoundingClientRect().top + window.scrollY - 12);   // the top of the rail is the top of the page
     }
     bubble.textContent = ts[i].textContent;
     bubble.style.top = Math.min(r.height - 14, Math.max(14, y - r.top)) + "px";
