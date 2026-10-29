@@ -397,6 +397,8 @@ header{display:flex;align-items:center;justify-content:space-between;gap:8px;mar
 .lm-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);}
 .lm-row .lm-name{flex:1;min-width:0;text-align:left;font:inherit;font-weight:600;color:var(--heading);background:none;border:none;padding:0;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .lm-row .lm-count{font-size:0.8rem;color:var(--ink-soft);white-space:nowrap;}
+.lm-trash{flex:none;width:30px;height:30px;padding:0;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);color:var(--ink-soft);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.lm-trash:hover{color:var(--tile-red);border-color:var(--tile-red);}
 .lm-mini{font:inherit;font-size:0.8rem;padding:4px 10px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink-soft);cursor:pointer;white-space:nowrap;}
 .lm-mini:hover{background:var(--paper-2);}
 .lm-mini.arm{background:#C0392B;border-color:#C0392B;color:#fff;}
@@ -406,7 +408,6 @@ header{display:flex;align-items:center;justify-content:space-between;gap:8px;mar
 .lm-body textarea{width:100%;box-sizing:border-box;min-height:120px;resize:vertical;line-height:1.5;}
 .lm-term{display:flex;gap:6px;align-items:center;margin-bottom:6px;}
 .lm-term input{flex:1 1 0;}
-.lm-term .lm-x{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);cursor:pointer;font-size:1.1rem;line-height:1;}
 .lm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
 .lm-grid label{display:grid;gap:3px;font-size:0.74rem;color:var(--ink-soft);}
 .lm-grid label.wide{grid-column:1 / -1;}
@@ -3665,8 +3666,13 @@ function suggestEnglishForms(gloss){
 }
 
 // ---- The lists window: add, rename and delete lists; add, edit and remove terms ----
+// Two cards in a row for deleting: the second one swaps the buttons' places, so a double tap can't confirm both.
+async function confirmDeleteTwice(title, body, okLabel, finalBody){
+  if(!await confirmDialog(title, body, okLabel)) return false;
+  return confirmDialog("Are you sure?", finalBody, okLabel, true);
+}
 // A clear yes/no card for things that can't be undone. Resolves true only if the person confirms.
-function confirmDialog(title, body, okLabel){
+function confirmDialog(title, body, okLabel, swap){
   return new Promise(resolve=>{
     const el = document.createElement("div");
     el.className = "modal-backdrop";
@@ -3675,6 +3681,7 @@ function confirmDialog(title, body, okLabel){
       <div class="modal-head"><h2></h2><p style="margin:6px 0 0;color:var(--ink);line-height:1.45;"></p></div>
       <div class="modal-foot"><button type="button" class="btn btn-ghost" data-r="0">Cancel</button><button type="button" class="btn btn-primary" data-r="1" style="background:var(--tile-red);border-color:var(--tile-red);"></button></div>
     </div>`;
+    if(swap) el.querySelector(".modal-foot").style.flexDirection = "row-reverse";   // the red button trades places with Cancel
     el.querySelector("h2").textContent = title;
     el.querySelector("p").textContent = body;
     el.querySelector("[data-r='1']").textContent = okLabel;
@@ -3748,7 +3755,8 @@ function renderListsView(){
     }
     if(b.dataset.act==="delete"){
       const count = personal.terms.filter(t=>t.list_id===id).length;
-      if(!await confirmDialog("Delete this list?", `“${l.name}” and its ${count} word${count===1?"":"s"} will be removed. You will lose all progress on ${count===1?"this word":"these words"}.`, "Delete list")) return;
+      const lost = count===1 ? "this word" : "these words";
+      if(!await confirmDeleteTwice("Delete this list?", `“${l.name}” and its ${count} word${count===1?"":"s"} will be removed. You will lose all progress on ${lost}.`, "Delete list", `This permanently deletes “${l.name}” and all progress on ${lost}. It can't be undone.`)) return;
       try{
         await window.turkceBackend.lists.deleteList(id);
         personal.lists = personal.lists.filter(x=>x.id!==id);
@@ -3763,8 +3771,8 @@ function renderTermsView(list){
   document.getElementById("lmTitle").textContent = list.name;
   const terms = personal.terms.filter(t=>t.list_id===list.id).sort((a,b)=>(a.position-b.position) || String(a.id).localeCompare(String(b.id)));
   const rows = terms.map(t=>list.kind==="nonverb"
-    ? `<div class="lm-term" data-id="${t.id}"><input data-f="tr" type="text" maxlength="100" value="${lmEsc(t.tr)}" aria-label="Turkish"><input data-f="en" type="text" maxlength="300" value="${lmEsc(t.en)}" aria-label="English"><button type="button" class="lm-x" data-act="del" aria-label="Remove">&times;</button></div>`
-    : `<div class="lm-row" data-id="${t.id}"><span class="lm-name" style="cursor:default;">${lmEsc(t.tr)}</span><span class="lm-count" style="flex:2;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${lmEsc(t.en)}</span><button type="button" class="lm-mini" data-act="edit">Edit</button><button type="button" class="lm-mini" data-act="del">Remove</button></div>`).join("");
+    ? `<div class="lm-term" data-id="${t.id}"><input data-f="tr" type="text" maxlength="100" value="${lmEsc(t.tr)}" aria-label="Turkish"><input data-f="en" type="text" maxlength="300" value="${lmEsc(t.en)}" aria-label="English"><button type="button" class="lm-trash" data-act="del" aria-label="Remove word" title="Remove word"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/><path d="M10 10v6M14 10v6"/></svg></button></div>`
+    : `<div class="lm-row" data-id="${t.id}"><span class="lm-name" style="cursor:default;">${lmEsc(t.tr)}</span><span class="lm-count" style="flex:2;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${lmEsc(t.en)}</span><button type="button" class="lm-mini" data-act="edit">Edit</button><button type="button" class="lm-trash" data-act="del" aria-label="Remove word" title="Remove word"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/><path d="M10 10v6M14 10v6"/></svg></button></div>`).join("");
   if(list.kind==="nonverb"){
     lmBody().innerHTML = `<h3>Add terms</h3><textarea id="lmBulk" placeholder="kitap, book&#10;kalem, pen&#10;güzel, beautiful" spellcheck="false" autocapitalize="off"></textarea>`
       + `<div class="lm-line"><button type="button" class="btn btn-primary" id="lmBulkAdd">Add</button></div><p class="lm-msg" id="lmMsg" role="status"></p>`
@@ -3802,7 +3810,7 @@ function renderTermsView(list){
     if(b.dataset.act==="edit"){ lm.editing = id; renderListsModal(); document.getElementById("lmVTr").focus(); return; }
     if(b.dataset.act==="del"){
       const term = personal.terms.find(t=>t.id===id), list = term && personal.lists.find(l=>l.id===term.list_id);
-      if(term && !await confirmDialog("Remove this word?", `Remove “${term.tr}”${list ? ` from “${list.name}”` : ""}? You will lose all progress on this word.`, "Remove word")) return;
+      if(term && !await confirmDeleteTwice("Remove this word?", `Remove “${term.tr}”${list ? ` from “${list.name}”` : ""}? You will lose all progress on this word.`, "Remove word", `This permanently removes “${term.tr}” and all your progress on it. It can't be undone.`)) return;
       try{ await window.turkceBackend.lists.deleteTerm(id); personal.terms = personal.terms.filter(t=>t.id!==id); if(lm.editing===id) lm.editing = null; lmChanged(); }
       catch(err){ lmFail(err); }
     }
