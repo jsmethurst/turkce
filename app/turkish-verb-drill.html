@@ -437,6 +437,8 @@ header{display:flex;align-items:center;justify-content:space-between;gap:8px;mar
 #tab-sozluk .chip-group{gap:5px;}
 #tab-sozluk .chip-group .chip{font-size:0.76rem;padding:5px 10px;}
 #tab-sozluk .chip-group .chip .chip-meta{font-size:0.64rem;margin-top:1px;}
+.case-used{display:block;margin-top:8px;font-size:0.9rem;color:var(--ink-soft);}
+.case-used b{color:var(--ink);font-weight:700;}
 .chip,.chip *{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;}
 /* Selected: a light tint of the accent, an accent outline and a check; nothing heavy. */
 .chip.on{background:color-mix(in srgb, var(--tile-blue) 12%, var(--surface));border-color:var(--tile-blue);color:var(--ink);}
@@ -5990,7 +5992,8 @@ function checkCases(){
   // Green: exactly right. Yellow: the case ending is right but something else in the sentence is off. Red: wrong.
   fb.className = "feedback show " + (exact ? "good" : ending ? "warn" : "bad");
   const head = exact ? "Doğru! Nice work." : ending ? "Right ending, but the sentence has an issue. Correct sentence:" : "Not quite. Correct sentence:";
-  fb.innerHTML = `${head}<span class="correct-answer">${item.ex}</span>`;
+  const caseName = String(item.c || "").replace(/\s*\+\s*/g, " + ");
+  fb.innerHTML = `${head}<span class="correct-answer">${item.ex}</span>` + (caseName ? `<span class="case-used">Case: <b>${caseName}</b></span>` : "");
   document.getElementById("casesSpeak").style.visibility = "visible";
   document.getElementById("casesCheck").disabled = true;
   document.getElementById("casesNext").hidden = false;
