@@ -3808,7 +3808,7 @@ function renderTermsView(list){
       + `<div class="lm-line"><button type="button" class="btn btn-primary" id="lmVSave">${e ? "Save changes" : "Add verb"}</button>${e ? '<button type="button" class="btn btn-ghost" id="lmVCancel">Cancel</button>' : ""}<button type="button" class="lm-mini" id="lmVSuggest">Suggest English forms</button></div><p class="lm-msg" id="lmMsg" role="status"></p>`
       + (e ? "" : `<h3>Add several verbs</h3><textarea id="lmBulkV" placeholder="tamir etmek, to repair / to fix&#10;yormak, to tire&#10;beklemek, to wait" spellcheck="false" autocapitalize="off"></textarea>`
         + `<div class="lm-line"><button type="button" class="btn btn-primary" id="lmBulkVAdd">Add verbs</button></div>`
-        + `<p class="hint" style="margin:6px 2px 4px;">One verb per line: Turkish infinitive, then the English meaning. The English forms (base, -ing, past, past participle) are guessed from the meaning, so please double-check them and edit anything that's wrong (Edit on the verb).</p><p class="lm-msg" id="lmMsgV" role="status"></p>`)
+        + `<p class="hint" style="margin:6px 2px 4px;">One verb per line: Turkish infinitive, then the English meaning. The English forms (base, -ing, past, past participle) are guessed from the meaning, so please double-check them and edit anything that's wrong.</p><p class="lm-msg" id="lmMsgV" role="status"></p>`)
       + `<h3>Verbs (${terms.length})</h3><div id="lmTerms">${rows}</div>`;
     lm.flags.formsTouched = !!e;
     if(!e) document.getElementById("lmBulkVAdd").onclick = ()=>lmBulkVerbAdd(list);
@@ -3906,7 +3906,7 @@ async function lmBulkVerbAdd(list){
     const rows = await window.turkceBackend.lists.addTerms(list.id, "verb", add.map((t,i)=>({...t, position:start+i})));
     personal.terms.push(...rows);
     lmChanged();
-    lmMsg([`Added ${rows.length} verb${rows.length===1 ? "" : "s"}. The English forms are guesses: please double-check them and edit any that are wrong (Edit on the verb).`, ...extra].join("\n"), false, "lmMsgV");
+    lmMsg([`Added ${rows.length} verb${rows.length===1 ? "" : "s"}. The English forms are guesses: please double-check them and edit any that are wrong.`, ...extra].join("\n"), false, "lmMsgV");
   }catch(e){ lmFail(e); }
 }
 async function lmVerbSave(list, editing){
