@@ -641,7 +641,6 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
     <div class="settings-group">
       <div class="chip-row" id="modeChips">
         <div class="chip on" data-mode="en2tr">Show English sentence → type Turkish form</div>
-        <div class="chip" data-mode="tr">Show Turkish infinitive → type Turkish form</div>
         <div class="chip" data-mode="tr2en">Show Turkish form → type English meaning</div>
       </div>
     </div>
@@ -3092,7 +3091,7 @@ function mergeTestLogs(a, b){
   return [...byTime.values()].sort((x,y)=>x.t-y.t);
 }
 function applyFormsSettings(S){
-  if(S.mode) state.mode = S.mode;
+  if(S.mode) state.mode = (S.mode==="tr") ? "en2tr" : S.mode;   // the infinitive → form mode was removed
   if(Array.isArray(S.tenses)) state.tenses = new Set(S.tenses);
   if(Array.isArray(S.compounds)) state.compounds = new Set(S.compounds);
   if(Array.isArray(S.persons)) state.persons = new Set(S.persons);
