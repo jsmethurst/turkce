@@ -3427,38 +3427,50 @@ document.querySelectorAll("#sozSubtabs .subtab").forEach(b=>{
   const dot = rail.querySelector(".ss-dot"), bubble = rail.querySelector(".ss-bubble");
   const titles = ()=>[...document.querySelectorAll("#refPanel .ref-page-title, #nonverbRefPanel .ref-page-title")].filter(t=>!t.hidden);
   const active = ()=>{ const p = document.getElementById("sozProgress"); return !!p && p.offsetParent!==null; };
-  function place(){
-    rail.hidden = !active();
-    if(rail.hidden || rail.classList.contains("drag")) return;
-    // Fixed in place: it starts level with the "All verbs" heading and runs to the bottom of the screen.
+  // Where the rail starts is worked out only when the view opens or the window changes, never while scrolling
+  // (the numbers a phone reports mid-scroll wobble, which made the whole rail jump).
+  function fit(){
     const h = document.querySelector("#sozProgList .section-title");
     if(h) rail.style.setProperty("--ss-top", Math.round(Math.min(h.getBoundingClientRect().top + window.scrollY, window.innerHeight * .5)) + "px");
+  }
+  let lastCur = -1;
+  function place(refit){
+    const was = rail.hidden;
+    rail.hidden = !active();
+    if(rail.hidden || rail.classList.contains("drag")) return;
+    if(refit || was) fit();
     const ts = titles(); if(!ts.length) return;
     let cur = 0;
     ts.forEach((t,i)=>{ if(t.getBoundingClientRect().top <= 90) cur = i; });
+    if(cur === lastCur && !refit) return;   // nothing to move
+    lastCur = cur;
     dot.style.top = ((cur + .5) / ts.length * 100) + "%";
   }
-  let queued = false;
-  const later = ()=>{ if(queued) return; queued = true; requestAnimationFrame(()=>{ queued = false; place(); }); };
-  window.addEventListener("scroll", later, {passive:true});
-  window.addEventListener("resize", later);
-  document.addEventListener("click", ()=>setTimeout(later, 0), true);   // tab and sub-tab switches, filters
+  let queued = false, wantFit = false;
+  const later = refit=>{ if(refit) wantFit = true; if(queued) return; queued = true; requestAnimationFrame(()=>{ queued = false; const f = wantFit; wantFit = false; place(f); }); };
+  window.addEventListener("scroll", ()=>later(false), {passive:true});
+  window.addEventListener("resize", ()=>later(true));
+  document.addEventListener("click", ()=>setTimeout(()=>later(true), 0), true);   // tab and sub-tab switches, filters
+  let lastDragIdx = -1;
   function scrubTo(y){
     const ts = titles(); if(!ts.length) return;
     const r = rail.getBoundingClientRect();
     const f = Math.min(.999, Math.max(0, (y - r.top) / r.height));
     const i = Math.floor(f * ts.length);
-    window.scrollTo(0, ts[i].getBoundingClientRect().top + window.scrollY - 12);
+    if(i !== lastDragIdx){   // only move the page when the finger reaches a different list
+      lastDragIdx = i;
+      window.scrollTo(0, ts[i].getBoundingClientRect().top + window.scrollY - 12);
+    }
     bubble.textContent = ts[i].textContent;
     bubble.style.top = Math.min(r.height - 14, Math.max(14, y - r.top)) + "px";
     dot.style.top = ((i + .5) / ts.length * 100) + "%";
   }
   rail.addEventListener("pointerdown", e=>{ e.preventDefault(); rail.setPointerCapture(e.pointerId); rail.classList.add("drag"); scrubTo(e.clientY); });
   rail.addEventListener("pointermove", e=>{ if(rail.classList.contains("drag")) scrubTo(e.clientY); });
-  const end = ()=>{ rail.classList.remove("drag"); later(); };
+  const end = ()=>{ rail.classList.remove("drag"); lastCur = -1; lastDragIdx = -1; later(false); };
   rail.addEventListener("pointerup", end);
   rail.addEventListener("pointercancel", end);
-  later();
+  later(true);
 })();
 document.getElementById("nonverbToggle").onclick = ()=>{
   const on = allNonverbsSelected();
