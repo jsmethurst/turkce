@@ -507,6 +507,15 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
 .ref-page-title{font-weight:600;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-soft);margin:16px 0 6px;}
 .ref-page-title:first-child{margin-top:0;}
 .ref-page-title{cursor:pointer;user-select:none;}
+/* Progress view: a thin rail on the right edge. Drag along it to scrub through the lists; the bubble names the list under your finger. */
+#sozScrub{position:fixed;right:0;top:18vh;height:64vh;width:22px;z-index:40;touch-action:none;user-select:none;-webkit-user-select:none;cursor:ns-resize;opacity:.5;transition:opacity .2s;}
+#sozScrub.drag,#sozScrub:hover{opacity:1;}
+#sozScrub[hidden]{display:none;}
+#sozScrub .ss-track{position:absolute;right:6px;top:0;bottom:0;width:4px;border-radius:2px;background:var(--line);}
+#sozScrub .ss-dot{position:absolute;right:3px;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:var(--tile-blue);border:2px solid var(--paper);box-sizing:border-box;box-shadow:0 0 0 1px var(--tile-blue);}
+#sozScrub.drag .ss-dot{transform:scale(1.5);}
+#sozScrub .ss-bubble{position:absolute;right:30px;transform:translateY(-50%);display:none;padding:6px 11px;border-radius:10px;background:var(--heading);color:var(--surface);font-size:0.82rem;font-weight:600;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.25);pointer-events:none;}
+#sozScrub.drag .ss-bubble{display:block;}
 .ref-row{position:relative;}
 .ref-row.is-hidden{opacity:.5;cursor:pointer;}
 .ref-row.is-hidden .ref-tr{text-decoration:line-through;}
@@ -3393,6 +3402,45 @@ document.querySelectorAll("#sozSubtabs .subtab").forEach(b=>{
     if(b.dataset.sub==="progress"){ renderReferencePanel(); renderNonverbReferencePanel(); }
   };
 });
+// Scrub rail for the Progress view (see #sozScrub in the CSS).
+(function(){
+  const rail = document.createElement("div");
+  rail.id = "sozScrub"; rail.hidden = true; rail.setAttribute("aria-hidden", "true");
+  rail.innerHTML = '<div class="ss-track"></div><div class="ss-dot"></div><div class="ss-bubble"></div>';
+  document.body.appendChild(rail);
+  const dot = rail.querySelector(".ss-dot"), bubble = rail.querySelector(".ss-bubble");
+  const titles = ()=>[...document.querySelectorAll("#refPanel .ref-page-title, #nonverbRefPanel .ref-page-title")].filter(t=>!t.hidden);
+  const active = ()=>{ const p = document.getElementById("sozProgress"); return !!p && p.offsetParent!==null; };
+  function place(){
+    rail.hidden = !active();
+    if(rail.hidden) return;
+    const ts = titles(); if(!ts.length) return;
+    let cur = 0;
+    ts.forEach((t,i)=>{ if(t.getBoundingClientRect().top <= 90) cur = i; });
+    dot.style.top = ((cur + .5) / ts.length * 100) + "%";
+  }
+  let queued = false;
+  const later = ()=>{ if(queued) return; queued = true; requestAnimationFrame(()=>{ queued = false; place(); }); };
+  window.addEventListener("scroll", later, {passive:true});
+  window.addEventListener("resize", later);
+  document.addEventListener("click", ()=>setTimeout(later, 0), true);   // tab and sub-tab switches, filters
+  function scrubTo(y){
+    const ts = titles(); if(!ts.length) return;
+    const r = rail.getBoundingClientRect();
+    const f = Math.min(.999, Math.max(0, (y - r.top) / r.height));
+    const i = Math.floor(f * ts.length);
+    window.scrollTo(0, ts[i].getBoundingClientRect().top + window.scrollY - 12);
+    bubble.textContent = ts[i].textContent;
+    bubble.style.top = Math.min(r.height - 14, Math.max(14, y - r.top)) + "px";
+    dot.style.top = ((i + .5) / ts.length * 100) + "%";
+  }
+  rail.addEventListener("pointerdown", e=>{ e.preventDefault(); rail.setPointerCapture(e.pointerId); rail.classList.add("drag"); scrubTo(e.clientY); });
+  rail.addEventListener("pointermove", e=>{ if(rail.classList.contains("drag")) scrubTo(e.clientY); });
+  const end = ()=>{ rail.classList.remove("drag"); later(); };
+  rail.addEventListener("pointerup", end);
+  rail.addEventListener("pointercancel", end);
+  later();
+})();
 document.getElementById("nonverbAll").onclick = ()=>{
   state.nonverbChunks = new Set(NONVERB_CHUNKS.map(c=>c.key));
   [...nonverbChunkChips.querySelectorAll(".chip")].forEach(c=>c.classList.add("on"));
