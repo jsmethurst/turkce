@@ -3713,8 +3713,8 @@ function confirmDialog(title, body, okLabel, swap){
 const lm = {kind:null, listId:null, editing:null, flags:{}};
 const lmEsc = t=>String(t==null ? "" : t).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
 const lmBody = ()=>document.getElementById("lmBody");
-function lmMsg(text, bad){
-  const m = document.getElementById("lmMsg");
+function lmMsg(text, bad, id){
+  const m = document.getElementById(id || "lmMsg");
   if(m){ m.textContent = text || ""; m.classList.toggle("bad", !!bad); }
 }
 function openListsModal(kind, listId){
@@ -3806,8 +3806,12 @@ function renderTermsView(list){
       + `<label>Past<input id="lmVPast" type="text" value="${lmEsc(f.past || "")}" placeholder="repaired / fixed" autocapitalize="off"></label>`
       + `<label>Past participle<input id="lmVPp" type="text" value="${lmEsc(f.pp || "")}" placeholder="repaired / fixed" autocapitalize="off"></label></div>`
       + `<div class="lm-line"><button type="button" class="btn btn-primary" id="lmVSave">${e ? "Save changes" : "Add verb"}</button>${e ? '<button type="button" class="btn btn-ghost" id="lmVCancel">Cancel</button>' : ""}<button type="button" class="lm-mini" id="lmVSuggest">Suggest English forms</button></div><p class="lm-msg" id="lmMsg" role="status"></p>`
+      + (e ? "" : `<h3>Add several verbs</h3><textarea id="lmBulkV" placeholder="tamir etmek, to repair / to fix&#10;yormak, to tire&#10;beklemek, to wait" spellcheck="false" autocapitalize="off"></textarea>`
+        + `<div class="lm-line"><button type="button" class="btn btn-primary" id="lmBulkVAdd">Add verbs</button></div>`
+        + `<p class="hint" style="margin:6px 2px 4px;">One verb per line: Turkish infinitive, then the English meaning. The English forms (base, -ing, past, past participle) are guessed from the meaning, so please double-check them and edit anything that's wrong (Edit on the verb).</p><p class="lm-msg" id="lmMsgV" role="status"></p>`)
       + `<h3>Verbs (${terms.length})</h3><div id="lmTerms">${rows}</div>`;
     lm.flags.formsTouched = !!e;
+    if(!e) document.getElementById("lmBulkVAdd").onclick = ()=>lmBulkVerbAdd(list);
     ["lmVBase","lmVIng","lmVPast","lmVPp"].forEach(id=>document.getElementById(id).oninput = ()=>{ lm.flags.formsTouched = true; });
     const suggest = ()=>{
       const gloss = document.getElementById("lmVEn").value.trim();
@@ -3880,6 +3884,29 @@ async function lmBulkAdd(list){
     personal.terms.push(...rows);
     lmChanged();
     lmMsg([`Added ${rows.length} term${rows.length===1 ? "" : "s"}.`, skipped.length ? "Skipped, already there: " + skipped.join(", ") : "", bad.length ? "Couldn't read: " + bad.join(" | ") : ""].filter(Boolean).join("\n"));
+  }catch(e){ lmFail(e); }
+}
+// Bulk add (verbs): one per line, "Turkish infinitive, English meaning". The English forms are guessed from the meaning.
+async function lmBulkVerbAdd(list){
+  const box = document.getElementById("lmBulkV");
+  const {good, bad} = parseBulkTerms(box.value);
+  if(!good.length && !bad.length) return lmMsg("Type or paste some verbs first.", true, "lmMsgV");
+  const seen = new Set(), add = [], skipped = [], notVerbs = [];
+  good.forEach(t=>{
+    if(!/(mak|mek)$/i.test(t.tr)){ notVerbs.push(t.tr); return; }
+    const low = t.tr.toLocaleLowerCase("tr");
+    const where = lmWhereIs("verb", t.tr) || (seen.has(low) ? "twice in this text" : null);
+    if(where) skipped.push(`${t.tr} (${where})`);
+    else { seen.add(low); add.push({tr:t.tr, en:t.en, forms:{...suggestEnglishForms(t.en), gloss:t.en}}); }
+  });
+  const extra = [skipped.length ? "Skipped, already there: " + skipped.join(", ") : "", notVerbs.length ? "Not a verb infinitive (should end in -mak or -mek): " + notVerbs.join(", ") : "", bad.length ? "Couldn't read: " + bad.join(" | ") : ""].filter(Boolean);
+  if(!add.length) return lmMsg(["Nothing new to add.", ...extra].join("\n"), true, "lmMsgV");
+  try{
+    const start = personal.terms.filter(t=>t.list_id===list.id).reduce((m,t)=>Math.max(m, t.position), -1) + 1;
+    const rows = await window.turkceBackend.lists.addTerms(list.id, "verb", add.map((t,i)=>({...t, position:start+i})));
+    personal.terms.push(...rows);
+    lmChanged();
+    lmMsg([`Added ${rows.length} verb${rows.length===1 ? "" : "s"}. The English forms are guesses: please double-check them and edit any that are wrong (Edit on the verb).`, ...extra].join("\n"), false, "lmMsgV");
   }catch(e){ lmFail(e); }
 }
 async function lmVerbSave(list, editing){
