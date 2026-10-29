@@ -435,12 +435,13 @@ header{display:flex;align-items:center;justify-content:space-between;gap:8px;mar
 }
 #tab-sozluk .chip-group{gap:5px;}
 #tab-sozluk .chip-group .chip{font-size:0.76rem;padding:5px 10px;}
-#tab-sozluk .chip-group .chip.on::before{margin-right:4px;}
 #tab-sozluk .chip-group .chip .chip-meta{font-size:0.64rem;margin-top:1px;}
 .chip,.chip *{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;}
 /* Selected: a light tint of the accent, an accent outline and a check; nothing heavy. */
 .chip.on{background:color-mix(in srgb, var(--tile-blue) 12%, var(--surface));border-color:var(--tile-blue);color:var(--ink);}
-.chip.on::before{content:"✓";color:var(--tile-blue);font-weight:700;margin-right:6px;}
+.chip{position:relative;}
+/* The check sits on the chip's top-left corner (like the red due dot on the top right), so a selected chip never gets wider. */
+.chip.on::before{content:"✓";position:absolute;top:-6px;left:-4px;width:16px;height:16px;box-sizing:border-box;border-radius:50%;background:var(--tile-blue);color:#fff;border:2px solid var(--paper);font-size:9px;font-weight:700;line-height:12px;text-align:center;}
 :root[data-theme="night"] .chip.on,:root[data-theme="moss"] .chip.on,:root[data-theme="coal"] .chip.on{background:color-mix(in srgb, var(--tile-blue) 22%, var(--surface));}
 /* A list whose test is due: a small red dot on its corner and the score line in red. */
 .chip.chip-due{position:relative;}
@@ -508,13 +509,16 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
 .ref-page-title:first-child{margin-top:0;}
 .ref-page-title{cursor:pointer;user-select:none;}
 /* Progress view: a thin rail on the right edge. Drag along it to scrub through the lists; the bubble names the list under your finger. */
-#sozScrub{position:fixed;right:0;top:18vh;height:64vh;width:46px;z-index:40;touch-action:none;user-select:none;-webkit-user-select:none;cursor:ns-resize;opacity:.5;transition:opacity .2s;}
+#sozProgList{display:flex;align-items:flex-start;gap:6px;}
+#sozProgList .ss-main{flex:1;min-width:0;}
+#sozProgList .ss-col{flex:none;width:34px;align-self:stretch;}
+#sozScrub{position:sticky;top:96px;height:min(62vh,520px);width:34px;z-index:5;touch-action:none;user-select:none;-webkit-user-select:none;cursor:ns-resize;opacity:.55;transition:opacity .2s;}
 #sozScrub.drag,#sozScrub:hover{opacity:1;}
 #sozScrub[hidden]{display:none;}
-#sozScrub .ss-track{position:absolute;right:10px;top:0;bottom:0;width:8px;border-radius:4px;background:var(--line);}
-#sozScrub .ss-dot{position:absolute;right:7px;width:14px;height:14px;margin-top:-7px;border-radius:50%;background:var(--tile-blue);border:2px solid var(--paper);box-sizing:border-box;box-shadow:0 0 0 1px var(--tile-blue);}
+#sozScrub .ss-track{position:absolute;left:13px;top:0;bottom:0;width:8px;border-radius:4px;background:var(--line);}
+#sozScrub .ss-dot{position:absolute;left:10px;width:14px;height:14px;margin-top:-7px;border-radius:50%;background:var(--tile-blue);border:2px solid var(--paper);box-sizing:border-box;box-shadow:0 0 0 1px var(--tile-blue);}
 #sozScrub.drag .ss-dot{transform:scale(1.5);}
-#sozScrub .ss-bubble{position:absolute;right:54px;transform:translateY(-50%);display:none;padding:6px 11px;border-radius:10px;background:var(--heading);color:var(--surface);font-size:0.82rem;font-weight:600;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.25);pointer-events:none;}
+#sozScrub .ss-bubble{position:absolute;right:42px;transform:translateY(-50%);display:none;padding:6px 11px;border-radius:10px;background:var(--heading);color:var(--surface);font-size:0.82rem;font-weight:600;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.25);pointer-events:none;}
 #sozScrub.drag .ss-bubble{display:block;}
 .ref-row{position:relative;}
 .ref-row.is-hidden{opacity:.5;cursor:pointer;}
@@ -782,11 +786,13 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
       <div class="fk-row"><span class="form-key-hint" id="formKeyHint">Tap colors to show only those terms below.</span></div>
     </div>
 
+    <div id="sozProgList"><div class="ss-main">
     <div class="section-title">All verbs</div>
     <div id="refPanel"></div>
 
     <div class="section-title">All non-verbs</div>
     <div id="nonverbRefPanel"></div>
+    </div><div class="ss-col" id="sozScrubCol"></div></div>
     </div>
     <!-- Topics are switched off for now (TOPICS_ON in the script); kept here so they can come back. -->
     <div id="sozTopics" hidden>
@@ -3417,7 +3423,7 @@ document.querySelectorAll("#sozSubtabs .subtab").forEach(b=>{
   const rail = document.createElement("div");
   rail.id = "sozScrub"; rail.hidden = true; rail.setAttribute("aria-hidden", "true");
   rail.innerHTML = '<div class="ss-track"></div><div class="ss-dot"></div><div class="ss-bubble"></div>';
-  document.body.appendChild(rail);
+  document.getElementById("sozScrubCol").appendChild(rail);
   const dot = rail.querySelector(".ss-dot"), bubble = rail.querySelector(".ss-bubble");
   const titles = ()=>[...document.querySelectorAll("#refPanel .ref-page-title, #nonverbRefPanel .ref-page-title")].filter(t=>!t.hidden);
   const active = ()=>{ const p = document.getElementById("sozProgress"); return !!p && p.offsetParent!==null; };
