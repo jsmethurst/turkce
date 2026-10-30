@@ -4525,10 +4525,12 @@ window.turkceSettings = {
   },
 };
 // Reads Turkish text aloud when "Auto-play" is on.
-function autoPlay(text){ if(state.autoSpeak && text) speak(text, "tr-TR"); }
+// Changing the selection on the Sözlük redraws a question in the background; nothing should be read aloud for that.
+function onSozluk(){ const t = document.getElementById("tab-sozluk"); return !!t && t.style.display!=="none"; }
+function autoPlay(text){ if(state.autoSpeak && text && !onSozluk()) speak(text, "tr-TR"); }
 // Reads English aloud (Vocab and Tekrar prompts and answers) when "Auto-play English" is on. The microphone
 // stays shut while anything is being spoken, so it never hears this.
-function autoPlayEn(text){ if(state.autoSpeakEn && text) speak(String(text).replace(/\s*\/\s*/g, ", "), "en-US"); }
+function autoPlayEn(text){ if(state.autoSpeakEn && text && !onSozluk()) speak(String(text).replace(/\s*\/\s*/g, ", "), "en-US"); }
 function syncVocabSettingChips(){
   document.querySelectorAll(".chip[data-master]").forEach(c=>{
     c.classList.toggle("on", c.dataset.master===vocabState.masterMode);
