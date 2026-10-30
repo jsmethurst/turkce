@@ -3309,7 +3309,8 @@ function updateSelectionCount(){
   const el = document.getElementById("selectionCount");
   if(!el) return;
   if(uniqueWordTotal===null) uniqueWordTotal = countUniqueWords([...VERBS.map(v=>v.inf), ...NONVERBS.map(n=>n.tr)]);
-  const selected = VERBS.filter(pageEnabled).length + NONVERBS.filter(nonverbEnabled).length;
+  // "Terms" and "unique words" count everything, hidden (excluded) words too; "selected" leaves the hidden ones out.
+  const selected = VERBS.filter(v=>pageEnabled(v) && !state.hidden.has(v.key)).length + NONVERBS.filter(n=>nonverbEnabled(n) && !state.hidden.has(n.key)).length;
   const total = VERBS.length + NONVERBS.length;
   el.textContent = `${total.toLocaleString()} terms · ${uniqueWordTotal.toLocaleString()} unique words · ${selected.toLocaleString()} terms selected`;
   renderSelectionChips();
