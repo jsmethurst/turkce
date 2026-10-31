@@ -5966,9 +5966,13 @@ function nextCasesCard(){
   updateCasesStats();
 }
 // Exactly right, or (for the verb cases) at least the right ending. Genitif + iyelik must be exact.
+// A subject pronoun at the start is optional in Turkish ("Arkadaşıma fotoğrafı gösteriyorum" = "Ben arkadaşıma fotoğrafı gösteriyorum"),
+// so it is ignored on either side.
+const CASE_SUBJECTS = new Set(["ben","sen","o","biz","siz","onlar"]);
+function caseDropSubject(words){ return (words.length>1 && CASE_SUBJECTS.has(words[0])) ? words.slice(1) : words; }
 function caseGrade(item, text){
-  const given = caseWords(text), target = caseWords(casePlain(item.ex));
-  const exact = given.length>0 && (given.join(" ")===target.join(" ") || (item.alts||[]).some(a=>caseWords(a).join(" ")===given.join(" ")));
+  const given = caseDropSubject(caseWords(text)), target = caseDropSubject(caseWords(casePlain(item.ex)));
+  const exact = given.length>0 && (given.join(" ")===target.join(" ") || (item.alts||[]).some(a=>caseDropSubject(caseWords(a)).join(" ")===given.join(" ")));
   const marked = item.strict ? "" : caseMarkedWord(item.ex);
   return {exact, ending: exact || !!(marked && given.includes(marked))};
 }
