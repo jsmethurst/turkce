@@ -1864,3 +1864,216 @@ günah, günahkâr, kötülük, suç, kusur, iğrenç, lanet, gazap, öfke, yarg
 Worship & Temple
 ----------------
 dua, oruç, kurban, sunu, sunak, buhur, tapınak, kilise, çadır, konut, sandık, kâhin, topluluk, Şabat, bayram, sünnet, çarmıh, kuzu, sürü, put, ilâh, övgü, bereket, tapınmak, tapmak, şükretmek, meshetmek, adamak
+
+
+============================================================
+JACOB'S PERSONAL LISTS (backup copy; the live lists are in the database)
+============================================================
+
+VERBS: Bible 1-25
+-----------------
+kurtarmak                 to save / to deliver / to rescue
+kutsamak                  to bless
+kurtulmak                 to be saved / to be freed
+bağışlamak                to forgive / to grant
+sapmak                    to turn aside / to stray
+dirilmek                  to rise from the dead
+kirletmek                 to defile / to make unclean
+yükselmek                 to rise / to ascend
+tapınmak                  to worship (God)
+yaratmak                  to create
+yargılamak                to judge
+övmek                     to praise
+meshetmek                 to anoint
+adamak                    to dedicate / to vow
+arınmak                   to be cleansed / to be purified
+alçaltmak                 to humble / to lower
+suçlamak                  to accuse / to blame
+tapmak                    to worship (idols) / to adore
+küfretmek                 to curse / to blaspheme
+lanetlemek                to curse
+kirlenmek                 to become unclean / to be defiled
+aldatmak                  to deceive
+şükretmek                 to give thanks
+aklanmak                  to be justified
+aklamak                   to justify / to acquit
+
+VERBS: Mark
+-----------
+haykırmak                 to cry out
+ortaya çıkmak             to appear / emerge
+vaftiz etmek              to baptize
+vaftiz edilmek            to be baptized
+itiraf etmek              to confess
+dolmak                    to fill up
+eğilmek                   to bend down
+tövbe etmek               to repent
+ardından gitmek           to follow o
+tutulmak                  to be held / caught
+susmak                    to remain silent
+buyruk vermek             to give an order
+yayılmak                  to spread
+bildirmek                 to report
+hizmet etmek              to serve (a guest)
+Tanrı sözünü duyurmak     to preach the word
+çökmek                    to collapse
+diz çökmek                to kneel
+temiz kılmak              to make clean
+uyarmak                   to warn
+sunmak                    to present / offer
+
+NON-VERBS: Bible 1-25
+---------------------
+RAB                       the LORD (YHWH)
+tanrı                     God
+İsa                       Jesus
+kutsal                    holy
+iblis                     the devil
+yürek                     heart
+günah                     sin
+ruh                       spirit / Spirit
+kötülük                   evil / wickedness
+gök                       sky / heaven
+Mesih                     Christ / Messiah
+can                       soul / life
+gerçek                    truth / real
+krallık                   kingdom
+iman                      faith
+yasa                      law
+yücelik                   glory / majesty
+buyruk                    command / decree
+sonsuz                    eternal / endless
+antlaşma                  covenant
+suç                       guilt / crime / offense
+sevgi                     love
+hak                       right / justice / due
+elçi                      apostle / messenger
+ölüm                      death
+
+NON-VERBS: Bible 26-50
+----------------------
+doğruluk                  righteousness
+esenlik                   peace / well-being
+hüküm                     judgment / decree / rule
+öfke                      anger / wrath
+ant                       oath
+oruç                      fasting / fast
+merhamet                  mercy / compassion
+ışık                      light
+lütuf                     grace / favor
+taht                      throne
+karanlık                  darkness
+yargı                     judgment
+görkem                    splendor / magnificence
+lanet                     curse
+gazap                     wrath
+duyunç                    conscience (biblical)
+kurtuluş                  salvation / deliverance
+itaat                     obedience
+umut                      hope
+müjde                     good news / gospel
+kefaret                   atonement
+günahkâr                  sinner / sinful
+vaat                      promise
+tövbe                     repentance
+sadakat                   faithfulness / loyalty
+
+NON-VERBS: Bible 51-75
+----------------------
+kurtarıcı                 savior / deliverer
+din                       religion / faith
+fidye                     ransom
+bereket                   blessing / abundance
+sır                       secret / mystery
+diriliş                   resurrection
+vicdan                    conscience
+ebedî                     eternal / everlasting
+kul                       servant / bondservant
+inanç                     belief / faith
+kutsallık                 holiness
+vahiy                     revelation
+cennet                    paradise / heaven
+gizem                     mystery
+yaşam                     life
+söz                       word / saying
+sunu                      offering
+kâhin                     priest
+peygamber                 prophet
+sunak                     altar
+çadır                     tent / tabernacle
+topluluk                  assembly / congregation
+kurban                    sacrifice / offering
+dua                       prayer
+ilâh                      god (deity) / idol
+
+NON-VERBS: Bible 76-100
+-----------------------
+Üçlü Birlik               Trinity (triple unity)
+melek                     angel
+tapınak                   temple
+miras                     inheritance
+tanıklık                  testimony / witness
+bilgelik                  wisdom
+sandık                    chest / ark
+sürü                      flock / herd
+kuzu                      lamb
+bilge                     wise / a wise person
+iğrenç                    detestable / abominable
+peygamberlik              prophecy
+sürgün                    exile
+Şabat                     Sabbath
+kusur                     fault / defect / blemish
+put                       idol
+sünnet                    circumcision
+belirti                   sign
+buhur                     incense
+konut                     dwelling / tabernacle
+bayram                    feast / festival
+övgü                      praise
+çarmıh                    cross
+kilise                    church
+şeytan                    Satan
+
+NON-VERBS: Mark
+---------------
+ilgili                    interested / related
+başlangıç                 beginning
+haberci                   reporter / messenger
+çöl                       desert / wildnerness
+vaftiz                    baptism
+halk                      people / public
+itiraf                    confession
+ırmak                     river / brook
+görev                     task / duty / assignment
+deve                      camel
+tüy                       fur / hair / feather
+çarıklar                  sandals
+layık                     worthy
+sevgili                   dear / beloved
+o an                      at that moment / immediately
+tam o                     right then
+ağ                        net
+art                       back / rear
+havra                     synagogue
+yetki                     authority
+Kefarnahum                Capernaum
+Celile                    Galilee
+göl                       lake
+Nasıra Kenti              Nazareth
+Yahudiye                  Judea
+din bilgin                scribe / religious scholar
+kötü ruh                  evil spirit
+bölge                     region
+böylece                   thus
+kaynana                   mother-in-law
+güneş batım               sunset
+cin                       demon
+cinli                     demon-possessed
+Simun                     Simon
+ıssız                     deserted / desolate
+kasaba                    town
+cüzam                     leprosy
+anında                    instantly
+tertemiz                  pure / clean / unblemished
+sıkıca                    tightly / sternly
+ancak                     however

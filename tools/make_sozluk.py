@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 APP = ROOT / "app" / "turkish-verb-drill.html"
+PERSONAL = ROOT / "tools" / "jacob_personal.json"   # snapshot of the owner's Personal lists (from the database)
 OUT = ROOT / "sozluk.txt"
 COL = 26
 RULE = "=" * 60
@@ -83,8 +84,18 @@ def main():
     for t in topics:
         out += section(t["label"])
         out += [", ".join(t["terms"]), ""]
+    personal_count = 0
+    if PERSONAL.exists():
+        lists = json.loads(PERSONAL.read_text(encoding="utf-8"))["lists"]
+        personal_count = sum(len(l["terms"]) for l in lists)
+        out += ["", RULE, "JACOB'S PERSONAL LISTS (backup copy; the live lists are in the database)", RULE, ""]
+        for kind, heading in (("verb", "VERBS"), ("nonverb", "NON-VERBS")):
+            for l in (x for x in lists if x["kind"] == kind):
+                out += section(f"{heading}: {l['name']}")
+                out += [tr.ljust(COL) + en for tr, en in l["terms"]]
+                out.append("")
     OUT.write_text("\n".join(out).rstrip("\n") + "\n", encoding="utf-8")
-    print(f"wrote {OUT.name}: {len(verbs)} verbs, {len(nonverbs)} non-verbs, {len(topics)} topics")
+    print(f"wrote {OUT.name}: {len(verbs)} verbs, {len(nonverbs)} non-verbs, {len(topics)} topics, {personal_count} personal terms")
 
 
 if __name__ == "__main__":
