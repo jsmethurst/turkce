@@ -5585,7 +5585,7 @@ function nextTekrarCard(){
     const next = words.filter(w=>!isDue(w)).sort((a,b)=>a.dueAt-b.dueAt)[0];
     if(!words.length) showTekrarMessage("Nothing to review yet", "Answer a few words in Vocab first (typing or a test). Every word you've answered at least once shows up here.");
     else showTekrarMessage("All caught up!", next ? `Next word is due in ${tekrarWaitText(next.dueAt-now)}.` : "");
-    stats.textContent = `${words.length} words in rotation`;
+    stats.textContent = `${words.length} term${words.length===1?"":"s"} in rotation`;
     return;
   }
   const item = {...pickWord.item};   // fresh object, so a repeat is recorded again
@@ -5615,7 +5615,7 @@ function nextTekrarCard(){
 function updateTekrarStats(words){
   const now = Date.now();
   const dueCount = words.filter(w=>w.dueAt<=now).length;
-  document.getElementById("tekrarStats").textContent = `${dueCount} due now · ${words.length} words in rotation` + (tekrar.currentEarly ? " · practicing ahead" : "");
+  document.getElementById("tekrarStats").textContent = `${dueCount} due now · ${words.length} term${words.length===1?"":"s"} in rotation` + (tekrar.currentEarly ? " · practicing ahead" : "");
 }
 function checkTekrar(){
   if(!tekrar.current || tekrar.flipped) return;
