@@ -3296,7 +3296,6 @@ function stripKnownSuffix(token, tokenSet){
   }
   return token;
 }
-let uniqueWordTotal = null;   // the dictionary doesn't change while the page is open
 function countUniqueWords(entries){
   const tokenSet = new Set();
   entries.forEach(w=>w.trim().split(/\s+/).forEach(tok=>tokenSet.add(tok.toLowerCase())));
@@ -3308,7 +3307,8 @@ function updateSelectionCount(){
   syncAllButtons();
   const el = document.getElementById("selectionCount");
   if(!el) return;
-  if(uniqueWordTotal===null) uniqueWordTotal = countUniqueWords([...VERBS.map(v=>v.inf), ...NONVERBS.map(n=>n.tr)]);
+  // Counted fresh each time: your Personal lists load after sign-in and change as you add or edit words.
+  const uniqueWordTotal = countUniqueWords([...VERBS.map(v=>v.inf), ...NONVERBS.map(n=>n.tr)]);
   // "Terms" and "unique words" count everything, hidden (excluded) words too; "selected" leaves the hidden ones out.
   const selected = VERBS.filter(v=>pageEnabled(v) && !state.hidden.has(v.key)).length + NONVERBS.filter(n=>nonverbEnabled(n) && !state.hidden.has(n.key)).length;
   const total = VERBS.length + NONVERBS.length;
