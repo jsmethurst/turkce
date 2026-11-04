@@ -3069,8 +3069,10 @@ function testSummaryText(key){
   const r = testResults && testResults[key];
   return r && r.last ? `${r.last.pct}% · ${daysAgoText(r.last.date)}` : "not tested";
 }
+// Inside the A2 box the chips read "Derste 1-25" (the box already says A2); everywhere else the full name is kept so the two Derste lists stay distinguishable.
+const boxLabel = label=>String(label).replace(/^A2 (?=Derste)/, "");
 function setChipLabel(el, label, testKey){
-  el.textContent = label;
+  el.textContent = boxLabel(label);
   if(!testResults) return;
   const meta = document.createElement("span");
   meta.className = "chip-meta";
