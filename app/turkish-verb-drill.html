@@ -6502,21 +6502,42 @@ function revealAnswer(){
   setPrimaryButtonMode("next");
 }
 
+// How many utterances are queued or playing (counted ourselves: the browser's own "speaking" flag lags behind speak()).
+let speechPending = 0;
+function speechBusy(){
+  return speechPending > 0 || ('speechSynthesis' in window && (window.speechSynthesis.speaking || window.speechSynthesis.pending));
+}
+// Runs fn once nothing is being spoken (or after maxMs, so a stuck speech engine can't freeze anything).
+function whenSpeechIdle(fn, maxMs){
+  const t0 = Date.now(), limit = maxMs || 20000;
+  (function poll(){
+    if(!speechBusy() || Date.now() - t0 > limit){ if(Date.now() - t0 > limit) speechPending = 0; fn(); return; }
+    setTimeout(poll, 80);
+  })();
+}
 function speak(text, lang){
   if(!('speechSynthesis' in window)) return;
-  window.speechSynthesis.cancel();
+  const ss = window.speechSynthesis;
+  const interrupting = speechBusy();
+  ss.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = lang;
   u.rate = 0.92;
-  const voices = window.speechSynthesis.getVoices();
+  const voices = ss.getVoices();
   const match = voices.find(v=>v.lang && v.lang.toLowerCase().replace("_","-")===lang.toLowerCase())
     || voices.find(v=>v.lang && v.lang.toLowerCase().startsWith(lang.toLowerCase().slice(0,2)));
   if(match) u.voice = match;
   // The microphone stays shut from now until a moment after the speech ends (it would hear itself).
   const mute = ms=>{ if(typeof voice==="object" && voice){ voice.quietUntil = Date.now() + ms; voiceStop(); } };
-  u.onend = u.onerror = ()=>{ if(typeof voice==="object" && voice) voice.quietUntil = Date.now() + 350; };
+  speechPending++;
+  let done = false;
+  u.onend = u.onerror = ()=>{
+    if(!done){ done = true; speechPending = Math.max(0, speechPending - 1); }
+    if(typeof voice==="object" && voice) voice.quietUntil = Date.now() + 350;
+  };
   mute(1500 + String(text).length*110);
-  window.speechSynthesis.speak(u);
+  // Speaking right after cancel() can make the browser drop the new utterance, so give the cancel a moment.
+  if(interrupting) setTimeout(()=>ss.speak(u), 120); else ss.speak(u);
 }
 function speakCurrent(){
   if(!state.current) return;
@@ -6763,20 +6784,30 @@ function startAutoAdvance(btn, advance, wrong){
   cancelAutoAdvance();
   const ms = wrong ? 3000 : 1500;
   voice.btn = btn;
-  btn.style.setProperty("--fill", ms+"ms");
-  btn.classList.remove("filling");
-  void btn.offsetWidth;
-  btn.classList.add("filling");
-  voice.timer = setTimeout(()=>{
-    voice.timer = null;
-    cancelAutoAdvance();
-    advance();
-  }, ms);
+  voice.timer = true;   // "waiting to move on": the microphone stays shut and a second answer is ignored
   ["pointerdown","keydown","wheel","touchstart"].forEach(t=>document.addEventListener(t, cancelAutoAdvance, {capture:true, passive:true}));
+  // The pause only starts once the revealed answer has been read out in full (Turkish, then English if both are on),
+  // so the next question can't cut it off.
+  const mine = {};
+  voice.waiting = mine;
+  whenSpeechIdle(()=>{
+    if(voice.waiting !== mine || !voice.timer) return;   // cancelled meanwhile
+    btn.style.setProperty("--fill", ms+"ms");
+    btn.classList.remove("filling");
+    void btn.offsetWidth;
+    btn.classList.add("filling");
+    voice.timer = setTimeout(()=>{
+      voice.timer = null;
+      voice.waiting = null;
+      cancelAutoAdvance();
+      advance();
+    }, ms);
+  });
 }
 function cancelAutoAdvance(){
   if(!voice) return;
-  if(voice.timer){ clearTimeout(voice.timer); voice.timer = null; }
+  voice.waiting = null;
+  if(voice.timer){ if(voice.timer !== true) clearTimeout(voice.timer); voice.timer = null; }
   if(voice.btn){ voice.btn.classList.remove("filling"); voice.btn = null; }
   ["pointerdown","keydown","wheel","touchstart"].forEach(t=>document.removeEventListener(t, cancelAutoAdvance, {capture:true}));
 }
