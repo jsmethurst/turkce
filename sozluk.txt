@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-273 verbs · 1025 non-verbs · 40 topics
+274 verbs · 1026 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -570,7 +570,7 @@ tamir etmek               to repair / to fix (something broken)
 yollamak                  to dispatch / to post
     akuzatif + datif: Mektubu arkadaşıma yolluyorum.  (I'm posting the letter to my friend.)
 
-A2 DERSTE 1-8
+A2 DERSTE 1-9
 -------------
 montaj yapmak             to assemble
     lokatif: Fabrikada mobilya montajı yapıyor.  (He is assembling the furniture at the factory.)
@@ -588,6 +588,8 @@ mecbur kalmak             to be compelled, by force
     örnek: Duvar çatlıyor.  (The wall is cracking.)
 yanmak                    to get burned
     lokatif: Ekmek fırında yanıyor.  (The bread is burning in the oven.)
+koparmak                  to tear off
+    akuzatif: Yaprağı koparıyorum.  (I am tearing off the leaf.)
 
 
 ============================================================
@@ -847,7 +849,7 @@ masada                    on the table
 satranç                   chess
 meyve suyu                fruit juice
 gazete                    newspaper
-mektup                    letter
+mektup                    letter (greeting card)
 şoför                     driver
 müze                      museum
 yağmur                    rain
@@ -1718,10 +1720,10 @@ yaralı                    injured / wounded
 misafirperver             hospitable
 yaramaz                   naughty / mischievous
 
-A2 DERSTE 1-24
+A2 DERSTE 1-25
 --------------
 uykulu                    sleepy
-montaj                    assembly
+montaj                    assembly (putting together)
 seçim                     election
 banknot                   banknote
 zorunda                   must
@@ -1729,13 +1731,14 @@ mecbur                    compelled
 ellerine sağlık           well done! (health to your hands)
 dükkân                    small to medium local shop
 mağaza                    large or corporate store
-sayı                      number
+sayı                      number (category)
 gece yarısı               midnight
 finans                    finance
 muhasebeci                accountant
+yeter                     enough
 yaklaşık                  approximately
 aksesuar                  accessory
-harf                      letter
+harf                      letter (character)
 oyun                      game
 fare                      mouse
 ceviz                     walnut
@@ -1860,7 +1863,7 @@ gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, ge�
 
 Everyday Actions
 ----------------
-açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek, saldırmak, savunmak, korumak, engellemek, tamir etmek, montaj, montaj yapmak, edinmek, edilmek, zorunda kalmak, mecbur kalmak, çatlamak, yanmak
+açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek, saldırmak, savunmak, korumak, engellemek, tamir etmek, montaj, montaj yapmak, edinmek, edilmek, zorunda kalmak, mecbur kalmak, çatlamak, yanmak, koparmak
 
 Thinking & Deciding
 -------------------
@@ -1872,7 +1875,7 @@ eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geni�
 
 Little Words
 ------------
-bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani, nihayet, asla, kendi, beraber, birden, hepsi, aslında, zorunda, mecbur, yaklaşık
+bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani, nihayet, asla, kendi, beraber, birden, hepsi, aslında, zorunda, mecbur, yaklaşık, yeter
 
 Cities & Countries
 ------------------
