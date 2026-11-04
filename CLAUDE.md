@@ -35,7 +35,7 @@ Browsers may reuse the page for up to 10 minutes. Pages that are already open no
 | `supabase/migrations/` | Database changes as numbered SQL files. They're applied by `.github/workflows/database.yml` after Jacob approves (see below). `20261007000000_user_docs.sql` is the original setup, already applied. |
 
 ## Word lists: A1 (frozen) and Personal
-The built-in lists are the **A1** lists (Listede: the Sayfa and Ünite lists and Sıfatlar; Derste): everyone gets them from the page. Jacob will not ask for more words to be added to A1; he may ask for a gloss edit here and there. In the Sözlük they sit in a solid box; a dotted box above it holds **Personal - editable**.
+The built-in lists are the **A1** lists (Listede: the Sayfa and Ünite lists and Sıfatlar; Derste): everyone gets them from the page. Jacob will not ask for more words to be added to A1; he may ask for a gloss edit here and there. Below them sits the **A2** box ("A2 - not editable"), which is where new built-in words go: its lists are called "A2 Derste 1-25", "A2 Derste 26-50"... and are made automatically from the order, like A1 Derste. In the Sözlük the A1 and A2 boxes are solid; a dotted box above them holds **Personal - editable**. If a word Jacob adds to A2 is an exact repeat of an A1 word, it is **moved** (taken out of A1, same permanent key, so practice history stays) rather than duplicated.
 
 Personal lists are stored per learner in the database (`public.user_lists`, `public.user_terms`), not in the page: each learner (signed in) can add, rename and delete lists, and add, edit and remove terms (**Manage** in the dotted box). Non-verbs can be added in bulk ("Turkish, English" per line); verbs one at a time, with English forms suggested from the meaning. A list is numbered into groups of 25 automatically: a list called "Test" shows as "Test 1-5", then "Test 1-25" and "Test 26-50" as words are added (a name that already ends in a range, like "Bible 1-25", is left alone). The first group keeps the list's own key; later groups use `<key>_c1`, `_c2`... A signed-out visitor sees an empty Personal box. Every learner, current and new, has the Bible lists: Bible 1-25 (verbs and non-verbs) and the non-verb lists Bible 26-50, 51-75 and 76-100. New signups get them from a trigger on `auth.users` (`private.seed_bible_lists`, words in `private.bible_seed`; a failure there never blocks a signup). The old built-in Bible words are no longer in the page. Don't add new words to the built-in dictionary until Jacob says where they go.
 
@@ -53,7 +53,7 @@ When Jacob says "add <turkish> - <english>":
 1. **Use his gloss exactly as written.** Don't correct or extend it.
 2. **Skip words that are already present.** Compare against **both** the uneditable section (the DICTIONARY: A1 and A2) **and Jacob's Personal lists**, whichever of the two the word is being added to. Run `python3 tools/find_word.py <word>` (it searches both), and if the database may have moved on, check his live words too (see "Jacob's Personal words"). If the word is already there in any list, don't add it, and tell him where it is.
 3. **Collisions:** if the word is new but its English gloss is the same as, or nearly the same as, another word's, or the Turkish clashes with another sense, **don't decide alone**. Suggest how to resolve it and wait for his answer.
-4. **Default list:** unless he names a list, add the word to the **Derste** lists. They're shown as "Derste" but stored as `"unit":"other"` for non-verbs and `"page":"other"` for verbs; the stored keys stayed the same so learners' saved data still matches.
+4. **Default list:** unless he names a list, add the word to the **A2 Derste** lists: `"unit":"a2"` for non-verbs and `"page":"a2"` for verbs (A1 Derste, stored as `"unit":"other"` / `"page":"other"`, is closed). The stored keys of A1 stayed the same so learners' saved data still matches.
 5. **Topic:** also put every new word into one fitting topic (see below).
 6. **Glosses of existing words** only change when he asks.
 7. After the edits:
@@ -64,8 +64,8 @@ When Jacob says "add <turkish> - <english>":
 
 ### Non-verb rows (`nonverbs` array)
 `{"tr":"usta","en":"expert","unit":"other","order":771}`
-- `unit` is one of `1`, `2` (Ünite sheets), `"other"`, `"sifatlar"` or `"bible"`. (There used to be a separate "common" group; those words now sit at the end of Derste.)
-- New Derste words: set `order` to one more than the highest `order` in the whole `nonverbs` array, and put the row at the end of the array (just before `],` / `topics: [`).
+- `unit` is one of `1`, `2` (Ünite sheets), `"other"` (A1 Derste), `"a2"` (A2 Derste), `"sifatlar"` or `"bible"`. (There used to be a separate "common" group; those words now sit at the end of Derste.)
+- New A2 Derste words (`"unit":"a2"`): set `order` to one more than the highest `order` in the whole `nonverbs` array, and put the row at the end of the array (just before `],` / `topics: [`). The last row has no trailing comma.
 - Groups of 25 ("Derste 151-175") are made automatically from the order. A part-filled last group is fine.
 
 ### Verb rows (`verbs` array)
@@ -77,7 +77,7 @@ When Jacob says "add <turkish> - <english>":
   - `c` is the case label: `akuzatif`, `datif`, `lokatif`, `ablatif`, `ile`, or `örnek` for a plain example.
   - Wrap the case suffix in `<b>…</b>`.
   - Use the present continuous where natural.
-- **New Derste verbs:** `"page":"other"`, with an `order` greater than the last `page:"other"` verb's and below 205 (the Bible verbs start at 205), e.g. 204.3, then 204.4. Put the row right after the last `page:"other"` row.
+- **New A2 Derste verbs:** `"page":"a2"`, with an `order` greater than the last `page:"a2"` verb's (the first A2 verb is 300.1, then 300.2 ...). Put the row at the end of the `verbs` array. (The A1 Derste verbs, `"page":"other"`, are closed.)
 - **Check the conjugation:** load the page and run `conjugateFull(verb, tenseKey, personIdx, false, false, false)` for each key in `TENSES`. This catches Turkish verbs with unusual stems.
 
 ### Topics (`topics` array)
