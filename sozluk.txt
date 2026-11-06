@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-280 verbs · 1064 non-verbs · 40 topics
+280 verbs · 1065 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -261,7 +261,7 @@ büyümek                   to grow / to grow up
 paylaşmak                 to share
     akuzatif: Haberi paylaşıyorum.  (I'm sharing the news.)
 
-4. SAYFA 121-149
+4. SAYFA 121-150
 ----------------
 indirmek                  to download / to lower
     akuzatif: Dosyayı indiriyorum.  (I'm downloading the file.)
@@ -297,6 +297,8 @@ sipariş vermek            to order
     örnek: Pizza sipariş veriyorum.  (I'm ordering pizza.)
 rezervasyon yapmak        to make a reservation
     örnek: İki kişilik rezervasyon yapıyorum.  (I'm making a reservation for two.)
+kiralamak                 to rent
+    örnek: Bir araba kiralıyorum.  (I'm renting a car.)
 fotoğraf çekmek           to take a photo
     örnek: Parkta fotoğraf çekiyorum.  (I'm taking photos in the park.)
 alışveriş yapmak          to shop
@@ -568,7 +570,7 @@ tamir etmek               to repair / to fix (something broken)
 yollamak                  to dispatch / to post
     akuzatif + datif: Mektubu arkadaşıma yolluyorum.  (I'm posting the letter to my friend.)
 
-A2 DERSTE 1-16
+A2 DERSTE 1-15
 --------------
 montaj yapmak             to assemble
     lokatif: Fabrikada mobilya montajı yapıyor.  (He is assembling the furniture at the factory.)
@@ -594,8 +596,6 @@ kokmak                    to produce a smell
     örnek: Çiçekler güzel kokuyor.  (The flowers smell nice.)
 kiralanmak                to be rented
     örnek: Bu daire kiralanıyor.  (This apartment is being rented.)
-kiralamak                 to rent
-    örnek: Bir araba kiralıyorum.  (I'm renting a car.)
 dolaşmak                  to wander
     lokatif: Şehirde dolaşıyorum.  (I am wandering around the city.)
 karışmak                  to get involved
@@ -1765,7 +1765,7 @@ A2 DERSTE 26-50
 yanlışlıkla               by mistake
 konum                     location
 navigasyon                navigation
-yeniden                   again
+yeniden                   anew / over again
 makale                    article
 kamyon                    truck / lorry
 bu sırada                 meanwhile
@@ -1775,21 +1775,22 @@ ilk önce                  first of all
 altyazı                   subtitles
 evcil hayvan              housepet
 yoksa                     or else
+buzdolabı                 refrigerator
 güncel                    current / up-to-date
 kel                       bald
 doğa                      nature
 ilginç                    interesting
 köylü                     villager
-saha                      field / pitch
-tarla                     field (for farming)
+saha                      sports field / pitch
+tarla                     farmland
 bant                      tape (sticky)
 orman                     forest
 mevsim                    season (of the year)
 örtü                      cover
-masa örtüsü               tablecloth
 
-A2 DERSTE 51-63
+A2 DERSTE 51-64
 ---------------
+masa örtüsü               tablecloth
 piknik örtüsü             picnic blanket
 çimen                     grass
 ayrı                      separate
@@ -1839,7 +1840,7 @@ masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitapl
 
 Kitchen & Food
 --------------
-mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak, tabak, kaşık, çatal, bıçak, yumurta, tavuk, balık, salata, elma, armut, limon, karpuz, kavun, kiraz, şeftali, erik, incir, patates, salatalık, soğan, sarımsak, biber, patlıcan, havuç, kabak, ıspanak, fasulye, tuz, şeker, karabiber, baharat, un, bal, karıştırmak, dökmek, ceviz
+mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak, tabak, kaşık, çatal, bıçak, yumurta, tavuk, balık, salata, elma, armut, limon, karpuz, kavun, kiraz, şeftali, erik, incir, patates, salatalık, soğan, sarımsak, biber, patlıcan, havuç, kabak, ıspanak, fasulye, tuz, şeker, karabiber, baharat, un, bal, karıştırmak, dökmek, ceviz, buzdolabı
 
 Transportation & Travel
 -----------------------
