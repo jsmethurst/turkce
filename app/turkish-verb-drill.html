@@ -3333,8 +3333,11 @@ function testSummaryText(key){
   const r = testResults && testResults[key];
   return r && r.last ? `${r.last.pct}% · ${daysAgoText(r.last.date)}` : "not tested";
 }
+// On the Sözlük selection page the A1 / A2 box already says which level a list is in, so its chips just read "Listede 1-25" or "Derste 1-25".
+// Everywhere else (Progress, Vocab tests, summaries, search tags) the full name, "A1 Listede 1-25", is kept.
+const boxLabel = label=>String(label).replace(/^A[12] (?=(Listede|Derste))/, "");
 function setChipLabel(el, label, testKey){
-  el.textContent = label;
+  el.textContent = boxLabel(label);
   if(!testResults) return;
   const meta = document.createElement("span");
   meta.className = "chip-meta";
