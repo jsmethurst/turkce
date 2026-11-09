@@ -980,7 +980,7 @@ function h2(v){ return "aıou".includes(v) ? "a" : "e"; }
 function devoice(consonant){ return VOICELESS.has(consonant) ? "t" : "d"; }
 
 function isSoftenable(root){
-  if(root==="öğret" || root==="kirlet" || /let$/.test(root)) return false;   // causatives (beklet-, sinirlet-, işlet-) keep their t: sinirletiyorum
+  if(root==="öğret" || root==="kirlet" || root==="üret" || root==="tüket" || root==="yet" || /let$/.test(root)) return false;   // causatives (beklet-, sinirlet-, işlet-) keep their t: sinirletiyorum
   return root.endsWith("git") || root.endsWith("tat") || root.endsWith("et");
 }
 function softenIfVowelFollows(root){
@@ -1493,12 +1493,12 @@ function englishGlossOne(verb, tenseKey, personIdx, negative, question, ability)
 
 // ---- Your verb list: edit or replace these entries ----
 const VERB_PAGES = [
-  {key:1, label:"1. Sayfa 1-34"},
-  {key:2, label:"2. Sayfa 35-77"},
-  {key:3, label:"3. Sayfa 78-120"},
-  {key:4, label:"4. Sayfa 121-150"},
+  {key:1, label:"A1 Listede 1-34"},
+  {key:2, label:"A1 Listede 35-77"},
+  {key:3, label:"A1 Listede 78-120"},
+  {key:4, label:"A1 Listede 121-150"},
 ];
-const VERB_PAGE_TAG = {1:"1. Sayfa", 2:"2. Sayfa", 3:"3. Sayfa", 4:"4. Sayfa", bible:"Bible"};
+const VERB_PAGE_TAG = {1:"A1 Listede 1-34", 2:"A1 Listede 35-77", 3:"A1 Listede 78-120", 4:"A1 Listede 121-150", bible:"Bible"};
 
 const LOGO = {
   chalk:  {a:'#3F78F0', b:'#1F4FC2', glass:'#FFFFFF', glassFill:'rgba(255,255,255,.20)', tea1:'#F6B04F', tea2:'#DD7B1E', saucer:'#FFFFFF', saucerShade:'#C9D6F5', steam:'#FFFFFF', face:'#4A2A12', blush:'#FF8F9C', accent:'#0E8FA6'},
@@ -1517,7 +1517,7 @@ const personalSignedIn = ()=>!!(window.turkceBackend && window.turkceBackend.lis
 
 function buildVerbBonusChunks(){
   const chunks = [];
-  [["bonus","bonusg","Derste"],["a2bonus","a2bonusg","A2 Derste"]].forEach(([page, prefix, name])=>{
+  [["bonus","bonusg","A1 Derste"],["a2listbonus","a2listg","A2 Listede"],["a2bonus","a2bonusg","A2 Derste"]].forEach(([page, prefix, name])=>{
     const items = VERBS.filter(v=>v.page===page);
     for(let i=0;i<items.length;i+=25){
       const key = `${prefix}${Math.floor(i/25)+1}`;
@@ -1532,28 +1532,27 @@ const VERB_BONUS_CHUNKS = buildVerbBonusChunks();
 
 // ---- Non-verb vocabulary (from Turkish Now Ünite 1 & 2 word sheets) ----
 const NONVERBS = [];
-// Non-verb groups beyond the Ünite sheets: [unit, chunk key prefix, label]
-const NONVERB_EXTRA_UNITS = [["other","otherg","Derste"],["sifatlar","sifatg","Sıfatlar"],["a2","a2otherg","A2 Derste"]];
+// Every list is named "<level> Listede" or "<level> Derste". The A1 Listede lists are the two Ünite sheets and then
+// Sıfatlar, numbered on from one list to the next (the same way as the verb pages). The chunk keys never change.
+// [unit, chunk key prefix, label, continues the A1 Listede numbering]
+const NONVERB_EXTRA_UNITS = [["other","otherg","A1 Derste"],["sifatlar","sifatg","A1 Listede",true],["a2l","a2listg","A2 Listede"],["a2","a2otherg","A2 Derste"]];
 function buildNonverbChunks(){
   const chunks = [];
-  [1,2].forEach(unit=>{
-    const items = NONVERBS.filter(n=>n.unit===unit);
-    for(let i=0;i<items.length;i+=25){
-      const group = Math.floor(i/25)+1;
-      const key = `u${unit}g${group}`;
-      const slice = items.slice(i,i+25);
-      slice.forEach(it=>{ it.chunkKey = key; });
-      chunks.push({key, label:`${unit}. Ünite ${i+1}-${i+slice.length}`, unit, items: slice});
-    }
-  });
-  NONVERB_EXTRA_UNITS.forEach(([unit, prefix, name])=>{
+  let listedeSoFar = 0;   // words already numbered in A1 Listede
+  const addGroups = (unit, prefix, name, offset)=>{
     const items = NONVERBS.filter(n=>n.unit===unit);
     for(let i=0;i<items.length;i+=25){
       const key = `${prefix}${Math.floor(i/25)+1}`;
       const slice = items.slice(i,i+25);
       slice.forEach(it=>{ it.chunkKey = key; });
-      chunks.push({key, label:`${name} ${i+1}-${i+slice.length}`, unit, items: slice});
+      chunks.push({key, label:`${name} ${offset+i+1}-${offset+i+slice.length}`, unit, items: slice});
     }
+    return items.length;
+  };
+  [1,2].forEach(unit=>{ listedeSoFar += addGroups(unit, `u${unit}g`, "A1 Listede", listedeSoFar); });
+  NONVERB_EXTRA_UNITS.forEach(([unit, prefix, name, continues])=>{
+    const n = addGroups(unit, prefix, name, continues ? listedeSoFar : 0);
+    if(continues) listedeSoFar += n;
   });
   return chunks;
 }
@@ -1580,7 +1579,7 @@ const CASE_INFO = {};
 function setDictionary(verbRows, nonverbRows, topicRows){
   const verbs = verbRows.map(r=>{
     const v = makeVerb(r.inf, r.base, r.ing, r.past, r.pp, r.gloss, r.num ?? null);
-    v.page = r.page==="other" ? "bonus" : r.page==="a2" ? "a2bonus" : r.page;
+    v.page = r.page==="other" ? "bonus" : r.page==="a2" ? "a2bonus" : r.page==="a2l" ? "a2listbonus" : r.page;
     v.key = r.k || `verb:${r.inf}`;   // permanent progress key: it never changes, even if the Turkish is respelled
     return v;
   });
@@ -1891,7 +1890,34 @@ verbs: [
 {"inf":"destek olmak","base":"support","ing":"supporting","past":"supported","pp":"supported","gloss":"to support","num":null,"page":"a2","order":303.4,"cases":[{"c":"datif","en":"I am supporting my friend.","ex":"Arkadaşım<b>a</b> destek oluyorum."}]},
 {"inf":"selam vermek","base":"greet","ing":"greeting","past":"greeted","pp":"greeted","gloss":"to greet","num":null,"page":"a2","order":303.5,"cases":[{"c":"datif","en":"I am greeting the neighbor.","ex":"Komşu<b>ya</b> selam veriyorum."}]},
 {"inf":"karşı çıkmak","base":"oppose / object","ing":"opposing / objecting","past":"opposed / objected","pp":"opposed / objected","gloss":"to oppose / object","num":null,"page":"a2","order":303.6,"cases":[{"c":"datif","en":"We are opposing the decision.","ex":"Karar<b>a</b> karşı çıkıyoruz."}]},
-{"inf":"yasaklamak","base":"ban","ing":"banning","past":"banned","pp":"banned","gloss":"to ban","num":null,"page":"a2","order":303.7,"cases":[{"c":"akuzatif","en":"They are banning cigarettes.","ex":"Sigara<b>yı</b> yasaklıyorlar."}]}
+{"inf":"yasaklamak","base":"ban","ing":"banning","past":"banned","pp":"banned","gloss":"to ban","num":null,"page":"a2","order":303.7,"cases":[{"c":"akuzatif","en":"They are banning cigarettes.","ex":"Sigara<b>yı</b> yasaklıyorlar."}]},
+{"inf":"balığa gitmek","base":"go fishing","ing":"going fishing","past":"went fishing","pp":"gone fishing","gloss":"to go fishing","num":null,"page":"a2l","order":400.01,"cases":[{"c":"datif","en":"We are going fishing at the weekend.","ex":"Hafta sonu balığ<b>a</b> gidiyoruz."}]},
+{"inf":"süt sağmak","base":"milk","ing":"milking","past":"milked","pp":"milked","gloss":"to milk","num":null,"page":"a2l","order":400.02,"cases":[{"c":"örnek","en":"The farmer is milking the cow.","ex":"Çiftçi süt sağıyor."}]},
+{"inf":"havlamak","base":"bark","ing":"barking","past":"barked","pp":"barked","gloss":"to bark","num":null,"page":"a2l","order":400.03,"cases":[{"c":"örnek","en":"The dog is barking.","ex":"Köpek havlıyor."}]},
+{"inf":"dilek tutmak","base":"make a wish","ing":"making a wish","past":"made a wish","pp":"made a wish","gloss":"to make a wish","num":null,"page":"a2l","order":400.04,"cases":[{"c":"lokatif","en":"I make a wish on my birthday.","ex":"Doğum günüm<b>de</b> dilek tutuyorum."}]},
+{"inf":"pasaja gitmek","base":"go to an arcade","ing":"going to an arcade","past":"went to an arcade","pp":"gone to an arcade","gloss":"to go to an arcade/passage","num":null,"page":"a2l","order":400.05,"cases":[{"c":"datif","en":"We are going to the arcade this evening.","ex":"Akşam pasaj<b>a</b> gidiyoruz."}]},
+{"inf":"patlamak","base":"explode","ing":"exploding","past":"exploded","pp":"exploded","gloss":"to explode","num":null,"page":"a2l","order":400.06,"cases":[{"c":"örnek","en":"The balloon is bursting.","ex":"Balon patlıyor."}]},
+{"inf":"hayatını kaybetmek","base":"lose one's life","ing":"losing one's life","past":"lost one's life","pp":"lost one's life","gloss":"to lose one's life","num":null,"page":"a2l","order":400.07,"cases":[{"c":"örnek","en":"Three people are losing their lives.","ex":"Üç kişi hayatını kaybediyor."}]},
+{"inf":"mezun olmak","base":"graduate","ing":"graduating","past":"graduated","pp":"graduated","gloss":"to graduate","num":null,"page":"a2l","order":400.08,"cases":[{"c":"ablatif","en":"I am graduating from university this year.","ex":"Bu yıl üniversite<b>den</b> mezun oluyorum."}]},
+{"inf":"elektrik kesilmek","base":"go out","ing":"going out","past":"went out","pp":"gone out","gloss":"electricity to go out","num":null,"page":"a2l","order":400.09,"cases":[{"c":"lokatif","en":"The electricity goes out in the storm.","ex":"Fırtına<b>da</b> elektrik kesiliyor."}]},
+{"inf":"burs almak","base":"get a scholarship","ing":"getting a scholarship","past":"got a scholarship","pp":"got a scholarship","gloss":"to get a scholarship","num":null,"page":"a2l","order":400.1,"cases":[{"c":"ablatif","en":"I am getting a scholarship from the university.","ex":"Üniversite<b>den</b> burs alıyorum."}]},
+{"inf":"ağaç dikmek","base":"plant a tree","ing":"planting a tree","past":"planted a tree","pp":"planted a tree","gloss":"to plant a tree","num":null,"page":"a2l","order":400.11,"cases":[{"c":"datif","en":"We are planting a tree in the garden.","ex":"Bahçe<b>ye</b> ağaç dikiyoruz."}]},
+{"inf":"haberleşmek","base":"communicate","ing":"communicating","past":"communicated","pp":"communicated","gloss":"to communicate","num":null,"page":"a2l","order":400.12,"cases":[{"c":"ile","en":"I communicate with my friends.","ex":"Arkadaşlarım<b>la</b> haberleşiyorum."}]},
+{"inf":"yaygınlaşmak","base":"become widespread","ing":"becoming widespread","past":"became widespread","pp":"become widespread","gloss":"to become widespread","num":null,"page":"a2l","order":400.13,"cases":[{"c":"örnek","en":"Smartphones are becoming widespread.","ex":"Akıllı telefonlar yaygınlaşıyor."}]},
+{"inf":"üretmek","base":"produce","ing":"producing","past":"produced","pp":"produced","gloss":"to produce","num":null,"page":"a2l","order":400.14,"cases":[{"c":"örnek","en":"The factory is producing cars.","ex":"Fabrika araba üretiyor."}]},
+{"inf":"sohbet etmek","base":"chat","ing":"chatting","past":"chatted","pp":"chatted","gloss":"to chat","num":null,"page":"a2l","order":400.15,"cases":[{"c":"ile","en":"I am chatting with my friend.","ex":"Arkadaşım<b>la</b> sohbet ediyorum."}]},
+{"inf":"sigara içmek","base":"smoke","ing":"smoking","past":"smoked","pp":"smoked","gloss":"to smoke","num":null,"page":"a2l","order":400.16,"cases":[{"c":"lokatif","en":"He is smoking outside.","ex":"Dışarı<b>da</b> sigara içiyor."}]},
+{"inf":"yakalanmak","base":"get caught","ing":"getting caught","past":"got caught","pp":"got caught","gloss":"to get caught","num":null,"page":"a2l","order":400.17,"cases":[{"c":"örnek","en":"The thief is getting caught.","ex":"Hırsız yakalanıyor."}]},
+{"inf":"karşılaşmak","base":"come across","ing":"coming across","past":"came across","pp":"come across","gloss":"to come across","num":null,"page":"a2l","order":400.18,"cases":[{"c":"ile","en":"I am coming across an old friend.","ex":"Eski bir arkadaş<b>la</b> karşılaşıyorum."}]},
+{"inf":"hayran olmak","base":"admire","ing":"admiring","past":"admired","pp":"admired","gloss":"to admire","num":null,"page":"a2l","order":400.19,"cases":[{"c":"datif","en":"I admire her voice.","ex":"Onun sesi<b>ne</b> hayran oluyorum."}]},
+{"inf":"ilgi beklemek","base":"expect attention","ing":"expecting attention","past":"expected attention","pp":"expected attention","gloss":"to expect attention","num":null,"page":"a2l","order":400.2,"cases":[{"c":"ablatif","en":"The child expects attention from his mother.","ex":"Çocuk annesin<b>den</b> ilgi bekliyor."}]},
+{"inf":"sarmak","base":"wrap","ing":"wrapping","past":"wrapped","pp":"wrapped","gloss":"to wrap","num":null,"page":"a2l","order":400.21,"cases":[{"c":"akuzatif","en":"I am wrapping the gift.","ex":"Hediye<b>yi</b> sarıyorum."}]},
+{"inf":"yoğurmak","base":"knead","ing":"kneading","past":"kneaded","pp":"kneaded","gloss":"to knead","num":null,"page":"a2l","order":400.22,"cases":[{"c":"akuzatif","en":"I am kneading the dough.","ex":"Hamur<b>u</b> yoğuruyorum."}]},
+{"inf":"rendelemek","base":"grate","ing":"grating","past":"grated","pp":"grated","gloss":"to grate","num":null,"page":"a2l","order":400.23,"cases":[{"c":"akuzatif","en":"I am grating the cheese.","ex":"Peynir<b>i</b> rendeliyorum."}]},
+{"inf":"çırpmak","base":"whisk","ing":"whisking","past":"whisked","pp":"whisked","gloss":"to whisk","num":null,"page":"a2l","order":400.24,"cases":[{"c":"akuzatif","en":"I am whisking the egg.","ex":"Yumurta<b>yı</b> çırpıyorum."}]},
+{"inf":"kavurmak","base":"sauté","ing":"sautéing","past":"sautéed","pp":"sautéed","gloss":"to sauté","num":null,"page":"a2l","order":400.25,"cases":[{"c":"akuzatif","en":"I am sautéing the onion.","ex":"Soğan<b>ı</b> kavuruyorum."}]},
+{"inf":"közlemek","base":"roast","ing":"roasting","past":"roasted","pp":"roasted","gloss":"to roast","num":null,"page":"a2l","order":400.26,"cases":[{"c":"akuzatif","en":"I am roasting the eggplant.","ex":"Patlıcan<b>ı</b> közlüyorum."}]},
+{"inf":"pazarlık yapmak","base":"bargain","ing":"bargaining","past":"bargained","pp":"bargained","gloss":"to bargain","num":null,"page":"a2l","order":400.27,"cases":[{"c":"lokatif","en":"I am bargaining at the market.","ex":"Pazar<b>da</b> pazarlık yapıyorum."}]}
 ],
 nonverbs: [
 {"tr":"nesne","en":"object","unit":1,"order":1},
@@ -2972,47 +2998,209 @@ nonverbs: [
 {"tr":"uçurtma","en":"kite","unit":"a2","order":1176},
 {"tr":"özne","en":"subject","unit":"a2","order":1177},
 {"tr":"acele","en":"hurry","unit":"a2","order":1178},
-{"tr":"bilgi","en":"information","unit":"a2","order":1179}
+{"tr":"bilgi","en":"information","unit":"a2","order":1179},
+{"tr":"lise","en":"high school","unit":"a2l","order":1180},
+{"tr":"tatil","en":"holiday","unit":"a2l","order":1181},
+{"tr":"bankacı","en":"banker","unit":"a2l","order":1182},
+{"tr":"aile fotoğrafı","en":"family photo","unit":"a2l","order":1183},
+{"tr":"şehir dışı","en":"out of town","unit":"a2l","order":1184},
+{"tr":"yurt","en":"dormitory","unit":"a2l","order":1185},
+{"tr":"renk","en":"color","unit":"a2l","order":1186},
+{"tr":"güvercin","en":"pigeon","unit":"a2l","order":1187},
+{"tr":"menekşe","en":"violet flower","unit":"a2l","order":1188},
+{"tr":"tenis kortu","en":"tennis court","unit":"a2l","order":1189},
+{"tr":"apartman","en":"apartment building","unit":"a2l","order":1190},
+{"tr":"avantaj","en":"advantage","unit":"a2l","order":1191},
+{"tr":"eğlence yeri","en":"entertainment place","unit":"a2l","order":1192},
+{"tr":"çiftlik","en":"farm","unit":"a2l","order":1193},
+{"tr":"tereyağı","en":"butter","unit":"a2l","order":1194},
+{"tr":"semt","en":"neighborhood","unit":"a2l","order":1195},
+{"tr":"kroki","en":"sketch / map","unit":"a2l","order":1196},
+{"tr":"valilik","en":"governor's office","unit":"a2l","order":1197},
+{"tr":"otopark","en":"parking lot","unit":"a2l","order":1198},
+{"tr":"karşısında","en":"opposite","unit":"a2l","order":1199},
+{"tr":"yanında","en":"next to","unit":"a2l","order":1200},
+{"tr":"önünde","en":"in front of","unit":"a2l","order":1201},
+{"tr":"arkasında","en":"behind","unit":"a2l","order":1202},
+{"tr":"sağında","en":"on the right of","unit":"a2l","order":1203},
+{"tr":"solunda","en":"on the left of","unit":"a2l","order":1204},
+{"tr":"altında","en":"under","unit":"a2l","order":1205},
+{"tr":"üstünde","en":"on / above","unit":"a2l","order":1206},
+{"tr":"salon","en":"living room","unit":"a2l","order":1207},
+{"tr":"köpek tüyü","en":"dog hair","unit":"a2l","order":1208},
+{"tr":"perde","en":"curtain","unit":"a2l","order":1209},
+{"tr":"oyuncak","en":"toy","unit":"a2l","order":1210},
+{"tr":"sokak lokantası","en":"street restaurant","unit":"a2l","order":1211},
+{"tr":"neon ışıkları","en":"neon lights","unit":"a2l","order":1212},
+{"tr":"ekonomi merkezi","en":"economic center","unit":"a2l","order":1213},
+{"tr":"finans merkezi","en":"financial center","unit":"a2l","order":1214},
+{"tr":"bilim","en":"science","unit":"a2l","order":1215},
+{"tr":"ticaret","en":"trade","unit":"a2l","order":1216},
+{"tr":"saray","en":"palace","unit":"a2l","order":1217},
+{"tr":"masal","en":"fairy tale","unit":"a2l","order":1218},
+{"tr":"tarihi yer","en":"historical place","unit":"a2l","order":1219},
+{"tr":"tiyatro","en":"theater","unit":"a2l","order":1220},
+{"tr":"metro","en":"subway","unit":"a2l","order":1221},
+{"tr":"doğal ürünler","en":"natural products","unit":"a2l","order":1222},
+{"tr":"traktör","en":"tractor","unit":"a2l","order":1223},
+{"tr":"sessiz","en":"quiet","unit":"a2l","order":1224},
+{"tr":"şehir merkezi","en":"city center","unit":"a2l","order":1225},
+{"tr":"kredi kartı","en":"credit card","unit":"a2l","order":1226},
+{"tr":"Ziraat Bankası","en":"Ziraat Bank","unit":"a2l","order":1227},
+{"tr":"kalem ucu","en":"pen tip","unit":"a2l","order":1228},
+{"tr":"pencere","en":"window","unit":"a2l","order":1229},
+{"tr":"çekmece","en":"drawer","unit":"a2l","order":1230},
+{"tr":"silgi","en":"eraser","unit":"a2l","order":1231},
+{"tr":"havuz","en":"pool","unit":"a2l","order":1232},
+{"tr":"adres","en":"address","unit":"a2l","order":1233},
+{"tr":"doğum tarihi","en":"birth date","unit":"a2l","order":1234},
+{"tr":"kültür","en":"culture","unit":"a2l","order":1235},
+{"tr":"sinagog","en":"synagogue","unit":"a2l","order":1236},
+{"tr":"kıta","en":"continent","unit":"a2l","order":1237},
+{"tr":"fayton","en":"carriage","unit":"a2l","order":1238},
+{"tr":"kule","en":"tower","unit":"a2l","order":1239},
+{"tr":"gece hayatı","en":"nightlife","unit":"a2l","order":1240},
+{"tr":"renkli","en":"colorful","unit":"a2l","order":1241},
+{"tr":"yabancı","en":"foreign","unit":"a2l","order":1242},
+{"tr":"çarşı","en":"bazaar","unit":"a2l","order":1243},
+{"tr":"turistik","en":"touristic","unit":"a2l","order":1244},
+{"tr":"hayat","en":"life","unit":"a2l","order":1245},
+{"tr":"sabaha kadar","en":"until morning","unit":"a2l","order":1246},
+{"tr":"yerli turist","en":"local tourist","unit":"a2l","order":1247},
+{"tr":"tarihi","en":"historical","unit":"a2l","order":1248},
+{"tr":"en meşhur","en":"most famous","unit":"a2l","order":1249},
+{"tr":"farklı","en":"different","unit":"a2l","order":1250},
+{"tr":"zirve","en":"summit","unit":"a2l","order":1251},
+{"tr":"nükleer santral","en":"nuclear power plant","unit":"a2l","order":1252},
+{"tr":"tsunami","en":"tsunami","unit":"a2l","order":1253},
+{"tr":"şiddet","en":"magnitude / severity","unit":"a2l","order":1254},
+{"tr":"misafir","en":"guest","unit":"a2l","order":1255},
+{"tr":"özgeçmiş","en":"CV / résumé","unit":"a2l","order":1256},
+{"tr":"medeni durum","en":"marital status","unit":"a2l","order":1257},
+{"tr":"yüksek lisans","en":"master's degree","unit":"a2l","order":1258},
+{"tr":"bilgisayar becerisi","en":"computer skill","unit":"a2l","order":1259},
+{"tr":"seminer","en":"seminar","unit":"a2l","order":1260},
+{"tr":"iş deneyimi","en":"work experience","unit":"a2l","order":1261},
+{"tr":"stajyer","en":"intern","unit":"a2l","order":1262},
+{"tr":"çevre","en":"environment","unit":"a2l","order":1263},
+{"tr":"heyecan","en":"excitement","unit":"a2l","order":1264},
+{"tr":"fidan","en":"sapling","unit":"a2l","order":1265},
+{"tr":"etkinlik","en":"activity / event","unit":"a2l","order":1266},
+{"tr":"kuruluş savaşı","en":"war of independence","unit":"a2l","order":1267},
+{"tr":"meclis","en":"parliament","unit":"a2l","order":1268},
+{"tr":"cumhuriyet","en":"republic","unit":"a2l","order":1269},
+{"tr":"çağdaş","en":"modern","unit":"a2l","order":1270},
+{"tr":"filozof","en":"philosopher","unit":"a2l","order":1271},
+{"tr":"buluş","en":"invention / discovery","unit":"a2l","order":1272},
+{"tr":"profesör","en":"professor","unit":"a2l","order":1273},
+{"tr":"telgraf","en":"telegraph","unit":"a2l","order":1274},
+{"tr":"mucit","en":"inventor","unit":"a2l","order":1275},
+{"tr":"işitme engelli","en":"hearing impaired","unit":"a2l","order":1276},
+{"tr":"teknoloji","en":"technology","unit":"a2l","order":1277},
+{"tr":"telsiz telefon","en":"cordless phone","unit":"a2l","order":1278},
+{"tr":"dijital kanal","en":"digital channel","unit":"a2l","order":1279},
+{"tr":"anı","en":"memory","unit":"a2l","order":1280},
+{"tr":"hikâye kipi","en":"narrative past tense","unit":"a2l","order":1281},
+{"tr":"çocukken","en":"when I was a child","unit":"a2l","order":1282},
+{"tr":"yaz akşamı","en":"summer evening","unit":"a2l","order":1283},
+{"tr":"dışarıda","en":"outside","unit":"a2l","order":1284},
+{"tr":"fıkra","en":"joke","unit":"a2l","order":1285},
+{"tr":"birlikte","en":"together","unit":"a2l","order":1286},
+{"tr":"gençken","en":"when young","unit":"a2l","order":1287},
+{"tr":"takım","en":"team","unit":"a2l","order":1288},
+{"tr":"grup","en":"group","unit":"a2l","order":1289},
+{"tr":"amaç","en":"aim / goal","unit":"a2l","order":1290},
+{"tr":"ebe","en":"tagger / \"it\" in games","unit":"a2l","order":1291},
+{"tr":"silah","en":"weapon","unit":"a2l","order":1292},
+{"tr":"beden eğitimi","en":"physical education","unit":"a2l","order":1293},
+{"tr":"işaret","en":"sign","unit":"a2l","order":1294},
+{"tr":"otobüsle","en":"by bus","unit":"a2l","order":1295},
+{"tr":"yüksek ses","en":"loud voice","unit":"a2l","order":1296},
+{"tr":"kilolu","en":"overweight","unit":"a2l","order":1297},
+{"tr":"kuruyemiş","en":"mixed nuts","unit":"a2l","order":1298},
+{"tr":"sınav kâğıdı","en":"exam paper","unit":"a2l","order":1299},
+{"tr":"emir kipi","en":"imperative mood","unit":"a2l","order":1300},
+{"tr":"demet","en":"bunch","unit":"a2l","order":1301},
+{"tr":"fiske","en":"pinch","unit":"a2l","order":1302},
+{"tr":"kadeh","en":"wine glass","unit":"a2l","order":1303},
+{"tr":"salkım","en":"bunch of grapes","unit":"a2l","order":1304},
+{"tr":"vişne","en":"sour cherry","unit":"a2l","order":1305},
+{"tr":"maydanoz","en":"parsley","unit":"a2l","order":1306},
+{"tr":"fındık","en":"hazelnut","unit":"a2l","order":1307},
+{"tr":"pul biber","en":"chili flakes","unit":"a2l","order":1308},
+{"tr":"salça","en":"tomato paste","unit":"a2l","order":1309},
+{"tr":"kıyma","en":"minced meat","unit":"a2l","order":1310},
+{"tr":"asma yaprağı","en":"grape leaf","unit":"a2l","order":1311},
+{"tr":"süzgeç","en":"strainer","unit":"a2l","order":1312},
+{"tr":"mantarsız","en":"without mushrooms","unit":"a2l","order":1313},
+{"tr":"buzsuz","en":"without ice","unit":"a2l","order":1314},
+{"tr":"limonlu","en":"with lemon","unit":"a2l","order":1315},
+{"tr":"çoban salata","en":"shepherd's salad","unit":"a2l","order":1316},
+{"tr":"ezogelin çorbası","en":"ezogelin soup","unit":"a2l","order":1317},
+{"tr":"maden suyu","en":"mineral water","unit":"a2l","order":1318},
+{"tr":"sipariş","en":"order","unit":"a2l","order":1319},
+{"tr":"hesap","en":"bill/check","unit":"a2l","order":1320},
+{"tr":"baklava","en":"baklava","unit":"a2l","order":1321},
+{"tr":"künefe","en":"künefe","unit":"a2l","order":1322},
+{"tr":"sütsüz","en":"without milk","unit":"a2l","order":1323},
+{"tr":"kafeinsiz","en":"decaffeinated","unit":"a2l","order":1324},
+{"tr":"dengesiz","en":"unbalanced","unit":"a2l","order":1325},
+{"tr":"taksit","en":"installment","unit":"a2l","order":1326},
+{"tr":"peşin ödeme","en":"cash payment","unit":"a2l","order":1327},
+{"tr":"vade farkı","en":"interest difference","unit":"a2l","order":1328},
+{"tr":"kullanım talimatı","en":"instruction manual","unit":"a2l","order":1329},
+{"tr":"mutfak kültürü","en":"food culture","unit":"a2l","order":1330},
+{"tr":"soya sosu","en":"soy sauce","unit":"a2l","order":1331},
+{"tr":"hardal","en":"mustard","unit":"a2l","order":1332},
+{"tr":"jambon","en":"ham","unit":"a2l","order":1333},
+{"tr":"nohut","en":"chickpea","unit":"a2l","order":1334},
+{"tr":"ölçülü","en":"moderate","unit":"a2l","order":1335},
+{"tr":"ızgara","en":"grilled","unit":"a2l","order":1336},
+{"tr":"buğulama","en":"steamed fish","unit":"a2l","order":1337},
+{"tr":"mangal","en":"barbecue grill","unit":"a2l","order":1338},
+{"tr":"ikram sırası","en":"serving order","unit":"a2l","order":1339},
+{"tr":"karşılaştırma","en":"comparison","unit":"a2l","order":1340},
+{"tr":"üstünlük","en":"superiority","unit":"a2l","order":1341}
 ],
 topics: [
 {"key":"question","label":"Question Words","terms":["ne","kim","neresi","nerede","kimde","ne var","ne yok","açık mı","kapalı mı","kaç kez","ne haber","kaçta","ne alaka"],"order":1},
 {"key":"numbers","label":"Numbers & Ordering","terms":["birinci","ikinci","üçüncü","dördüncü","altıncı","yedinci","dokuzuncu","sonuncu","numaralı","ilk","sıra","sıradaki","sırada","üçüncü kişi","numara","toplam","kilo","sıralama","milyonlarca","artı","yüzde yüz","santimetre","birleştirmek","bölmek","çarpmak","ölçmek","tartmak","sayı"],"order":2},
-{"key":"time","label":"Time & Schedule","terms":["şimdi","bugün","sabah","öğle","öğlen","akşam","gece","kadar","önce","sonra","erken","geç","saatinde","yarım saat","buçuk","çeyrek geçe","çeyrek kala","teneffüs","hafta sonu","hafta içi","pazartesi","cumartesi","pazar günü","saatlik","günlük","haftalık","aylık","zaman","vakit","süre","geçirmek","dün","yarın","geçen ay","sık sık","genellikle","randevu","meşgul","uygun","gecikmek","yetişmek","ertesi gün","seans","hemen","bütün gün","şimdilik","saniye","dakikalarca","saatlerce","günlerce","haftalarca","aylarca","yıllarca","asır","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar","Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık","gece yarısı","mevsim","acele"],"order":3},
+{"key":"time","label":"Time & Schedule","terms":["şimdi","bugün","sabah","öğle","öğlen","akşam","gece","kadar","önce","sonra","erken","geç","saatinde","yarım saat","buçuk","çeyrek geçe","çeyrek kala","teneffüs","hafta sonu","hafta içi","pazartesi","cumartesi","pazar günü","saatlik","günlük","haftalık","aylık","zaman","vakit","süre","geçirmek","dün","yarın","geçen ay","sık sık","genellikle","randevu","meşgul","uygun","gecikmek","yetişmek","ertesi gün","seans","hemen","bütün gün","şimdilik","saniye","dakikalarca","saatlerce","günlerce","haftalarca","aylarca","yıllarca","asır","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar","Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık","gece yarısı","mevsim","acele","tatil","doğum tarihi","sabaha kadar","çocukken","yaz akşamı","gençken"],"order":3},
 {"key":"politeness","label":"Politeness & Fillers","terms":["buyurun","geçmiş olsun","affedersiniz","rica ederim","teşekkürler","lütfen","afiyet olsun","sağol","bir şey değil","hoş geldiniz","hoş bulduk","güle güle","iyi günler","maalesef","acaba","görüşürüz","ne haber","teşekkür ederim","sıhhatler olsun","her şey yolunda","ellerine sağlık","selam vermek"],"order":4},
-{"key":"people","label":"People & Professions","terms":["insan","kadın","erkek","çocuk","öğretmen","öğrenci","doktor","pilot","müdür","avukat","garson","oyuncu","futbolcu","şarkıcı","manken","şoför","kurye","ev hanımı","dağcı","dişçi","öğretim elemanı","turist","antikacı","müşteri","bekar","evli","yaşlı","Koreli","ad","soyad","soyadı","evlenmek","doktorlar","çocuklar","öğrenciler","insanlar","meslek","çiçekçi","İngiliz","kimse","emekli","usta","acemi","ağabey","abi","oğul","elektrikçi","hala","anne tarafı","teyze","dayı","anneanne","baba tarafı","amca","babaanne","dede","enişte","yenge","kuzen","kız","erkek kardeş","soy","karı-koca","onlar kardeş","abla","kız kardeş","komşu","akraba","yeğen","herkes","görümce","kayınço","balıkçı","veteriner","yazar","başkan","polis","hemşire","mühendis","asker","aşçı","çiftçi","kasiyer","terzi","mimar","sekreter","esnaf","fırıncı","kasap","ressam","müzisyen","yazılımcı","fotoğrafçı","çift","hırsız","muhasebeci","evsiz","köylü","ikiz"],"order":5},
-{"key":"places","label":"Places & Buildings","terms":["okul","sınıf","kütüphane","hastane","cami","banka","sinema","kafe","kafeterya","kantin","park","bahçe","şehir","üniversite","havaalanı","havalimanı","durak","market","manav","idari amirlik","halkla ilişkiler","okuma salonu","öğrenci işleri","bina","metropol","müze","okulda","sınıfta","hastanede","sinemada","sinema salonu","cadde","sokak","bu sokak","büfe","şirket","memleket","köy","yer","yerler","sur","devlet","meydan","köprü","tünel","kaldırım","postane","saha"],"order":6},
-{"key":"furniture","label":"House & Furniture","terms":["masa","sandalye","koltuk","dolap","kanepe","yastık","sehpa","halı","duvar","oda","kitaplık","vazo","şamdan","avize","ayna","evde","odada","masada","kitaplıkta","eşya","piyano","anahtar","kilitlemek","temizlemek","taşınmak","kiralamak","zemin kat","bodrum kat","mum","tavan","kalorifer","cam","balkon","yatak odası","asansör","kilit","battaniye","gardırop","bulaşık makinesi","çamaşır makinesi","süpürge","ütü","çöp","leke","paspas","örtü","masa örtüsü"],"order":7},
-{"key":"kitchen","label":"Kitchen & Food","terms":["mutfak","bardak","fincan","çorba","yemek","lezzetli","çilek","muz","domates","üzüm","zeytinyağı","reçel","ayran","yoğurt","şarap","kahve içmek","meyve suyu","organik","kek","süt","simit","tencere","tava","pişirmek","içmek","hazırlamak","demlemek","tatmak","kesmek","servis yapmak","sipariş vermek","rezervasyon yapmak","bahşiş","tuzlu","kuru yemekler","sulu yemekler","hafif yemek","çok çeşitli","acı","tatlı","ekşi","yağlı yemek","hazır yemek","taze yemek","doğalgaz","peynir","doymak","acıkmak","tabak","kaşık","çatal","bıçak","yumurta","tavuk","balık","salata","elma","armut","limon","karpuz","kavun","kiraz","şeftali","erik","incir","patates","salatalık","soğan","sarımsak","biber","patlıcan","havuç","kabak","ıspanak","fasulye","tuz","şeker","karabiber","baharat","un","bal","karıştırmak","dökmek","ceviz","buzdolabı"],"order":8},
-{"key":"transport","label":"Transportation & Travel","terms":["araba","uçak","dolmuş","vapur","motosiklet","trafik","yolculuk","tur","sahil","havaalanı","havalimanı","bilet almak","seyahat etmek","sürmek","binmek","indirmek","arabada","tatil planı","gezmek","keşfetmek","ziyaret etmek","bavul hazırlamak","harita","geri dönmek","inmek","yat","uzak","gezgin","köy","pist","aktarma","istasyon","otogar","pasaport","vize","benzin","hız","valiz","kamyon","yaya","yaya geçidi"],"order":9},
-{"key":"media","label":"Electronics & Media","terms":["bilgisayar","telefon","cep telefonu","televizyon","radyo","internet","kanal","dizi","haber","program","yayın akışı","çizgi film","magazin","komedi filmi","ana haber","spor programı","yemek programı","yarışma","çocuk programı","müzik programı","sinema filmi","yabancı sinema","tekrar","yayında","yayınlanmak","yayınlamak","izlemek","seyretmek","televizyon izlemek","televizyon seyretmek","fotoğraf","gazete","dergi","televizyon kanalı","televizyon programı","komedi","yüklemek","mesaj atmak","telefon etmek","e-posta adresi","gerilim","korku filmi","belgesel","bilim kurgu","dramatik","kahvaltı haberleri","tekerleme","görüntülü","sesi","kılıf","kumanda","anten","tuş","elektrik","şarkı","takip etmek","makale","altyazı","tablet"],"order":10},
+{"key":"people","label":"People & Professions","terms":["insan","kadın","erkek","çocuk","öğretmen","öğrenci","doktor","pilot","müdür","avukat","garson","oyuncu","futbolcu","şarkıcı","manken","şoför","kurye","ev hanımı","dağcı","dişçi","öğretim elemanı","turist","antikacı","müşteri","bekar","evli","yaşlı","Koreli","ad","soyad","soyadı","evlenmek","doktorlar","çocuklar","öğrenciler","insanlar","meslek","çiçekçi","İngiliz","kimse","emekli","usta","acemi","ağabey","abi","oğul","elektrikçi","hala","anne tarafı","teyze","dayı","anneanne","baba tarafı","amca","babaanne","dede","enişte","yenge","kuzen","kız","erkek kardeş","soy","karı-koca","onlar kardeş","abla","kız kardeş","komşu","akraba","yeğen","herkes","görümce","kayınço","balıkçı","veteriner","yazar","başkan","polis","hemşire","mühendis","asker","aşçı","çiftçi","kasiyer","terzi","mimar","sekreter","esnaf","fırıncı","kasap","ressam","müzisyen","yazılımcı","fotoğrafçı","çift","hırsız","muhasebeci","evsiz","köylü","ikiz","bankacı","aile fotoğrafı","yabancı","yerli turist","misafir","özgeçmiş","medeni durum","iş deneyimi","stajyer","filozof","profesör","mucit","grup"],"order":5},
+{"key":"places","label":"Places & Buildings","terms":["okul","sınıf","kütüphane","hastane","cami","banka","sinema","kafe","kafeterya","kantin","park","bahçe","şehir","üniversite","havaalanı","havalimanı","durak","market","manav","idari amirlik","halkla ilişkiler","okuma salonu","öğrenci işleri","bina","metropol","müze","okulda","sınıfta","hastanede","sinemada","sinema salonu","cadde","sokak","bu sokak","büfe","şirket","memleket","köy","yer","yerler","sur","devlet","meydan","köprü","tünel","kaldırım","postane","saha","şehir dışı","yurt","apartman","eğlence yeri","çiftlik","semt","valilik","sokak lokantası","neon ışıkları","saray","tarihi yer","Ziraat Bankası","havuz","kule","meclis","nükleer santral"],"order":6},
+{"key":"furniture","label":"House & Furniture","terms":["masa","sandalye","koltuk","dolap","kanepe","yastık","sehpa","halı","duvar","oda","kitaplık","vazo","şamdan","avize","ayna","evde","odada","masada","kitaplıkta","eşya","piyano","anahtar","kilitlemek","temizlemek","taşınmak","kiralamak","zemin kat","bodrum kat","mum","tavan","kalorifer","cam","balkon","yatak odası","asansör","kilit","battaniye","gardırop","bulaşık makinesi","çamaşır makinesi","süpürge","ütü","çöp","leke","paspas","örtü","masa örtüsü","salon","perde","pencere","çekmece"],"order":7},
+{"key":"kitchen","label":"Kitchen & Food","terms":["mutfak","bardak","fincan","çorba","yemek","lezzetli","çilek","muz","domates","üzüm","zeytinyağı","reçel","ayran","yoğurt","şarap","kahve içmek","meyve suyu","organik","kek","süt","simit","tencere","tava","pişirmek","içmek","hazırlamak","demlemek","tatmak","kesmek","servis yapmak","sipariş vermek","rezervasyon yapmak","bahşiş","tuzlu","kuru yemekler","sulu yemekler","hafif yemek","çok çeşitli","acı","tatlı","ekşi","yağlı yemek","hazır yemek","taze yemek","doğalgaz","peynir","doymak","acıkmak","tabak","kaşık","çatal","bıçak","yumurta","tavuk","balık","salata","elma","armut","limon","karpuz","kavun","kiraz","şeftali","erik","incir","patates","salatalık","soğan","sarımsak","biber","patlıcan","havuç","kabak","ıspanak","fasulye","tuz","şeker","karabiber","baharat","un","bal","karıştırmak","dökmek","ceviz","buzdolabı","tereyağı","kuruyemiş","demet","fiske","kadeh","salkım","vişne","maydanoz","fındık","pul biber","salça","kıyma","asma yaprağı","süzgeç","mantarsız","buzsuz","limonlu","çoban salata","ezogelin çorbası","maden suyu","sütsüz","kafeinsiz","mutfak kültürü","soya sosu","hardal","jambon","nohut","ızgara","buğulama","mangal","ikram sırası","sarmak","yoğurmak","rendelemek","çırpmak","kavurmak","közlemek"],"order":8},
+{"key":"transport","label":"Transportation & Travel","terms":["araba","uçak","dolmuş","vapur","motosiklet","trafik","yolculuk","tur","sahil","havaalanı","havalimanı","bilet almak","seyahat etmek","sürmek","binmek","indirmek","arabada","tatil planı","gezmek","keşfetmek","ziyaret etmek","bavul hazırlamak","harita","geri dönmek","inmek","yat","uzak","gezgin","köy","pist","aktarma","istasyon","otogar","pasaport","vize","benzin","hız","valiz","kamyon","yaya","yaya geçidi","otopark","metro","traktör","fayton","otobüsle"],"order":9},
+{"key":"media","label":"Electronics & Media","terms":["bilgisayar","telefon","cep telefonu","televizyon","radyo","internet","kanal","dizi","haber","program","yayın akışı","çizgi film","magazin","komedi filmi","ana haber","spor programı","yemek programı","yarışma","çocuk programı","müzik programı","sinema filmi","yabancı sinema","tekrar","yayında","yayınlanmak","yayınlamak","izlemek","seyretmek","televizyon izlemek","televizyon seyretmek","fotoğraf","gazete","dergi","televizyon kanalı","televizyon programı","komedi","yüklemek","mesaj atmak","telefon etmek","e-posta adresi","gerilim","korku filmi","belgesel","bilim kurgu","dramatik","kahvaltı haberleri","tekerleme","görüntülü","sesi","kılıf","kumanda","anten","tuş","elektrik","şarkı","takip etmek","makale","altyazı","tablet","masal","teknoloji","dijital kanal","fıkra"],"order":10},
 {"key":"personality","label":"Personality & Appearance","terms":["çalışkan","tembel","komik","yakışıklı","yardımsever","neşeli","sakin","kısa saçlı","şişman","güzel","genç","uzun","kısa","zayıf","çirkin","ünlü","dünyaca ünlü","ülkece ünlü","dominant"],"order":11},
-{"key":"school","label":"School & Study","terms":["sınav","soru","ders çalışmak","ödev","kurs","kursa gitmek","teneffüs","bölüm","kitaplar","kitap","kalem","tahta","defter","çanta","sözlük","kağıt","kareli kağıt","çizgili kağıt","cümle","fiil","isim","sıfat","fotokopi","okumak","yazmak","öğrenmek","öğretmek","anlamak","cevaplamak","tekrar etmek","tamamlamak","düzeltmek","açıklamak","çözmek","sırt çantası","doğru","yanlış","mezuniyet","tören","hata","hece","kapak","ders","tamlama","kural","virgül","harf","bant","zil","özne"],"order":12},
-{"key":"shopping","label":"Shopping & Money","terms":["para çekmek","alışveriş","alışveriş yapmak","ucuz","pahalı","bilet almak","kilo","numara","manav","müşteri","almak","satmak","ödemek","harcamak","biriktirmek","kumbara","cüzdan","beden","pazar","seçmek","denemek","fakir","zengin","kıymetli","ücretsiz","bedava","indirim","zam","ürün","bağış vermek","borç","hediye","vitrin","poşet","marka","banknot","dükkân","mağaza","finans","sepet","kiralanmak"],"order":13},
-{"key":"hobbies","label":"Hobbies & Free Time","terms":["satranç","gitar çalmak","top oynamak","fotoğraf çekmek","hobi","koleksiyon","paraşüt","sörf","kamp yapmak","bulmaca","piknik","klasik müzik","dans etmek","boş zaman","boş olmak","kazanmak","kaybetmek","konser","parti","yürüyüş","yüzmek","spor yapmak","tırmanmak","çizmek","oynamak","eğlenmek","güzel vakit geçirmek","dışarı çıkmak","amatör","boncuk","seramik","ipek","düğün","spor aletleri","ava çıkmak","oyun","şiir","piknik örtüsü","ayıcık","uçurtma"],"order":14},
+{"key":"school","label":"School & Study","terms":["sınav","soru","ders çalışmak","ödev","kurs","kursa gitmek","teneffüs","bölüm","kitaplar","kitap","kalem","tahta","defter","çanta","sözlük","kağıt","kareli kağıt","çizgili kağıt","cümle","fiil","isim","sıfat","fotokopi","okumak","yazmak","öğrenmek","öğretmek","anlamak","cevaplamak","tekrar etmek","tamamlamak","düzeltmek","açıklamak","çözmek","sırt çantası","doğru","yanlış","mezuniyet","tören","hata","hece","kapak","ders","tamlama","kural","virgül","harf","bant","zil","özne","lise","bilim","kalem ucu","silgi","yüksek lisans","bilgisayar becerisi","seminer","sınav kâğıdı","emir kipi","hikâye kipi","beden eğitimi"],"order":12},
+{"key":"shopping","label":"Shopping & Money","terms":["para çekmek","alışveriş","alışveriş yapmak","ucuz","pahalı","bilet almak","kilo","numara","manav","müşteri","almak","satmak","ödemek","harcamak","biriktirmek","kumbara","cüzdan","beden","pazar","seçmek","denemek","fakir","zengin","kıymetli","ücretsiz","bedava","indirim","zam","ürün","bağış vermek","borç","hediye","vitrin","poşet","marka","banknot","dükkân","mağaza","finans","sepet","kiralanmak","ticaret","kredi kartı","çarşı","sipariş","hesap","taksit","peşin ödeme","vade farkı","kullanım talimatı","pazarlık yapmak"],"order":13},
+{"key":"hobbies","label":"Hobbies & Free Time","terms":["satranç","gitar çalmak","top oynamak","fotoğraf çekmek","hobi","koleksiyon","paraşüt","sörf","kamp yapmak","bulmaca","piknik","klasik müzik","dans etmek","boş zaman","boş olmak","kazanmak","kaybetmek","konser","parti","yürüyüş","yüzmek","spor yapmak","tırmanmak","çizmek","oynamak","eğlenmek","güzel vakit geçirmek","dışarı çıkmak","amatör","boncuk","seramik","ipek","düğün","spor aletleri","ava çıkmak","oyun","şiir","piknik örtüsü","ayıcık","uçurtma","tenis kortu","oyuncak","gece hayatı","etkinlik","takım","ebe","balığa gitmek"],"order":14},
 {"key":"common","label":"Common Verbs","terms":["olmak","yapmak","etmek","gitmek","gelmek","almak","vermek","görmek","bakmak","bilmek","istemek","söylemek","yaşamak","sevmek","bulmak","anlamak","parça"],"order":15},
 {"key":"startfinish","label":"Start, Finish & Wait","terms":["başlamak","bitmek","bitirmek","devam etmek","tamamlamak","beklemek","kalmak","durmak","artmak","gecikmek","erken","geç","ilk önce"],"order":16},
-{"key":"colors","label":"Colors","terms":["renkler","kırmızı","mavi","sarı","yeşil","turuncu","mor","pembe","kahverengi","siyah","beyaz","gri","lacivert","açık mavi","koyu mavi","açık yeşil","koyu yeşil","koyu kırmızı","koyu","bordo","antrasit"],"order":17},
+{"key":"colors","label":"Colors","terms":["renkler","kırmızı","mavi","sarı","yeşil","turuncu","mor","pembe","kahverengi","siyah","beyaz","gri","lacivert","açık mavi","koyu mavi","açık yeşil","koyu yeşil","koyu kırmızı","koyu","bordo","antrasit","renk","renkli"],"order":17},
 {"key":"clothes","label":"Clothes","terms":["kıyafetler","üst giyim","tişört","kısa kollu","uzun kollu","kolsuz","gömlek","bluz","kazak","hırka","düğme","fermuar","ceket","yelek","fermuarlı yelek","düğmeli yelek","süveter","forma","alt giyim","tayt","pantolon","kot pantolon","şort","etek","eşofman","kemer","iç giyim","çorap","atlet","iç çamaşırı","elbise","tulum","pijama","bornoz","çizgili","kareli","beden","giymek","çıkarmak","aksesuar","bağcık","cırt cırt","deri","yaka"],"order":18},
 {"key":"winterwear","label":"Shoes & Winter Wear","terms":["kışlık kıyafetler","mont","kaban","atkı","eldiven","yağmurluk","bere","şapka","şemsiye","ayakkabı","spor ayakkabı","sandalet","terlik","topuklu ayakkabı","bot","babet","numara","yağmur","soğuk","üşümek","ıslanmak"],"order":19},
 {"key":"jewelry","label":"Jewelry & Accessories","terms":["takılar","özel takılar","küpe","yüzük","alyans","kolye","bileklik","bilezik","halhal","broş","taç","saat","zincir","toka","altın kolye","gümüş yüzük","pırlanta yüzük","nazar boncuğu","boncuk","kol çantası","sırt çantası","çanta","cüzdan","gözlük","mendil","takmak","inci"],"order":20},
-{"key":"nature","label":"Nature & Outdoors","terms":["hava","deniz","sahil","yağmur","sıcak","soğuk","buz","kuru","ıslak","ağaç","kuş","çiçekler","bitki","toprak","kum","hayvan","boğa","yakmak","ateşi yakmak","söndürmek","beslemek","koklamak","ıslanmak","üşümek","buhar","dalga","dal","sivrisinek","kelebek","akmak","ada","yaprak","dünya","fare","evcil hayvan","doğa","tarla","orman","çimen","ayı","kanat"],"order":21},
-{"key":"directions","label":"Here, There & Directions","terms":["burada","burası","şurada","şurası","orada","orası","nerede","neresi","ileride","ön","arka","arası","uzak","kuzey","güney","doğu","batı","harita","metre","kat","zemin kat","bodrum kat","birinci katta","ikinci kat","altıncı kat","yan","kenar","sol","sağ","etraf","karşı","konum","navigasyon","çapraz","yukarı","aşağı","köşe","ara","kavşak"],"order":22},
-{"key":"feelings","label":"Feelings","terms":["sevmek","beğenmek","hoşlanmak","korkmak","üzülmek","sevinmek","kızmak","şaşırmak","sıkılmak","yorulmak","hissetmek","özlemek","merak etmek","güvenmek","eğlenmek","ağlamak","gülmek","gülümsemek","harika","eğlenceli","yorucu","monoton","pozitif enerji","mutlu","üzgün","heyecanlı","memnun","huzurlu","pişman","endişeli","kızgın","yorgun","şaşkın","sinirli","kıskanç","sıkıcı","yormak","sıkıntılı","duygusal","sarılmak","kavuşmak","ummak","rahatlatmak","rahatlamak","üzmek","sinirletmek","değer vermek","saygı duymak"],"order":23},
+{"key":"nature","label":"Nature & Outdoors","terms":["hava","deniz","sahil","yağmur","sıcak","soğuk","buz","kuru","ıslak","ağaç","kuş","çiçekler","bitki","toprak","kum","hayvan","boğa","yakmak","ateşi yakmak","söndürmek","beslemek","koklamak","ıslanmak","üşümek","buhar","dalga","dal","sivrisinek","kelebek","akmak","ada","yaprak","dünya","fare","evcil hayvan","doğa","tarla","orman","çimen","ayı","kanat","güvercin","menekşe","köpek tüyü","doğal ürünler","kıta","zirve","tsunami","şiddet","çevre","fidan"],"order":21},
+{"key":"directions","label":"Here, There & Directions","terms":["burada","burası","şurada","şurası","orada","orası","nerede","neresi","ileride","ön","arka","arası","uzak","kuzey","güney","doğu","batı","harita","metre","kat","zemin kat","bodrum kat","birinci katta","ikinci kat","altıncı kat","yan","kenar","sol","sağ","etraf","karşı","konum","navigasyon","çapraz","yukarı","aşağı","köşe","ara","kavşak","kroki","karşısında","yanında","önünde","arkasında","sağında","solunda","altında","üstünde","adres","dışarıda"],"order":22},
+{"key":"feelings","label":"Feelings","terms":["sevmek","beğenmek","hoşlanmak","korkmak","üzülmek","sevinmek","kızmak","şaşırmak","sıkılmak","yorulmak","hissetmek","özlemek","merak etmek","güvenmek","eğlenmek","ağlamak","gülmek","gülümsemek","harika","eğlenceli","yorucu","monoton","pozitif enerji","mutlu","üzgün","heyecanlı","memnun","huzurlu","pişman","endişeli","kızgın","yorgun","şaşkın","sinirli","kıskanç","sıkıcı","yormak","sıkıntılı","duygusal","sarılmak","kavuşmak","ummak","rahatlatmak","rahatlamak","üzmek","sinirletmek","değer vermek","saygı duymak","heyecan","anı","hayran olmak","ilgi beklemek"],"order":23},
 {"key":"routine","label":"Daily Routine","terms":["fırçalamak","uyanmak","kalkmak","yıkamak","diş fırçalamak","taramak","kurulanmak","giymek","hazırlanmak","çalışmak","ders çalışmak","dinlenmek","yatmak","uyumak","sabah","öğlen","akşam","gece","genellikle","sık sık","uyku","sabun","tarak","alışmak"],"order":24},
-{"key":"health","label":"Health & Body","terms":["hasta","hastalık","ateş","doktor","hastane","dişçi","dişçiye gitmek","geçmiş olsun","beyin","kan","beden","sağlıklı olmak","spor yapmak","yorulmak","doğmak","büyümek","ölmek","ilaç","yaralı","sağlıklı","sağlıksız","yaşlanmak","alın","karın","burun","ağız","hapşırmak","göğüs kafesi","baş","kafa","saç","çene","yanak","kulak","göz","kirpik","kaş","boyun","boğaz","omuz","kol","dirsek","bilek","ayak bileği","el","parmak","avuç","bacak","diz","ayak","topuk","sırt","bel","ayak parmağı","tırnak","dudak","dil","diş","kas","sakal","bıyık","göğüs","kucak","ağrı","başı ağrı","karnı ağrı","dişi ağrı","dizi ağrı","grip","hap","şurup","eczane","eczaneci","nezle","teşhiş","halsiz","şikayet","reçete","tedavi","ağrımak","acımak","hıçkırmak","nezle olmak","öksürmek","uykulu","termometre"],"order":25},
-{"key":"communication","label":"Talking & Communicating","terms":["konuşmak","söylemek","demek","sormak","soru sormak","cevaplamak","anlatmak","açıklamak","bahsetmek","dinlemek","duymak","anlamak","tekrar etmek","telefon etmek","mesaj atmak","göndermek","mektup","e-posta adresi","davet etmek","teklif etmek","yardım etmek","paylaşmak","tanışmak","görüşmek","buluşmak","buluşma","cümle","şaka","izin","emretmek","yollamak","seçim","izin vermek","karşı çıkmak","yasaklamak","bilgi"],"order":26},
-{"key":"movement","label":"Coming & Going","terms":["gitmek","gelmek","dönmek","geri dönmek","çıkmak","dışarı çıkmak","girmek","geçmek","yürümek","koşmak","binmek","inmek","durmak","oturmak","kalkmak","uğramak","tırmanmak","düşmek","taşınmak","ayrılmak","katılmak","gecikmek","yetişmek","uğurlamak","uzanmak","kaçmak","dağılmak","görünmek","kaybolmak","hızlanmak","yavaşlamak","gezdirmek","dolaşmak"],"order":27},
-{"key":"actions","label":"Everyday Actions","terms":["açmak","kapatmak","açılmak","kapanmak","koymak","getirmek","götürmek","taşımak","tutmak","kaldırmak","kesmek","eklemek","kırmak","kırılmak","çekmek","bırakmak","bulmak","aramak","kullanmak","göstermek","vermek","almak","kilitlemek","dokunmak","toplamak","değiştirmek","değişmek","çalıştırmak","çalmak","katlamak","birikmek","savaşmak","eşleştirmek","dirsek atmak","ayırmak","yakalamak","uçmak","vurmak","düşürmek","boşaltmak","saklamak","bastırmak","imzalamak","onaylamak","reddetmek","tavsiye etmek","saldırmak","savunmak","korumak","engellemek","tamir etmek","montaj","montaj yapmak","edinmek","edilmek","zorunda kalmak","mecbur kalmak","çatlamak","yanmak","koparmak","kokmak","karışmak","basmak","öpmek","gerekmek","silmek","okşamak","zarar vermek","destek olmak"],"order":28},
-{"key":"thinking","label":"Thinking & Deciding","terms":["bilmek","düşünmek","hatırlamak","unutmak","anlamak","öğrenmek","karar vermek","planlamak","tercih etmek","seçmek","merak etmek","inanmak","tanımak","belirlemek","istemek","denemek","kontrol etmek","çözmek","beyin","rüya","doğru","yanlış","plan","emin","fikir","sanmak","mantık","vazgeçmek","fırsat"],"order":29},
-{"key":"describing","label":"Describing Things","terms":["eski","küçük","çok","güzel","ucuz","pahalı","sıcak","soğuk","hızlı","zor","geniş","açık","kapalı","dolu","boş","kuru","ıslak","uzak","bozuk","tenha","kalabalık","hareketli","lezzetli","eğlenceli","yorucu","monoton","harika","uygun","meşgul","organik","iyi","kötü","değişik","yeni","yavaş","çabuk","kıymetli","temiz","kirli","mükemmel","berbat","minik","aynı","sert","yumuşak","ağır","hafif","önemli","önemsiz","tehlikeli","gürültü","gürültülü","canlı","özgün","çok çeşitli","büyük","az","yüksek","alçak","kolay","son","dar","yakın","pozitif","eksi","sıkıcı","sıkışık","yamuk","düz","metre kare","sorunlu","problemli","kıvırcık","dalgalı","özel","uğurlu","şanslı","kesik","korkutucu","ürkütücü","mümkün","tuhaf","yoğun","eksik","fazla","küçülmek","ferah","güncel","kel","ilginç","ayrı","benzemek"],"order":30},
-{"key":"littlewords","label":"Little Words","terms":["bu","o","onlar","kimse","bazı","bütün","çok","mesela","yalnız","arası","kadar","önce","sonra","acaba","vardı","yoktu","ne var","ne yok","genellikle","sık sık","neyse ki","maalesef","diğer","aynı","gerek","çoğunlukla","hâlâ","neyse","henüz","bu yüzden","ayrıca","tek tek","buna rağmen","sonunda","ise","birkaç","olur","böyle","sanki","hakkında","bu kadar","yani","nihayet","asla","kendi","beraber","birden","hepsi","aslında","zorunda","mecbur","yaklaşık","yeter","yanlışlıkla","yeniden","bu sırada","aynı zamanda","yoksa","şart"],"order":31},
-{"key":"cities","label":"Cities & Countries","terms":["şehir","metropol","memleket","Moskova","Londra","Pekin","Tokyo","Buenos Aires","İngiliz","Koreli","başkent"],"order":32},
+{"key":"health","label":"Health & Body","terms":["hasta","hastalık","ateş","doktor","hastane","dişçi","dişçiye gitmek","geçmiş olsun","beyin","kan","beden","sağlıklı olmak","spor yapmak","yorulmak","doğmak","büyümek","ölmek","ilaç","yaralı","sağlıklı","sağlıksız","yaşlanmak","alın","karın","burun","ağız","hapşırmak","göğüs kafesi","baş","kafa","saç","çene","yanak","kulak","göz","kirpik","kaş","boyun","boğaz","omuz","kol","dirsek","bilek","ayak bileği","el","parmak","avuç","bacak","diz","ayak","topuk","sırt","bel","ayak parmağı","tırnak","dudak","dil","diş","kas","sakal","bıyık","göğüs","kucak","ağrı","başı ağrı","karnı ağrı","dişi ağrı","dizi ağrı","grip","hap","şurup","eczane","eczaneci","nezle","teşhiş","halsiz","şikayet","reçete","tedavi","ağrımak","acımak","hıçkırmak","nezle olmak","öksürmek","uykulu","termometre","işitme engelli","kilolu"],"order":25},
+{"key":"communication","label":"Talking & Communicating","terms":["konuşmak","söylemek","demek","sormak","soru sormak","cevaplamak","anlatmak","açıklamak","bahsetmek","dinlemek","duymak","anlamak","tekrar etmek","telefon etmek","mesaj atmak","göndermek","mektup","e-posta adresi","davet etmek","teklif etmek","yardım etmek","paylaşmak","tanışmak","görüşmek","buluşmak","buluşma","cümle","şaka","izin","emretmek","yollamak","seçim","izin vermek","karşı çıkmak","yasaklamak","bilgi","telgraf","telsiz telefon","işaret","yüksek ses","haberleşmek","sohbet etmek"],"order":26},
+{"key":"movement","label":"Coming & Going","terms":["gitmek","gelmek","dönmek","geri dönmek","çıkmak","dışarı çıkmak","girmek","geçmek","yürümek","koşmak","binmek","inmek","durmak","oturmak","kalkmak","uğramak","tırmanmak","düşmek","taşınmak","ayrılmak","katılmak","gecikmek","yetişmek","uğurlamak","uzanmak","kaçmak","dağılmak","görünmek","kaybolmak","hızlanmak","yavaşlamak","gezdirmek","dolaşmak","pasaja gitmek"],"order":27},
+{"key":"actions","label":"Everyday Actions","terms":["açmak","kapatmak","açılmak","kapanmak","koymak","getirmek","götürmek","taşımak","tutmak","kaldırmak","kesmek","eklemek","kırmak","kırılmak","çekmek","bırakmak","bulmak","aramak","kullanmak","göstermek","vermek","almak","kilitlemek","dokunmak","toplamak","değiştirmek","değişmek","çalıştırmak","çalmak","katlamak","birikmek","savaşmak","eşleştirmek","dirsek atmak","ayırmak","yakalamak","uçmak","vurmak","düşürmek","boşaltmak","saklamak","bastırmak","imzalamak","onaylamak","reddetmek","tavsiye etmek","saldırmak","savunmak","korumak","engellemek","tamir etmek","montaj","montaj yapmak","edinmek","edilmek","zorunda kalmak","mecbur kalmak","çatlamak","yanmak","koparmak","kokmak","karışmak","basmak","öpmek","gerekmek","silmek","okşamak","zarar vermek","destek olmak","süt sağmak","havlamak","dilek tutmak","patlamak","hayatını kaybetmek","mezun olmak","elektrik kesilmek","burs almak","ağaç dikmek","yaygınlaşmak","üretmek","sigara içmek","yakalanmak","karşılaşmak"],"order":28},
+{"key":"thinking","label":"Thinking & Deciding","terms":["bilmek","düşünmek","hatırlamak","unutmak","anlamak","öğrenmek","karar vermek","planlamak","tercih etmek","seçmek","merak etmek","inanmak","tanımak","belirlemek","istemek","denemek","kontrol etmek","çözmek","beyin","rüya","doğru","yanlış","plan","emin","fikir","sanmak","mantık","vazgeçmek","fırsat","avantaj","kültür","hayat","kuruluş savaşı","cumhuriyet","buluş","amaç","silah","karşılaştırma","üstünlük"],"order":29},
+{"key":"describing","label":"Describing Things","terms":["eski","küçük","çok","güzel","ucuz","pahalı","sıcak","soğuk","hızlı","zor","geniş","açık","kapalı","dolu","boş","kuru","ıslak","uzak","bozuk","tenha","kalabalık","hareketli","lezzetli","eğlenceli","yorucu","monoton","harika","uygun","meşgul","organik","iyi","kötü","değişik","yeni","yavaş","çabuk","kıymetli","temiz","kirli","mükemmel","berbat","minik","aynı","sert","yumuşak","ağır","hafif","önemli","önemsiz","tehlikeli","gürültü","gürültülü","canlı","özgün","çok çeşitli","büyük","az","yüksek","alçak","kolay","son","dar","yakın","pozitif","eksi","sıkıcı","sıkışık","yamuk","düz","metre kare","sorunlu","problemli","kıvırcık","dalgalı","özel","uğurlu","şanslı","kesik","korkutucu","ürkütücü","mümkün","tuhaf","yoğun","eksik","fazla","küçülmek","ferah","güncel","kel","ilginç","ayrı","benzemek","sessiz","tarihi","en meşhur","farklı","çağdaş","dengesiz","ölçülü"],"order":30},
+{"key":"littlewords","label":"Little Words","terms":["bu","o","onlar","kimse","bazı","bütün","çok","mesela","yalnız","arası","kadar","önce","sonra","acaba","vardı","yoktu","ne var","ne yok","genellikle","sık sık","neyse ki","maalesef","diğer","aynı","gerek","çoğunlukla","hâlâ","neyse","henüz","bu yüzden","ayrıca","tek tek","buna rağmen","sonunda","ise","birkaç","olur","böyle","sanki","hakkında","bu kadar","yani","nihayet","asla","kendi","beraber","birden","hepsi","aslında","zorunda","mecbur","yaklaşık","yeter","yanlışlıkla","yeniden","bu sırada","aynı zamanda","yoksa","şart","birlikte"],"order":31},
+{"key":"cities","label":"Cities & Countries","terms":["şehir","metropol","memleket","Moskova","Londra","Pekin","Tokyo","Buenos Aires","İngiliz","Koreli","başkent","ekonomi merkezi","finans merkezi","şehir merkezi","turistik"],"order":32},
 {"key":"weather","label":"Weather","terms":["hava","güneşli","bulutlu","parçalı bulutlu","yağmurlu","yağmur","rüzgarlı","karlı","sisli","nemli","serin","ılık","sıcak","soğuk","buz","kuru","ıslak","yağmurluk","şemsiye","üşümek","ıslanmak","eksi","felaket","sel","deprem","yangın","kardan adam"],"order":33},
-{"key":"films","label":"Films & Genres","terms":["sinema","sinemada","sinema salonu","sinema filmi","yabancı sinema","komedi","komedi filmi","gerilim","korku filmi","belgesel","bilim kurgu","dramatik","savaş","çizgi film","dizi","bölüm","özgün","izlemek","seyretmek","yönetmen"],"order":34},
-{"key":"tastes","label":"Tastes & Dishes","terms":["tuzlu","tatlı","acı","ekşi","lezzetli","kuru yemekler","sulu yemekler","hafif yemek","çok çeşitli","yemek","çorba","aç","tok","tatmak","pişirmek","yağlı yemek","hazır yemek","taze yemek","sıcacık","çıtır","çikolata","dondurma"],"order":35},
+{"key":"films","label":"Films & Genres","terms":["sinema","sinemada","sinema salonu","sinema filmi","yabancı sinema","komedi","komedi filmi","gerilim","korku filmi","belgesel","bilim kurgu","dramatik","savaş","çizgi film","dizi","bölüm","özgün","izlemek","seyretmek","yönetmen","tiyatro"],"order":34},
+{"key":"tastes","label":"Tastes & Dishes","terms":["tuzlu","tatlı","acı","ekşi","lezzetli","kuru yemekler","sulu yemekler","hafif yemek","çok çeşitli","yemek","çorba","aç","tok","tatmak","pişirmek","yağlı yemek","hazır yemek","taze yemek","sıcacık","çıtır","çikolata","dondurma","baklava","künefe"],"order":35},
 {"key":"character","label":"Character Traits","terms":["nazik","kaba","kibar","akıllı","akılsız","sabırlı","sabırsız","dürüst","neşeli","eğlenceli","sakin","arkadaş canlısı","cömert","cimri","düzenli","dağınık","güleryüzlü","hayalperest","merhametli","hırslı","karizmatik","güvenilir","kararlı","kararsız","mütevazı","enerjik","özgüvenli","becerikli","yetenekli","meraklı","esprili","zeki","bencil","sosyal","asosyal","utangaç","düşünceli","düşüncesiz","inatçı","çok yönlü","anlayışlı","anlayışsız","hoşgörülü","maceracı","cesur","korkak","çılgın","yaratıcı","misafirperver","yaramaz","çalışkan","tembel","yardımsever","davranmak","eli açık","uslu","şakacı","maceraperest","havalı","yaramazlık yapmak"],"order":36},
 {"key":"opposites","label":"Opposites","terms":["iyi","kötü","nazik","kaba","çalışkan","tembel","akıllı","akılsız","sabırlı","sabırsız","cömert","cimri","düzenli","dağınık","evli","bekar","kararlı","kararsız","mutlu","üzgün","sosyal","asosyal","düşünceli","düşüncesiz","anlayışlı","anlayışsız","sağlıklı","sağlıksız","cesur","korkak","dolu","boş","açık","kapalı","az","çok","büyük","küçük","erken","geç","genç","yaşlı","uzak","yakın","uzun","kısa","dar","geniş","aç","tok","ucuz","pahalı","acı","tatlı","yeni","eski","yavaş","hızlı","güzel","çirkin","temiz","kirli","sert","yumuşak","fakir","zengin","ağır","hafif","önemli","önemsiz","sıcak","soğuk","doğru","yanlış","ilk","son","yüksek","alçak","kolay","zor","zayıf","şişman","ıslak","kuru","eğlenceli","sıkıcı","pozitif","eksi"],"order":37},
-{"key":"faith","label":"God & Faith","terms":["RAB","tanrı","İsa","Mesih","ruh","Üçlü Birlik","kutsal","kutsallık","gök","cennet","melek","iblis","şeytan","iman","inanç","din","umut","sevgi","merhamet","lütuf","yücelik","görkem","taht","krallık","sonsuz","ebedî","ışık","karanlık","gerçek","bilgelik","bilge","vahiy","sır","gizem","peygamber","peygamberlik","elçi","müjde","yaşam","can","yürek","kul","söz","belirti","diriliş","inanmak","yaratmak","kutsamak","övmek","yükselmek","dirilmek","perest","perestli"],"order":38},
+{"key":"faith","label":"God & Faith","terms":["RAB","tanrı","İsa","Mesih","ruh","Üçlü Birlik","kutsal","kutsallık","gök","cennet","melek","iblis","şeytan","iman","inanç","din","umut","sevgi","merhamet","lütuf","yücelik","görkem","taht","krallık","sonsuz","ebedî","ışık","karanlık","gerçek","bilgelik","bilge","vahiy","sır","gizem","peygamber","peygamberlik","elçi","müjde","yaşam","can","yürek","kul","söz","belirti","diriliş","inanmak","yaratmak","kutsamak","övmek","yükselmek","dirilmek","perest","perestli","sinagog"],"order":38},
 {"key":"salvation","label":"Sin & Salvation","terms":["günah","günahkâr","kötülük","suç","kusur","iğrenç","lanet","gazap","öfke","yargı","hüküm","yasa","buyruk","itaat","duyunç","vicdan","doğruluk","hak","tövbe","kefaret","fidye","kurtuluş","kurtarıcı","sadakat","antlaşma","ant","vaat","miras","esenlik","ölüm","sürgün","tanıklık","kurtarmak","kurtulmak","bağışlamak","sapmak","kirletmek","kirlenmek","arınmak","yargılamak","aklamak","aklanmak","suçlamak","küfretmek","lanetlemek","aldatmak","alçaltmak"],"order":39},
 {"key":"worship","label":"Worship & Temple","terms":["dua","oruç","kurban","sunu","sunak","buhur","tapınak","kilise","çadır","konut","sandık","kâhin","topluluk","Şabat","bayram","sünnet","çarmıh","kuzu","sürü","put","ilâh","övgü","bereket","tapınmak","tapmak","şükretmek","meshetmek","adamak"],"order":40}
 ]
@@ -3026,7 +3214,7 @@ function caseTagsHTML(inf){
 function isSimpleVerb(v){ return v.inf.indexOf(" ")===-1; }
 function pageEnabled(v){
   if(v.page==null) return true;
-  if(v.page==="bonus" || v.page==="a2bonus" || v.page==="mine" || v.page==="bible"){
+  if(v.page==="bonus" || v.page==="a2bonus" || v.page==="a2listbonus" || v.page==="mine" || v.page==="bible"){
     if(state.bonusVerbChunks.has(v.bonusChunkKey)) return true;
   } else if(state.pages.has(v.page)){
     return true;
@@ -3090,6 +3278,7 @@ function collectSettings(){
       nonverbChunks: [...state.nonverbChunks],
       topics: [...state.topics],
       a2Added: true,
+      a2ListAdded: true,
       negatives: state.negatives,
       questions: state.questions,
       ability: state.ability,
@@ -3144,10 +3333,8 @@ function testSummaryText(key){
   const r = testResults && testResults[key];
   return r && r.last ? `${r.last.pct}% · ${daysAgoText(r.last.date)}` : "not tested";
 }
-// Inside the A2 box the chips read "Derste 1-25" (the box already says A2); everywhere else the full name is kept so the two Derste lists stay distinguishable.
-const boxLabel = label=>String(label).replace(/^A2 (?=Derste)/, "");
 function setChipLabel(el, label, testKey){
-  el.textContent = boxLabel(label);
+  el.textContent = label;
   if(!testResults) return;
   const meta = document.createElement("span");
   meta.className = "chip-meta";
@@ -3223,6 +3410,10 @@ function applyFormsSettings(S){
   if(!S.a2Added){
     VERB_BONUS_CHUNKS.filter(c=>c.key.startsWith("a2bonusg")).forEach(c=>state.bonusVerbChunks.add(c.key));
     NONVERB_CHUNKS.filter(c=>c.unit==="a2").forEach(c=>state.nonverbChunks.add(c.key));
+  }
+  if(!S.a2ListAdded){
+    VERB_BONUS_CHUNKS.filter(c=>c.key.startsWith("a2listg")).forEach(c=>state.bonusVerbChunks.add(c.key));
+    NONVERB_CHUNKS.filter(c=>c.unit==="a2l").forEach(c=>state.nonverbChunks.add(c.key));
   }
   if(typeof S.negatives==="boolean") state.negatives = S.negatives;
   if(typeof S.questions==="boolean") state.questions = S.questions;
@@ -3373,6 +3564,7 @@ function renderPageChips(){
   const derste = VERB_BONUS_CHUNKS.filter(bc=>bc.key.startsWith("bonusg"));
   derste.forEach(bc=>addVerbChunk(a1, bc));
   const a2 = chipGroup(pageChips, "A2 - not editable", "a1 a2");
+  VERB_BONUS_CHUNKS.filter(bc=>bc.key.startsWith("a2listg")).forEach(bc=>addVerbChunk(a2, bc));
   VERB_BONUS_CHUNKS.filter(bc=>bc.key.startsWith("a2bonusg")).forEach(bc=>addVerbChunk(a2, bc));
 }
 renderPageChips();
@@ -3456,7 +3648,7 @@ function renderSelectionChips(){
   const allVerbs = VERB_PAGES.every(p=>state.pages.has(p.key)) && VERB_BONUS_CHUNKS.every(c=>state.bonusVerbChunks.has(c.key));
   if(allVerbs) chips.push({label:"All verbs", remove(){ state.pages.clear(); state.bonusVerbChunks.clear(); }});
   else {
-    VERB_PAGES.filter(p=>state.pages.has(p.key)).forEach(p=>chips.push({label:p.label, remove(){ state.pages.delete(p.key); }}));
+    VERB_PAGES.filter(p=>state.pages.has(p.key)).forEach(p=>chips.push({label:p.label + " (verbs)", remove(){ state.pages.delete(p.key); }}));
     VERB_BONUS_CHUNKS.filter(c=>state.bonusVerbChunks.has(c.key)).forEach(c=>chips.push({label:c.label + " (verbs)", remove(){ state.bonusVerbChunks.delete(c.key); }}));
   }
   verbChipCount = chips.length;
@@ -3515,11 +3707,12 @@ function renderNonverbChunkChips(){
   const mine = chipGroup(nonverbChunkChips, "Personal - editable", "personal", personalSignedIn() ? {label:"Manage", run:()=>openListsModal("nonverb")} : null);
   NONVERB_CHUNKS.filter(c=>c.personal).sort(byTitle).forEach(c=>addChunk(mine, c));
   const a1 = chipGroup(nonverbChunkChips, "A1 - not editable", "a1");
-  // Ünite and Sıfatlar lists first, then Derste (the same order as before, just without headings).
+  // Listede lists first (Ünite 1, Ünite 2, Sıfatlar), then Derste.
   [c=>c.unit===1 || c.unit===2 || c.unit==="sifatlar", c=>c.unit==="other"].forEach(test=>{
     NONVERB_CHUNKS.filter(test).forEach(c=>addChunk(a1, c));
   });
   const a2 = chipGroup(nonverbChunkChips, "A2 - not editable", "a1 a2");
+  NONVERB_CHUNKS.filter(c=>c.unit==="a2l").forEach(c=>addChunk(a2, c));
   NONVERB_CHUNKS.filter(c=>c.unit==="a2").forEach(c=>addChunk(a2, c));
 }
 renderNonverbChunkChips();
@@ -4407,10 +4600,10 @@ function chooseSearchResult(i){
 function renderNonverbReferencePanel(){
   const box = document.getElementById("nonverbRefPanel");
   box.innerHTML = "";
-  // Personal lists first, then the Ünite and Sıfatlar lists, then Derste (as on the List selection view).
+  // Personal lists first, then Listede, then Derste (as on the List selection view).
   const byName = (a,b)=>a.label.localeCompare(b.label, "tr", {numeric:true});
   const a1 = NONVERB_CHUNKS.filter(c=>!c.personal);
-  [...NONVERB_CHUNKS.filter(c=>c.personal).sort(byName), ...a1.filter(c=>c.unit!=="other" && c.unit!=="a2"), ...a1.filter(c=>c.unit==="other"), ...a1.filter(c=>c.unit==="a2")].forEach(c=>{
+  [...NONVERB_CHUNKS.filter(c=>c.personal).sort(byName), ...a1.filter(c=>c.unit===1 || c.unit===2 || c.unit==="sifatlar"), ...a1.filter(c=>c.unit==="other"), ...a1.filter(c=>c.unit==="a2l"), ...a1.filter(c=>c.unit==="a2")].forEach(c=>{
     if(!c.items.length) return;
     const title = document.createElement("div");
     title.className = "ref-page-title";
@@ -4912,7 +5105,7 @@ function vocabItemDetail(item){
     return {inf:v.inf, gloss:v.vocabGloss, tag: chunk ? chunk.label : VERB_PAGE_TAG[v.page] || "Derste", caseNotes: caseTagsHTML(v.inf)};
   }
   const nv = NONVERBS[item.idx];
-  // Tag with the 25-word group, e.g. "Sıfatlar 26-50".
+  // Tag with the 25-word group, e.g. "A1 Listede 26-50".
   const chunk = NONVERB_CHUNKS.find(c=>c.key===nv.chunkKey);
   return {inf:nv.tr, gloss:nv.en, tag: chunk ? chunk.label : (NONVERB_EXTRA_UNITS.find(u=>u[0]===nv.unit) || [])[2] || `${nv.unit}. Ünite`, caseNotes:""};
 }

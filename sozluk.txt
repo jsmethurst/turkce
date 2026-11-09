@@ -1,13 +1,13 @@
 TÜRKÇE — SÖZLÜK
 
-296 verbs · 1079 non-verbs · 40 topics
+323 verbs · 1241 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
 ============================================================
 
-1. SAYFA 1-34
--------------
+A1 LISTEDE 1-34
+---------------
 olmak                     to be / to become
     örnek: Doktor olmak istiyorum.  (I want to become a doctor.)
 yapmak                    to do / to make
@@ -81,8 +81,8 @@ izlemek                   to watch
 aramak                    to call / to search
     akuzatif: Telefonu arıyorum.  (I'm looking for the phone.)
 
-2. SAYFA 35-77
---------------
+A1 LISTEDE 35-77
+----------------
 anlatmak                  to tell / to narrate
     akuzatif: Hikâyeyi anlatıyorum.  (I'm telling the story.)
     datif: Ona anlatıyorum.  (I'm telling him/her.)
@@ -172,8 +172,8 @@ tanışmak                  to meet / to get acquainted
 görüşmek                  to meet / to see each other
     ile: Doktorla görüşüyorum.  (I'm seeing the doctor.)
 
-3. SAYFA 78-120
----------------
+A1 LISTEDE 78-120
+-----------------
 yardım etmek              to help
     datif: Sana yardım ediyorum.  (I'm helping you.)
 denemek                   to try
@@ -261,8 +261,8 @@ büyümek                   to grow / to grow up
 paylaşmak                 to share
     akuzatif: Haberi paylaşıyorum.  (I'm sharing the news.)
 
-4. SAYFA 121-150
-----------------
+A1 LISTEDE 121-150
+------------------
 indirmek                  to download / to lower
     akuzatif: Dosyayı indiriyorum.  (I'm downloading the file.)
 yüklemek                  to upload / to load
@@ -324,8 +324,8 @@ değişmek                  to change (become different)
 artmak                    to increase
     örnek: Fiyatlar artıyor.  (Prices are increasing.)
 
-DERSTE 1-25
------------
+A1 DERSTE 1-25
+--------------
 belirlemek                to determine
     akuzatif: Tarihi belirliyorum.  (I'm determining the date.)
 yayınlamak                to broadcast / to publish
@@ -378,8 +378,8 @@ demlemek                  to brew
 yakmak                    to burn
     akuzatif: Mumu yakıyorum.  (I'm lighting the candle.)
 
-DERSTE 26-50
-------------
+A1 DERSTE 26-50
+---------------
 ateşi yakmak              to light a fire
     örnek: Kampta ateşi yakıyorum.  (I'm lighting the fire at camp.)
 söndürmek                 to extinguish
@@ -431,8 +431,8 @@ geri dönmek               to come back / to go back
 keşfetmek                 to discover / to explore
     akuzatif: Şehri keşfediyorum.  (I'm exploring the city.)
 
-DERSTE 51-75
-------------
+A1 DERSTE 51-75
+---------------
 sağlıklı olmak            to be healthy
     örnek: Sağlıklı olmak istiyorum.  (I want to be healthy.)
 biriktirmek               to save (money)
@@ -484,8 +484,8 @@ ava çıkmak                to go hunting
 yaramazlık yapmak         to misbehave
     örnek: Çocuklar yaramazlık yapıyor.  (The children are misbehaving.)
 
-DERSTE 76-100
--------------
+A1 DERSTE 76-100
+----------------
 dirsek atmak              to elbow someone
     datif: Oyuncu rakibe dirsek atıyor.  (The player is elbowing his opponent.)
 ağrımak                   to ache
@@ -537,8 +537,8 @@ tartmak                   to weigh
 saklamak                  to hide / to conceal
     akuzatif: Anahtarı saklıyor.  (He is hiding the key.)
 
-DERSTE 101-115
---------------
+A1 DERSTE 101-115
+-----------------
 görünmek                  to show up / to appear
     lokatif: Ay gökyüzünde görünüyor.  (The moon is appearing in the sky.)
 kaybolmak                 to disappear
@@ -569,6 +569,66 @@ tamir etmek               to repair / to fix (something broken)
     akuzatif: Arabayı tamir ediyor.  (He is repairing the car.)
 yollamak                  to dispatch / to post
     akuzatif + datif: Mektubu arkadaşıma yolluyorum.  (I'm posting the letter to my friend.)
+
+A2 LISTEDE 1-25
+---------------
+balığa gitmek             to go fishing
+    datif: Hafta sonu balığa gidiyoruz.  (We are going fishing at the weekend.)
+süt sağmak                to milk
+    örnek: Çiftçi süt sağıyor.  (The farmer is milking the cow.)
+havlamak                  to bark
+    örnek: Köpek havlıyor.  (The dog is barking.)
+dilek tutmak              to make a wish
+    lokatif: Doğum günümde dilek tutuyorum.  (I make a wish on my birthday.)
+pasaja gitmek             to go to an arcade/passage
+    datif: Akşam pasaja gidiyoruz.  (We are going to the arcade this evening.)
+patlamak                  to explode
+    örnek: Balon patlıyor.  (The balloon is bursting.)
+hayatını kaybetmek        to lose one's life
+    örnek: Üç kişi hayatını kaybediyor.  (Three people are losing their lives.)
+mezun olmak               to graduate
+    ablatif: Bu yıl üniversiteden mezun oluyorum.  (I am graduating from university this year.)
+elektrik kesilmek         electricity to go out
+    lokatif: Fırtınada elektrik kesiliyor.  (The electricity goes out in the storm.)
+burs almak                to get a scholarship
+    ablatif: Üniversiteden burs alıyorum.  (I am getting a scholarship from the university.)
+ağaç dikmek               to plant a tree
+    datif: Bahçeye ağaç dikiyoruz.  (We are planting a tree in the garden.)
+haberleşmek               to communicate
+    ile: Arkadaşlarımla haberleşiyorum.  (I communicate with my friends.)
+yaygınlaşmak              to become widespread
+    örnek: Akıllı telefonlar yaygınlaşıyor.  (Smartphones are becoming widespread.)
+üretmek                   to produce
+    örnek: Fabrika araba üretiyor.  (The factory is producing cars.)
+sohbet etmek              to chat
+    ile: Arkadaşımla sohbet ediyorum.  (I am chatting with my friend.)
+sigara içmek              to smoke
+    lokatif: Dışarıda sigara içiyor.  (He is smoking outside.)
+yakalanmak                to get caught
+    örnek: Hırsız yakalanıyor.  (The thief is getting caught.)
+karşılaşmak               to come across
+    ile: Eski bir arkadaşla karşılaşıyorum.  (I am coming across an old friend.)
+hayran olmak              to admire
+    datif: Onun sesine hayran oluyorum.  (I admire her voice.)
+ilgi beklemek             to expect attention
+    ablatif: Çocuk annesinden ilgi bekliyor.  (The child expects attention from his mother.)
+sarmak                    to wrap
+    akuzatif: Hediyeyi sarıyorum.  (I am wrapping the gift.)
+yoğurmak                  to knead
+    akuzatif: Hamuru yoğuruyorum.  (I am kneading the dough.)
+rendelemek                to grate
+    akuzatif: Peyniri rendeliyorum.  (I am grating the cheese.)
+çırpmak                   to whisk
+    akuzatif: Yumurtayı çırpıyorum.  (I am whisking the egg.)
+kavurmak                  to sauté
+    akuzatif: Soğanı kavuruyorum.  (I am sautéing the onion.)
+
+A2 LISTEDE 26-27
+----------------
+közlemek                  to roast
+    akuzatif: Patlıcanı közlüyorum.  (I am roasting the eggplant.)
+pazarlık yapmak           to bargain
+    lokatif: Pazarda pazarlık yapıyorum.  (I am bargaining at the market.)
 
 A2 DERSTE 1-25
 --------------
@@ -643,8 +703,8 @@ yasaklamak                to ban
 NON-VERBS
 ============================================================
 
-1. ÜNİTE 1-25
--------------
+A1 LISTEDE 1-25
+---------------
 nesne                     object
 insan                     person
 yer                       place / floor / ground
@@ -671,8 +731,8 @@ defter                    notebook
 çanta                     bag
 şemsiye                   umbrella
 
-1. ÜNİTE 26-50
---------------
+A1 LISTEDE 26-50
+----------------
 çocuk                     child
 kadın                     woman
 araba                     car
@@ -699,8 +759,8 @@ hastanede                 in the hospital
 arabada                   in the car
 evde                      at home
 
-1. ÜNİTE 51-75
---------------
+A1 LISTEDE 51-75
+----------------
 nerede                    where?
 kimde                     with whom? / who has it?
 burada                    here
@@ -727,8 +787,8 @@ koltuk                    armchair
 bardak                    drinking glass
 telefon                   telephone
 
-1. ÜNİTE 76-100
----------------
+A1 LISTEDE 76-100
+-----------------
 fincan                    cup
 oda                       room
 fotoğraf                  photograph
@@ -755,8 +815,8 @@ kat                       floor
 kafeterya                 cafeteria / dining hall
 öğrenci işleri            student affairs
 
-1. ÜNİTE 101-125
-----------------
+A1 LISTEDE 101-125
+------------------
 bahçe                     garden
 harita                    map
 metre                     meter
@@ -783,8 +843,8 @@ soru                      question
 tembel                    lazy
 sıcak                     hot
 
-1. ÜNİTE 126-150
-----------------
+A1 LISTEDE 126-150
+------------------
 İngiliz                   English / British
 ilk                       first / earliest
 geniş                     wide / spacious
@@ -811,8 +871,8 @@ vazo                      vase
 avize                     chandelier
 bugün                     today
 
-1. ÜNİTE 151-157
-----------------
+A1 LISTEDE 151-157
+------------------
 acaba                     I wonder
 evli                      married
 bu sokak                  this street
@@ -821,8 +881,8 @@ altıncı kat               sixth floor
 teşekkür ederim           thank you
 piyano                    piano
 
-2. ÜNİTE 1-25
--------------
+A1 LISTEDE 158-182
+------------------
 iyi günler                have a nice day
 manav                     greengrocer
 müşteri                   customer
@@ -849,8 +909,8 @@ sıra                      queue / line
 üçüncü                    third
 sonuncu                   the last one (final in a sequence)
 
-2. ÜNİTE 26-50
---------------
+A1 LISTEDE 183-207
+------------------
 kısa saçlı                short-haired
 erkek                     man
 doğru                     correct / true
@@ -877,8 +937,8 @@ numaralı                  numbered
 Koreli                    Korean
 bina                      building
 
-2. ÜNİTE 51-75
---------------
+A1 LISTEDE 208-232
+------------------
 market                    market
 süt                       milk
 ne var                    what is there?
@@ -905,8 +965,8 @@ klasik müzik              classical music
 sık sık                   frequently
 hafta sonu                weekend
 
-2. ÜNİTE 76-100
----------------
+A1 LISTEDE 233-257
+------------------
 meslek                    profession
 kurye                     courier
 bahşiş                    tip
@@ -933,8 +993,8 @@ gürültü                   noise
 monoton                   monotonous
 pozitif enerji            positive energy
 
-2. ÜNİTE 101-125
-----------------
+A1 LISTEDE 258-282
+------------------
 koleksiyon                collection
 paraşüt                   parachute
 sörf                      surfing
@@ -961,8 +1021,8 @@ bitki                     plant
 reçel                     jam
 zeytinyağı                olive oil
 
-2. ÜNİTE 126-150
-----------------
+A1 LISTEDE 283-307
+------------------
 ayran                     ayran
 havalimanı                international airport
 yolculuk                  journey
@@ -989,8 +1049,8 @@ dişçi                     dentist
 kurs                      course
 harika                    great / wonderful
 
-2. ÜNİTE 151-175
-----------------
+A1 LISTEDE 308-332
+------------------
 program                   schedule / program
 süre                      duration
 internet                  internet
@@ -1017,8 +1077,8 @@ saatinde                  on time
 erken                     early
 geç                       late
 
-2. ÜNİTE 176-199
-----------------
+A1 LISTEDE 333-356
+------------------
 bölüm                     episode
 televizyon kanalı         TV channel
 spor programı             sports program
@@ -1044,568 +1104,8 @@ tatil planı               holiday plan
 sinema salonu             movie theater
 televizyon programı       television program
 
-DERSTE 1-25
------------
-bazı                      some
-bütün                     all / whole
-boş                       empty
-dolu                      full
-kuru                      dry
-ıslak                     wet
-tencere                   saucepan
-tava                      frying pan
-uzak                      far
-yat                       yacht
-bozuk                     broken
-tenha                     not busy
-zemin kat                 ground floor
-bodrum kat                basement
-beyin                     brain
-mesela                    for example
-yalnız                    alone
-rüya                      dream (while sleeping)
-ön                        front
-arka                      back (whole thing)
-kuzey                     north
-güney                     south
-doğu                      east
-batı                      west
-memleket                  hometown
-
-DERSTE 26-50
-------------
-yorucu                    exhausting
-cümle                     sentence
-arası                     between
-hayvan                    animal
-şirket                    company
-kumbara                   piggy bank
-seans                     session
-beden                     size / body
-kan                       blood
-renkler                   colors
-kırmızı                   red
-mavi                      blue
-sarı                      yellow
-yeşil                     green
-turuncu                   orange
-mor                       purple
-pembe                     pink
-kahverengi                brown
-siyah                     black
-beyaz                     white
-gri                       grey
-lacivert                  navy
-açık mavi                 light blue
-koyu mavi                 dark blue
-açık yeşil                light green
-
-DERSTE 51-75
-------------
-koyu yeşil                dark green
-koyu kırmızı              dark red
-kıyafetler                clothes
-üst giyim                 tops (clothes)
-tişört                    t-shirt
-kısa kollu                short sleeve (shirt)
-uzun kollu                long sleeve (shirt)
-kolsuz                    sleeveless (shirt)
-gömlek                    formal shirt
-bluz                      blouse
-kazak                     sweater
-hırka                     cardigan (sweater with buttons)
-düğme                     button
-fermuar                   zipper
-ceket                     jacket
-mont                      coat
-kaban                     long coat
-yelek                     vest
-fermuarlı yelek           zippered vest
-düğmeli yelek             buttoned vest
-süveter                   sleeveless sweater
-forma                     uniform / jersey
-alt giyim                 bottoms (clothes)
-tayt                      leggings
-pantolon                  pants
-
-DERSTE 76-100
--------------
-kot pantolon              jeans
-şort                      shorts
-etek                      skirt
-eşofman                   tracksuit
-kemer                     belt
-kışlık kıyafetler         winter clothes
-atkı                      scarf
-eldiven                   gloves
-yağmurluk                 raincoat
-bere                      beanie
-spor ayakkabı             sneakers
-sandalet                  sandals
-terlik                    slippers
-topuklu ayakkabı          high heels
-bot                       boots
-babet                     flats (shoes)
-iç giyim                  innerwear
-çorap                     socks
-atlet                     undershirt / tank top
-iç çamaşırı               underwear
-elbise                    dress
-tulum                     overalls
-pijama                    pajamas
-bornoz                    bathrobe
-şapka                     hat
-
-DERSTE 101-125
---------------
-takılar                   jewelry
-alyans                    wedding ring
-kolye                     necklace
-bileklik                  bracelet
-halhal                    anklet
-broş                      brooch
-taç                       crown
-zincir                    chain
-toka                      hair clip
-özel takılar              special jewelry
-altın kolye               gold necklace
-gümüş yüzük               silver ring
-pırlanta yüzük            diamond ring
-nazar boncuğu             evil eye charm
-kol çantası               shoulder bag
-sırt çantası              backpack
-çizgili                   striped
-kareli                    checkered
-kareli kağıt              graph paper
-çizgili kağıt             lined paper
-dün                       yesterday
-yarın                     tomorrow
-geçen ay                  last month
-vardı                     there was
-yoktu                     there was not
-
-DERSTE 126-150
---------------
-ilaç                      medicine
-ertesi gün                the next day
-neyse ki                  fortunately
-gezgin                    traveler
-köy                       village
-güneşli                   sunny
-bulutlu                   cloudy
-parçalı bulutlu           partly cloudy
-yağmurlu                  rainy
-serin                     cool (around 18°C)
-ılık                      lukewarm / warm (around 22°C)
-rüzgarlı                  windy
-karlı                     snowy
-sisli                     foggy
-nemli                     humid
-gerilim                   thriller
-korku filmi               horror film
-belgesel                  documentary
-bilim kurgu               science fiction
-dramatik                  drama
-savaş                     war
-kuru yemekler             dry meals
-sulu yemekler             stews
-tuzlu                     salty
-özgün                     original
-
-DERSTE 151-175
---------------
-çok çeşitli               a wide variety of
-hafif yemek               light meal
-yağlı yemek               fatty / heavy meal
-hazır yemek               ready-to-eat meal
-taze yemek                fresh food
-dünyaca ünlü              world-renowned
-ülkece ünlü               famous nationwide
-pozitif                   positive
-eksi                      minus / negative
-sıkıcı                    boring
-fiil                      verb
-isim                      noun
-sıfat                     adjective
-gerek                     necessary
-hemen                     immediately
-sıhhatler olsun           take care! (stay healthy)
-eli açık                  generous (open-handed)
-sıkışık                   cramped
-emekli                    retired
-usta                      expert
-acemi                     novice
-emin                      certain / sure
-bütün gün                 all day
-buhar                     steam
-ücretsiz                  free (no cost)
-
-DERSTE 176-200
---------------
-bedava                    free (informal / possibly rude)
-uyku                      sleep
-şimdilik                  for now
-indirim                   discount
-zam                       price increase
-mum                       candle
-fikir                     idea
-ağabey                    older brother (formal)
-abi                       older brother (informal)
-yamuk                     skewed
-düz                       straight / aligned
-alın                      forehead
-karın                     stomach
-oğul                      son
-burun                     nose
-ağız                      mouth
-metre kare                square meter
-uslu                      well-behaved
-elektrikçi                electrician
-çoğunlukla                mostly / for the most part
-hala                      aunt (dad's sister)
-hâlâ                      still (continuing)
-pist                      runway
-anne tarafı               mother's side
-teyze                     aunt (mom's sister)
-
-DERSTE 201-225
---------------
-dayı                      uncle (mom's brother)
-anneanne                  grandmother (mom's mom)
-baba tarafı               dad's side
-amca                      uncle (dad's brother)
-babaanne                  grandmother (dad's mom)
-dede                      grandfather
-enişte                    aunt's husband
-yenge                     uncle's wife
-kuzen                     cousin
-kız                       daughter
-erkek kardeş              younger brother
-soy                       lineage
-karı-koca                 wife-husband
-onlar kardeş              sibling
-abla                      older sister
-kız kardeş                younger sister
-sıcacık                   toasty warm
-çıtır                     crunchy
-sur                       castle wall
-sorunlu                   problematic (everyday situation)
-problemli                 problematic (formal / technical situation)
-sıkıntılı                 troubled
-göğüs kafesi              rib cage
-neyse                     anyway
-henüz                     yet
-
-DERSTE 226-250
---------------
-duygusal                  emotional
-parça                     part / piece
-artı                      plus
-kıvırcık                  curly
-dalga                     wave (sea)
-dalgalı                   wavy
-inci                      pearl
-dal                       branch
-komşu                     neighbor
-akraba                    relative (person)
-yeğen                     niece / nephew
-şaka                      joke
-şakacı                    jokester
-herkes                    everyone
-bu yüzden                 that's why
-özel                      special / private
-devlet                    government
-ayrıca                    also
-perest                    devotee
-perestli                  devoted / devout
-tek tek                   one by one
-baş                       head (medical term, denote a leader)
-kafa                      head (informal, slang for brain)
-saç                       hair
-çene                      chin
-
-DERSTE 251-275
---------------
-yanak                     cheek
-kulak                     ear
-göz                       eye
-kirpik                    eyelash
-kaş                       eyebrow
-boyun                     neck (whole thing)
-boğaz                     throat
-omuz                      shoulder
-kol                       arm
-dirsek                    elbow
-bilek                     wrist
-ayak bileği               ankle
-el                        hand
-parmak                    finger
-avuç                      palm
-bacak                     leg
-diz                       knee
-ayak                      foot
-topuk                     heel
-sırt                      upper back
-bel                       lower back
-ayak parmağı              toe
-tırnak                    fingernail / toenail
-dudak                     lip
-dil                       tongue / language
-
-DERSTE 276-300
---------------
-diş                       tooth
-kas                       muscle
-sakal                     beard
-bıyık                     mustache
-saniye                    second (unit of time)
-göğüs                     chest (body)
-maceraperest              adventurer (in spirit)
-uğurlu                    auspicious / lucky
-şanslı                    lucky
-felaket                   disaster
-sel                       flood
-deprem                    earthquake
-yangın                    fire
-buna rağmen               despite this / nevertheless
-tekerleme                 nursery rhyme
-kesik                     cut / shut off
-doğalgaz                  natural gas
-görüntülü                 video
-sonunda                   finally (in the end)
-ise                       if
-aktarma                   transfer / connection (travel)
-birkaç                    a few
-havalı                    cool (person)
-olur                      sure / okay
-sesi                      sound
-
-DERSTE 301-325
---------------
-böyle                     like this
-kucak                     lap (top of legs)
-korkutucu                 frightening
-ürkütücü                  terrifying
-görümce                   sister-in-law
-kayınço                   brother-in-law
-balıkçı                   fisherman
-ürün                      product (for purchase)
-sanki                     as if
-izin                      permission
-mümkün                    possible
-hakkında                  about / regarding
-bu kadar                  that's all / that much
-veteriner                 veterinarian
-yani                      well...
-kaçta                     what time?
-tuhaf                     strange
-mantık                    logic
-mezuniyet                 graduation
-tören                     ceremony
-sivrisinek                mosquito
-tavan                     ceiling
-kelebek                   butterfly
-yazar                     author
-düğün                     wedding
-
-DERSTE 326-350
---------------
-hata                      mistake
-dakikalarca               for several minutes
-saatlerce                 for several hours
-günlerce                  for several days
-haftalarca                for several weeks
-aylarca                   for several months
-yıllarca                  for several years
-kalorifer                 radiator
-spor aletleri             exercise equipment
-bordo                     burgundy
-yan                       beside
-antrasit                  anthracite
-yoğun                     intense
-ağrı                      ache
-başı ağrı                 headache
-karnı ağrı                stomachache
-dişi ağrı                 toothache
-dizi ağrı                 knee pain
-grip                      flu
-hap                       pill
-şurup                     syrup
-eczane                    pharmacy
-eczaneci                  pharmacist
-nezle                     common cold
-teşhiş                    diagnosis
-
-DERSTE 351-375
---------------
-halsiz                    sluggish (because of sickness)
-şikayet                   complaint
-reçete                    prescription
-tedavi                    treatment
-nihayet                   finally (at long last)
-ne alaka                  what's that got to do with it?
-peynir                    cheese
-ada                       island
-hece                      syllable
-borç                      debt
-asla                      never
-yüzde yüz                 100%
-kılıf                     case / protective cover
-kapak                     front cover
-kumanda                   remote control
-başkent                   capital city
-başkan                    president / chairman
-yaprak                    leaf
-yönetmen                  director
-anten                     antenna
-tuş                       button (never for clothes)
-cam                       glass (material)
-hediye                    gift
-vitrin                    storefront / display window
-kenar                     edge
-
-DERSTE 376-400
---------------
-polis                     police
-hemşire                   nurse
-mühendis                  engineer
-asker                     soldier
-aşçı                      chef
-çiftçi                    farmer
-kasiyer                   cashier
-terzi                     tailor
-mimar                     architect
-sekreter                  secretary
-esnaf                     shopkeeper / small business owner
-fırıncı                   baker
-kasap                     butcher
-ressam                    painter
-müzisyen                  musician
-yazılımcı                 software developer
-fotoğrafçı                photographer
-tamlama                   phrase
-her şey yolunda           everything is fine
-dominant                  dominant
-çift                      couple
-sol                       left
-aslında                   actually
-ferah                     airy / roomy
-sağ                       right (direction)
-
-DERSTE 401-425
---------------
-kural                     rule
-etraf                     surroundings
-karşı                     against / opposite
-leke                      stain
-marka                     brand
-postane                   post office
-benzin                    gasoline
-hız                       speed
-paspas                    doormat
-virgül                    comma
-hırsız                    thief
-kendi                     self / own
-beraber                   together (collaborative)
-eksik                     missing / lacking
-fazla                     excessive / too much
-birden                    all of a sudden
-asır                      century
-Pazartesi                 Monday
-Salı                      Tuesday
-Çarşamba                  Wednesday
-Perşembe                  Thursday
-Cuma                      Friday
-Cumartesi                 Saturday
-Pazar                     Sunday
-Ocak                      January
-
-DERSTE 426-450
---------------
-Şubat                     February
-Mart                      March
-Nisan                     April
-Mayıs                     May
-Haziran                   June
-Temmuz                    July
-Ağustos                   August
-Eylül                     September
-Ekim                      October
-Kasım                     November
-Aralık                    December
-balkon                    balcony
-yatak odası               bedroom
-asansör                   elevator
-kilit                     lock
-battaniye                 blanket
-gardırop                  wardrobe
-bulaşık makinesi          dishwasher
-çamaşır makinesi          washing machine
-süpürge                   broom / vacuum
-ütü                       iron (for clothes)
-sabun                     soap
-tarak                     comb
-tabak                     plate / dish
-kaşık                     spoon
-
-DERSTE 451-475
---------------
-çatal                     fork
-bıçak                     knife
-çöp                       trash / garbage
-poşet                     plastic bag
-yumurta                   egg
-tavuk                     chicken
-balık                     fish
-salata                    salad
-elma                      apple
-armut                     pear
-limon                     lemon
-karpuz                    watermelon
-kavun                     melon
-kiraz                     cherry
-şeftali                   peach
-erik                      plum
-incir                     fig
-patates                   potato
-salatalık                 cucumber
-soğan                     onion
-sarımsak                  garlic
-biber                     pepper
-patlıcan                  eggplant
-havuç                     carrot
-kabak                     zucchini
-
-DERSTE 476-500
---------------
-hepsi                     all of them
-ıspanak                   spinach
-fasulye                   bean
-tuz                       salt
-şeker                     sugar
-karabiber                 black pepper
-baharat                   spice
-un                        flour
-bal                       honey
-çikolata                  chocolate
-dondurma                  ice cream
-meydan                    square / plaza
-köprü                     bridge
-tünel                     tunnel
-kaldırım                  sidewalk
-istasyon                  station
-otogar                    bus station
-pasaport                  passport
-vize                      visa
-dünya                     world / earth
-elektrik                  electricity
-fırsat                    opportunity
-santimetre                centimeter
-şarkı                     song
-ders                      lesson / class
-
-SIFATLAR 1-25
--------------
+A1 LISTEDE 357-381
+------------------
 iyi                       good
 kötü                      bad
 nazik                     kind / gentle
@@ -1632,8 +1132,8 @@ hayalperest               dreamer / dreamy
 merhametli                compassionate / merciful
 evli                      married
 
-SIFATLAR 26-50
---------------
+A1 LISTEDE 382-406
+------------------
 bekar                     single
 hırslı                    ambitious
 karizmatik                charismatic
@@ -1660,8 +1160,8 @@ utangaç                   shy
 memnun                    pleased / satisfied
 huzurlu                   peaceful / at ease
 
-SIFATLAR 51-75
---------------
+A1 LISTEDE 407-431
+------------------
 düşünceli                 thoughtful / considerate
 düşüncesiz                thoughtless / inconsiderate
 hasta                     sick / ill
@@ -1688,8 +1188,8 @@ dolu                      full
 boş                       empty
 açık                      open
 
-SIFATLAR 76-100
----------------
+A1 LISTEDE 432-456
+------------------
 kapalı                    closed
 az                        few / little
 çok                       many / much / very
@@ -1716,8 +1216,8 @@ lezzetli                  delicious
 değişik                   different / unusual
 yeni                      new
 
-SIFATLAR 101-125
-----------------
+A1 LISTEDE 457-481
+------------------
 eski                      old (things)
 yavaş                     slow
 hızlı                     fast
@@ -1744,8 +1244,8 @@ sıcak                     hot
 soğuk                     cold
 doğru                     correct / true
 
-SIFATLAR 126-145
-----------------
+A1 LISTEDE 482-501
+------------------
 yanlış                    wrong
 tehlikeli                 dangerous
 koyu                      dark (for colors)
@@ -1766,6 +1266,749 @@ kuru                      dry
 yaralı                    injured / wounded
 misafirperver             hospitable
 yaramaz                   naughty / mischievous
+
+A1 DERSTE 1-25
+--------------
+bazı                      some
+bütün                     all / whole
+boş                       empty
+dolu                      full
+kuru                      dry
+ıslak                     wet
+tencere                   saucepan
+tava                      frying pan
+uzak                      far
+yat                       yacht
+bozuk                     broken
+tenha                     not busy
+zemin kat                 ground floor
+bodrum kat                basement
+beyin                     brain
+mesela                    for example
+yalnız                    alone
+rüya                      dream (while sleeping)
+ön                        front
+arka                      back (whole thing)
+kuzey                     north
+güney                     south
+doğu                      east
+batı                      west
+memleket                  hometown
+
+A1 DERSTE 26-50
+---------------
+yorucu                    exhausting
+cümle                     sentence
+arası                     between
+hayvan                    animal
+şirket                    company
+kumbara                   piggy bank
+seans                     session
+beden                     size / body
+kan                       blood
+renkler                   colors
+kırmızı                   red
+mavi                      blue
+sarı                      yellow
+yeşil                     green
+turuncu                   orange
+mor                       purple
+pembe                     pink
+kahverengi                brown
+siyah                     black
+beyaz                     white
+gri                       grey
+lacivert                  navy
+açık mavi                 light blue
+koyu mavi                 dark blue
+açık yeşil                light green
+
+A1 DERSTE 51-75
+---------------
+koyu yeşil                dark green
+koyu kırmızı              dark red
+kıyafetler                clothes
+üst giyim                 tops (clothes)
+tişört                    t-shirt
+kısa kollu                short sleeve (shirt)
+uzun kollu                long sleeve (shirt)
+kolsuz                    sleeveless (shirt)
+gömlek                    formal shirt
+bluz                      blouse
+kazak                     sweater
+hırka                     cardigan (sweater with buttons)
+düğme                     button
+fermuar                   zipper
+ceket                     jacket
+mont                      coat
+kaban                     long coat
+yelek                     vest
+fermuarlı yelek           zippered vest
+düğmeli yelek             buttoned vest
+süveter                   sleeveless sweater
+forma                     uniform / jersey
+alt giyim                 bottoms (clothes)
+tayt                      leggings
+pantolon                  pants
+
+A1 DERSTE 76-100
+----------------
+kot pantolon              jeans
+şort                      shorts
+etek                      skirt
+eşofman                   tracksuit
+kemer                     belt
+kışlık kıyafetler         winter clothes
+atkı                      scarf
+eldiven                   gloves
+yağmurluk                 raincoat
+bere                      beanie
+spor ayakkabı             sneakers
+sandalet                  sandals
+terlik                    slippers
+topuklu ayakkabı          high heels
+bot                       boots
+babet                     flats (shoes)
+iç giyim                  innerwear
+çorap                     socks
+atlet                     undershirt / tank top
+iç çamaşırı               underwear
+elbise                    dress
+tulum                     overalls
+pijama                    pajamas
+bornoz                    bathrobe
+şapka                     hat
+
+A1 DERSTE 101-125
+-----------------
+takılar                   jewelry
+alyans                    wedding ring
+kolye                     necklace
+bileklik                  bracelet
+halhal                    anklet
+broş                      brooch
+taç                       crown
+zincir                    chain
+toka                      hair clip
+özel takılar              special jewelry
+altın kolye               gold necklace
+gümüş yüzük               silver ring
+pırlanta yüzük            diamond ring
+nazar boncuğu             evil eye charm
+kol çantası               shoulder bag
+sırt çantası              backpack
+çizgili                   striped
+kareli                    checkered
+kareli kağıt              graph paper
+çizgili kağıt             lined paper
+dün                       yesterday
+yarın                     tomorrow
+geçen ay                  last month
+vardı                     there was
+yoktu                     there was not
+
+A1 DERSTE 126-150
+-----------------
+ilaç                      medicine
+ertesi gün                the next day
+neyse ki                  fortunately
+gezgin                    traveler
+köy                       village
+güneşli                   sunny
+bulutlu                   cloudy
+parçalı bulutlu           partly cloudy
+yağmurlu                  rainy
+serin                     cool (around 18°C)
+ılık                      lukewarm / warm (around 22°C)
+rüzgarlı                  windy
+karlı                     snowy
+sisli                     foggy
+nemli                     humid
+gerilim                   thriller
+korku filmi               horror film
+belgesel                  documentary
+bilim kurgu               science fiction
+dramatik                  drama
+savaş                     war
+kuru yemekler             dry meals
+sulu yemekler             stews
+tuzlu                     salty
+özgün                     original
+
+A1 DERSTE 151-175
+-----------------
+çok çeşitli               a wide variety of
+hafif yemek               light meal
+yağlı yemek               fatty / heavy meal
+hazır yemek               ready-to-eat meal
+taze yemek                fresh food
+dünyaca ünlü              world-renowned
+ülkece ünlü               famous nationwide
+pozitif                   positive
+eksi                      minus / negative
+sıkıcı                    boring
+fiil                      verb
+isim                      noun
+sıfat                     adjective
+gerek                     necessary
+hemen                     immediately
+sıhhatler olsun           take care! (stay healthy)
+eli açık                  generous (open-handed)
+sıkışık                   cramped
+emekli                    retired
+usta                      expert
+acemi                     novice
+emin                      certain / sure
+bütün gün                 all day
+buhar                     steam
+ücretsiz                  free (no cost)
+
+A1 DERSTE 176-200
+-----------------
+bedava                    free (informal / possibly rude)
+uyku                      sleep
+şimdilik                  for now
+indirim                   discount
+zam                       price increase
+mum                       candle
+fikir                     idea
+ağabey                    older brother (formal)
+abi                       older brother (informal)
+yamuk                     skewed
+düz                       straight / aligned
+alın                      forehead
+karın                     stomach
+oğul                      son
+burun                     nose
+ağız                      mouth
+metre kare                square meter
+uslu                      well-behaved
+elektrikçi                electrician
+çoğunlukla                mostly / for the most part
+hala                      aunt (dad's sister)
+hâlâ                      still (continuing)
+pist                      runway
+anne tarafı               mother's side
+teyze                     aunt (mom's sister)
+
+A1 DERSTE 201-225
+-----------------
+dayı                      uncle (mom's brother)
+anneanne                  grandmother (mom's mom)
+baba tarafı               dad's side
+amca                      uncle (dad's brother)
+babaanne                  grandmother (dad's mom)
+dede                      grandfather
+enişte                    aunt's husband
+yenge                     uncle's wife
+kuzen                     cousin
+kız                       daughter
+erkek kardeş              younger brother
+soy                       lineage
+karı-koca                 wife-husband
+onlar kardeş              sibling
+abla                      older sister
+kız kardeş                younger sister
+sıcacık                   toasty warm
+çıtır                     crunchy
+sur                       castle wall
+sorunlu                   problematic (everyday situation)
+problemli                 problematic (formal / technical situation)
+sıkıntılı                 troubled
+göğüs kafesi              rib cage
+neyse                     anyway
+henüz                     yet
+
+A1 DERSTE 226-250
+-----------------
+duygusal                  emotional
+parça                     part / piece
+artı                      plus
+kıvırcık                  curly
+dalga                     wave (sea)
+dalgalı                   wavy
+inci                      pearl
+dal                       branch
+komşu                     neighbor
+akraba                    relative (person)
+yeğen                     niece / nephew
+şaka                      joke
+şakacı                    jokester
+herkes                    everyone
+bu yüzden                 that's why
+özel                      special / private
+devlet                    government
+ayrıca                    also
+perest                    devotee
+perestli                  devoted / devout
+tek tek                   one by one
+baş                       head (medical term, denote a leader)
+kafa                      head (informal, slang for brain)
+saç                       hair
+çene                      chin
+
+A1 DERSTE 251-275
+-----------------
+yanak                     cheek
+kulak                     ear
+göz                       eye
+kirpik                    eyelash
+kaş                       eyebrow
+boyun                     neck (whole thing)
+boğaz                     throat
+omuz                      shoulder
+kol                       arm
+dirsek                    elbow
+bilek                     wrist
+ayak bileği               ankle
+el                        hand
+parmak                    finger
+avuç                      palm
+bacak                     leg
+diz                       knee
+ayak                      foot
+topuk                     heel
+sırt                      upper back
+bel                       lower back
+ayak parmağı              toe
+tırnak                    fingernail / toenail
+dudak                     lip
+dil                       tongue / language
+
+A1 DERSTE 276-300
+-----------------
+diş                       tooth
+kas                       muscle
+sakal                     beard
+bıyık                     mustache
+saniye                    second (unit of time)
+göğüs                     chest (body)
+maceraperest              adventurer (in spirit)
+uğurlu                    auspicious / lucky
+şanslı                    lucky
+felaket                   disaster
+sel                       flood
+deprem                    earthquake
+yangın                    fire
+buna rağmen               despite this / nevertheless
+tekerleme                 nursery rhyme
+kesik                     cut / shut off
+doğalgaz                  natural gas
+görüntülü                 video
+sonunda                   finally (in the end)
+ise                       if
+aktarma                   transfer / connection (travel)
+birkaç                    a few
+havalı                    cool (person)
+olur                      sure / okay
+sesi                      sound
+
+A1 DERSTE 301-325
+-----------------
+böyle                     like this
+kucak                     lap (top of legs)
+korkutucu                 frightening
+ürkütücü                  terrifying
+görümce                   sister-in-law
+kayınço                   brother-in-law
+balıkçı                   fisherman
+ürün                      product (for purchase)
+sanki                     as if
+izin                      permission
+mümkün                    possible
+hakkında                  about / regarding
+bu kadar                  that's all / that much
+veteriner                 veterinarian
+yani                      well...
+kaçta                     what time?
+tuhaf                     strange
+mantık                    logic
+mezuniyet                 graduation
+tören                     ceremony
+sivrisinek                mosquito
+tavan                     ceiling
+kelebek                   butterfly
+yazar                     author
+düğün                     wedding
+
+A1 DERSTE 326-350
+-----------------
+hata                      mistake
+dakikalarca               for several minutes
+saatlerce                 for several hours
+günlerce                  for several days
+haftalarca                for several weeks
+aylarca                   for several months
+yıllarca                  for several years
+kalorifer                 radiator
+spor aletleri             exercise equipment
+bordo                     burgundy
+yan                       beside
+antrasit                  anthracite
+yoğun                     intense
+ağrı                      ache
+başı ağrı                 headache
+karnı ağrı                stomachache
+dişi ağrı                 toothache
+dizi ağrı                 knee pain
+grip                      flu
+hap                       pill
+şurup                     syrup
+eczane                    pharmacy
+eczaneci                  pharmacist
+nezle                     common cold
+teşhiş                    diagnosis
+
+A1 DERSTE 351-375
+-----------------
+halsiz                    sluggish (because of sickness)
+şikayet                   complaint
+reçete                    prescription
+tedavi                    treatment
+nihayet                   finally (at long last)
+ne alaka                  what's that got to do with it?
+peynir                    cheese
+ada                       island
+hece                      syllable
+borç                      debt
+asla                      never
+yüzde yüz                 100%
+kılıf                     case / protective cover
+kapak                     front cover
+kumanda                   remote control
+başkent                   capital city
+başkan                    president / chairman
+yaprak                    leaf
+yönetmen                  director
+anten                     antenna
+tuş                       button (never for clothes)
+cam                       glass (material)
+hediye                    gift
+vitrin                    storefront / display window
+kenar                     edge
+
+A1 DERSTE 376-400
+-----------------
+polis                     police
+hemşire                   nurse
+mühendis                  engineer
+asker                     soldier
+aşçı                      chef
+çiftçi                    farmer
+kasiyer                   cashier
+terzi                     tailor
+mimar                     architect
+sekreter                  secretary
+esnaf                     shopkeeper / small business owner
+fırıncı                   baker
+kasap                     butcher
+ressam                    painter
+müzisyen                  musician
+yazılımcı                 software developer
+fotoğrafçı                photographer
+tamlama                   phrase
+her şey yolunda           everything is fine
+dominant                  dominant
+çift                      couple
+sol                       left
+aslında                   actually
+ferah                     airy / roomy
+sağ                       right (direction)
+
+A1 DERSTE 401-425
+-----------------
+kural                     rule
+etraf                     surroundings
+karşı                     against / opposite
+leke                      stain
+marka                     brand
+postane                   post office
+benzin                    gasoline
+hız                       speed
+paspas                    doormat
+virgül                    comma
+hırsız                    thief
+kendi                     self / own
+beraber                   together (collaborative)
+eksik                     missing / lacking
+fazla                     excessive / too much
+birden                    all of a sudden
+asır                      century
+Pazartesi                 Monday
+Salı                      Tuesday
+Çarşamba                  Wednesday
+Perşembe                  Thursday
+Cuma                      Friday
+Cumartesi                 Saturday
+Pazar                     Sunday
+Ocak                      January
+
+A1 DERSTE 426-450
+-----------------
+Şubat                     February
+Mart                      March
+Nisan                     April
+Mayıs                     May
+Haziran                   June
+Temmuz                    July
+Ağustos                   August
+Eylül                     September
+Ekim                      October
+Kasım                     November
+Aralık                    December
+balkon                    balcony
+yatak odası               bedroom
+asansör                   elevator
+kilit                     lock
+battaniye                 blanket
+gardırop                  wardrobe
+bulaşık makinesi          dishwasher
+çamaşır makinesi          washing machine
+süpürge                   broom / vacuum
+ütü                       iron (for clothes)
+sabun                     soap
+tarak                     comb
+tabak                     plate / dish
+kaşık                     spoon
+
+A1 DERSTE 451-475
+-----------------
+çatal                     fork
+bıçak                     knife
+çöp                       trash / garbage
+poşet                     plastic bag
+yumurta                   egg
+tavuk                     chicken
+balık                     fish
+salata                    salad
+elma                      apple
+armut                     pear
+limon                     lemon
+karpuz                    watermelon
+kavun                     melon
+kiraz                     cherry
+şeftali                   peach
+erik                      plum
+incir                     fig
+patates                   potato
+salatalık                 cucumber
+soğan                     onion
+sarımsak                  garlic
+biber                     pepper
+patlıcan                  eggplant
+havuç                     carrot
+kabak                     zucchini
+
+A1 DERSTE 476-500
+-----------------
+hepsi                     all of them
+ıspanak                   spinach
+fasulye                   bean
+tuz                       salt
+şeker                     sugar
+karabiber                 black pepper
+baharat                   spice
+un                        flour
+bal                       honey
+çikolata                  chocolate
+dondurma                  ice cream
+meydan                    square / plaza
+köprü                     bridge
+tünel                     tunnel
+kaldırım                  sidewalk
+istasyon                  station
+otogar                    bus station
+pasaport                  passport
+vize                      visa
+dünya                     world / earth
+elektrik                  electricity
+fırsat                    opportunity
+santimetre                centimeter
+şarkı                     song
+ders                      lesson / class
+
+A2 LISTEDE 1-25
+---------------
+lise                      high school
+tatil                     holiday
+bankacı                   banker
+aile fotoğrafı            family photo
+şehir dışı                out of town
+yurt                      dormitory
+renk                      color
+güvercin                  pigeon
+menekşe                   violet flower
+tenis kortu               tennis court
+apartman                  apartment building
+avantaj                   advantage
+eğlence yeri              entertainment place
+çiftlik                   farm
+tereyağı                  butter
+semt                      neighborhood
+kroki                     sketch / map
+valilik                   governor's office
+otopark                   parking lot
+karşısında                opposite
+yanında                   next to
+önünde                    in front of
+arkasında                 behind
+sağında                   on the right of
+solunda                   on the left of
+
+A2 LISTEDE 26-50
+----------------
+altında                   under
+üstünde                   on / above
+salon                     living room
+köpek tüyü                dog hair
+perde                     curtain
+oyuncak                   toy
+sokak lokantası           street restaurant
+neon ışıkları             neon lights
+ekonomi merkezi           economic center
+finans merkezi            financial center
+bilim                     science
+ticaret                   trade
+saray                     palace
+masal                     fairy tale
+tarihi yer                historical place
+tiyatro                   theater
+metro                     subway
+doğal ürünler             natural products
+traktör                   tractor
+sessiz                    quiet
+şehir merkezi             city center
+kredi kartı               credit card
+Ziraat Bankası            Ziraat Bank
+kalem ucu                 pen tip
+pencere                   window
+
+A2 LISTEDE 51-75
+----------------
+çekmece                   drawer
+silgi                     eraser
+havuz                     pool
+adres                     address
+doğum tarihi              birth date
+kültür                    culture
+sinagog                   synagogue
+kıta                      continent
+fayton                    carriage
+kule                      tower
+gece hayatı               nightlife
+renkli                    colorful
+yabancı                   foreign
+çarşı                     bazaar
+turistik                  touristic
+hayat                     life
+sabaha kadar              until morning
+yerli turist              local tourist
+tarihi                    historical
+en meşhur                 most famous
+farklı                    different
+zirve                     summit
+nükleer santral           nuclear power plant
+tsunami                   tsunami
+şiddet                    magnitude / severity
+
+A2 LISTEDE 76-100
+-----------------
+misafir                   guest
+özgeçmiş                  CV / résumé
+medeni durum              marital status
+yüksek lisans             master's degree
+bilgisayar becerisi       computer skill
+seminer                   seminar
+iş deneyimi               work experience
+stajyer                   intern
+çevre                     environment
+heyecan                   excitement
+fidan                     sapling
+etkinlik                  activity / event
+kuruluş savaşı            war of independence
+meclis                    parliament
+cumhuriyet                republic
+çağdaş                    modern
+filozof                   philosopher
+buluş                     invention / discovery
+profesör                  professor
+telgraf                   telegraph
+mucit                     inventor
+işitme engelli            hearing impaired
+teknoloji                 technology
+telsiz telefon            cordless phone
+dijital kanal             digital channel
+
+A2 LISTEDE 101-125
+------------------
+anı                       memory
+hikâye kipi               narrative past tense
+çocukken                  when I was a child
+yaz akşamı                summer evening
+dışarıda                  outside
+fıkra                     joke
+birlikte                  together
+gençken                   when young
+takım                     team
+grup                      group
+amaç                      aim / goal
+ebe                       tagger / "it" in games
+silah                     weapon
+beden eğitimi             physical education
+işaret                    sign
+otobüsle                  by bus
+yüksek ses                loud voice
+kilolu                    overweight
+kuruyemiş                 mixed nuts
+sınav kâğıdı              exam paper
+emir kipi                 imperative mood
+demet                     bunch
+fiske                     pinch
+kadeh                     wine glass
+salkım                    bunch of grapes
+
+A2 LISTEDE 126-150
+------------------
+vişne                     sour cherry
+maydanoz                  parsley
+fındık                    hazelnut
+pul biber                 chili flakes
+salça                     tomato paste
+kıyma                     minced meat
+asma yaprağı              grape leaf
+süzgeç                    strainer
+mantarsız                 without mushrooms
+buzsuz                    without ice
+limonlu                   with lemon
+çoban salata              shepherd's salad
+ezogelin çorbası          ezogelin soup
+maden suyu                mineral water
+sipariş                   order
+hesap                     bill/check
+baklava                   baklava
+künefe                    künefe
+sütsüz                    without milk
+kafeinsiz                 decaffeinated
+dengesiz                  unbalanced
+taksit                    installment
+peşin ödeme               cash payment
+vade farkı                interest difference
+kullanım talimatı         instruction manual
+
+A2 LISTEDE 151-162
+------------------
+mutfak kültürü            food culture
+soya sosu                 soy sauce
+hardal                    mustard
+jambon                    ham
+nohut                     chickpea
+ölçülü                    moderate
+ızgara                    grilled
+buğulama                  steamed fish
+mangal                    barbecue grill
+ikram sırası              serving order
+karşılaştırma             comparison
+üstünlük                  superiority
 
 A2 DERSTE 1-25
 --------------
@@ -1872,7 +2115,7 @@ birinci, ikinci, üçüncü, dördüncü, altıncı, yedinci, dokuzuncu, sonuncu
 
 Time & Schedule
 ---------------
-şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik, saniye, dakikalarca, saatlerce, günlerce, haftalarca, aylarca, yıllarca, asır, Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar, Ocak, Şubat, Mart, Nisan, Mayıs, Haziran, Temmuz, Ağustos, Eylül, Ekim, Kasım, Aralık, gece yarısı, mevsim, acele
+şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik, saniye, dakikalarca, saatlerce, günlerce, haftalarca, aylarca, yıllarca, asır, Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar, Ocak, Şubat, Mart, Nisan, Mayıs, Haziran, Temmuz, Ağustos, Eylül, Ekim, Kasım, Aralık, gece yarısı, mevsim, acele, tatil, doğum tarihi, sabaha kadar, çocukken, yaz akşamı, gençken
 
 Politeness & Fillers
 --------------------
@@ -1880,27 +2123,27 @@ buyurun, geçmiş olsun, affedersiniz, rica ederim, teşekkürler, lütfen, afiy
 
 People & Professions
 --------------------
-insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi, hala, anne tarafı, teyze, dayı, anneanne, baba tarafı, amca, babaanne, dede, enişte, yenge, kuzen, kız, erkek kardeş, soy, karı-koca, onlar kardeş, abla, kız kardeş, komşu, akraba, yeğen, herkes, görümce, kayınço, balıkçı, veteriner, yazar, başkan, polis, hemşire, mühendis, asker, aşçı, çiftçi, kasiyer, terzi, mimar, sekreter, esnaf, fırıncı, kasap, ressam, müzisyen, yazılımcı, fotoğrafçı, çift, hırsız, muhasebeci, evsiz, köylü, ikiz
+insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avukat, garson, oyuncu, futbolcu, şarkıcı, manken, şoför, kurye, ev hanımı, dağcı, dişçi, öğretim elemanı, turist, antikacı, müşteri, bekar, evli, yaşlı, Koreli, ad, soyad, soyadı, evlenmek, doktorlar, çocuklar, öğrenciler, insanlar, meslek, çiçekçi, İngiliz, kimse, emekli, usta, acemi, ağabey, abi, oğul, elektrikçi, hala, anne tarafı, teyze, dayı, anneanne, baba tarafı, amca, babaanne, dede, enişte, yenge, kuzen, kız, erkek kardeş, soy, karı-koca, onlar kardeş, abla, kız kardeş, komşu, akraba, yeğen, herkes, görümce, kayınço, balıkçı, veteriner, yazar, başkan, polis, hemşire, mühendis, asker, aşçı, çiftçi, kasiyer, terzi, mimar, sekreter, esnaf, fırıncı, kasap, ressam, müzisyen, yazılımcı, fotoğrafçı, çift, hırsız, muhasebeci, evsiz, köylü, ikiz, bankacı, aile fotoğrafı, yabancı, yerli turist, misafir, özgeçmiş, medeni durum, iş deneyimi, stajyer, filozof, profesör, mucit, grup
 
 Places & Buildings
 ------------------
-okul, sınıf, kütüphane, hastane, cami, banka, sinema, kafe, kafeterya, kantin, park, bahçe, şehir, üniversite, havaalanı, havalimanı, durak, market, manav, idari amirlik, halkla ilişkiler, okuma salonu, öğrenci işleri, bina, metropol, müze, okulda, sınıfta, hastanede, sinemada, sinema salonu, cadde, sokak, bu sokak, büfe, şirket, memleket, köy, yer, yerler, sur, devlet, meydan, köprü, tünel, kaldırım, postane, saha
+okul, sınıf, kütüphane, hastane, cami, banka, sinema, kafe, kafeterya, kantin, park, bahçe, şehir, üniversite, havaalanı, havalimanı, durak, market, manav, idari amirlik, halkla ilişkiler, okuma salonu, öğrenci işleri, bina, metropol, müze, okulda, sınıfta, hastanede, sinemada, sinema salonu, cadde, sokak, bu sokak, büfe, şirket, memleket, köy, yer, yerler, sur, devlet, meydan, köprü, tünel, kaldırım, postane, saha, şehir dışı, yurt, apartman, eğlence yeri, çiftlik, semt, valilik, sokak lokantası, neon ışıkları, saray, tarihi yer, Ziraat Bankası, havuz, kule, meclis, nükleer santral
 
 House & Furniture
 -----------------
-masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitaplık, vazo, şamdan, avize, ayna, evde, odada, masada, kitaplıkta, eşya, piyano, anahtar, kilitlemek, temizlemek, taşınmak, kiralamak, zemin kat, bodrum kat, mum, tavan, kalorifer, cam, balkon, yatak odası, asansör, kilit, battaniye, gardırop, bulaşık makinesi, çamaşır makinesi, süpürge, ütü, çöp, leke, paspas, örtü, masa örtüsü
+masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitaplık, vazo, şamdan, avize, ayna, evde, odada, masada, kitaplıkta, eşya, piyano, anahtar, kilitlemek, temizlemek, taşınmak, kiralamak, zemin kat, bodrum kat, mum, tavan, kalorifer, cam, balkon, yatak odası, asansör, kilit, battaniye, gardırop, bulaşık makinesi, çamaşır makinesi, süpürge, ütü, çöp, leke, paspas, örtü, masa örtüsü, salon, perde, pencere, çekmece
 
 Kitchen & Food
 --------------
-mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak, tabak, kaşık, çatal, bıçak, yumurta, tavuk, balık, salata, elma, armut, limon, karpuz, kavun, kiraz, şeftali, erik, incir, patates, salatalık, soğan, sarımsak, biber, patlıcan, havuç, kabak, ıspanak, fasulye, tuz, şeker, karabiber, baharat, un, bal, karıştırmak, dökmek, ceviz, buzdolabı
+mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak, tabak, kaşık, çatal, bıçak, yumurta, tavuk, balık, salata, elma, armut, limon, karpuz, kavun, kiraz, şeftali, erik, incir, patates, salatalık, soğan, sarımsak, biber, patlıcan, havuç, kabak, ıspanak, fasulye, tuz, şeker, karabiber, baharat, un, bal, karıştırmak, dökmek, ceviz, buzdolabı, tereyağı, kuruyemiş, demet, fiske, kadeh, salkım, vişne, maydanoz, fındık, pul biber, salça, kıyma, asma yaprağı, süzgeç, mantarsız, buzsuz, limonlu, çoban salata, ezogelin çorbası, maden suyu, sütsüz, kafeinsiz, mutfak kültürü, soya sosu, hardal, jambon, nohut, ızgara, buğulama, mangal, ikram sırası, sarmak, yoğurmak, rendelemek, çırpmak, kavurmak, közlemek
 
 Transportation & Travel
 -----------------------
-araba, uçak, dolmuş, vapur, motosiklet, trafik, yolculuk, tur, sahil, havaalanı, havalimanı, bilet almak, seyahat etmek, sürmek, binmek, indirmek, arabada, tatil planı, gezmek, keşfetmek, ziyaret etmek, bavul hazırlamak, harita, geri dönmek, inmek, yat, uzak, gezgin, köy, pist, aktarma, istasyon, otogar, pasaport, vize, benzin, hız, valiz, kamyon, yaya, yaya geçidi
+araba, uçak, dolmuş, vapur, motosiklet, trafik, yolculuk, tur, sahil, havaalanı, havalimanı, bilet almak, seyahat etmek, sürmek, binmek, indirmek, arabada, tatil planı, gezmek, keşfetmek, ziyaret etmek, bavul hazırlamak, harita, geri dönmek, inmek, yat, uzak, gezgin, köy, pist, aktarma, istasyon, otogar, pasaport, vize, benzin, hız, valiz, kamyon, yaya, yaya geçidi, otopark, metro, traktör, fayton, otobüsle
 
 Electronics & Media
 -------------------
-bilgisayar, telefon, cep telefonu, televizyon, radyo, internet, kanal, dizi, haber, program, yayın akışı, çizgi film, magazin, komedi filmi, ana haber, spor programı, yemek programı, yarışma, çocuk programı, müzik programı, sinema filmi, yabancı sinema, tekrar, yayında, yayınlanmak, yayınlamak, izlemek, seyretmek, televizyon izlemek, televizyon seyretmek, fotoğraf, gazete, dergi, televizyon kanalı, televizyon programı, komedi, yüklemek, mesaj atmak, telefon etmek, e-posta adresi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, kahvaltı haberleri, tekerleme, görüntülü, sesi, kılıf, kumanda, anten, tuş, elektrik, şarkı, takip etmek, makale, altyazı, tablet
+bilgisayar, telefon, cep telefonu, televizyon, radyo, internet, kanal, dizi, haber, program, yayın akışı, çizgi film, magazin, komedi filmi, ana haber, spor programı, yemek programı, yarışma, çocuk programı, müzik programı, sinema filmi, yabancı sinema, tekrar, yayında, yayınlanmak, yayınlamak, izlemek, seyretmek, televizyon izlemek, televizyon seyretmek, fotoğraf, gazete, dergi, televizyon kanalı, televizyon programı, komedi, yüklemek, mesaj atmak, telefon etmek, e-posta adresi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, kahvaltı haberleri, tekerleme, görüntülü, sesi, kılıf, kumanda, anten, tuş, elektrik, şarkı, takip etmek, makale, altyazı, tablet, masal, teknoloji, dijital kanal, fıkra
 
 Personality & Appearance
 ------------------------
@@ -1908,15 +2151,15 @@ Personality & Appearance
 
 School & Study
 --------------
-sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, kitaplar, kitap, kalem, tahta, defter, çanta, sözlük, kağıt, kareli kağıt, çizgili kağıt, cümle, fiil, isim, sıfat, fotokopi, okumak, yazmak, öğrenmek, öğretmek, anlamak, cevaplamak, tekrar etmek, tamamlamak, düzeltmek, açıklamak, çözmek, sırt çantası, doğru, yanlış, mezuniyet, tören, hata, hece, kapak, ders, tamlama, kural, virgül, harf, bant, zil, özne
+sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, kitaplar, kitap, kalem, tahta, defter, çanta, sözlük, kağıt, kareli kağıt, çizgili kağıt, cümle, fiil, isim, sıfat, fotokopi, okumak, yazmak, öğrenmek, öğretmek, anlamak, cevaplamak, tekrar etmek, tamamlamak, düzeltmek, açıklamak, çözmek, sırt çantası, doğru, yanlış, mezuniyet, tören, hata, hece, kapak, ders, tamlama, kural, virgül, harf, bant, zil, özne, lise, bilim, kalem ucu, silgi, yüksek lisans, bilgisayar becerisi, seminer, sınav kâğıdı, emir kipi, hikâye kipi, beden eğitimi
 
 Shopping & Money
 ----------------
-para çekmek, alışveriş, alışveriş yapmak, ucuz, pahalı, bilet almak, kilo, numara, manav, müşteri, almak, satmak, ödemek, harcamak, biriktirmek, kumbara, cüzdan, beden, pazar, seçmek, denemek, fakir, zengin, kıymetli, ücretsiz, bedava, indirim, zam, ürün, bağış vermek, borç, hediye, vitrin, poşet, marka, banknot, dükkân, mağaza, finans, sepet, kiralanmak
+para çekmek, alışveriş, alışveriş yapmak, ucuz, pahalı, bilet almak, kilo, numara, manav, müşteri, almak, satmak, ödemek, harcamak, biriktirmek, kumbara, cüzdan, beden, pazar, seçmek, denemek, fakir, zengin, kıymetli, ücretsiz, bedava, indirim, zam, ürün, bağış vermek, borç, hediye, vitrin, poşet, marka, banknot, dükkân, mağaza, finans, sepet, kiralanmak, ticaret, kredi kartı, çarşı, sipariş, hesap, taksit, peşin ödeme, vade farkı, kullanım talimatı, pazarlık yapmak
 
 Hobbies & Free Time
 -------------------
-satranç, gitar çalmak, top oynamak, fotoğraf çekmek, hobi, koleksiyon, paraşüt, sörf, kamp yapmak, bulmaca, piknik, klasik müzik, dans etmek, boş zaman, boş olmak, kazanmak, kaybetmek, konser, parti, yürüyüş, yüzmek, spor yapmak, tırmanmak, çizmek, oynamak, eğlenmek, güzel vakit geçirmek, dışarı çıkmak, amatör, boncuk, seramik, ipek, düğün, spor aletleri, ava çıkmak, oyun, şiir, piknik örtüsü, ayıcık, uçurtma
+satranç, gitar çalmak, top oynamak, fotoğraf çekmek, hobi, koleksiyon, paraşüt, sörf, kamp yapmak, bulmaca, piknik, klasik müzik, dans etmek, boş zaman, boş olmak, kazanmak, kaybetmek, konser, parti, yürüyüş, yüzmek, spor yapmak, tırmanmak, çizmek, oynamak, eğlenmek, güzel vakit geçirmek, dışarı çıkmak, amatör, boncuk, seramik, ipek, düğün, spor aletleri, ava çıkmak, oyun, şiir, piknik örtüsü, ayıcık, uçurtma, tenis kortu, oyuncak, gece hayatı, etkinlik, takım, ebe, balığa gitmek
 
 Common Verbs
 ------------
@@ -1928,7 +2171,7 @@ başlamak, bitmek, bitirmek, devam etmek, tamamlamak, beklemek, kalmak, durmak, 
 
 Colors
 ------
-renkler, kırmızı, mavi, sarı, yeşil, turuncu, mor, pembe, kahverengi, siyah, beyaz, gri, lacivert, açık mavi, koyu mavi, açık yeşil, koyu yeşil, koyu kırmızı, koyu, bordo, antrasit
+renkler, kırmızı, mavi, sarı, yeşil, turuncu, mor, pembe, kahverengi, siyah, beyaz, gri, lacivert, açık mavi, koyu mavi, açık yeşil, koyu yeşil, koyu kırmızı, koyu, bordo, antrasit, renk, renkli
 
 Clothes
 -------
@@ -1944,15 +2187,15 @@ takılar, özel takılar, küpe, yüzük, alyans, kolye, bileklik, bilezik, halh
 
 Nature & Outdoors
 -----------------
-hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, çiçekler, bitki, toprak, kum, hayvan, boğa, yakmak, ateşi yakmak, söndürmek, beslemek, koklamak, ıslanmak, üşümek, buhar, dalga, dal, sivrisinek, kelebek, akmak, ada, yaprak, dünya, fare, evcil hayvan, doğa, tarla, orman, çimen, ayı, kanat
+hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, çiçekler, bitki, toprak, kum, hayvan, boğa, yakmak, ateşi yakmak, söndürmek, beslemek, koklamak, ıslanmak, üşümek, buhar, dalga, dal, sivrisinek, kelebek, akmak, ada, yaprak, dünya, fare, evcil hayvan, doğa, tarla, orman, çimen, ayı, kanat, güvercin, menekşe, köpek tüyü, doğal ürünler, kıta, zirve, tsunami, şiddet, çevre, fidan
 
 Here, There & Directions
 ------------------------
-burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön, arka, arası, uzak, kuzey, güney, doğu, batı, harita, metre, kat, zemin kat, bodrum kat, birinci katta, ikinci kat, altıncı kat, yan, kenar, sol, sağ, etraf, karşı, konum, navigasyon, çapraz, yukarı, aşağı, köşe, ara, kavşak
+burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön, arka, arası, uzak, kuzey, güney, doğu, batı, harita, metre, kat, zemin kat, bodrum kat, birinci katta, ikinci kat, altıncı kat, yan, kenar, sol, sağ, etraf, karşı, konum, navigasyon, çapraz, yukarı, aşağı, köşe, ara, kavşak, kroki, karşısında, yanında, önünde, arkasında, sağında, solunda, altında, üstünde, adres, dışarıda
 
 Feelings
 --------
-sevmek, beğenmek, hoşlanmak, korkmak, üzülmek, sevinmek, kızmak, şaşırmak, sıkılmak, yorulmak, hissetmek, özlemek, merak etmek, güvenmek, eğlenmek, ağlamak, gülmek, gülümsemek, harika, eğlenceli, yorucu, monoton, pozitif enerji, mutlu, üzgün, heyecanlı, memnun, huzurlu, pişman, endişeli, kızgın, yorgun, şaşkın, sinirli, kıskanç, sıkıcı, yormak, sıkıntılı, duygusal, sarılmak, kavuşmak, ummak, rahatlatmak, rahatlamak, üzmek, sinirletmek, değer vermek, saygı duymak
+sevmek, beğenmek, hoşlanmak, korkmak, üzülmek, sevinmek, kızmak, şaşırmak, sıkılmak, yorulmak, hissetmek, özlemek, merak etmek, güvenmek, eğlenmek, ağlamak, gülmek, gülümsemek, harika, eğlenceli, yorucu, monoton, pozitif enerji, mutlu, üzgün, heyecanlı, memnun, huzurlu, pişman, endişeli, kızgın, yorgun, şaşkın, sinirli, kıskanç, sıkıcı, yormak, sıkıntılı, duygusal, sarılmak, kavuşmak, ummak, rahatlatmak, rahatlamak, üzmek, sinirletmek, değer vermek, saygı duymak, heyecan, anı, hayran olmak, ilgi beklemek
 
 Daily Routine
 -------------
@@ -1960,35 +2203,35 @@ fırçalamak, uyanmak, kalkmak, yıkamak, diş fırçalamak, taramak, kurulanmak
 
 Health & Body
 -------------
-hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş olsun, beyin, kan, beden, sağlıklı olmak, spor yapmak, yorulmak, doğmak, büyümek, ölmek, ilaç, yaralı, sağlıklı, sağlıksız, yaşlanmak, alın, karın, burun, ağız, hapşırmak, göğüs kafesi, baş, kafa, saç, çene, yanak, kulak, göz, kirpik, kaş, boyun, boğaz, omuz, kol, dirsek, bilek, ayak bileği, el, parmak, avuç, bacak, diz, ayak, topuk, sırt, bel, ayak parmağı, tırnak, dudak, dil, diş, kas, sakal, bıyık, göğüs, kucak, ağrı, başı ağrı, karnı ağrı, dişi ağrı, dizi ağrı, grip, hap, şurup, eczane, eczaneci, nezle, teşhiş, halsiz, şikayet, reçete, tedavi, ağrımak, acımak, hıçkırmak, nezle olmak, öksürmek, uykulu, termometre
+hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş olsun, beyin, kan, beden, sağlıklı olmak, spor yapmak, yorulmak, doğmak, büyümek, ölmek, ilaç, yaralı, sağlıklı, sağlıksız, yaşlanmak, alın, karın, burun, ağız, hapşırmak, göğüs kafesi, baş, kafa, saç, çene, yanak, kulak, göz, kirpik, kaş, boyun, boğaz, omuz, kol, dirsek, bilek, ayak bileği, el, parmak, avuç, bacak, diz, ayak, topuk, sırt, bel, ayak parmağı, tırnak, dudak, dil, diş, kas, sakal, bıyık, göğüs, kucak, ağrı, başı ağrı, karnı ağrı, dişi ağrı, dizi ağrı, grip, hap, şurup, eczane, eczaneci, nezle, teşhiş, halsiz, şikayet, reçete, tedavi, ağrımak, acımak, hıçkırmak, nezle olmak, öksürmek, uykulu, termometre, işitme engelli, kilolu
 
 Talking & Communicating
 -----------------------
-konuşmak, söylemek, demek, sormak, soru sormak, cevaplamak, anlatmak, açıklamak, bahsetmek, dinlemek, duymak, anlamak, tekrar etmek, telefon etmek, mesaj atmak, göndermek, mektup, e-posta adresi, davet etmek, teklif etmek, yardım etmek, paylaşmak, tanışmak, görüşmek, buluşmak, buluşma, cümle, şaka, izin, emretmek, yollamak, seçim, izin vermek, karşı çıkmak, yasaklamak, bilgi
+konuşmak, söylemek, demek, sormak, soru sormak, cevaplamak, anlatmak, açıklamak, bahsetmek, dinlemek, duymak, anlamak, tekrar etmek, telefon etmek, mesaj atmak, göndermek, mektup, e-posta adresi, davet etmek, teklif etmek, yardım etmek, paylaşmak, tanışmak, görüşmek, buluşmak, buluşma, cümle, şaka, izin, emretmek, yollamak, seçim, izin vermek, karşı çıkmak, yasaklamak, bilgi, telgraf, telsiz telefon, işaret, yüksek ses, haberleşmek, sohbet etmek
 
 Coming & Going
 --------------
-gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, geçmek, yürümek, koşmak, binmek, inmek, durmak, oturmak, kalkmak, uğramak, tırmanmak, düşmek, taşınmak, ayrılmak, katılmak, gecikmek, yetişmek, uğurlamak, uzanmak, kaçmak, dağılmak, görünmek, kaybolmak, hızlanmak, yavaşlamak, gezdirmek, dolaşmak
+gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, geçmek, yürümek, koşmak, binmek, inmek, durmak, oturmak, kalkmak, uğramak, tırmanmak, düşmek, taşınmak, ayrılmak, katılmak, gecikmek, yetişmek, uğurlamak, uzanmak, kaçmak, dağılmak, görünmek, kaybolmak, hızlanmak, yavaşlamak, gezdirmek, dolaşmak, pasaja gitmek
 
 Everyday Actions
 ----------------
-açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek, saldırmak, savunmak, korumak, engellemek, tamir etmek, montaj, montaj yapmak, edinmek, edilmek, zorunda kalmak, mecbur kalmak, çatlamak, yanmak, koparmak, kokmak, karışmak, basmak, öpmek, gerekmek, silmek, okşamak, zarar vermek, destek olmak
+açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek, saldırmak, savunmak, korumak, engellemek, tamir etmek, montaj, montaj yapmak, edinmek, edilmek, zorunda kalmak, mecbur kalmak, çatlamak, yanmak, koparmak, kokmak, karışmak, basmak, öpmek, gerekmek, silmek, okşamak, zarar vermek, destek olmak, süt sağmak, havlamak, dilek tutmak, patlamak, hayatını kaybetmek, mezun olmak, elektrik kesilmek, burs almak, ağaç dikmek, yaygınlaşmak, üretmek, sigara içmek, yakalanmak, karşılaşmak
 
 Thinking & Deciding
 -------------------
-bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir, sanmak, mantık, vazgeçmek, fırsat
+bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir, sanmak, mantık, vazgeçmek, fırsat, avantaj, kültür, hayat, kuruluş savaşı, cumhuriyet, buluş, amaç, silah, karşılaştırma, üstünlük
 
 Describing Things
 -----------------
-eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı, kesik, korkutucu, ürkütücü, mümkün, tuhaf, yoğun, eksik, fazla, küçülmek, ferah, güncel, kel, ilginç, ayrı, benzemek
+eski, küçük, çok, güzel, ucuz, pahalı, sıcak, soğuk, hızlı, zor, geniş, açık, kapalı, dolu, boş, kuru, ıslak, uzak, bozuk, tenha, kalabalık, hareketli, lezzetli, eğlenceli, yorucu, monoton, harika, uygun, meşgul, organik, iyi, kötü, değişik, yeni, yavaş, çabuk, kıymetli, temiz, kirli, mükemmel, berbat, minik, aynı, sert, yumuşak, ağır, hafif, önemli, önemsiz, tehlikeli, gürültü, gürültülü, canlı, özgün, çok çeşitli, büyük, az, yüksek, alçak, kolay, son, dar, yakın, pozitif, eksi, sıkıcı, sıkışık, yamuk, düz, metre kare, sorunlu, problemli, kıvırcık, dalgalı, özel, uğurlu, şanslı, kesik, korkutucu, ürkütücü, mümkün, tuhaf, yoğun, eksik, fazla, küçülmek, ferah, güncel, kel, ilginç, ayrı, benzemek, sessiz, tarihi, en meşhur, farklı, çağdaş, dengesiz, ölçülü
 
 Little Words
 ------------
-bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani, nihayet, asla, kendi, beraber, birden, hepsi, aslında, zorunda, mecbur, yaklaşık, yeter, yanlışlıkla, yeniden, bu sırada, aynı zamanda, yoksa, şart
+bu, o, onlar, kimse, bazı, bütün, çok, mesela, yalnız, arası, kadar, önce, sonra, acaba, vardı, yoktu, ne var, ne yok, genellikle, sık sık, neyse ki, maalesef, diğer, aynı, gerek, çoğunlukla, hâlâ, neyse, henüz, bu yüzden, ayrıca, tek tek, buna rağmen, sonunda, ise, birkaç, olur, böyle, sanki, hakkında, bu kadar, yani, nihayet, asla, kendi, beraber, birden, hepsi, aslında, zorunda, mecbur, yaklaşık, yeter, yanlışlıkla, yeniden, bu sırada, aynı zamanda, yoksa, şart, birlikte
 
 Cities & Countries
 ------------------
-şehir, metropol, memleket, Moskova, Londra, Pekin, Tokyo, Buenos Aires, İngiliz, Koreli, başkent
+şehir, metropol, memleket, Moskova, Londra, Pekin, Tokyo, Buenos Aires, İngiliz, Koreli, başkent, ekonomi merkezi, finans merkezi, şehir merkezi, turistik
 
 Weather
 -------
@@ -1996,11 +2239,11 @@ hava, güneşli, bulutlu, parçalı bulutlu, yağmurlu, yağmur, rüzgarlı, kar
 
 Films & Genres
 --------------
-sinema, sinemada, sinema salonu, sinema filmi, yabancı sinema, komedi, komedi filmi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, savaş, çizgi film, dizi, bölüm, özgün, izlemek, seyretmek, yönetmen
+sinema, sinemada, sinema salonu, sinema filmi, yabancı sinema, komedi, komedi filmi, gerilim, korku filmi, belgesel, bilim kurgu, dramatik, savaş, çizgi film, dizi, bölüm, özgün, izlemek, seyretmek, yönetmen, tiyatro
 
 Tastes & Dishes
 ---------------
-tuzlu, tatlı, acı, ekşi, lezzetli, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, yemek, çorba, aç, tok, tatmak, pişirmek, yağlı yemek, hazır yemek, taze yemek, sıcacık, çıtır, çikolata, dondurma
+tuzlu, tatlı, acı, ekşi, lezzetli, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, yemek, çorba, aç, tok, tatmak, pişirmek, yağlı yemek, hazır yemek, taze yemek, sıcacık, çıtır, çikolata, dondurma, baklava, künefe
 
 Character Traits
 ----------------
@@ -2012,7 +2255,7 @@ iyi, kötü, nazik, kaba, çalışkan, tembel, akıllı, akılsız, sabırlı, s
 
 God & Faith
 -----------
-RAB, tanrı, İsa, Mesih, ruh, Üçlü Birlik, kutsal, kutsallık, gök, cennet, melek, iblis, şeytan, iman, inanç, din, umut, sevgi, merhamet, lütuf, yücelik, görkem, taht, krallık, sonsuz, ebedî, ışık, karanlık, gerçek, bilgelik, bilge, vahiy, sır, gizem, peygamber, peygamberlik, elçi, müjde, yaşam, can, yürek, kul, söz, belirti, diriliş, inanmak, yaratmak, kutsamak, övmek, yükselmek, dirilmek, perest, perestli
+RAB, tanrı, İsa, Mesih, ruh, Üçlü Birlik, kutsal, kutsallık, gök, cennet, melek, iblis, şeytan, iman, inanç, din, umut, sevgi, merhamet, lütuf, yücelik, görkem, taht, krallık, sonsuz, ebedî, ışık, karanlık, gerçek, bilgelik, bilge, vahiy, sır, gizem, peygamber, peygamberlik, elçi, müjde, yaşam, can, yürek, kul, söz, belirti, diriliş, inanmak, yaratmak, kutsamak, övmek, yükselmek, dirilmek, perest, perestli, sinagog
 
 Sin & Salvation
 ---------------

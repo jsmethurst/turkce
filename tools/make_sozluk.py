@@ -58,12 +58,12 @@ def main():
            RULE, "FİİLLER (VERBS)", RULE, ""]
     groups = []
     n = 0
-    for page in (1, 2, 3, 4):
+    for page in (1, 2, 3, 4):   # A1 Listede: the numbers run on from one page to the next
         items = [v for v in verbs if v["page"] == page]
         if items:
-            groups.append((f"{page}. SAYFA {n + 1}-{n + len(items)}", items))
+            groups.append((f"A1 LISTEDE {n + 1}-{n + len(items)}", items))
             n += len(items)
-    for page, name in (("other", "DERSTE"), ("a2", "A2 DERSTE")):
+    for page, name in (("other", "A1 DERSTE"), ("a2l", "A2 LISTEDE"), ("a2", "A2 DERSTE")):
         items = [v for v in verbs if v["page"] == page]
         for a, b, chunk in chunks(items):
             groups.append((f"{name} {a}-{b}", chunk))
@@ -73,13 +73,18 @@ def main():
             out += verb_lines(v)
         out.append("")
     out += ["", RULE, "NON-VERBS", RULE, ""]
-    units = [(1, "1. Ünite"), (2, "2. Ünite"), ("other", "Derste"), ("sifatlar", "Sıfatlar"), ("a2", "A2 Derste")]
-    for unit, name in units:
+    # A1 Listede = Ünite 1, Ünite 2, Sıfatlar, numbered on from one list to the next (as in the app).
+    listede = 0
+    for unit, name, runs_on in ((1, "A1 Listede", True), (2, "A1 Listede", True), ("sifatlar", "A1 Listede", True),
+                                ("other", "A1 Derste", False), ("a2l", "A2 Listede", False), ("a2", "A2 Derste", False)):
         items = [x for x in nonverbs if x["unit"] == unit]
+        offset = listede if runs_on else 0
         for a, b, chunk in chunks(items):
-            out += section(upper_tr(f"{name} {a}-{b}"))
+            out += section(upper_tr(f"{name} {offset + a}-{offset + b}"))
             out += [x["tr"].ljust(COL) + x["en"] for x in chunk]
             out.append("")
+        if runs_on:
+            listede += len(items)
     out += ["", RULE, "TOPICS", RULE, ""]
     for t in topics:
         out += section(t["label"])
