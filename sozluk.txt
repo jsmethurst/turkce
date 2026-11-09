@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-297 verbs · 1079 non-verbs · 40 topics
+296 verbs · 1079 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -614,19 +614,17 @@ okşamak                   to pet
     akuzatif: Kediyi okşuyorum.  (I am petting the cat.)
 üzmek                     to upset (something)
     akuzatif: Beni üzüyorsun.  (You are upsetting me.)
-sinirlenmek               to get angry
-    datif: Ona sinirleniyorum.  (I am getting angry at him.)
 sinirletmek               to provoke
     akuzatif: Beni sinirletiyorsun.  (You are provoking me.)
 alışmak                   to get used to
     datif: Yeni eve alışıyorum.  (I am getting used to the new house.)
 izin vermek               to allow
     datif: Öğrenciye izin veriyorum.  (I am allowing the student.)
-
-A2 DERSTE 26-32
----------------
 zarar vermek              to cause harm
     datif: Çevreye zarar veriyor.  (It is causing harm to the environment.)
+
+A2 DERSTE 26-31
+---------------
 değer vermek              to value
     datif: Aileye değer veriyorum.  (I value my family.)
 saygı duymak              to respect
@@ -1847,7 +1845,7 @@ zil                       bell
 yukarı                    up
 aşağı                     down
 köşe                      corner
-ara                       between
+ara                       gap / in between
 kavşak                    intersection
 yaka                      collar
 kanat                     wing
@@ -1954,7 +1952,7 @@ burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön,
 
 Feelings
 --------
-sevmek, beğenmek, hoşlanmak, korkmak, üzülmek, sevinmek, kızmak, şaşırmak, sıkılmak, yorulmak, hissetmek, özlemek, merak etmek, güvenmek, eğlenmek, ağlamak, gülmek, gülümsemek, harika, eğlenceli, yorucu, monoton, pozitif enerji, mutlu, üzgün, heyecanlı, memnun, huzurlu, pişman, endişeli, kızgın, yorgun, şaşkın, sinirli, kıskanç, sıkıcı, yormak, sıkıntılı, duygusal, sarılmak, kavuşmak, ummak, rahatlatmak, rahatlamak, üzmek, sinirlenmek, sinirletmek, değer vermek, saygı duymak
+sevmek, beğenmek, hoşlanmak, korkmak, üzülmek, sevinmek, kızmak, şaşırmak, sıkılmak, yorulmak, hissetmek, özlemek, merak etmek, güvenmek, eğlenmek, ağlamak, gülmek, gülümsemek, harika, eğlenceli, yorucu, monoton, pozitif enerji, mutlu, üzgün, heyecanlı, memnun, huzurlu, pişman, endişeli, kızgın, yorgun, şaşkın, sinirli, kıskanç, sıkıcı, yormak, sıkıntılı, duygusal, sarılmak, kavuşmak, ummak, rahatlatmak, rahatlamak, üzmek, sinirletmek, değer vermek, saygı duymak
 
 Daily Routine
 -------------
