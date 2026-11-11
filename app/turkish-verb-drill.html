@@ -1517,7 +1517,7 @@ const personalSignedIn = ()=>!!(window.turkceBackend && window.turkceBackend.lis
 
 function buildVerbBonusChunks(){
   const chunks = [];
-  [["bonus","bonusg","A1 Derste"],["a2listbonus","a2listg","A2 Listede"],["a2bonus","a2bonusg","A2 Derste"]].forEach(([page, prefix, name])=>{
+  [["bonus","bonusg","A1 Derste"],["a2listbonus","a2listvg","A2 Listede"],["a2bonus","a2bonusg","A2 Derste"]].forEach(([page, prefix, name])=>{
     const items = VERBS.filter(v=>v.page===page);
     for(let i=0;i<items.length;i+=25){
       const key = `${prefix}${Math.floor(i/25)+1}`;
@@ -3397,7 +3397,7 @@ function applyFormsSettings(S){
   if(Array.isArray(S.compounds)) state.compounds = new Set(S.compounds);
   if(Array.isArray(S.persons)) state.persons = new Set(S.persons);
   if(Array.isArray(S.pages)) state.pages = new Set(S.pages);
-  if(Array.isArray(S.bonusVerbChunks)) state.bonusVerbChunks = new Set(S.bonusVerbChunks);
+  if(Array.isArray(S.bonusVerbChunks)) state.bonusVerbChunks = new Set(S.bonusVerbChunks.map(k=>k.replace(/^a2listg(\d+)$/, "a2listvg$1")));   // the A2 Listede verb lists once shared keys with the non-verb ones
   if(Array.isArray(S.nonverbChunks)) state.nonverbChunks = new Set(S.nonverbChunks);
   if(Array.isArray(S.topics)) state.topics = new Set(S.topics);
   // The old "Common" lists now sit at the end of Derste: a saved Common selection becomes those Derste lists.
@@ -3415,7 +3415,7 @@ function applyFormsSettings(S){
     NONVERB_CHUNKS.filter(c=>c.unit==="a2").forEach(c=>state.nonverbChunks.add(c.key));
   }
   if(!S.a2ListAdded){
-    VERB_BONUS_CHUNKS.filter(c=>c.key.startsWith("a2listg")).forEach(c=>state.bonusVerbChunks.add(c.key));
+    VERB_BONUS_CHUNKS.filter(c=>c.key.startsWith("a2listvg")).forEach(c=>state.bonusVerbChunks.add(c.key));
     NONVERB_CHUNKS.filter(c=>c.unit==="a2l").forEach(c=>state.nonverbChunks.add(c.key));
   }
   if(typeof S.negatives==="boolean") state.negatives = S.negatives;
@@ -3567,7 +3567,7 @@ function renderPageChips(){
   const derste = VERB_BONUS_CHUNKS.filter(bc=>bc.key.startsWith("bonusg"));
   derste.forEach(bc=>addVerbChunk(a1, bc));
   const a2 = chipGroup(pageChips, "A2 - not editable", "a1 a2");
-  VERB_BONUS_CHUNKS.filter(bc=>bc.key.startsWith("a2listg")).forEach(bc=>addVerbChunk(a2, bc));
+  VERB_BONUS_CHUNKS.filter(bc=>bc.key.startsWith("a2listvg")).forEach(bc=>addVerbChunk(a2, bc));
   VERB_BONUS_CHUNKS.filter(bc=>bc.key.startsWith("a2bonusg")).forEach(bc=>addVerbChunk(a2, bc));
 }
 renderPageChips();
