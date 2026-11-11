@@ -2721,7 +2721,7 @@ defa                      time (occasion)
 derece                    degree
 gemi                      ship
 ceza                      punishment / penalty / fine
-özgür                     free
+özgür                     free / independent
 tahmin                    guess / prediction
 otel                      hotel
 aptal                     stupid / fool
