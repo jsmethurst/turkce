@@ -1039,6 +1039,2434 @@
      "earth"
     ]
    ]
+  },
+  {
+   "kind": "verb",
+   "name": "Common",
+   "terms": [
+    [
+     "kurmak",
+     "to set up / build / found"
+    ],
+    [
+     "sağlamak",
+     "to provide / ensure"
+    ],
+    [
+     "ulaşmak",
+     "to reach / arrive at"
+    ],
+    [
+     "bulunmak",
+     "to be located / to be present"
+    ],
+    [
+     "başarmak",
+     "to achieve / succeed in"
+    ],
+    [
+     "kaçırmak",
+     "to miss / to kidnap"
+    ],
+    [
+     "çevirmek",
+     "to turn / to translate"
+    ],
+    [
+     "kutlamak",
+     "to celebrate / congratulate"
+    ],
+    [
+     "önermek",
+     "to suggest / propose"
+    ],
+    [
+     "tartışmak",
+     "to argue / discuss"
+    ],
+    [
+     "etkilemek",
+     "to affect / impress"
+    ],
+    [
+     "affetmek",
+     "to forgive"
+    ],
+    [
+     "bozmak",
+     "to break / spoil / ruin"
+    ],
+    [
+     "uğraşmak",
+     "to deal with / struggle with"
+    ],
+    [
+     "kaydetmek",
+     "to record / save"
+    ],
+    [
+     "karşılamak",
+     "to meet / welcome / cover"
+    ],
+    [
+     "desteklemek",
+     "to support"
+    ],
+    [
+     "içermek",
+     "to contain / include"
+    ],
+    [
+     "ilerlemek",
+     "to advance / progress"
+    ],
+    [
+     "yetmek",
+     "to be enough"
+    ],
+    [
+     "uymak",
+     "to fit / comply with"
+    ],
+    [
+     "dövmek",
+     "to beat / hit"
+    ],
+    [
+     "incelemek",
+     "to examine / study"
+    ],
+    [
+     "uygulamak",
+     "to apply / implement"
+    ],
+    [
+     "iletmek",
+     "to convey / transmit"
+    ],
+    [
+     "çekilmek",
+     "to withdraw / be pulled"
+    ],
+    [
+     "sokmak",
+     "to put in / insert / sting"
+    ],
+    [
+     "kaymak",
+     "to slide / slip"
+    ],
+    [
+     "itmek",
+     "to push"
+    ],
+    [
+     "işlemek",
+     "to process / work (a material)"
+    ],
+    [
+     "saymak",
+     "to count"
+    ],
+    [
+     "bağlamak",
+     "to tie / connect"
+    ],
+    [
+     "bağırmak",
+     "to shout"
+    ],
+    [
+     "azalmak",
+     "to decrease"
+    ],
+    [
+     "ezmek",
+     "to crush / mash"
+    ],
+    [
+     "kurumak",
+     "to dry up"
+    ],
+    [
+     "batmak",
+     "to sink / set (sun)"
+    ],
+    [
+     "tıklamak",
+     "to click"
+    ],
+    [
+     "yayımlamak",
+     "to publish"
+    ],
+    [
+     "yitirmek",
+     "to lose (formal)"
+    ],
+    [
+     "genişlemek",
+     "to widen / expand"
+    ],
+    [
+     "donmak",
+     "to freeze"
+    ],
+    [
+     "dönüşmek",
+     "to turn into / transform"
+    ],
+    [
+     "oluşmak",
+     "to form / come into being"
+    ],
+    [
+     "gelişmek",
+     "to develop"
+    ],
+    [
+     "dayanmak",
+     "to endure / rely on"
+    ]
+   ]
+  },
+  {
+   "kind": "nonverb",
+   "name": "Common",
+   "terms": [
+    [
+     "ve",
+     "and"
+    ],
+    [
+     "ben",
+     "I"
+    ],
+    [
+     "için",
+     "for; because of"
+    ],
+    [
+     "sen",
+     "you (singular)"
+    ],
+    [
+     "da",
+     "also / too (da/de)"
+    ],
+    [
+     "ama",
+     "but"
+    ],
+    [
+     "daha",
+     "more / still"
+    ],
+    [
+     "gibi",
+     "like / as"
+    ],
+    [
+     "biz",
+     "we"
+    ],
+    [
+     "bile",
+     "even"
+    ],
+    [
+     "siz",
+     "you (plural / formal)"
+    ],
+    [
+     "ya",
+     "or / what about… / oh (exclamation)"
+    ],
+    [
+     "sadece",
+     "only / just"
+    ],
+    [
+     "nasıl",
+     "how"
+    ],
+    [
+     "yıl",
+     "year"
+    ],
+    [
+     "şu",
+     "that (over there)"
+    ],
+    [
+     "hiç",
+     "never / at all / none"
+    ],
+    [
+     "evet",
+     "yes"
+    ],
+    [
+     "başka",
+     "other / another"
+    ],
+    [
+     "yol",
+     "road / way"
+    ],
+    [
+     "iki",
+     "two"
+    ],
+    [
+     "öyle",
+     "like that / so"
+    ],
+    [
+     "hayır",
+     "no"
+    ],
+    [
+     "artık",
+     "from now on / anymore"
+    ],
+    [
+     "tüm",
+     "all / whole"
+    ],
+    [
+     "taraf",
+     "side / party"
+    ],
+    [
+     "biraz",
+     "a little"
+    ],
+    [
+     "konu",
+     "subject / topic"
+    ],
+    [
+     "çünkü",
+     "because"
+    ],
+    [
+     "üzerinde",
+     "on top of / about"
+    ],
+    [
+     "pek",
+     "very / (not) much"
+    ],
+    [
+     "fark",
+     "difference"
+    ],
+    [
+     "şekil",
+     "shape / form"
+    ],
+    [
+     "hep",
+     "always / all the time"
+    ],
+    [
+     "güç",
+     "power / strength"
+    ],
+    [
+     "yaş",
+     "age / wet (fresh)"
+    ],
+    [
+     "orta",
+     "middle / medium"
+    ],
+    [
+     "hiçbir",
+     "no (not any)"
+    ],
+    [
+     "hadi",
+     "come on"
+    ],
+    [
+     "belki",
+     "maybe"
+    ],
+    [
+     "su",
+     "water"
+    ],
+    [
+     "veya",
+     "or"
+    ],
+    [
+     "yine",
+     "again"
+    ],
+    [
+     "ülke",
+     "country"
+    ],
+    [
+     "üç",
+     "three"
+    ],
+    [
+     "olay",
+     "event / incident"
+    ],
+    [
+     "boy",
+     "height / length"
+    ],
+    [
+     "dikkat",
+     "attention / care"
+    ],
+    [
+     "dış",
+     "outside / foreign"
+    ],
+    [
+     "zaten",
+     "anyway / already"
+    ],
+    [
+     "kabul",
+     "acceptance"
+    ],
+    [
+     "hem",
+     "both / also"
+    ],
+    [
+     "fakat",
+     "but (however)"
+    ],
+    [
+     "sonuç",
+     "result"
+    ],
+    [
+     "yük",
+     "load / burden"
+    ],
+    [
+     "dost",
+     "close friend"
+    ],
+    [
+     "lazım",
+     "necessary / needed"
+    ],
+    [
+     "bin",
+     "thousand"
+    ],
+    [
+     "içeri",
+     "inside"
+    ],
+    [
+     "resim",
+     "picture / drawing"
+    ],
+    [
+     "biri",
+     "someone"
+    ],
+    [
+     "merkez",
+     "center"
+    ],
+    [
+     "hangi",
+     "which"
+    ],
+    [
+     "sistem",
+     "system"
+    ],
+    [
+     "merhaba",
+     "hello"
+    ],
+    [
+     "aşk",
+     "love (romantic)"
+    ],
+    [
+     "efendi",
+     "gentleman / sir"
+    ],
+    [
+     "bebek",
+     "baby"
+    ],
+    [
+     "neden",
+     "reason / why"
+    ],
+    [
+     "tane",
+     "piece / item (counter)"
+    ],
+    [
+     "bağ",
+     "bond / link / vineyard"
+    ],
+    [
+     "şans",
+     "luck / chance"
+    ],
+    [
+     "kalp",
+     "heart"
+    ],
+    [
+     "bey",
+     "Mr. / gentleman"
+    ],
+    [
+     "sebep",
+     "cause"
+    ],
+    [
+     "üzere",
+     "in order to / about to"
+    ],
+    [
+     "yalan",
+     "lie"
+    ],
+    [
+     "maç",
+     "match / game"
+    ],
+    [
+     "niye",
+     "why"
+    ],
+    [
+     "eş",
+     "spouse / partner"
+    ],
+    [
+     "ilişki",
+     "relationship"
+    ],
+    [
+     "etki",
+     "effect / influence"
+    ],
+    [
+     "başarı",
+     "success"
+    ],
+    [
+     "hat",
+     "line"
+    ],
+    [
+     "hayal",
+     "dream / imagination"
+    ],
+    [
+     "beri",
+     "since"
+    ],
+    [
+     "ile",
+     "with / and"
+    ],
+    [
+     "tabii",
+     "of course"
+    ],
+    [
+     "ciddi",
+     "serious"
+    ],
+    [
+     "dönem",
+     "period / term"
+    ],
+    [
+     "eğitim",
+     "education"
+    ],
+    [
+     "kesinlikle",
+     "definitely"
+    ],
+    [
+     "dava",
+     "lawsuit / cause"
+    ],
+    [
+     "nokta",
+     "dot / point"
+    ],
+    [
+     "tamamen",
+     "completely"
+    ],
+    [
+     "bazen",
+     "sometimes"
+    ],
+    [
+     "kayıt",
+     "record / registration"
+    ],
+    [
+     "koca",
+     "huge / husband"
+    ],
+    [
+     "özür",
+     "apology / excuse"
+    ],
+    [
+     "herhangi",
+     "any"
+    ],
+    [
+     "üye",
+     "member"
+    ],
+    [
+     "kelime",
+     "word"
+    ],
+    [
+     "kaynak",
+     "source / spring"
+    ],
+    [
+     "araştırma",
+     "research"
+    ],
+    [
+     "birçok",
+     "many"
+    ],
+    [
+     "kısım",
+     "part / section"
+    ],
+    [
+     "sanat",
+     "art"
+    ],
+    [
+     "taş",
+     "stone"
+    ],
+    [
+     "bakan",
+     "minister"
+    ],
+    [
+     "millet",
+     "nation / people"
+    ],
+    [
+     "gizli",
+     "secret / hidden"
+    ],
+    [
+     "sefer",
+     "trip / time"
+    ],
+    [
+     "normal",
+     "normal"
+    ],
+    [
+     "yıldız",
+     "star"
+    ],
+    [
+     "ifade",
+     "expression / statement"
+    ],
+    [
+     "ortak",
+     "partner / shared"
+    ],
+    [
+     "sürekli",
+     "constant / continuous"
+    ],
+    [
+     "yapı",
+     "structure / building"
+    ],
+    [
+     "özellikle",
+     "especially"
+    ],
+    [
+     "sınır",
+     "border / limit"
+    ],
+    [
+     "yön",
+     "direction"
+    ],
+    [
+     "örnek",
+     "example"
+    ],
+    [
+     "liste",
+     "list"
+    ],
+    [
+     "şöyle",
+     "like this / as follows"
+    ],
+    [
+     "çeşit",
+     "kind / variety"
+    ],
+    [
+     "elbette",
+     "of course"
+    ],
+    [
+     "defa",
+     "time (occasion)"
+    ],
+    [
+     "derece",
+     "degree"
+    ],
+    [
+     "gemi",
+     "ship"
+    ],
+    [
+     "ceza",
+     "punishment / penalty / fine"
+    ],
+    [
+     "özgür",
+     "free"
+    ],
+    [
+     "tahmin",
+     "guess / prediction"
+    ],
+    [
+     "otel",
+     "hotel"
+    ],
+    [
+     "aptal",
+     "stupid / fool"
+    ],
+    [
+     "bağlantı",
+     "connection"
+    ],
+    [
+     "test",
+     "test"
+    ],
+    [
+     "mal",
+     "goods / property"
+    ],
+    [
+     "şüphe",
+     "doubt"
+    ],
+    [
+     "ordu",
+     "army"
+    ],
+    [
+     "kaza",
+     "accident"
+    ],
+    [
+     "ileri",
+     "forward / advanced"
+    ],
+    [
+     "hedef",
+     "target / goal"
+    ],
+    [
+     "giriş",
+     "entrance"
+    ],
+    [
+     "video",
+     "video"
+    ],
+    [
+     "düşman",
+     "enemy"
+    ],
+    [
+     "ekip",
+     "team / crew"
+    ],
+    [
+     "galiba",
+     "probably / I guess"
+    ],
+    [
+     "nefes",
+     "breath"
+    ],
+    [
+     "teknik",
+     "technical / technique"
+    ],
+    [
+     "yönetim",
+     "management"
+    ],
+    [
+     "dahil",
+     "included"
+    ],
+    [
+     "kart",
+     "card"
+    ],
+    [
+     "mücadele",
+     "struggle"
+    ],
+    [
+     "süper",
+     "super / great"
+    ],
+    [
+     "sahne",
+     "stage / scene"
+    ],
+    [
+     "aynen",
+     "exactly"
+    ],
+    [
+     "toplantı",
+     "meeting"
+    ],
+    [
+     "imkân",
+     "possibility / means"
+    ],
+    [
+     "vücut",
+     "body"
+    ],
+    [
+     "mesele",
+     "matter / issue"
+    ],
+    [
+     "âşık",
+     "in love / lover"
+    ],
+    [
+     "rapor",
+     "report"
+    ],
+    [
+     "pis",
+     "dirty"
+    ],
+    [
+     "günaydın",
+     "good morning"
+    ],
+    [
+     "belediye",
+     "municipality"
+    ],
+    [
+     "mahkeme",
+     "court"
+    ],
+    [
+     "kulüp",
+     "club"
+    ],
+    [
+     "cinayet",
+     "murder"
+    ],
+    [
+     "katil",
+     "killer"
+    ],
+    [
+     "lider",
+     "leader"
+    ],
+    [
+     "basit",
+     "simple"
+    ],
+    [
+     "terk",
+     "abandonment / leaving"
+    ],
+    [
+     "muhteşem",
+     "magnificent"
+    ],
+    [
+     "sorun",
+     "problem"
+    ],
+    [
+     "ödül",
+     "prize / award"
+    ],
+    [
+     "acil",
+     "urgent"
+    ],
+    [
+     "site",
+     "site / housing complex"
+    ],
+    [
+     "saye",
+     "(sayesinde) thanks to"
+    ],
+    [
+     "temel",
+     "basic / foundation"
+    ],
+    [
+     "madde",
+     "substance / article / item"
+    ],
+    [
+     "makine",
+     "machine"
+    ],
+    [
+     "sezon",
+     "season (sports / TV)"
+    ],
+    [
+     "not",
+     "note / grade"
+    ],
+    [
+     "vay",
+     "wow"
+    ],
+    [
+     "garip",
+     "strange"
+    ],
+    [
+     "proje",
+     "project"
+    ],
+    [
+     "keşke",
+     "if only"
+    ],
+    [
+     "tip",
+     "type"
+    ],
+    [
+     "iddia",
+     "claim / bet"
+    ],
+    [
+     "dağ",
+     "mountain"
+    ],
+    [
+     "serbest",
+     "free / unrestricted"
+    ],
+    [
+     "çeviri",
+     "translation"
+    ],
+    [
+     "kavga",
+     "fight / quarrel"
+    ],
+    [
+     "zevk",
+     "pleasure / taste"
+    ],
+    [
+     "ufak",
+     "small / tiny"
+    ],
+    [
+     "hapis",
+     "prison / jail"
+    ],
+    [
+     "muhtemelen",
+     "probably"
+    ],
+    [
+     "baskı",
+     "pressure / print"
+    ],
+    [
+     "bomba",
+     "bomb"
+    ],
+    [
+     "av",
+     "hunt / prey"
+    ],
+    [
+     "kamera",
+     "camera"
+    ],
+    [
+     "çay",
+     "tea"
+    ],
+    [
+     "dosya",
+     "file / folder"
+    ],
+    [
+     "evlat",
+     "child (son / daughter, one's own)"
+    ],
+    [
+     "ters",
+     "reverse / wrong way round"
+    ],
+    [
+     "hükümet",
+     "government"
+    ],
+    [
+     "teslim",
+     "handover / surrender"
+    ],
+    [
+     "gurur",
+     "pride"
+    ],
+    [
+     "rol",
+     "role"
+    ],
+    [
+     "tarz",
+     "style"
+    ],
+    [
+     "motor",
+     "motor / engine"
+    ],
+    [
+     "araç",
+     "vehicle / tool"
+    ],
+    [
+     "oy",
+     "vote"
+    ],
+    [
+     "ofis",
+     "office"
+    ],
+    [
+     "uzay",
+     "space"
+    ],
+    [
+     "kahraman",
+     "hero"
+    ],
+    [
+     "cehennem",
+     "hell"
+    ],
+    [
+     "daire",
+     "apartment / circle"
+    ],
+    [
+     "kanıt",
+     "proof / evidence"
+    ],
+    [
+     "barış",
+     "peace"
+    ],
+    [
+     "risk",
+     "risk"
+    ],
+    [
+     "ajan",
+     "agent / spy"
+    ],
+    [
+     "ihtimal",
+     "probability"
+    ],
+    [
+     "kuvvet",
+     "force / strength"
+    ],
+    [
+     "memur",
+     "civil servant / official"
+    ],
+    [
+     "keyif",
+     "enjoyment / good mood"
+    ],
+    [
+     "şampiyon",
+     "champion"
+    ],
+    [
+     "ilan",
+     "announcement / ad"
+    ],
+    [
+     "adalet",
+     "justice"
+    ],
+    [
+     "gaz",
+     "gas"
+    ],
+    [
+     "tehdit",
+     "threat"
+    ],
+    [
+     "tebrik",
+     "congratulation"
+    ],
+    [
+     "çıkış",
+     "exit"
+    ],
+    [
+     "kedi",
+     "cat"
+    ],
+    [
+     "kimlik",
+     "identity / ID"
+    ],
+    [
+     "sayfa",
+     "page"
+    ],
+    [
+     "operasyon",
+     "operation"
+    ],
+    [
+     "eser",
+     "work (of art / literature)"
+    ],
+    [
+     "aşırı",
+     "excessive / extreme"
+    ],
+    [
+     "herhalde",
+     "probably / surely"
+    ],
+    [
+     "yazık",
+     "pity / what a shame"
+    ],
+    [
+     "tren",
+     "train"
+    ],
+    [
+     "şeref",
+     "honor"
+    ],
+    [
+     "yöntem",
+     "method"
+    ],
+    [
+     "veri",
+     "data"
+    ],
+    [
+     "temsil",
+     "representation"
+    ],
+    [
+     "gayet",
+     "quite / rather"
+    ],
+    [
+     "kutu",
+     "box"
+    ],
+    [
+     "seviye",
+     "level"
+    ],
+    [
+     "aday",
+     "candidate"
+    ],
+    [
+     "bol",
+     "plentiful / loose"
+    ],
+    [
+     "karakter",
+     "character"
+    ],
+    [
+     "onur",
+     "dignity / honor"
+    ],
+    [
+     "mahalle",
+     "neighborhood"
+    ],
+    [
+     "inanılmaz",
+     "unbelievable"
+    ],
+    [
+     "general",
+     "general (military)"
+    ],
+    [
+     "uluslararası",
+     "international"
+    ],
+    [
+     "satış",
+     "sale"
+    ],
+    [
+     "işlem",
+     "procedure / transaction"
+    ],
+    [
+     "fena",
+     "bad"
+    ],
+    [
+     "patron",
+     "boss"
+    ],
+    [
+     "hukuk",
+     "law"
+    ],
+    [
+     "uzman",
+     "expert"
+    ],
+    [
+     "içki",
+     "alcoholic drink"
+    ],
+    [
+     "tespit",
+     "detection / determination"
+    ],
+    [
+     "şükür",
+     "gratitude / thank God"
+    ],
+    [
+     "hücre",
+     "cell"
+    ],
+    [
+     "korkunç",
+     "terrible"
+    ],
+    [
+     "laf",
+     "talk / remark"
+    ],
+    [
+     "kent",
+     "city (town)"
+    ],
+    [
+     "gönül",
+     "heart (feelings)"
+    ],
+    [
+     "iptal",
+     "cancellation"
+    ],
+    [
+     "fizik",
+     "physics"
+    ],
+    [
+     "ceset",
+     "corpse"
+    ],
+    [
+     "tepki",
+     "reaction"
+    ],
+    [
+     "mutlaka",
+     "definitely"
+    ],
+    [
+     "hariç",
+     "except / excluded"
+    ],
+    [
+     "puan",
+     "point / score"
+    ],
+    [
+     "miktar",
+     "amount"
+    ],
+    [
+     "salak",
+     "silly / dumb"
+    ],
+    [
+     "tepe",
+     "hill / top"
+    ],
+    [
+     "fiyat",
+     "price"
+    ],
+    [
+     "cesaret",
+     "courage"
+    ],
+    [
+     "ameliyat",
+     "surgery"
+    ],
+    [
+     "mezar",
+     "grave"
+    ],
+    [
+     "hoca",
+     "teacher (informal) / hodja"
+    ],
+    [
+     "davranış",
+     "behavior"
+    ],
+    [
+     "deney",
+     "experiment"
+    ],
+    [
+     "fayda",
+     "benefit"
+    ],
+    [
+     "sahte",
+     "fake"
+    ],
+    [
+     "dert",
+     "trouble / worry"
+    ],
+    [
+     "kader",
+     "fate"
+    ],
+    [
+     "niyet",
+     "intention"
+    ],
+    [
+     "yerel",
+     "local"
+    ],
+    [
+     "yağ",
+     "oil / fat"
+    ],
+    [
+     "seçenek",
+     "option / choice"
+    ],
+    [
+     "düşük",
+     "low"
+    ],
+    [
+     "profesyonel",
+     "professional"
+    ],
+    [
+     "alet",
+     "tool / device"
+    ],
+    [
+     "cihaz",
+     "device / appliance"
+    ],
+    [
+     "detay",
+     "detail"
+    ],
+    [
+     "gezegen",
+     "planet"
+    ],
+    [
+     "yorum",
+     "comment / interpretation"
+    ],
+    [
+     "talep",
+     "demand / request"
+    ],
+    [
+     "bar",
+     "bar"
+    ],
+    [
+     "vali",
+     "governor"
+    ],
+    [
+     "darbe",
+     "blow / coup"
+    ],
+    [
+     "tuvalet",
+     "toilet"
+    ],
+    [
+     "medya",
+     "media"
+    ],
+    [
+     "kriz",
+     "crisis"
+    ],
+    [
+     "malzeme",
+     "material / supplies"
+    ],
+    [
+     "ilçe",
+     "district"
+    ],
+    [
+     "evren",
+     "universe"
+    ],
+    [
+     "reklam",
+     "advertisement"
+    ],
+    [
+     "başbakan",
+     "prime minister"
+    ],
+    [
+     "sürpriz",
+     "surprise"
+    ],
+    [
+     "şef",
+     "chef / boss"
+    ],
+    [
+     "bira",
+     "beer"
+    ],
+    [
+     "kış",
+     "winter"
+    ],
+    [
+     "intihar",
+     "suicide"
+    ],
+    [
+     "kod",
+     "code"
+    ],
+    [
+     "tanık",
+     "witness"
+    ],
+    [
+     "kemik",
+     "bone"
+    ],
+    [
+     "paket",
+     "package"
+    ],
+    [
+     "mevcut",
+     "existing / available"
+    ],
+    [
+     "vatandaş",
+     "citizen"
+    ],
+    [
+     "dev",
+     "giant"
+    ],
+    [
+     "kanun",
+     "law / statute"
+    ],
+    [
+     "ikna",
+     "persuasion"
+    ],
+    [
+     "ömür",
+     "lifetime"
+    ],
+    [
+     "politika",
+     "policy / politics"
+    ],
+    [
+     "kurt",
+     "wolf / worm"
+    ],
+    [
+     "müthiş",
+     "tremendous / awesome"
+    ],
+    [
+     "müslüman",
+     "Muslim"
+    ],
+    [
+     "lig",
+     "league"
+    ],
+    [
+     "kurşun",
+     "bullet / lead"
+    ],
+    [
+     "zafer",
+     "victory"
+    ],
+    [
+     "yavru",
+     "baby animal / cub"
+    ],
+    [
+     "nehir",
+     "river"
+    ],
+    [
+     "çare",
+     "remedy / solution"
+    ],
+    [
+     "gelenek",
+     "tradition"
+    ],
+    [
+     "masum",
+     "innocent"
+    ],
+    [
+     "bahis",
+     "bet"
+    ],
+    [
+     "tel",
+     "wire / string"
+    ],
+    [
+     "mesafe",
+     "distance"
+    ],
+    [
+     "kraliçe",
+     "queen"
+    ],
+    [
+     "bedel",
+     "price (paid) / cost"
+    ],
+    [
+     "yüzyıl",
+     "century"
+    ],
+    [
+     "mekân",
+     "place / venue"
+    ],
+    [
+     "kılıç",
+     "sword"
+    ],
+    [
+     "demir",
+     "iron"
+    ],
+    [
+     "tıp",
+     "medicine (field)"
+    ],
+    [
+     "boyut",
+     "dimension / size"
+    ],
+    [
+     "düzgün",
+     "neat / proper"
+    ],
+    [
+     "adil",
+     "fair / just"
+    ],
+    [
+     "net",
+     "clear / net"
+    ],
+    [
+     "koç",
+     "coach / ram"
+    ],
+    [
+     "daima",
+     "always"
+    ],
+    [
+     "ihanet",
+     "betrayal"
+    ],
+    [
+     "milyar",
+     "billion"
+    ],
+    [
+     "zehir",
+     "poison"
+    ],
+    [
+     "resmen",
+     "officially"
+    ],
+    [
+     "eşit",
+     "equal"
+    ],
+    [
+     "öz",
+     "essence / own"
+    ],
+    [
+     "roman",
+     "novel"
+    ],
+    [
+     "kanser",
+     "cancer"
+    ],
+    [
+     "intikam",
+     "revenge"
+    ],
+    [
+     "cenaze",
+     "funeral"
+    ],
+    [
+     "banyo",
+     "bathroom / bath"
+    ],
+    [
+     "karışık",
+     "mixed / complicated"
+    ],
+    [
+     "siyasi",
+     "political"
+    ],
+    [
+     "taksi",
+     "taxi"
+    ],
+    [
+     "parlak",
+     "bright / shiny"
+    ],
+    [
+     "kilometre",
+     "kilometer"
+    ],
+    [
+     "uyum",
+     "harmony"
+    ],
+    [
+     "bayrak",
+     "flag"
+    ],
+    [
+     "aktif",
+     "active"
+    ],
+    [
+     "sinyal",
+     "signal"
+    ],
+    [
+     "üretim",
+     "production"
+    ],
+    [
+     "yasal",
+     "legal"
+    ],
+    [
+     "madem",
+     "since / seeing that"
+    ],
+    [
+     "transfer",
+     "transfer"
+    ],
+    [
+     "yüzey",
+     "surface"
+    ],
+    [
+     "fabrika",
+     "factory"
+    ],
+    [
+     "şifre",
+     "password / code"
+    ],
+    [
+     "tekne",
+     "boat"
+    ],
+    [
+     "modern",
+     "modern"
+    ],
+    [
+     "aşama",
+     "stage / phase"
+    ],
+    [
+     "temas",
+     "contact"
+    ],
+    [
+     "ip",
+     "rope / string"
+    ],
+    [
+     "matematik",
+     "mathematics"
+    ],
+    [
+     "hasar",
+     "damage"
+    ],
+    [
+     "gökyüzü",
+     "sky"
+    ],
+    [
+     "ekran",
+     "screen"
+    ],
+    [
+     "imparator",
+     "emperor"
+    ],
+    [
+     "eylem",
+     "action / protest"
+    ],
+    [
+     "çağrı",
+     "call / summons"
+    ],
+    [
+     "kör",
+     "blind"
+    ],
+    [
+     "kimya",
+     "chemistry"
+    ],
+    [
+     "geçici",
+     "temporary"
+    ],
+    [
+     "final",
+     "final"
+    ],
+    [
+     "arazi",
+     "land / terrain"
+    ],
+    [
+     "rakip",
+     "rival"
+    ],
+    [
+     "fakülte",
+     "faculty (university)"
+    ],
+    [
+     "alkol",
+     "alcohol"
+    ],
+    [
+     "prens",
+     "prince"
+    ],
+    [
+     "prenses",
+     "princess"
+    ],
+    [
+     "yetişkin",
+     "adult"
+    ],
+    [
+     "fırtına",
+     "storm"
+    ],
+    [
+     "terör",
+     "terror"
+    ],
+    [
+     "böcek",
+     "insect / bug"
+    ],
+    [
+     "tablo",
+     "painting / table (chart)"
+    ],
+    [
+     "maaş",
+     "salary"
+    ],
+    [
+     "sene",
+     "year"
+    ],
+    [
+     "zihin",
+     "mind"
+    ],
+    [
+     "garanti",
+     "guarantee"
+    ],
+    [
+     "toz",
+     "dust / powder"
+    ],
+    [
+     "performans",
+     "performance"
+    ],
+    [
+     "çağ",
+     "age / era"
+    ],
+    [
+     "kupa",
+     "cup / trophy"
+    ],
+    [
+     "metal",
+     "metal"
+    ],
+    [
+     "koşul",
+     "condition"
+    ],
+    [
+     "bisiklet",
+     "bicycle"
+    ],
+    [
+     "şok",
+     "shock"
+    ],
+    [
+     "ortalama",
+     "average"
+    ],
+    [
+     "albüm",
+     "album"
+    ],
+    [
+     "tarif",
+     "recipe / description"
+    ],
+    [
+     "konuk",
+     "guest"
+    ],
+    [
+     "eleman",
+     "staff member / element"
+    ],
+    [
+     "nesil",
+     "generation"
+    ],
+    [
+     "çatı",
+     "roof"
+    ],
+    [
+     "ayrıntı",
+     "detail"
+    ],
+    [
+     "pozisyon",
+     "position"
+    ],
+    [
+     "sıfır",
+     "zero"
+    ],
+    [
+     "köle",
+     "slave"
+    ],
+    [
+     "sigorta",
+     "insurance"
+    ],
+    [
+     "depo",
+     "warehouse / tank"
+    ],
+    [
+     "teori",
+     "theory"
+    ],
+    [
+     "analiz",
+     "analysis"
+    ],
+    [
+     "istifa",
+     "resignation"
+    ],
+    [
+     "standart",
+     "standard"
+    ],
+    [
+     "sabit",
+     "fixed"
+    ],
+    [
+     "işkence",
+     "torture"
+    ],
+    [
+     "virüs",
+     "virus"
+    ],
+    [
+     "merdiven",
+     "stairs / ladder"
+    ],
+    [
+     "kök",
+     "root"
+    ],
+    [
+     "çaba",
+     "effort"
+    ],
+    [
+     "tesis",
+     "facility"
+    ],
+    [
+     "veda",
+     "farewell"
+    ],
+    [
+     "gündüz",
+     "daytime"
+    ],
+    [
+     "bulut",
+     "cloud"
+    ],
+    [
+     "restoran",
+     "restaurant"
+    ],
+    [
+     "hain",
+     "traitor"
+    ],
+    [
+     "maske",
+     "mask"
+    ],
+    [
+     "festival",
+     "festival"
+    ],
+    [
+     "popüler",
+     "popular"
+    ],
+    [
+     "bahar",
+     "spring (season)"
+    ],
+    [
+     "müdahale",
+     "intervention"
+    ],
+    [
+     "mucize",
+     "miracle"
+    ],
+    [
+     "gölge",
+     "shadow / shade"
+    ],
+    [
+     "romantik",
+     "romantic"
+    ],
+    [
+     "efsane",
+     "legend"
+    ],
+    [
+     "petrol",
+     "oil (petroleum)"
+    ],
+    [
+     "yuva",
+     "nest / home"
+    ],
+    [
+     "liman",
+     "port / harbor"
+    ],
+    [
+     "nüfus",
+     "population"
+    ],
+    [
+     "isyan",
+     "rebellion"
+    ],
+    [
+     "senaryo",
+     "scenario / script"
+    ],
+    [
+     "firma",
+     "company"
+    ],
+    [
+     "manzara",
+     "view / scenery"
+    ],
+    [
+     "stres",
+     "stress"
+    ],
+    [
+     "şahit",
+     "witness"
+    ],
+    [
+     "çelik",
+     "steel"
+    ],
+    [
+     "duman",
+     "smoke"
+    ],
+    [
+     "arzu",
+     "desire"
+    ],
+    [
+     "yedek",
+     "spare / backup"
+    ],
+    [
+     "tecrübe",
+     "experience"
+    ],
+    [
+     "yanıt",
+     "response"
+    ],
+    [
+     "sultan",
+     "sultan"
+    ],
+    [
+     "sıvı",
+     "liquid"
+    ],
+    [
+     "elektronik",
+     "electronic"
+    ],
+    [
+     "konferans",
+     "conference"
+    ],
+    [
+     "ümit",
+     "hope"
+    ],
+    [
+     "siyaset",
+     "politics"
+    ],
+    [
+     "sektör",
+     "sector"
+    ],
+    [
+     "otomatik",
+     "automatic"
+    ],
+    [
+     "edebiyat",
+     "literature"
+    ],
+    [
+     "hazine",
+     "treasure"
+    ],
+    [
+     "ilham",
+     "inspiration"
+    ],
+    [
+     "rakam",
+     "digit / figure"
+    ],
+    [
+     "heykel",
+     "statue"
+    ],
+    [
+     "rekor",
+     "record"
+    ],
+    [
+     "orijinal",
+     "original"
+    ],
+    [
+     "potansiyel",
+     "potential"
+    ],
+    [
+     "demokrasi",
+     "democracy"
+    ],
+    [
+     "inşallah",
+     "God willing / hopefully"
+    ],
+    [
+     "vadi",
+     "valley"
+    ],
+    [
+     "röportaj",
+     "interview"
+    ],
+    [
+     "basketbol",
+     "basketball"
+    ],
+    [
+     "masaj",
+     "massage"
+    ],
+    [
+     "kartal",
+     "eagle"
+    ],
+    [
+     "tank",
+     "tank"
+    ],
+    [
+     "rehber",
+     "guide"
+    ],
+    [
+     "iade",
+     "return / refund"
+    ],
+    [
+     "profil",
+     "profile"
+    ],
+    [
+     "içerik",
+     "content"
+    ],
+    [
+     "gündem",
+     "agenda"
+    ],
+    [
+     "rekabet",
+     "competition"
+    ],
+    [
+     "genetik",
+     "genetic"
+    ],
+    [
+     "gıda",
+     "food (as a product)"
+    ],
+    [
+     "önlem",
+     "precaution / measure"
+    ],
+    [
+     "alternatif",
+     "alternative"
+    ],
+    [
+     "lira",
+     "lira"
+    ],
+    [
+     "başvuru",
+     "application"
+    ],
+    [
+     "sergi",
+     "exhibition"
+    ],
+    [
+     "şair",
+     "poet"
+    ],
+    [
+     "etiket",
+     "label / tag"
+    ],
+    [
+     "özet",
+     "summary"
+    ],
+    [
+     "bütçe",
+     "budget"
+    ],
+    [
+     "turnuva",
+     "tournament"
+    ],
+    [
+     "öneri",
+     "suggestion"
+    ],
+    [
+     "yatırım",
+     "investment"
+    ],
+    [
+     "çekirdek",
+     "seed / core / kernel"
+    ],
+    [
+     "sakat",
+     "disabled / injured"
+    ],
+    [
+     "protesto",
+     "protest"
+    ],
+    [
+     "sanal",
+     "virtual"
+    ],
+    [
+     "kültürel",
+     "cultural"
+    ],
+    [
+     "dönüşüm",
+     "transformation"
+    ],
+    [
+     "şube",
+     "branch"
+    ],
+    [
+     "hakem",
+     "referee"
+    ],
+    [
+     "otomobil",
+     "automobile"
+    ],
+    [
+     "felsefe",
+     "philosophy"
+    ],
+    [
+     "mobil",
+     "mobile"
+    ],
+    [
+     "hamile",
+     "pregnant"
+    ],
+    [
+     "paralel",
+     "parallel"
+    ],
+    [
+     "euro",
+     "euro"
+    ],
+    [
+     "endüstri",
+     "industry"
+    ],
+    [
+     "ulaşım",
+     "transportation"
+    ],
+    [
+     "kapasite",
+     "capacity"
+    ],
+    [
+     "iktidar",
+     "ruling power"
+    ],
+    [
+     "platform",
+     "platform"
+    ],
+    [
+     "baraj",
+     "dam"
+    ],
+    [
+     "faiz",
+     "interest (on money)"
+    ],
+    [
+     "akademik",
+     "academic"
+    ],
+    [
+     "takvim",
+     "calendar"
+    ],
+    [
+     "iklim",
+     "climate"
+    ],
+    [
+     "tasarım",
+     "design"
+    ],
+    [
+     "namaz",
+     "prayer (Islamic)"
+    ],
+    [
+     "turizm",
+     "tourism"
+    ],
+    [
+     "anket",
+     "survey"
+    ],
+    [
+     "grafik",
+     "graph / graphic"
+    ],
+    [
+     "klip",
+     "(music) video clip"
+    ],
+    [
+     "coğrafya",
+     "geography"
+    ],
+    [
+     "istatistik",
+     "statistics"
+    ],
+    [
+     "tarım",
+     "agriculture"
+    ],
+    [
+     "ilke",
+     "principle"
+    ],
+    [
+     "türkü",
+     "folk song"
+    ],
+    [
+     "referandum",
+     "referendum"
+    ]
+   ]
   }
  ]
 }
