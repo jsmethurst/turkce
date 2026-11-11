@@ -3267,6 +3267,8 @@ const state = {
 const SETTINGS_KEY = "fiil_settings_v1";
 let SAVED_SETTINGS = null;
 try{ SAVED_SETTINGS = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "null"); }catch(e){ SAVED_SETTINGS = null; }
+// The one-time "select the new A2 lists" step must run once per learner, never on every load: it is skipped when this browser already ran it.
+let a2Done = !!(SAVED_SETTINGS && SAVED_SETTINGS.a2Added), a2ListDone = !!(SAVED_SETTINGS && SAVED_SETTINGS.a2ListAdded);
 function collectSettings(){
   return {
       mode: state.mode,
@@ -3410,14 +3412,15 @@ function applyFormsSettings(S){
     ["bonusg4","bonusg5"].forEach(k=>{ if(VERB_BONUS_CHUNKS.some(c=>c.key===k)) state.bonusVerbChunks.add(k); });
   }
   // The A2 lists arrived after some learners saved their selection: select them once, then leave the choice alone.
-  if(!S.a2Added){
+  if(!S.a2Added && !a2Done){
     VERB_BONUS_CHUNKS.filter(c=>c.key.startsWith("a2bonusg")).forEach(c=>state.bonusVerbChunks.add(c.key));
     NONVERB_CHUNKS.filter(c=>c.unit==="a2").forEach(c=>state.nonverbChunks.add(c.key));
   }
-  if(!S.a2ListAdded){
+  if(!S.a2ListAdded && !a2ListDone){
     VERB_BONUS_CHUNKS.filter(c=>c.key.startsWith("a2listvg")).forEach(c=>state.bonusVerbChunks.add(c.key));
     NONVERB_CHUNKS.filter(c=>c.unit==="a2l").forEach(c=>state.nonverbChunks.add(c.key));
   }
+  a2Done = a2ListDone = true;
   if(typeof S.negatives==="boolean") state.negatives = S.negatives;
   if(typeof S.questions==="boolean") state.questions = S.questions;
   if(typeof S.ability==="boolean") state.ability = S.ability;
@@ -7233,6 +7236,9 @@ async function initRemote(){
       remoteExists = snap.exists;
       const merged = snap.exists ? JSON.parse(JSON.stringify(snap.data())) : collectSettings();
       dirtySettings.forEach((v,k)=>{ merged[k] = v; });
+      // Settings saved before the A2 flags existed lack them: upload them now so the one-time A2 step never runs again.
+      if(snap.exists && !merged.a2Added) dirtySettings.set("a2Added", true);
+      if(snap.exists && !merged.a2ListAdded) dirtySettings.set("a2ListAdded", true);
       applyFormsSettings(merged);
       applyVocabSettings(merged);
       lastLocalSettings = collectSettings();
