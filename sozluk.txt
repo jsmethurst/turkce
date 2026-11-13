@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-323 verbs · 1241 non-verbs · 40 topics
+324 verbs · 1241 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -350,7 +350,7 @@ koklamak                  to smell
     akuzatif: Çiçeği kokluyorum.  (I'm smelling the flower.)
 toplamak                  to collect
     akuzatif: Kâğıtları topluyorum.  (I'm collecting the papers.)
-gülümsemek                to smile slightly
+gülümsemek                to smile
     datif: Bana gülümsüyor.  (He/she is smiling at me.)
 bahsetmek                 to talk about
     ablatif: Bundan bahsediyorum.  (I'm talking about this.)
@@ -469,8 +469,10 @@ dağılmak                  to disperse / to scatter
     örnek: Kalabalık dağılıyor.  (The crowd is dispersing.)
 bağış vermek              to give a donation
     datif: Okula bağış veriyorum.  (I'm giving a donation to the school.)
-savaşmak                  to fight
+savaşmak                  to fight (in war) / to battle
     ile: Askerler düşmanla savaşıyor.  (The soldiers are fighting the enemy.)
+dövüşmek                  to fight
+    ile: Boksörler birbirleriyle dövüşüyor.  (The boxers are fighting each other.)
 vazgeçmek                 to give up
     ablatif: Plandan vazgeçiyorum.  (I'm giving up on the plan.)
 rahatlatmak               to soothe (someone)
@@ -481,11 +483,11 @@ eşleştirmek               to match together
     akuzatif: Çocuklar çorapları eşleştiriyor.  (The children are matching the socks.)
 ava çıkmak                to go hunting
     örnek: Hafta sonu ava çıkıyoruz.  (We're going hunting this weekend.)
-yaramazlık yapmak         to misbehave
-    örnek: Çocuklar yaramazlık yapıyor.  (The children are misbehaving.)
 
 A1 DERSTE 76-100
 ----------------
+yaramazlık yapmak         to misbehave
+    örnek: Çocuklar yaramazlık yapıyor.  (The children are misbehaving.)
 dirsek atmak              to elbow someone
     datif: Oyuncu rakibe dirsek atıyor.  (The player is elbowing his opponent.)
 ağrımak                   to ache
@@ -534,11 +536,11 @@ bölmek                    to divide / to split
     akuzatif: Masayı ölçüyorum.  (I'm measuring the table.)
 tartmak                   to weigh
     akuzatif: Elmaları tartıyor.  (She is weighing the apples.)
+
+A1 DERSTE 101-116
+-----------------
 saklamak                  to hide / to conceal
     akuzatif: Anahtarı saklıyor.  (He is hiding the key.)
-
-A1 DERSTE 101-115
------------------
 görünmek                  to show up / to appear
     lokatif: Ay gökyüzünde görünüyor.  (The moon is appearing in the sky.)
 kaybolmak                 to disappear
@@ -826,7 +828,7 @@ yaşlı                     old / elderly (people)
 kafe                      cafe
 bekar                     single
 açık                      open
-oyuncu                    actor
+oyuncu                    actor / player
 futbolcu                  football player
 şarkıcı                   singer
 manken                    model
@@ -2215,7 +2217,7 @@ gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, ge�
 
 Everyday Actions
 ----------------
-açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek, saldırmak, savunmak, korumak, engellemek, tamir etmek, montaj, montaj yapmak, edinmek, edilmek, zorunda kalmak, mecbur kalmak, çatlamak, yanmak, koparmak, kokmak, karışmak, basmak, öpmek, gerekmek, silmek, okşamak, zarar vermek, destek olmak, süt sağmak, havlamak, dilek tutmak, patlamak, hayatını kaybetmek, mezun olmak, elektrik kesilmek, burs almak, ağaç dikmek, yaygınlaşmak, üretmek, sigara içmek, yakalanmak, karşılaşmak
+açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, dövüşmek, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek, saldırmak, savunmak, korumak, engellemek, tamir etmek, montaj, montaj yapmak, edinmek, edilmek, zorunda kalmak, mecbur kalmak, çatlamak, yanmak, koparmak, kokmak, karışmak, basmak, öpmek, gerekmek, silmek, okşamak, zarar vermek, destek olmak, süt sağmak, havlamak, dilek tutmak, patlamak, hayatını kaybetmek, mezun olmak, elektrik kesilmek, burs almak, ağaç dikmek, yaygınlaşmak, üretmek, sigara içmek, yakalanmak, karşılaşmak
 
 Thinking & Deciding
 -------------------
