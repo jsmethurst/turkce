@@ -77,7 +77,7 @@ When Jacob says "add <turkish> - <english>":
   - `c` is the case label: `akuzatif`, `datif`, `lokatif`, `ablatif`, `ile`, or `örnek` for a plain example.
   - Wrap the case suffix in `<b>…</b>`.
   - Use the present continuous where natural.
-- **A2 Listede verbs** are `"page":"a2l"` (orders 400.01, 400.02 ...) and non-verbs `"unit":"a2l"`; that list is complete, so normal additions go to A2 Derste.
+- **A2 Listede verbs** are `"page":"a2l"` (orders 400.01, 400.02 ...) and non-verbs `"unit":"a2l"`; that list is complete, so normal additions go to A2 Derste. (Jacob added the 120 "Türkçe Fiil / Kalıp" phrase verbs from the Turkish Now A2-B1 sheet there, e.g. `birine alışmak`; their Turkish and English are kept exactly as on the sheet, and each has one case example. Multi-word verbs are never offered in Forms: `isSimpleVerb` skips any infinitive with a space.)
 - **New A2 Derste verbs:** `"page":"a2"`, with an `order` greater than the last `page:"a2"` verb's (the first A2 verb is 300.1, then 300.2 ...). Put the row at the end of the `verbs` array. (The A1 Derste verbs, `"page":"other"`, are closed.)
 - **Check the conjugation:** load the page and run `conjugateFull(verb, tenseKey, personIdx, false, false, false)` for each key in `TENSES`. This catches Turkish verbs with unusual stems.
 

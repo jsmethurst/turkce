@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-331 verbs · 1251 non-verbs · 40 topics
+451 verbs · 1251 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -76,8 +76,10 @@ izlemek                   to watch
     akuzatif: Filmi izliyorum.  (I'm watching the movie.)
 öğrenmek                  to learn
     ablatif: Kitaptan öğreniyorum.  (I'm learning from the book.)
+    akuzatif: Yeni kelimeleri öğreniyorum.  (I'm learning the new words.)
 öğretmek                  to teach
     datif: Çocuğa müzik öğretiyorum.  (I'm teaching the child music.)
+    akuzatif: Çocuklara alfabeyi öğretiyor.  (She's teaching the children the alphabet.)
 aramak                    to call / to search
     akuzatif: Telefonu arıyorum.  (I'm looking for the phone.)
 
@@ -180,6 +182,7 @@ denemek                   to try
     akuzatif: Yeni restoranı deniyorum.  (I'm trying the new restaurant.)
 bırakmak                  to leave / to let go / to drop off
     akuzatif: İşi bırakıyorum.  (I'm quitting the job.)
+    datif: Çantayı masaya bırakıyorum.  (I'm leaving the bag on the table.)
 düşünmek                  to think
     akuzatif: Seni düşünüyorum.  (I'm thinking of you.)
 hatırlamak                to remember
@@ -224,10 +227,12 @@ yorulmak                  to get tired
     örnek: Bugün çok yoruldum.  (I got very tired today.)
 hissetmek                 to feel
     örnek: Kendimi iyi hissediyorum.  (I feel good.)
+    akuzatif: Acıyı hissediyorum.  (I feel the pain.)
 inanmak                   to believe
     datif: Sana inanıyorum.  (I believe you.)
 güvenmek                  to trust
     datif: Sana güveniyorum.  (I trust you.)
+    lokatif: Her konuda sana güveniyorum.  (I rely on you in every matter.)
 özlemek                   to miss
     akuzatif: Seni özlüyorum.  (I miss you.)
 merak etmek               to wonder / to be curious
@@ -285,6 +290,7 @@ kesmek                    to cut
     akuzatif: Ekmeği kesiyorum.  (I'm cutting the bread.)
 eklemek                   to add
     datif: Çorbaya tuz ekliyorum.  (I'm adding salt to the soup.)
+    akuzatif: Çorbaya tuzu ekliyorum.  (I'm adding the salt to the soup.)
 geçirmek                  to spend / to pass
     akuzatif: Tatili evde geçiriyorum.  (I'm spending the holiday at home.)
 hazırlanmak               to get ready
@@ -295,6 +301,7 @@ davet etmek               to invite
     akuzatif: Seni davet ediyorum.  (I'm inviting you.)
 sipariş vermek            to order
     örnek: Pizza sipariş veriyorum.  (I'm ordering pizza.)
+    ablatif: Restorandan sipariş veriyorum.  (I'm ordering from the restaurant.)
 rezervasyon yapmak        to make a reservation
     örnek: İki kişilik rezervasyon yapıyorum.  (I'm making a reservation for two.)
 kiralamak                 to rent
@@ -625,12 +632,264 @@ rendelemek                to grate
 kavurmak                  to sauté
     akuzatif: Soğanı kavuruyorum.  (I am sautéing the onion.)
 
-A2 LISTEDE 26-27
+A2 LISTEDE 26-50
 ----------------
 közlemek                  to roast
     akuzatif: Patlıcanı közlüyorum.  (I am roasting the eggplant.)
 pazarlık yapmak           to bargain
     lokatif: Pazarda pazarlık yapıyorum.  (I am bargaining at the market.)
+birine alışmak            to get used to someone
+    datif: Yeni öğretmene alışıyorum.  (I'm getting used to the new teacher.)
+bir şeye alışmak          to get used to something
+    datif: Soğuk havaya alışıyorum.  (I'm getting used to the cold weather.)
+bir işe başlamak          to start a job / task
+    datif: Yeni bir işe başlıyor.  (She's starting a new job.)
+bir kursa katılmak        to attend a course
+    datif: Bir kursa katılıyorum.  (I'm attending a course.)
+birine güvenmek           to trust someone
+    datif: Kardeşime güveniyorum.  (I trust my brother.)
+bir şeye inanmak          to believe in something
+    datif: Geleceğe inanıyorum.  (I believe in the future.)
+birine kızmak             to get angry with someone
+    datif: Arkadaşıma kızıyorum.  (I'm angry with my friend.)
+bir şeye üzülmek          to be upset about something
+    datif: Bu duruma üzülüyorum.  (I'm upset about this situation.)
+bir habere sevinmek       to be glad about some news
+    datif: Habere seviniyoruz.  (We're glad about the news.)
+bir şeye şaşırmak         to be surprised at something
+    datif: Sonuca şaşırıyorum.  (I'm surprised at the result.)
+birine benzemek           to look like someone
+    datif: Babasına benziyor.  (She looks like her father.)
+bir yere yaklaşmak        to approach a place
+    datif: İstasyona yaklaşıyoruz.  (We're approaching the station.)
+bir yere ulaşmak          to reach a place
+    datif: Zirveye ulaşıyoruz.  (We're reaching the top.)
+birine yardım etmek       to help someone
+    datif: Komşuma yardım ediyorum.  (I'm helping my neighbor.)
+birine teşekkür etmek     to thank someone
+    datif: Öğretmenime teşekkür ediyorum.  (I'm thanking my teacher.)
+bir şeye ihtiyaç duymak   to need something
+    datif: Dinlenmeye ihtiyaç duyuyorum.  (I need some rest.)
+birini özlemek            to miss someone
+    akuzatif: Ailemi özlüyorum.  (I miss my family.)
+bir şeye dikkat etmek     to pay attention to something
+    datif: Derse dikkat ediyorum.  (I'm paying attention to the lesson.)
+bir şeye önem vermek      to attach importance to something
+    datif: Aileye önem veriyoruz.  (We attach importance to family.)
+bir karara karşı çıkmak   to oppose a decision
+    datif: Karara karşı çıkıyorlar.  (They're opposing the decision.)
+birine izin vermek        to allow someone
+    datif: Oğluma izin veriyorum.  (I'm giving my son permission.)
+bir soruya cevap vermek   to answer a question
+    datif: Soruya cevap veriyor.  (He's answering the question.)
+birine davet göndermek    to send someone an invitation
+    datif: Arkadaşlarıma davet gönderiyorum.  (I'm sending my friends an invitation.)
+
+A2 LISTEDE 51-75
+----------------
+bir konuya odaklanmak     to focus on a topic
+    datif: Konuya odaklanıyoruz.  (We're focusing on the topic.)
+bir zorluğa dayanmak      to endure a difficulty
+    datif: Zorluğa dayanıyor.  (He endures the difficulty.)
+bir işe başvurmak         to apply for a job
+    datif: Bir işe başvuruyorum.  (I'm applying for a job.)
+birine rastlamak          to run into someone
+    datif: Öğretmenime rastladım.  (I ran into my teacher.)
+birine eşlik etmek        to accompany someone
+    datif: Büyükanneme eşlik ediyorum.  (I'm accompanying my grandmother.)
+birine hayran olmak       to admire someone
+    datif: Babama hayran oluyorum.  (I admire my father.)
+bir yere ait olmak        to belong to a place
+    datif: Buraya aitim.  (I belong here.)
+bir şehirde yaşamak       to live in a city
+    lokatif: Büyük bir şehirde yaşıyorum.  (I live in a big city.)
+bir yerde çalışmak        to work somewhere
+    lokatif: Bir fabrikada çalışıyor.  (She works at a factory.)
+bir yerde oturmak         to sit somewhere / live somewhere
+    lokatif: Bahçede oturuyoruz.  (We're sitting in the garden.)
+bir yerde bulunmak        to be located somewhere
+    lokatif: Banka köşede bulunuyor.  (The bank is located on the corner.)
+bir yerde kalmak          to stay somewhere
+    lokatif: Arkadaşımın evinde kalıyorum.  (I'm staying at my friend's house.)
+bir yerde beklemek        to wait somewhere
+    lokatif: Köşede bekliyorum.  (I'm waiting at the corner.)
+bir alanda uzmanlaşmak    to specialize in a field
+    lokatif: Bu alanda uzmanlaşıyorum.  (I'm specializing in this field.)
+bir konuda başarılı olmak to be successful in something
+    lokatif: Matematikte başarılı oluyor.  (She's successful in math.)
+bir konuda başarısız olmakto fail at something
+    lokatif: Bu konuda başarısız oluyorum.  (I'm failing at this subject.)
+bir konuda ısrar etmek    to insist on something
+    lokatif: Bu meselede ısrar ediyorum.  (I insist on this matter.)
+bir konuda tereddüt etmek to hesitate about something
+    lokatif: Seçimde tereddüt ediyorum.  (I'm hesitating about the choice.)
+birinden şüphelenmek      to suspect someone
+    ablatif: Komşusundan şüpheleniyor.  (He suspects his neighbor.)
+bir yerde saklanmak       to hide somewhere
+    lokatif: Kedi yatağın altında saklanıyor.  (The cat is hiding under the bed.)
+bir konuda yoğunlaşmak    to concentrate on a subject
+    lokatif: Bu konuda yoğunlaşıyorum.  (I'm concentrating on this subject.)
+bir alanda gelişmek       to develop in a field
+    lokatif: Bu alanda gelişiyor.  (She's developing in this field.)
+bir projede rol almak     to play a role in a project
+    lokatif: Projede rol alıyorum.  (I'm playing a role in the project.)
+bir konuda söz sahibi olmakto have a say in something
+    lokatif: Bu konuda söz sahibi oluyor.  (She has a say in this matter.)
+bir etkinlikte yer almak  to take part in an event
+    lokatif: Etkinlikte yer alıyoruz.  (We're taking part in the event.)
+
+A2 LISTEDE 76-100
+-----------------
+birinden korkmak          to be afraid of someone
+    ablatif: Patrondan korkuyorum.  (I'm afraid of my boss.)
+bir şeyden çekinmek       to hesitate to do something / shy away from something
+    ablatif: Konuşmadan çekiniyor.  (She's shy about speaking.)
+bir şeyden sıkılmak       to get bored with something
+    ablatif: Bu işten sıkılıyorum.  (I'm getting bored with this work.)
+bir şeyden bıkmak         to get fed up with something
+    ablatif: Bu trafikten bıkıyorum.  (I'm fed up with this traffic.)
+bir şeyden vazgeçmek      to give up something
+    ablatif: Hayalinden vazgeçiyor.  (She's giving up her dream.)
+bir durumdan şikâyet etmekto complain about a situation
+    ablatif: Durumdan şikâyet ediyoruz.  (We're complaining about the situation.)
+bir konudan bahsetmek     to talk about a topic
+    ablatif: Konudan bahsediyor.  (He's talking about the topic.)
+birinden etkilenmek       to be impressed by someone
+    ablatif: Öğretmenimizden etkileniyorum.  (I'm impressed by our teacher.)
+birinden hoşlanmak        to like someone
+    ablatif: Komşumdan hoşlanıyorum.  (I like my neighbor.)
+bir şeyden nefret etmek   to hate something
+    ablatif: Kalabalıktan nefret ediyorum.  (I hate crowds.)
+bir şeyden yararlanmak    to benefit from something
+    ablatif: Fırsattan yararlanıyorum.  (I'm taking advantage of the opportunity.)
+bir kaynaktan faydalanmak to make use of a source
+    ablatif: Bu kaynaktan faydalanıyoruz.  (We're making use of this source.)
+bir tehlikeden kurtulmak  to escape from a danger
+    ablatif: Tehlikeden kurtuluyoruz.  (We're escaping the danger.)
+birinden uzaklaşmak       to move away from someone
+    ablatif: Ondan uzaklaşıyorum.  (I'm moving away from him.)
+bir işten ayrılmak        to leave a job
+    ablatif: İşten ayrılıyor.  (He's leaving his job.)
+bir yerden kaçmak         to run away from a place
+    ablatif: Mahkûm hapishaneden kaçıyor.  (The prisoner is escaping from the prison.)
+bir şeyden sakınmak       to avoid something
+    ablatif: Soğuktan sakınıyorum.  (I'm avoiding the cold.)
+bir sesten rahatsız olmak to be disturbed by a noise
+    ablatif: Bu sesten rahatsız oluyorum.  (I'm disturbed by this noise.)
+bir sonuçtan memnun olmak to be satisfied with a result
+    ablatif: Sonuçtan memnun oluyoruz.  (We're satisfied with the result.)
+bir davranıştan utanmak   to be ashamed of a behavior
+    ablatif: Davranışımdan utanıyorum.  (I'm ashamed of my behavior.)
+birinden sorumlu olmak    to be responsible for someone
+    ablatif: Küçük kardeşimden sorumlu oluyorum.  (I'm responsible for my little brother.)
+bir olaydan kaynaklanmak  to result from an event
+    ablatif: Gecikme bir kazadan kaynaklanıyor.  (The delay results from an accident.)
+birçok parçadan oluşmak   to consist of many parts
+    ablatif: Bu makine birçok parçadan oluşuyor.  (This machine consists of many parts.)
+bir şeyi anlamak          to understand something
+    akuzatif: Bunu anlıyorum.  (I understand this.)
+bir konuyu anlatmak       to explain a topic
+    akuzatif: Öğretmen konuyu anlatıyor.  (The teacher is explaining the topic.)
+
+A2 LISTEDE 101-125
+------------------
+bir konuyu araştırmak     to research a topic
+    akuzatif: Bir konuyu araştırıyorum.  (I'm researching a topic.)
+bir belgeyi incelemek     to examine a document
+    akuzatif: Belgeyi inceliyor.  (She's examining the document.)
+seçenekleri değerlendirmekto evaluate the options
+    akuzatif: Seçenekleri değerlendiriyoruz.  (We're evaluating the options.)
+iki şeyi karşılaştırmak   to compare two things
+    akuzatif: İki şeyi karşılaştırıyorum.  (I'm comparing two things.)
+bir teklifi kabul etmek   to accept an offer
+    akuzatif: Teklifi kabul ediyorum.  (I'm accepting the offer.)
+bir daveti reddetmek      to refuse an invitation
+    akuzatif: Daveti reddediyor.  (She's refusing the invitation.)
+bir hatayı fark etmek     to notice a mistake
+    akuzatif: Bir hatayı fark ediyorum.  (I notice a mistake.)
+bir olayı hatırlamak      to remember an event
+    akuzatif: Olayı hatırlıyorum.  (I remember the event.)
+bir randevuyu unutmak     to forget an appointment
+    akuzatif: Randevuyu unuttu.  (He forgot the appointment.)
+birini korumak            to protect someone
+    akuzatif: Çocuğumu koruyorum.  (I protect my child.)
+bir beceriyi geliştirmek  to improve a skill
+    akuzatif: Bir beceriyi geliştiriyorum.  (I'm improving a skill.)
+bir planı değiştirmek     to change a plan
+    akuzatif: Planı değiştiriyoruz.  (We're changing the plan.)
+bir metni düzeltmek       to correct a text
+    akuzatif: Yazıyı düzeltiyorum.  (I'm correcting the text.)
+bir problemi çözmek       to solve a problem
+    akuzatif: Problemi çözüyor.  (He's solving the problem.)
+bir hedefi başarmak       to achieve a goal
+    akuzatif: Hedefi başarıyoruz.  (We're achieving the goal.)
+bir görevi tamamlamak     to complete a task
+    akuzatif: Görevi tamamlıyorum.  (I'm completing the task.)
+bir geleneği sürdürmek    to maintain a tradition
+    akuzatif: Geleneği sürdürüyorlar.  (They maintain the tradition.)
+bir ekibi yönetmek        to manage a team
+    akuzatif: Ekibi yönetiyorum.  (I manage the team.)
+birini etkilemek          to influence someone
+    akuzatif: Gençleri etkiliyor.  (He's influencing the young people.)
+birini desteklemek        to support someone
+    akuzatif: Arkadaşımı destekliyorum.  (I support my friend.)
+bir fikri savunmak        to defend an idea
+    akuzatif: Bir fikri savunuyor.  (She's defending an idea.)
+bir davranışı eleştirmek  to criticize a behavior
+    akuzatif: Davranışı eleştiriyor.  (He's criticizing the behavior.)
+bir çözüm önermek         to suggest a solution
+    örnek: Bir çözüm öneriyorum.  (I'm suggesting a solution.)
+bir durumu açıklamak      to explain a situation
+    akuzatif: Durumu açıklıyor.  (She's explaining the situation.)
+bir iddiayı kanıtlamak    to prove a claim
+    akuzatif: İddiayı kanıtlıyorum.  (I'm proving the claim.)
+
+A2 LISTEDE 126-147
+------------------
+bir sonucu tahmin etmek   to predict a result
+    akuzatif: Sonucu tahmin ediyorum.  (I'm predicting the result.)
+bir etkinliği planlamak   to plan an event
+    akuzatif: Etkinliği planlıyoruz.  (We're planning the event.)
+bir toplantıyı ertelemek  to postpone a meeting
+    akuzatif: Toplantıyı erteliyorlar.  (They're postponing the meeting.)
+bir durumu gözlemlemek    to observe a situation
+    akuzatif: Durumu gözlemliyoruz.  (We're observing the situation.)
+bir konuyu sorgulamak     to question a topic
+    akuzatif: Konuyu sorguluyorum.  (I'm questioning the topic.)
+bir projeyi gerçekleştirmekto carry out a project
+    akuzatif: Projeyi gerçekleştiriyoruz.  (We're carrying out the project.)
+bir gerçeği ortaya çıkarmakto reveal a truth
+    akuzatif: Gerçeği ortaya çıkarıyor.  (He's revealing the truth.)
+bir ayrıntıyı göz ardı etmekto overlook a detail
+    akuzatif: Bir ayrıntıyı göz ardı ediyorsun.  (You're overlooking a detail.)
+bir konuyu ele almak      to address a topic
+    akuzatif: Konuyu ele alıyoruz.  (We're addressing the topic.)
+bir ihtimali göz önünde bulundurmakto take a possibility into account
+    akuzatif: İhtimali göz önünde bulunduruyorum.  (I'm taking the possibility into account.)
+bir şeyden ders çıkarmak  to learn a lesson from something
+    ablatif: Bu olaydan ders çıkarıyorum.  (I'm learning a lesson from this event.)
+bir konuya öncelik vermek to prioritize a topic
+    datif: Bu konuya öncelik veriyoruz.  (We're prioritizing this topic.)
+bir belgeyi gözden geçirmekto review a document
+    akuzatif: Belgeyi gözden geçiriyorum.  (I'm reviewing the document.)
+bir konuda uzlaşmak       to reach an agreement on something
+    lokatif: Bu konuda uzlaşıyoruz.  (We're reaching an agreement on this topic.)
+bir durumdan haberdar olmakto be aware of a situation
+    ablatif: Durumdan haberdar oluyorum.  (I'm aware of the situation.)
+bir şeyi merak etmek      to be curious about something
+    akuzatif: Bunu merak ediyorum.  (I'm curious about this.)
+bir engelle mücadele etmekto struggle with an obstacle
+    ile: Bir engelle mücadele ediyor.  (She's struggling with an obstacle.)
+birinden ilham almak      to get inspiration from someone
+    ablatif: Öğretmenimden ilham alıyorum.  (I get inspiration from my teacher.)
+bir şeyi hesaba katmak    to take something into consideration
+    akuzatif: Fiyatı hesaba katıyoruz.  (We're taking the price into consideration.)
+bir düşünceyi dile getirmekto express an idea
+    akuzatif: Düşünceyi dile getiriyor.  (He's expressing an idea.)
+bir şeye karşı koymak     to resist something
+    datif: Baskıya karşı koyuyorlar.  (They're resisting the pressure.)
+bir gerçeğin farkına varmakto become aware of a truth
+    datif: Gerçeğin farkına varıyorum.  (I'm becoming aware of the truth.)
 
 A2 DERSTE 1-25
 --------------
@@ -2153,7 +2412,7 @@ insan, kadın, erkek, çocuk, öğretmen, öğrenci, doktor, pilot, müdür, avu
 
 Places & Buildings
 ------------------
-okul, sınıf, kütüphane, hastane, cami, banka, sinema, kafe, kafeterya, kantin, park, bahçe, şehir, üniversite, havaalanı, havalimanı, durak, market, manav, idari amirlik, halkla ilişkiler, okuma salonu, öğrenci işleri, bina, metropol, müze, okulda, sınıfta, hastanede, sinemada, sinema salonu, cadde, sokak, bu sokak, büfe, şirket, memleket, köy, yer, yerler, sur, devlet, meydan, köprü, tünel, kaldırım, postane, saha, şehir dışı, yurt, apartman, eğlence yeri, çiftlik, semt, valilik, sokak lokantası, neon ışıkları, saray, tarihi yer, Ziraat Bankası, havuz, kule, meclis, nükleer santral
+okul, sınıf, kütüphane, hastane, cami, banka, sinema, kafe, kafeterya, kantin, park, bahçe, şehir, üniversite, havaalanı, havalimanı, durak, market, manav, idari amirlik, halkla ilişkiler, okuma salonu, öğrenci işleri, bina, metropol, müze, okulda, sınıfta, hastanede, sinemada, sinema salonu, cadde, sokak, bu sokak, büfe, şirket, memleket, köy, yer, yerler, sur, devlet, meydan, köprü, tünel, kaldırım, postane, saha, şehir dışı, yurt, apartman, eğlence yeri, çiftlik, semt, valilik, sokak lokantası, neon ışıkları, saray, tarihi yer, Ziraat Bankası, havuz, kule, meclis, nükleer santral, bir yere ait olmak, bir şehirde yaşamak, bir yerde çalışmak, bir yerde oturmak, bir yerde bulunmak, bir yerde kalmak, bir yerde beklemek, bir yerde saklanmak
 
 House & Furniture
 -----------------
@@ -2177,7 +2436,7 @@ Personality & Appearance
 
 School & Study
 --------------
-sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, kitaplar, kitap, kalem, tahta, defter, çanta, sözlük, kağıt, kareli kağıt, çizgili kağıt, cümle, fiil, isim, sıfat, fotokopi, okumak, yazmak, öğrenmek, öğretmek, anlamak, cevaplamak, tekrar etmek, tamamlamak, düzeltmek, açıklamak, çözmek, sırt çantası, doğru, yanlış, mezuniyet, tören, hata, hece, kapak, ders, tamlama, kural, virgül, harf, bant, zil, özne, lise, bilim, kalem ucu, silgi, yüksek lisans, bilgisayar becerisi, seminer, sınav kâğıdı, emir kipi, hikâye kipi, beden eğitimi
+sınav, soru, ders çalışmak, ödev, kurs, kursa gitmek, teneffüs, bölüm, kitaplar, kitap, kalem, tahta, defter, çanta, sözlük, kağıt, kareli kağıt, çizgili kağıt, cümle, fiil, isim, sıfat, fotokopi, okumak, yazmak, öğrenmek, öğretmek, anlamak, cevaplamak, tekrar etmek, tamamlamak, düzeltmek, açıklamak, çözmek, sırt çantası, doğru, yanlış, mezuniyet, tören, hata, hece, kapak, ders, tamlama, kural, virgül, harf, bant, zil, özne, lise, bilim, kalem ucu, silgi, yüksek lisans, bilgisayar becerisi, seminer, sınav kâğıdı, emir kipi, hikâye kipi, beden eğitimi, bir kursa katılmak, bir alanda uzmanlaşmak, bir alanda gelişmek, bir beceriyi geliştirmek, bir metni düzeltmek
 
 Shopping & Money
 ----------------
@@ -2221,7 +2480,7 @@ burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön,
 
 Feelings
 --------
-sevmek, beğenmek, hoşlanmak, korkmak, üzülmek, sevinmek, kızmak, şaşırmak, sıkılmak, yorulmak, hissetmek, özlemek, merak etmek, güvenmek, eğlenmek, ağlamak, gülmek, gülümsemek, harika, eğlenceli, yorucu, monoton, pozitif enerji, mutlu, üzgün, heyecanlı, memnun, huzurlu, pişman, endişeli, kızgın, yorgun, şaşkın, sinirli, kıskanç, sıkıcı, yormak, sıkıntılı, duygusal, sarılmak, kavuşmak, ummak, rahatlatmak, rahatlamak, üzmek, sinirletmek, değer vermek, saygı duymak, heyecan, anı, hayran olmak, ilgi beklemek, heyecanlanmak
+sevmek, beğenmek, hoşlanmak, korkmak, üzülmek, sevinmek, kızmak, şaşırmak, sıkılmak, yorulmak, hissetmek, özlemek, merak etmek, güvenmek, eğlenmek, ağlamak, gülmek, gülümsemek, harika, eğlenceli, yorucu, monoton, pozitif enerji, mutlu, üzgün, heyecanlı, memnun, huzurlu, pişman, endişeli, kızgın, yorgun, şaşkın, sinirli, kıskanç, sıkıcı, yormak, sıkıntılı, duygusal, sarılmak, kavuşmak, ummak, rahatlatmak, rahatlamak, üzmek, sinirletmek, değer vermek, saygı duymak, heyecan, anı, hayran olmak, ilgi beklemek, heyecanlanmak, birine kızmak, bir şeye üzülmek, bir habere sevinmek, bir şeye şaşırmak, birini özlemek, birine hayran olmak, birinden şüphelenmek, birinden korkmak, bir şeyden çekinmek, bir şeyden sıkılmak, bir şeyden bıkmak, birinden etkilenmek, birinden hoşlanmak, bir şeyden nefret etmek, bir sesten rahatsız olmak, bir sonuçtan memnun olmak, bir davranıştan utanmak, bir şeyi merak etmek, birinden ilham almak
 
 Daily Routine
 -------------
@@ -2233,19 +2492,19 @@ hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş ol
 
 Talking & Communicating
 -----------------------
-konuşmak, söylemek, demek, sormak, soru sormak, cevaplamak, anlatmak, açıklamak, bahsetmek, dinlemek, duymak, anlamak, tekrar etmek, telefon etmek, mesaj atmak, göndermek, mektup, e-posta adresi, davet etmek, teklif etmek, yardım etmek, paylaşmak, tanışmak, görüşmek, buluşmak, buluşma, cümle, şaka, izin, emretmek, yollamak, seçim, izin vermek, karşı çıkmak, yasaklamak, bilgi, telgraf, telsiz telefon, işaret, yüksek ses, haberleşmek, sohbet etmek, mesajlaşmak, mektuplaşmak, selamlaşmak, boşver
+konuşmak, söylemek, demek, sormak, soru sormak, cevaplamak, anlatmak, açıklamak, bahsetmek, dinlemek, duymak, anlamak, tekrar etmek, telefon etmek, mesaj atmak, göndermek, mektup, e-posta adresi, davet etmek, teklif etmek, yardım etmek, paylaşmak, tanışmak, görüşmek, buluşmak, buluşma, cümle, şaka, izin, emretmek, yollamak, seçim, izin vermek, karşı çıkmak, yasaklamak, bilgi, telgraf, telsiz telefon, işaret, yüksek ses, haberleşmek, sohbet etmek, mesajlaşmak, mektuplaşmak, selamlaşmak, boşver, birine yardım etmek, birine teşekkür etmek, birine izin vermek, bir soruya cevap vermek, birine davet göndermek, birine rastlamak, birine eşlik etmek, bir konuda ısrar etmek, bir durumdan şikâyet etmek, bir konudan bahsetmek, bir konuyu anlatmak, bir teklifi kabul etmek, bir daveti reddetmek, bir çözüm önermek, bir durumu açıklamak, bir konuda uzlaşmak, bir düşünceyi dile getirmek
 
 Coming & Going
 --------------
-gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, geçmek, yürümek, koşmak, binmek, inmek, durmak, oturmak, kalkmak, uğramak, tırmanmak, düşmek, taşınmak, ayrılmak, katılmak, gecikmek, yetişmek, uğurlamak, uzanmak, kaçmak, dağılmak, görünmek, kaybolmak, hızlanmak, yavaşlamak, gezdirmek, dolaşmak, pasaja gitmek, varmak
+gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, geçmek, yürümek, koşmak, binmek, inmek, durmak, oturmak, kalkmak, uğramak, tırmanmak, düşmek, taşınmak, ayrılmak, katılmak, gecikmek, yetişmek, uğurlamak, uzanmak, kaçmak, dağılmak, görünmek, kaybolmak, hızlanmak, yavaşlamak, gezdirmek, dolaşmak, pasaja gitmek, varmak, bir yere yaklaşmak, bir yere ulaşmak, bir tehlikeden kurtulmak, birinden uzaklaşmak, bir işten ayrılmak, bir yerden kaçmak, bir şeyden sakınmak
 
 Everyday Actions
 ----------------
-açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, dövüşmek, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek, saldırmak, savunmak, korumak, engellemek, tamir etmek, montaj, montaj yapmak, edinmek, edilmek, zorunda kalmak, mecbur kalmak, çatlamak, yanmak, koparmak, kokmak, karışmak, basmak, öpmek, gerekmek, silmek, okşamak, zarar vermek, destek olmak, süt sağmak, havlamak, dilek tutmak, patlamak, hayatını kaybetmek, mezun olmak, elektrik kesilmek, burs almak, ağaç dikmek, yaygınlaşmak, üretmek, sigara içmek, yakalanmak, karşılaşmak, sulamak, uzatmak
+açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, dövüşmek, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek, saldırmak, savunmak, korumak, engellemek, tamir etmek, montaj, montaj yapmak, edinmek, edilmek, zorunda kalmak, mecbur kalmak, çatlamak, yanmak, koparmak, kokmak, karışmak, basmak, öpmek, gerekmek, silmek, okşamak, zarar vermek, destek olmak, süt sağmak, havlamak, dilek tutmak, patlamak, hayatını kaybetmek, mezun olmak, elektrik kesilmek, burs almak, ağaç dikmek, yaygınlaşmak, üretmek, sigara içmek, yakalanmak, karşılaşmak, sulamak, uzatmak, birine alışmak, bir şeye alışmak, bir işe başlamak, birine benzemek, bir şeye ihtiyaç duymak, bir zorluğa dayanmak, bir işe başvurmak, bir konuda başarılı olmak, bir konuda başarısız olmak, bir projede rol almak, bir konuda söz sahibi olmak, bir etkinlikte yer almak, bir şeyden vazgeçmek, bir şeyden yararlanmak, bir kaynaktan faydalanmak, birinden sorumlu olmak, bir olaydan kaynaklanmak, birçok parçadan oluşmak, birini korumak, bir planı değiştirmek, bir problemi çözmek, bir hedefi başarmak, bir görevi tamamlamak, bir geleneği sürdürmek, bir ekibi yönetmek, birini etkilemek, birini desteklemek, bir toplantıyı ertelemek, bir projeyi gerçekleştirmek, bir ayrıntıyı göz ardı etmek, bir engelle mücadele etmek
 
 Thinking & Deciding
 -------------------
-bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir, sanmak, mantık, vazgeçmek, fırsat, avantaj, kültür, hayat, kuruluş savaşı, cumhuriyet, buluş, amaç, silah, karşılaştırma, üstünlük
+bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir, sanmak, mantık, vazgeçmek, fırsat, avantaj, kültür, hayat, kuruluş savaşı, cumhuriyet, buluş, amaç, silah, karşılaştırma, üstünlük, birine güvenmek, bir şeye inanmak, bir şeye dikkat etmek, bir şeye önem vermek, bir karara karşı çıkmak, bir konuya odaklanmak, bir konuda tereddüt etmek, bir konuda yoğunlaşmak, bir şeyi anlamak, bir konuyu araştırmak, bir belgeyi incelemek, seçenekleri değerlendirmek, iki şeyi karşılaştırmak, bir hatayı fark etmek, bir olayı hatırlamak, bir randevuyu unutmak, bir fikri savunmak, bir davranışı eleştirmek, bir iddiayı kanıtlamak, bir sonucu tahmin etmek, bir etkinliği planlamak, bir durumu gözlemlemek, bir konuyu sorgulamak, bir gerçeği ortaya çıkarmak, bir konuyu ele almak, bir ihtimali göz önünde bulundurmak, bir şeyden ders çıkarmak, bir konuya öncelik vermek, bir belgeyi gözden geçirmek, bir durumdan haberdar olmak, bir şeyi hesaba katmak, bir şeye karşı koymak, bir gerçeğin farkına varmak
 
 Describing Things
 -----------------
