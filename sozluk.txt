@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-330 verbs · 1249 non-verbs · 40 topics
+331 verbs · 1251 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -246,7 +246,7 @@ göndermek                 to send
     datif: Anneme mektup gönderiyorum.  (I'm sending a letter to my mother.)
 tutmak                    to hold / to keep
     akuzatif: Çantayı tutuyorum.  (I'm holding the bag.)
-yetişmek                  to arrive / to be on time
+yetişmek                  to be on time
     datif: Otobüse yetişiyorum.  (I'm catching the bus.)
 gecikmek                  to be late
     datif: Derse gecikiyorum.  (I'm late for class.)
@@ -685,7 +685,7 @@ izin vermek               to allow
 zarar vermek              to cause harm
     datif: Çevreye zarar veriyor.  (It is causing harm to the environment.)
 
-A2 DERSTE 26-37
+A2 DERSTE 26-38
 ---------------
 değer vermek              to value
     datif: Aileye değer veriyorum.  (I value my family.)
@@ -711,6 +711,8 @@ selamlaşmak               to greet each other
     ile: Komşumuzla selamlaşıyoruz.  (We greet our neighbor.)
 uzatmak                   to extend / to stretch / to pass something over
     akuzatif: Tuzu bana uzatıyor.  (He's passing me the salt.)
+varmak                    to arrive
+    datif: Eve varıyoruz.  (We're arriving home.)
 
 
 ============================================================
@@ -2108,7 +2110,7 @@ yaka                      collar
 kanat                     wing
 uçurtma                   kite
 
-A2 DERSTE 76-86
+A2 DERSTE 76-88
 ---------------
 özne                      subject
 acele                     hurry
@@ -2121,6 +2123,8 @@ matara                    water bottle
 kuş yemi                  birdseed
 kavanoz                   jar
 sinek                     fly (insect)
+boşver                    nevermind
+defalarca                 over and over again
 
 
 ============================================================
@@ -2137,7 +2141,7 @@ birinci, ikinci, üçüncü, dördüncü, altıncı, yedinci, dokuzuncu, sonuncu
 
 Time & Schedule
 ---------------
-şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik, saniye, dakikalarca, saatlerce, günlerce, haftalarca, aylarca, yıllarca, asır, Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar, Ocak, Şubat, Mart, Nisan, Mayıs, Haziran, Temmuz, Ağustos, Eylül, Ekim, Kasım, Aralık, gece yarısı, mevsim, acele, tatil, doğum tarihi, sabaha kadar, çocukken, yaz akşamı, gençken, nadiren
+şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik, saniye, dakikalarca, saatlerce, günlerce, haftalarca, aylarca, yıllarca, asır, Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar, Ocak, Şubat, Mart, Nisan, Mayıs, Haziran, Temmuz, Ağustos, Eylül, Ekim, Kasım, Aralık, gece yarısı, mevsim, acele, tatil, doğum tarihi, sabaha kadar, çocukken, yaz akşamı, gençken, nadiren, defalarca
 
 Politeness & Fillers
 --------------------
@@ -2229,11 +2233,11 @@ hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş ol
 
 Talking & Communicating
 -----------------------
-konuşmak, söylemek, demek, sormak, soru sormak, cevaplamak, anlatmak, açıklamak, bahsetmek, dinlemek, duymak, anlamak, tekrar etmek, telefon etmek, mesaj atmak, göndermek, mektup, e-posta adresi, davet etmek, teklif etmek, yardım etmek, paylaşmak, tanışmak, görüşmek, buluşmak, buluşma, cümle, şaka, izin, emretmek, yollamak, seçim, izin vermek, karşı çıkmak, yasaklamak, bilgi, telgraf, telsiz telefon, işaret, yüksek ses, haberleşmek, sohbet etmek, mesajlaşmak, mektuplaşmak, selamlaşmak
+konuşmak, söylemek, demek, sormak, soru sormak, cevaplamak, anlatmak, açıklamak, bahsetmek, dinlemek, duymak, anlamak, tekrar etmek, telefon etmek, mesaj atmak, göndermek, mektup, e-posta adresi, davet etmek, teklif etmek, yardım etmek, paylaşmak, tanışmak, görüşmek, buluşmak, buluşma, cümle, şaka, izin, emretmek, yollamak, seçim, izin vermek, karşı çıkmak, yasaklamak, bilgi, telgraf, telsiz telefon, işaret, yüksek ses, haberleşmek, sohbet etmek, mesajlaşmak, mektuplaşmak, selamlaşmak, boşver
 
 Coming & Going
 --------------
-gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, geçmek, yürümek, koşmak, binmek, inmek, durmak, oturmak, kalkmak, uğramak, tırmanmak, düşmek, taşınmak, ayrılmak, katılmak, gecikmek, yetişmek, uğurlamak, uzanmak, kaçmak, dağılmak, görünmek, kaybolmak, hızlanmak, yavaşlamak, gezdirmek, dolaşmak, pasaja gitmek
+gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, geçmek, yürümek, koşmak, binmek, inmek, durmak, oturmak, kalkmak, uğramak, tırmanmak, düşmek, taşınmak, ayrılmak, katılmak, gecikmek, yetişmek, uğurlamak, uzanmak, kaçmak, dağılmak, görünmek, kaybolmak, hızlanmak, yavaşlamak, gezdirmek, dolaşmak, pasaja gitmek, varmak
 
 Everyday Actions
 ----------------
