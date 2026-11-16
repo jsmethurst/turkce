@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-324 verbs · 1241 non-verbs · 40 topics
+330 verbs · 1249 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -685,7 +685,7 @@ izin vermek               to allow
 zarar vermek              to cause harm
     datif: Çevreye zarar veriyor.  (It is causing harm to the environment.)
 
-A2 DERSTE 26-31
+A2 DERSTE 26-37
 ---------------
 değer vermek              to value
     datif: Aileye değer veriyorum.  (I value my family.)
@@ -699,6 +699,18 @@ karşı çıkmak              to oppose / object
     datif: Karara karşı çıkıyoruz.  (We are opposing the decision.)
 yasaklamak                to ban
     akuzatif: Sigarayı yasaklıyorlar.  (They are banning cigarettes.)
+mesajlaşmak               to text (sending/receiving)
+    ile: Arkadaşımla mesajlaşıyorum.  (I'm texting with my friend.)
+mektuplaşmak              to exchange letters
+    ile: Eski arkadaşımla mektuplaşıyorum.  (I'm exchanging letters with my old friend.)
+sulamak                   to water something
+    akuzatif: Çiçekleri suluyorum.  (I'm watering the flowers.)
+heyecanlanmak             to get excited
+    örnek: Çocuklar heyecanlanıyor.  (The children are getting excited.)
+selamlaşmak               to greet each other
+    ile: Komşumuzla selamlaşıyoruz.  (We greet our neighbor.)
+uzatmak                   to extend / to stretch / to pass something over
+    akuzatif: Tuzu bana uzatıyor.  (He's passing me the salt.)
 
 
 ============================================================
@@ -2096,11 +2108,19 @@ yaka                      collar
 kanat                     wing
 uçurtma                   kite
 
-A2 DERSTE 76-78
+A2 DERSTE 76-86
 ---------------
 özne                      subject
 acele                     hurry
 bilgi                     information
+akrep                     scorpion
+nadiren                   rarely
+rutin                     routine
+alışkanlık                habit
+matara                    water bottle
+kuş yemi                  birdseed
+kavanoz                   jar
+sinek                     fly (insect)
 
 
 ============================================================
@@ -2117,7 +2137,7 @@ birinci, ikinci, üçüncü, dördüncü, altıncı, yedinci, dokuzuncu, sonuncu
 
 Time & Schedule
 ---------------
-şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik, saniye, dakikalarca, saatlerce, günlerce, haftalarca, aylarca, yıllarca, asır, Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar, Ocak, Şubat, Mart, Nisan, Mayıs, Haziran, Temmuz, Ağustos, Eylül, Ekim, Kasım, Aralık, gece yarısı, mevsim, acele, tatil, doğum tarihi, sabaha kadar, çocukken, yaz akşamı, gençken
+şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik, saniye, dakikalarca, saatlerce, günlerce, haftalarca, aylarca, yıllarca, asır, Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar, Ocak, Şubat, Mart, Nisan, Mayıs, Haziran, Temmuz, Ağustos, Eylül, Ekim, Kasım, Aralık, gece yarısı, mevsim, acele, tatil, doğum tarihi, sabaha kadar, çocukken, yaz akşamı, gençken, nadiren
 
 Politeness & Fillers
 --------------------
@@ -2137,7 +2157,7 @@ masa, sandalye, koltuk, dolap, kanepe, yastık, sehpa, halı, duvar, oda, kitapl
 
 Kitchen & Food
 --------------
-mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak, tabak, kaşık, çatal, bıçak, yumurta, tavuk, balık, salata, elma, armut, limon, karpuz, kavun, kiraz, şeftali, erik, incir, patates, salatalık, soğan, sarımsak, biber, patlıcan, havuç, kabak, ıspanak, fasulye, tuz, şeker, karabiber, baharat, un, bal, karıştırmak, dökmek, ceviz, buzdolabı, tereyağı, kuruyemiş, demet, fiske, kadeh, salkım, vişne, maydanoz, fındık, pul biber, salça, kıyma, asma yaprağı, süzgeç, mantarsız, buzsuz, limonlu, çoban salata, ezogelin çorbası, maden suyu, sütsüz, kafeinsiz, mutfak kültürü, soya sosu, hardal, jambon, nohut, ızgara, buğulama, mangal, ikram sırası, sarmak, yoğurmak, rendelemek, çırpmak, kavurmak, közlemek
+mutfak, bardak, fincan, çorba, yemek, lezzetli, çilek, muz, domates, üzüm, zeytinyağı, reçel, ayran, yoğurt, şarap, kahve içmek, meyve suyu, organik, kek, süt, simit, tencere, tava, pişirmek, içmek, hazırlamak, demlemek, tatmak, kesmek, servis yapmak, sipariş vermek, rezervasyon yapmak, bahşiş, tuzlu, kuru yemekler, sulu yemekler, hafif yemek, çok çeşitli, acı, tatlı, ekşi, yağlı yemek, hazır yemek, taze yemek, doğalgaz, peynir, doymak, acıkmak, tabak, kaşık, çatal, bıçak, yumurta, tavuk, balık, salata, elma, armut, limon, karpuz, kavun, kiraz, şeftali, erik, incir, patates, salatalık, soğan, sarımsak, biber, patlıcan, havuç, kabak, ıspanak, fasulye, tuz, şeker, karabiber, baharat, un, bal, karıştırmak, dökmek, ceviz, buzdolabı, tereyağı, kuruyemiş, demet, fiske, kadeh, salkım, vişne, maydanoz, fındık, pul biber, salça, kıyma, asma yaprağı, süzgeç, mantarsız, buzsuz, limonlu, çoban salata, ezogelin çorbası, maden suyu, sütsüz, kafeinsiz, mutfak kültürü, soya sosu, hardal, jambon, nohut, ızgara, buğulama, mangal, ikram sırası, sarmak, yoğurmak, rendelemek, çırpmak, kavurmak, közlemek, matara, kavanoz
 
 Transportation & Travel
 -----------------------
@@ -2189,7 +2209,7 @@ takılar, özel takılar, küpe, yüzük, alyans, kolye, bileklik, bilezik, halh
 
 Nature & Outdoors
 -----------------
-hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, çiçekler, bitki, toprak, kum, hayvan, boğa, yakmak, ateşi yakmak, söndürmek, beslemek, koklamak, ıslanmak, üşümek, buhar, dalga, dal, sivrisinek, kelebek, akmak, ada, yaprak, dünya, fare, evcil hayvan, doğa, tarla, orman, çimen, ayı, kanat, güvercin, menekşe, köpek tüyü, doğal ürünler, kıta, zirve, tsunami, şiddet, çevre, fidan
+hava, deniz, sahil, yağmur, sıcak, soğuk, buz, kuru, ıslak, ağaç, kuş, çiçekler, bitki, toprak, kum, hayvan, boğa, yakmak, ateşi yakmak, söndürmek, beslemek, koklamak, ıslanmak, üşümek, buhar, dalga, dal, sivrisinek, kelebek, akmak, ada, yaprak, dünya, fare, evcil hayvan, doğa, tarla, orman, çimen, ayı, kanat, güvercin, menekşe, köpek tüyü, doğal ürünler, kıta, zirve, tsunami, şiddet, çevre, fidan, akrep, kuş yemi, sinek
 
 Here, There & Directions
 ------------------------
@@ -2197,11 +2217,11 @@ burada, burası, şurada, şurası, orada, orası, nerede, neresi, ileride, ön,
 
 Feelings
 --------
-sevmek, beğenmek, hoşlanmak, korkmak, üzülmek, sevinmek, kızmak, şaşırmak, sıkılmak, yorulmak, hissetmek, özlemek, merak etmek, güvenmek, eğlenmek, ağlamak, gülmek, gülümsemek, harika, eğlenceli, yorucu, monoton, pozitif enerji, mutlu, üzgün, heyecanlı, memnun, huzurlu, pişman, endişeli, kızgın, yorgun, şaşkın, sinirli, kıskanç, sıkıcı, yormak, sıkıntılı, duygusal, sarılmak, kavuşmak, ummak, rahatlatmak, rahatlamak, üzmek, sinirletmek, değer vermek, saygı duymak, heyecan, anı, hayran olmak, ilgi beklemek
+sevmek, beğenmek, hoşlanmak, korkmak, üzülmek, sevinmek, kızmak, şaşırmak, sıkılmak, yorulmak, hissetmek, özlemek, merak etmek, güvenmek, eğlenmek, ağlamak, gülmek, gülümsemek, harika, eğlenceli, yorucu, monoton, pozitif enerji, mutlu, üzgün, heyecanlı, memnun, huzurlu, pişman, endişeli, kızgın, yorgun, şaşkın, sinirli, kıskanç, sıkıcı, yormak, sıkıntılı, duygusal, sarılmak, kavuşmak, ummak, rahatlatmak, rahatlamak, üzmek, sinirletmek, değer vermek, saygı duymak, heyecan, anı, hayran olmak, ilgi beklemek, heyecanlanmak
 
 Daily Routine
 -------------
-fırçalamak, uyanmak, kalkmak, yıkamak, diş fırçalamak, taramak, kurulanmak, giymek, hazırlanmak, çalışmak, ders çalışmak, dinlenmek, yatmak, uyumak, sabah, öğlen, akşam, gece, genellikle, sık sık, uyku, sabun, tarak, alışmak
+fırçalamak, uyanmak, kalkmak, yıkamak, diş fırçalamak, taramak, kurulanmak, giymek, hazırlanmak, çalışmak, ders çalışmak, dinlenmek, yatmak, uyumak, sabah, öğlen, akşam, gece, genellikle, sık sık, uyku, sabun, tarak, alışmak, rutin, alışkanlık
 
 Health & Body
 -------------
@@ -2209,7 +2229,7 @@ hasta, hastalık, ateş, doktor, hastane, dişçi, dişçiye gitmek, geçmiş ol
 
 Talking & Communicating
 -----------------------
-konuşmak, söylemek, demek, sormak, soru sormak, cevaplamak, anlatmak, açıklamak, bahsetmek, dinlemek, duymak, anlamak, tekrar etmek, telefon etmek, mesaj atmak, göndermek, mektup, e-posta adresi, davet etmek, teklif etmek, yardım etmek, paylaşmak, tanışmak, görüşmek, buluşmak, buluşma, cümle, şaka, izin, emretmek, yollamak, seçim, izin vermek, karşı çıkmak, yasaklamak, bilgi, telgraf, telsiz telefon, işaret, yüksek ses, haberleşmek, sohbet etmek
+konuşmak, söylemek, demek, sormak, soru sormak, cevaplamak, anlatmak, açıklamak, bahsetmek, dinlemek, duymak, anlamak, tekrar etmek, telefon etmek, mesaj atmak, göndermek, mektup, e-posta adresi, davet etmek, teklif etmek, yardım etmek, paylaşmak, tanışmak, görüşmek, buluşmak, buluşma, cümle, şaka, izin, emretmek, yollamak, seçim, izin vermek, karşı çıkmak, yasaklamak, bilgi, telgraf, telsiz telefon, işaret, yüksek ses, haberleşmek, sohbet etmek, mesajlaşmak, mektuplaşmak, selamlaşmak
 
 Coming & Going
 --------------
@@ -2217,7 +2237,7 @@ gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, ge�
 
 Everyday Actions
 ----------------
-açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, dövüşmek, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek, saldırmak, savunmak, korumak, engellemek, tamir etmek, montaj, montaj yapmak, edinmek, edilmek, zorunda kalmak, mecbur kalmak, çatlamak, yanmak, koparmak, kokmak, karışmak, basmak, öpmek, gerekmek, silmek, okşamak, zarar vermek, destek olmak, süt sağmak, havlamak, dilek tutmak, patlamak, hayatını kaybetmek, mezun olmak, elektrik kesilmek, burs almak, ağaç dikmek, yaygınlaşmak, üretmek, sigara içmek, yakalanmak, karşılaşmak
+açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, dövüşmek, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek, saldırmak, savunmak, korumak, engellemek, tamir etmek, montaj, montaj yapmak, edinmek, edilmek, zorunda kalmak, mecbur kalmak, çatlamak, yanmak, koparmak, kokmak, karışmak, basmak, öpmek, gerekmek, silmek, okşamak, zarar vermek, destek olmak, süt sağmak, havlamak, dilek tutmak, patlamak, hayatını kaybetmek, mezun olmak, elektrik kesilmek, burs almak, ağaç dikmek, yaygınlaşmak, üretmek, sigara içmek, yakalanmak, karşılaşmak, sulamak, uzatmak
 
 Thinking & Deciding
 -------------------
