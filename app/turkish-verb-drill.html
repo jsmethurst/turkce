@@ -6784,7 +6784,47 @@ function clockCanon(text){
 function clockCorrect(text){
   if(!clocks.current) return false;
   const given = clockCanon(text);
-  return !!given && clockAnswers(clocks.current).some(a=>clockCanon(a)===given);
+  return (!!given && clockAnswers(clocks.current).some(a=>clockCanon(a)===given)) || clockDigitsCorrect(text);
+}
+// Speech recognition often writes the numbers as digits and drops their endings: "saat 10.20 geçe", "10:30", "1'e 5 var".
+// Read the hour, the minutes and the closing word, and accept it when they say the right time the right way.
+function clockDigitsCorrect(text){
+  const c = clocks.current;
+  let x = String(text||"").toLocaleLowerCase("tr-TR").replace(/[’‘`´']/g,"").replace(/[!?]/g," ").replace(/\s+/g," ").trim().replace(/^saat\s+/,"").replace(/\.$/,"");
+  if(!/\d/.test(x)) return false;
+  const kac = c.q==="kac", h12 = c.h%12 || 12;
+  const hours = [h12]; if(c.digital && c.h>12) hours.push(c.h);
+  const nexts = [h12%12 + 1]; if(c.digital && c.h+1>12 && c.h+1<24) nexts.push(c.h+1);
+  if(c.h===0) hours.push(0);
+  const minuteOf = t=>{
+    t = t.trim();
+    if(/^\d{1,2}$/.test(t)) return +t;
+    if(normalizeTR(t)===normalizeTR("çeyrek")) return 15;
+    for(let n=1;n<60;n++) if(normalizeTR(t)===normalizeTR(ckNum(n))) return n;
+    return -1;
+  };
+  // "10.20 geçe", "10 20 geçe", "10u 20 geçe", "11e çeyrek kala"
+  let mm = x.match(/^(\d{1,2})[a-zçğıöşü]*(?:\s*[.:,]\s*|\s+)(.+?)\s+(geçiyor|geçe|var|kala)$/);
+  if(mm){
+    const hr = +mm[1], mins = minuteOf(mm[2]), word = mm[3];
+    if(mins<1 || mins>29) return false;
+    if(word==="geçiyor" || word==="geçe") return c.m===mins && hours.includes(hr) && word===(kac ? "geçiyor" : "geçe");
+    return 60-c.m===mins && nexts.includes(hr) && word===(kac ? "var" : "kala");
+  }
+  // "10.30" / "10 buçuk" / "10.30da" / "10 buçukta"; "10.00" / "10da"
+  mm = x.match(/^(\d{1,2})(?:\s*[.:,]\s*(\d{2})|\s+(buçuk|buçukta))?([a-zçğıöşü]*)$/);
+  if(mm){
+    const hr = +mm[1], mins = mm[2]!=null ? +mm[2] : mm[3] ? 30 : 0, tail = mm[3] && mm[3].endsWith("ta") ? "ta" : mm[4];
+    if(mins!==c.m || !hours.includes(hr) || (c.m!==0 && c.m!==30)) return false;
+    return kac ? !tail : /^(d|t)[ae]$/.test(tail);
+  }
+  return false;
+}
+// What the recognizer heard, written out: "saat 10.20 geçe" is shown as the full answer it stands for when it was right,
+// and with its digits turned into words otherwise.
+function clockHeardAsWords(heard){
+  if(/\d/.test(heard) && clockDigitsCorrect(heard)) return clockSpoken(clocks.current);
+  return String(heard).replace(/(\d)\s*[.:,]\s*(\d)/g, "$1 $2").replace(/\d+/g, d=>ckNum(Math.min(+d, 59)));
 }
 function clockSpoken(c){ return "Saat " + clockAnswers(c)[0] + "."; }
 function clockSVG(h, m){
@@ -7615,7 +7655,7 @@ function onVoiceResult(e){
     const heard = match>=0 ? alts[match] : alts[0];
     document.getElementById("clocksInput").value = heard;
     checkClock();
-    showHeard("clocksInput", heard, match);
+    showHeard("clocksInput", clockHeardAsWords(heard), match);
     startAutoAdvance(document.getElementById("clocksMicBtn"), nextClock, match<0);
   } else if(target.tab==="cases"){
     if(!cases.current || cases.flipped) return;
