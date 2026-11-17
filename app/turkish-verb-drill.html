@@ -188,6 +188,26 @@ header{display:flex;align-items:center;justify-content:space-between;gap:8px;mar
   cursor:pointer;color:var(--ink-soft);transition:all .15s ease;user-select:none;
 }
 .tab.active{background:var(--tab-on-bg);color:var(--tab-on-ink);box-shadow:var(--shadow);}
+@media(max-width:420px){.tabs{gap:2px;}.tab{min-width:0;padding:9px 2px;font-size:0.8rem;}}
+/* Clocks tab */
+.clock-q{display:flex;align-items:center;justify-content:center;gap:26px;flex-wrap:nowrap;}
+.clock-q-label{font-size:1.45rem;font-weight:700;color:var(--heading);white-space:nowrap;}
+.clock-analog{width:190px;height:190px;display:block;}
+.clock-analog .ck-face{fill:var(--surface);stroke:var(--ink);stroke-width:3;}
+.clock-analog .ck-tick{stroke:var(--ink-soft);stroke-width:1.5;stroke-linecap:round;}
+.clock-analog .ck-tick.h{stroke:var(--ink);stroke-width:3;}
+.clock-analog .ck-num{fill:var(--ink);font-family:var(--font);font-size:15px;font-weight:700;}
+.clock-analog .ck-hour{stroke:var(--ink);stroke-width:7;stroke-linecap:round;}
+.clock-analog .ck-min{stroke:var(--tile-blue);stroke-width:4.5;stroke-linecap:round;}
+.clock-analog .ck-hub{fill:var(--ink);}
+.clock-digital{font-family:var(--font);font-size:3.3rem;font-weight:700;letter-spacing:.04em;font-variant-numeric:tabular-nums;line-height:1;
+  padding:16px 24px;border-radius:14px;border:2px solid var(--line);background:var(--paper);color:var(--heading);}
+@media(max-width:480px){
+  .clock-q{gap:14px;}
+  .clock-q-label{font-size:1.2rem;}
+  .clock-analog{width:158px;height:158px;}
+  .clock-digital{font-size:2.3rem;padding:12px 14px;}
+}
 
 .how-list{margin:0;padding-left:20px;display:grid;gap:8px;font-size:0.9rem;line-height:1.45;color:var(--ink-soft);}
 .how-list b{color:var(--ink);}
@@ -334,12 +354,12 @@ header{display:flex;align-items:center;justify-content:space-between;gap:8px;mar
   .answer-row .icon-btn{flex:0 0 auto;}
   .answer-row .btn{flex:1 1 auto;}
 }
-#answerInput, #vocabAnswerInput, #tekrarInput, #casesInput{
+#answerInput, #vocabAnswerInput, #tekrarInput, #casesInput, #clocksInput{
   flex:1;font-family:var(--font);font-size:1.05rem;
   padding:13px 14px;border-radius:11px;border:1.5px solid var(--line);
   background:var(--paper);color:var(--ink);outline:none;
 }
-#answerInput:focus, #vocabAnswerInput:focus, #tekrarInput:focus, #casesInput:focus{border-color:var(--tile-turquoise);background:var(--surface);}
+#answerInput:focus, #vocabAnswerInput:focus, #tekrarInput:focus, #casesInput:focus, #clocksInput:focus{border-color:var(--tile-turquoise);background:var(--surface);}
 .btn{
   font-family:var(--font);font-weight:700;font-size:0.92rem;border:none;cursor:pointer;
   border-radius:11px;padding:13px 18px;transition:transform .1s ease, opacity .15s;
@@ -591,6 +611,7 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
   <div class="tabs">
     <div class="tab active" data-tab="verbs">Forms</div>
     <div class="tab" data-tab="cases">Cases</div>
+    <div class="tab" data-tab="clocks">Clocks</div>
     <div class="tab" data-tab="vocab">Vocab</div>
     <div class="tab" data-tab="tekrar">Tekrar</div>
     <div class="tab" data-tab="sozluk">Sözlük</div>
@@ -885,6 +906,45 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
     <div class="settings-group">
       <h3>Cases</h3>
       <div class="chip-row" id="casesFilterChips"></div>
+    </div>
+  </div>
+
+  <!-- ============ CLOCKS ============ -->
+  <div id="tab-clocks" style="display:none;">
+    <div class="card">
+      <div class="prompt-header">
+        <div class="card-top-actions" style="margin-left:auto;">
+          <button class="icon-btn" id="clocksSpeak" title="Hear it" style="visibility:hidden;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+          </button>
+        </div>
+      </div>
+      <div class="prompt-main">
+        <div class="clock-q">
+          <div class="clock-q-label" id="clocksPrompt">Saat kaç?</div>
+          <div id="clocksFace"></div>
+        </div>
+      </div>
+      <div class="answer-row" id="clocksAnswerRow">
+        <input id="clocksInput" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Write the time in Turkish…">
+        <button class="icon-btn mic-btn" id="clocksMicBtn" title="Answer by voice" aria-label="Answer by voice" aria-pressed="false" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4M8 22h8"></path></svg></button>
+        <button class="btn btn-primary" id="clocksCheck">Check</button>
+      </div>
+      <div class="feedback" id="clocksFeedback"></div>
+      <div class="bottom-actions">
+        <button class="btn btn-primary" id="clocksNext" style="margin-left:auto;" hidden>Next →</button>
+      </div>
+    </div>
+    <p class="hint" style="text-align:center;margin-top:14px;" id="clocksStats"></p>
+
+    <div class="section-title">Settings</div>
+    <div class="settings-group">
+      <h3>Clock</h3>
+      <div class="chip-row" id="clocksTypeChips"></div>
+    </div>
+    <div class="settings-group">
+      <h3>Question</h3>
+      <div class="chip-row" id="clocksQChips"></div>
     </div>
   </div>
 
@@ -4887,10 +4947,12 @@ document.querySelectorAll(".tab").forEach(t=>{
     document.getElementById("tab-sozluk").style.display = t.dataset.tab==="sozluk" ? "block":"none";
     document.getElementById("tab-tekrar").style.display = t.dataset.tab==="tekrar" ? "block":"none";
     document.getElementById("tab-cases").style.display = t.dataset.tab==="cases" ? "block":"none";
+    document.getElementById("tab-clocks").style.display = t.dataset.tab==="clocks" ? "block":"none";
     cancelAutoAdvance();
     if(t.dataset.tab==="vocab") nextVocabCard();
     if(t.dataset.tab==="tekrar") nextTekrarCard();
     if(t.dataset.tab==="cases") nextCasesCard();
+    if(t.dataset.tab==="clocks") nextClock();
     if(t.dataset.tab==="sozluk"){ renderReferencePanel(); renderNonverbReferencePanel(); }
     voiceSync();
   };
@@ -6664,6 +6726,166 @@ document.addEventListener("keydown", e=>{
   else if((e.key==="p" || e.key==="P") && cases.current && cases.flipped){ e.preventDefault(); document.getElementById("casesSpeak").click(); }
 });
 
+// ---- Clocks: telling the time the TÖMER way ----
+// "Saat kaç?"   → saat bir · bir buçuk · biri beş geçiyor · bire beş var  (12:30 = yarım)
+// "Saat kaçta?" → saat birde · bir buçukta · biri beş geçe · bire beş kala (12:30 = yarımda)
+// Analog clocks move in 5-minute steps, digital ones in 1-minute steps (24-hour, as in Turkey).
+// Nothing here is saved to the learner's history; only the four setting chips are remembered on this device.
+const CLOCKS_KEY = "turkce_clocks_v1";
+const clocks = {sel:new Set(["analog","digital","kac","kacta"]), current:null, flipped:false, right:0, total:0};
+try{
+  const t = JSON.parse(localStorage.getItem(CLOCKS_KEY) || "null");
+  if(t && Array.isArray(t.sel)){
+    const v = t.sel.filter(k=>["analog","digital","kac","kacta"].includes(k));
+    if(v.some(k=>k==="analog"||k==="digital") && v.some(k=>k==="kac"||k==="kacta")) clocks.sel = new Set(v);
+  }
+}catch(e){}
+function saveClocksSettings(){ try{ localStorage.setItem(CLOCKS_KEY, JSON.stringify({sel:[...clocks.sel]})); }catch(e){} }
+const CK_ONES = ["sıfır","bir","iki","üç","dört","beş","altı","yedi","sekiz","dokuz"];
+const CK_TENS = ["","on","yirmi","otuz","kırk","elli"];
+function ckNum(n){
+  if(n<10) return CK_ONES[n];
+  const t = CK_TENS[Math.floor(n/10)];
+  return n%10 ? t+" "+CK_ONES[n%10] : t;
+}
+// The last word of an hour number with -(y)i, -(y)e or -de: [accusative, dative, locative].
+const CK_SUFFIX = {
+  "bir":["biri","bire","birde"], "iki":["ikiyi","ikiye","ikide"], "üç":["üçü","üçe","üçte"], "dört":["dördü","dörde","dörtte"],
+  "beş":["beşi","beşe","beşte"], "altı":["altıyı","altıya","altıda"], "yedi":["yediyi","yediye","yedide"], "sekiz":["sekizi","sekize","sekizde"],
+  "dokuz":["dokuzu","dokuza","dokuzda"], "on":["onu","ona","onda"], "yirmi":["yirmiyi","yirmiye","yirmide"]
+};
+function ckCase(n, i){ const w = ckNum(n).split(" "); const last = w.pop(); return [...w, CK_SUFFIX[last][i]].join(" "); }
+function ckMinutes(m){ return m===15 ? ["çeyrek","on beş"] : [ckNum(m)]; }
+// Every accepted answer (without "saat"); the first is the one shown as the correct answer.
+function clockAnswers(c){
+  const {h, m, q, digital} = c;
+  const kac = q==="kac";
+  const h12 = h%12 || 12;
+  const hours = [h12]; if(digital && h>12) hours.push(h);                     // 14:05 can also be "on dördü beş geçiyor"
+  const next = h12%12 + 1, nexts = [next]; if(digital && h+1>12 && h+1<24) nexts.push(h+1);
+  const out = [];
+  if(m===0) hours.forEach(x=>out.push(kac ? ckNum(x) : ckCase(x,2)));
+  else if(m===30){
+    if(h12===12) out.push(kac ? "yarım" : "yarımda");
+    hours.forEach(x=>out.push(ckNum(x)+" "+(kac ? "buçuk" : "buçukta")));
+  }
+  else if(m<30) hours.forEach(x=>ckMinutes(m).forEach(mw=>out.push(ckCase(x,0)+" "+mw+" "+(kac ? "geçiyor" : "geçe"))));
+  else nexts.forEach(x=>ckMinutes(60-m).forEach(mw=>out.push(ckCase(x,1)+" "+mw+" "+(kac ? "var" : "kala"))));
+  return out;
+}
+// "Saat bir'e 5 var." → "bire beş var": apostrophes, digits (speech often gives "1'e 5"), punctuation and a leading "saat" don't matter.
+function clockCanon(text){
+  let x = String(text||"").toLocaleLowerCase("tr-TR").replace(/[’‘`´']/g,"");
+  x = x.replace(/\d+/g, d=>ckNum(Math.min(+d, 59)));
+  x = x.replace(/dört(e|ü)\b/g,"dörd$1");   // "4'e" → "dörde"
+  x = normalizeTR(x.replace(/[,;:.!?]/g," "));
+  return x.replace(/\s+/g," ").trim().replace(/^saat\s+/,"");
+}
+function clockCorrect(text){
+  if(!clocks.current) return false;
+  const given = clockCanon(text);
+  return !!given && clockAnswers(clocks.current).some(a=>clockCanon(a)===given);
+}
+function clockSpoken(c){ return "Saat " + clockAnswers(c)[0] + "."; }
+function clockSVG(h, m){
+  const h12 = h%12, cx = 100, cy = 100;
+  const hand = (deg, len)=>{ const r = (deg-90)*Math.PI/180; return [cx+len*Math.cos(r), cy+len*Math.sin(r)].map(v=>v.toFixed(1)); };
+  let ticks = "", nums = "";
+  for(let i=0;i<60;i++){
+    const big = i%5===0, a = (i*6-90)*Math.PI/180, r1 = big ? 80 : 84, r2 = 90;
+    ticks += `<line class="ck-tick${big?" h":""}" x1="${(cx+r1*Math.cos(a)).toFixed(1)}" y1="${(cy+r1*Math.sin(a)).toFixed(1)}" x2="${(cx+r2*Math.cos(a)).toFixed(1)}" y2="${(cy+r2*Math.sin(a)).toFixed(1)}"/>`;
+  }
+  for(let n=1;n<=12;n++){
+    const a = (n*30-90)*Math.PI/180;
+    nums += `<text class="ck-num" x="${(cx+66*Math.cos(a)).toFixed(1)}" y="${(cy+66*Math.sin(a)).toFixed(1)}" text-anchor="middle" dominant-baseline="central">${n}</text>`;
+  }
+  const [hx,hy] = hand(h12*30 + m*0.5, 44), [mx,my] = hand(m*6, 70);
+  return `<svg class="clock-analog" viewBox="0 0 200 200" role="img" aria-label="Analog clock"><circle class="ck-face" cx="100" cy="100" r="94"/>${ticks}${nums}`
+    + `<line class="ck-hour" x1="100" y1="100" x2="${hx}" y2="${hy}"/><line class="ck-min" x1="100" y1="100" x2="${mx}" y2="${my}"/><circle class="ck-hub" cx="100" cy="100" r="5"/></svg>`;
+}
+function renderClockFace(c){
+  const box = document.getElementById("clocksFace");
+  if(c.digital){
+    box.innerHTML = `<div class="clock-digital" role="img" aria-label="Digital clock">${String(c.h).padStart(2,"0")}:${String(c.m).padStart(2,"0")}</div>`;
+  } else box.innerHTML = clockSVG(c.h, c.m);
+}
+function updateClocksStats(){
+  document.getElementById("clocksStats").textContent = clocks.total ? `${clocks.right} / ${clocks.total} right this visit` : "";
+}
+function nextClock(){
+  const kinds = ["analog","digital"].filter(k=>clocks.sel.has(k)), qs = ["kac","kacta"].filter(k=>clocks.sel.has(k));
+  let c;
+  do{
+    const digital = pick(kinds)==="digital";
+    c = digital ? {digital, h:Math.floor(Math.random()*24), m:Math.floor(Math.random()*60)}
+                : {digital, h:1+Math.floor(Math.random()*12), m:5*Math.floor(Math.random()*12)};
+    c.q = pick(qs);
+  } while(clocks.current && c.h===clocks.current.h && c.m===clocks.current.m);
+  clocks.current = c;
+  clocks.flipped = false;
+  document.getElementById("clocksPrompt").textContent = c.q==="kac" ? "Saat kaç?" : "Saat kaçta?";
+  renderClockFace(c);
+  document.getElementById("clocksSpeak").style.visibility = "hidden";
+  document.getElementById("clocksCheck").disabled = false;
+  document.getElementById("clocksNext").hidden = true;
+  const fb = document.getElementById("clocksFeedback");
+  fb.className = "feedback"; fb.innerHTML = "";
+  const input = document.getElementById("clocksInput");
+  input.value = "";
+  if(window.matchMedia("(hover: hover)").matches) focusAnswerBox(input);
+  updateClocksStats();
+}
+function checkClock(){
+  const c = clocks.current;
+  if(!c || clocks.flipped) return;
+  const input = document.getElementById("clocksInput");
+  const ok = clockCorrect(input.value);
+  clocks.flipped = true;
+  clocks.total++;
+  if(ok) clocks.right++;
+  const said = clockSpoken(c);
+  autoPlay(said);
+  const fb = document.getElementById("clocksFeedback");
+  fb.className = "feedback show " + (ok ? "good" : "bad");
+  fb.innerHTML = `${ok ? "Doğru! Nice work." : "Not quite. Correct answer:"}<span class="correct-answer">${said}</span>`;
+  document.getElementById("clocksSpeak").style.visibility = "visible";
+  document.getElementById("clocksCheck").disabled = true;
+  document.getElementById("clocksNext").hidden = false;
+  updateClocksStats();
+  input.blur();
+}
+function renderClocksSettings(){
+  [["clocksTypeChips",[["analog","Analog"],["digital","Digital"]]],["clocksQChips",[["kac","Saat kaç?"],["kacta","Saat kaçta?"]]]].forEach(([id, opts])=>{
+    const box = document.getElementById(id);
+    box.innerHTML = "";
+    opts.forEach(([k, label])=>{
+      const chip = document.createElement("div");
+      chip.className = "chip" + (clocks.sel.has(k) ? " on" : "");
+      chip.textContent = label;
+      chip.onclick = ()=>{
+        // At least one clock type and one question stay on.
+        if(clocks.sel.has(k)){ if(opts.filter(([o])=>clocks.sel.has(o)).length===1) return; clocks.sel.delete(k); } else clocks.sel.add(k);
+        saveClocksSettings(); renderClocksSettings(); nextClock();
+      };
+      box.appendChild(chip);
+    });
+  });
+}
+renderClocksSettings();
+document.getElementById("clocksCheck").onclick = checkClock;
+document.getElementById("clocksNext").onclick = nextClock;
+document.getElementById("clocksSpeak").onclick = ()=>{ if(clocks.current) speak(clockSpoken(clocks.current), "tr-TR"); };
+document.getElementById("clocksInput").addEventListener("keydown", e=>{
+  if(e.key==="Enter"){ e.preventDefault(); e.stopPropagation(); if(clocks.flipped) nextClock(); else checkClock(); }
+});
+document.addEventListener("keydown", e=>{
+  if(document.getElementById("tab-clocks").style.display==="none") return;
+  const tag = document.activeElement.tagName;
+  if(tag==="INPUT" || tag==="TEXTAREA" || e.metaKey || e.ctrlKey || e.altKey) return;
+  if(e.key==="Enter" && clocks.current && clocks.flipped){ e.preventDefault(); nextClock(); }
+  else if((e.key==="p" || e.key==="P") && clocks.current && clocks.flipped){ e.preventDefault(); document.getElementById("clocksSpeak").click(); }
+});
+
 function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 
 function allActiveTenseKeys(){
@@ -7249,10 +7471,11 @@ function voiceTarget(){
   // Tekrar and Cases are answered in Turkish.
   if(document.getElementById("tab-tekrar").style.display!=="none" && tekrar.current) return {tab:"tekrar", lang:"tr-TR"};
   if(document.getElementById("tab-cases").style.display!=="none" && cases.current) return {tab:"cases", lang:"tr-TR"};
+  if(document.getElementById("tab-clocks").style.display!=="none" && clocks.current) return {tab:"clocks", lang:"tr-TR"};
   return null;
 }
 function paintMicButtons(){
-  ["micBtn","vocabMicBtn","tekrarMicBtn","casesMicBtn"].forEach(id=>{
+  ["micBtn","vocabMicBtn","tekrarMicBtn","casesMicBtn","clocksMicBtn"].forEach(id=>{
     const b = document.getElementById(id);
     b.classList.toggle("mic-on", voice.on);
     b.classList.toggle("mic-wait", voice.on && !voice.listening);
@@ -7268,6 +7491,7 @@ function voiceAwaiting(tab){
   if(tab==="vocab") return !!vocabState.current && !vocabState.flipped;
   if(tab==="tekrar") return !!tekrar.current && !tekrar.flipped;
   if(tab==="cases") return !!cases.current && !cases.flipped;
+  if(tab==="clocks") return !!clocks.current && !clocks.flipped;
   return false;
 }
 function voiceSpeaking(){
@@ -7385,6 +7609,14 @@ function onVoiceResult(e){
     checkTekrar();
     showHeard("tekrarInput", heard, match);
     startAutoAdvance(document.getElementById("tekrarMicBtn"), nextTekrarCard, match<0);
+  } else if(target.tab==="clocks"){
+    if(!clocks.current || clocks.flipped) return;
+    const match = alts.findIndex(a=>clockCorrect(a));
+    const heard = match>=0 ? alts[match] : alts[0];
+    document.getElementById("clocksInput").value = heard;
+    checkClock();
+    showHeard("clocksInput", heard, match);
+    startAutoAdvance(document.getElementById("clocksMicBtn"), nextClock, match<0);
   } else if(target.tab==="cases"){
     if(!cases.current || cases.flipped) return;
     // Prefer a guess that is exactly right, then one with the right ending.
@@ -7452,7 +7684,7 @@ function micAllowedHere(){
   try{ return window.top===window.self; }catch(e){ return false; }
 }
 if(SpeechRec && micAllowedHere()){
-  ["micBtn","vocabMicBtn","tekrarMicBtn","casesMicBtn"].forEach(id=>{
+  ["micBtn","vocabMicBtn","tekrarMicBtn","casesMicBtn","clocksMicBtn"].forEach(id=>{
     const b = document.getElementById(id);
     b.hidden = false;
     b.onclick = toggleVoice;
