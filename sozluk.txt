@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-456 verbs · 1259 non-verbs · 40 topics
+457 verbs · 1261 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -944,7 +944,7 @@ izin vermek               to allow
 zarar vermek              to cause harm
     datif: Çevreye zarar veriyor.  (It is causing harm to the environment.)
 
-A2 DERSTE 26-43
+A2 DERSTE 26-44
 ---------------
 değer vermek              to value
     datif: Aileye değer veriyorum.  (I value my family.)
@@ -982,6 +982,8 @@ kaynamak                  to boil
     örnek: Su kaynıyor.  (The water is boiling.)
 dilemek                   to wish
     datif: Sana mutluluk diliyorum.  (I wish you happiness.)
+ertelemek                 to postpone
+    akuzatif: Randevuyu erteliyorum.  (I'm postponing the appointment.)
 
 
 ============================================================
@@ -2379,7 +2381,7 @@ yaka                      collar
 kanat                     wing
 uçurtma                   kite
 
-A2 DERSTE 76-96
+A2 DERSTE 76-98
 ---------------
 özne                      subject
 acele                     hurry
@@ -2402,6 +2404,8 @@ lahana                    cabbage
 canlılar                  living things
 kızıl                     crimson
 martı                     seagull
+yılbaşı                   New Year's (Eve)
+olasılık                  probability
 
 
 ============================================================
@@ -2418,7 +2422,7 @@ birinci, ikinci, üçüncü, dördüncü, altıncı, yedinci, dokuzuncu, sonuncu
 
 Time & Schedule
 ---------------
-şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik, saniye, dakikalarca, saatlerce, günlerce, haftalarca, aylarca, yıllarca, asır, Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar, Ocak, Şubat, Mart, Nisan, Mayıs, Haziran, Temmuz, Ağustos, Eylül, Ekim, Kasım, Aralık, gece yarısı, mevsim, acele, tatil, doğum tarihi, sabaha kadar, çocukken, yaz akşamı, gençken, nadiren, defalarca
+şimdi, bugün, sabah, öğle, öğlen, akşam, gece, kadar, önce, sonra, erken, geç, saatinde, yarım saat, buçuk, çeyrek geçe, çeyrek kala, teneffüs, hafta sonu, hafta içi, pazartesi, cumartesi, pazar günü, saatlik, günlük, haftalık, aylık, zaman, vakit, süre, geçirmek, dün, yarın, geçen ay, sık sık, genellikle, randevu, meşgul, uygun, gecikmek, yetişmek, ertesi gün, seans, hemen, bütün gün, şimdilik, saniye, dakikalarca, saatlerce, günlerce, haftalarca, aylarca, yıllarca, asır, Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar, Ocak, Şubat, Mart, Nisan, Mayıs, Haziran, Temmuz, Ağustos, Eylül, Ekim, Kasım, Aralık, gece yarısı, mevsim, acele, tatil, doğum tarihi, sabaha kadar, çocukken, yaz akşamı, gençken, nadiren, defalarca, yılbaşı
 
 Politeness & Fillers
 --------------------
@@ -2518,11 +2522,11 @@ gitmek, gelmek, dönmek, geri dönmek, çıkmak, dışarı çıkmak, girmek, ge�
 
 Everyday Actions
 ----------------
-açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, dövüşmek, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek, saldırmak, savunmak, korumak, engellemek, tamir etmek, montaj, montaj yapmak, edinmek, edilmek, zorunda kalmak, mecbur kalmak, çatlamak, yanmak, koparmak, kokmak, karışmak, basmak, öpmek, gerekmek, silmek, okşamak, zarar vermek, destek olmak, süt sağmak, havlamak, dilek tutmak, patlamak, hayatını kaybetmek, mezun olmak, elektrik kesilmek, burs almak, ağaç dikmek, yaygınlaşmak, üretmek, sigara içmek, yakalanmak, karşılaşmak, sulamak, uzatmak, birine alışmak, bir şeye alışmak, bir işe başlamak, birine benzemek, bir şeye ihtiyaç duymak, bir zorluğa dayanmak, bir işe başvurmak, bir konuda başarılı olmak, bir konuda başarısız olmak, bir projede rol almak, bir konuda söz sahibi olmak, bir etkinlikte yer almak, bir şeyden vazgeçmek, bir şeyden yararlanmak, bir kaynaktan faydalanmak, birinden sorumlu olmak, bir olaydan kaynaklanmak, birçok parçadan oluşmak, birini korumak, bir planı değiştirmek, bir problemi çözmek, bir hedefi başarmak, bir görevi tamamlamak, bir geleneği sürdürmek, bir ekibi yönetmek, birini etkilemek, birini desteklemek, bir toplantıyı ertelemek, bir projeyi gerçekleştirmek, bir ayrıntıyı göz ardı etmek, bir engelle mücadele etmek, tüketmek
+açmak, kapatmak, açılmak, kapanmak, koymak, getirmek, götürmek, taşımak, tutmak, kaldırmak, kesmek, eklemek, kırmak, kırılmak, çekmek, bırakmak, bulmak, aramak, kullanmak, göstermek, vermek, almak, kilitlemek, dokunmak, toplamak, değiştirmek, değişmek, çalıştırmak, çalmak, katlamak, birikmek, savaşmak, dövüşmek, eşleştirmek, dirsek atmak, ayırmak, yakalamak, uçmak, vurmak, düşürmek, boşaltmak, saklamak, bastırmak, imzalamak, onaylamak, reddetmek, tavsiye etmek, saldırmak, savunmak, korumak, engellemek, tamir etmek, montaj, montaj yapmak, edinmek, edilmek, zorunda kalmak, mecbur kalmak, çatlamak, yanmak, koparmak, kokmak, karışmak, basmak, öpmek, gerekmek, silmek, okşamak, zarar vermek, destek olmak, süt sağmak, havlamak, dilek tutmak, patlamak, hayatını kaybetmek, mezun olmak, elektrik kesilmek, burs almak, ağaç dikmek, yaygınlaşmak, üretmek, sigara içmek, yakalanmak, karşılaşmak, sulamak, uzatmak, birine alışmak, bir şeye alışmak, bir işe başlamak, birine benzemek, bir şeye ihtiyaç duymak, bir zorluğa dayanmak, bir işe başvurmak, bir konuda başarılı olmak, bir konuda başarısız olmak, bir projede rol almak, bir konuda söz sahibi olmak, bir etkinlikte yer almak, bir şeyden vazgeçmek, bir şeyden yararlanmak, bir kaynaktan faydalanmak, birinden sorumlu olmak, bir olaydan kaynaklanmak, birçok parçadan oluşmak, birini korumak, bir planı değiştirmek, bir problemi çözmek, bir hedefi başarmak, bir görevi tamamlamak, bir geleneği sürdürmek, bir ekibi yönetmek, birini etkilemek, birini desteklemek, bir toplantıyı ertelemek, bir projeyi gerçekleştirmek, bir ayrıntıyı göz ardı etmek, bir engelle mücadele etmek, tüketmek, ertelemek
 
 Thinking & Deciding
 -------------------
-bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir, sanmak, mantık, vazgeçmek, fırsat, avantaj, kültür, hayat, kuruluş savaşı, cumhuriyet, buluş, amaç, silah, karşılaştırma, üstünlük, birine güvenmek, bir şeye inanmak, bir şeye dikkat etmek, bir şeye önem vermek, bir karara karşı çıkmak, bir konuya odaklanmak, bir konuda tereddüt etmek, bir konuda yoğunlaşmak, bir şeyi anlamak, bir konuyu araştırmak, bir belgeyi incelemek, seçenekleri değerlendirmek, iki şeyi karşılaştırmak, bir hatayı fark etmek, bir olayı hatırlamak, bir randevuyu unutmak, bir fikri savunmak, bir davranışı eleştirmek, bir iddiayı kanıtlamak, bir sonucu tahmin etmek, bir etkinliği planlamak, bir durumu gözlemlemek, bir konuyu sorgulamak, bir gerçeği ortaya çıkarmak, bir konuyu ele almak, bir ihtimali göz önünde bulundurmak, bir şeyden ders çıkarmak, bir konuya öncelik vermek, bir belgeyi gözden geçirmek, bir durumdan haberdar olmak, bir şeyi hesaba katmak, bir şeye karşı koymak, bir gerçeğin farkına varmak, anlam
+bilmek, düşünmek, hatırlamak, unutmak, anlamak, öğrenmek, karar vermek, planlamak, tercih etmek, seçmek, merak etmek, inanmak, tanımak, belirlemek, istemek, denemek, kontrol etmek, çözmek, beyin, rüya, doğru, yanlış, plan, emin, fikir, sanmak, mantık, vazgeçmek, fırsat, avantaj, kültür, hayat, kuruluş savaşı, cumhuriyet, buluş, amaç, silah, karşılaştırma, üstünlük, birine güvenmek, bir şeye inanmak, bir şeye dikkat etmek, bir şeye önem vermek, bir karara karşı çıkmak, bir konuya odaklanmak, bir konuda tereddüt etmek, bir konuda yoğunlaşmak, bir şeyi anlamak, bir konuyu araştırmak, bir belgeyi incelemek, seçenekleri değerlendirmek, iki şeyi karşılaştırmak, bir hatayı fark etmek, bir olayı hatırlamak, bir randevuyu unutmak, bir fikri savunmak, bir davranışı eleştirmek, bir iddiayı kanıtlamak, bir sonucu tahmin etmek, bir etkinliği planlamak, bir durumu gözlemlemek, bir konuyu sorgulamak, bir gerçeği ortaya çıkarmak, bir konuyu ele almak, bir ihtimali göz önünde bulundurmak, bir şeyden ders çıkarmak, bir konuya öncelik vermek, bir belgeyi gözden geçirmek, bir durumdan haberdar olmak, bir şeyi hesaba katmak, bir şeye karşı koymak, bir gerçeğin farkına varmak, anlam, olasılık
 
 Describing Things
 -----------------
@@ -3116,7 +3120,7 @@ kanıt                     proof / evidence
 barış                     peace
 risk                      risk
 ajan                      agent / spy
-ihtimal                   probability
+ihtimal                   likelihood
 kuvvet                    force / strength
 memur                     civil servant / official
 keyif                     enjoyment / good mood
