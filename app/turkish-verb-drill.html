@@ -5351,6 +5351,18 @@ function updateVocabTypingUI(){
       fb.innerHTML = "";
       input.focus({preventScroll:true});   // don't scroll the page up when the card refreshes
     }
+  } else if(vocabState.typingMode && vocabState.allDone){
+    // Every word is doğru: keep the answer box (and the cursor in it) so Enter can start again.
+    front.style.cursor = "default";
+    back.style.cursor = "default";
+    row.style.display = "flex";
+    input.disabled = false;
+    input.value = "";
+    input.placeholder = "Press Enter to start again";
+    document.getElementById("vocabCheckBtn").disabled = true;
+    fb.className = "feedback";
+    fb.innerHTML = "";
+    input.focus({preventScroll:true});
   } else {
     front.style.cursor = "pointer";
     back.style.cursor = "pointer";
@@ -5358,6 +5370,7 @@ function updateVocabTypingUI(){
     fb.className = "feedback";
     fb.innerHTML = "";
   }
+  if(!vocabState.allDone) document.getElementById("vocabAnswerInput").placeholder = "Type your answer…";
   voiceSync();
 }
 
@@ -5386,6 +5399,7 @@ function showVocabMessage(title, detail){
 }
 
 function nextVocabCard(){
+  vocabState.allDone = false;
   document.getElementById("vocabAnswerInput").value = "";
   if(vocabState.test){
     document.getElementById("vocabResetProgress").classList.remove("btn-rainbow");
@@ -5471,6 +5485,7 @@ function nextVocabCard(){
   const counts = vocabSelectionCounts();
   const allDone = pool.length===0 && vocabState.unknownOnly && counts.total>0 && counts.known===counts.total;
   document.getElementById("vocabResetProgress").classList.toggle("btn-rainbow", allDone);
+  vocabState.allDone = allDone;   // Enter restarts from here (see vocabRestartIfDone)
   if(pool.length===0){
     if(allDone) showVocabMessage("Hepsi doğru!", "Every word in this selection is doğru. Reset the progress filter to go again.");
     else if(vocabState.masterMode==="weak") showVocabMessage("No weak words to practice right now.", "Weak words are the ones showing yellow or red on the Sözlük tab, plus words you haven't practiced yet.");
@@ -5839,13 +5854,21 @@ document.addEventListener("keydown", e=>{
 document.querySelector("#tab-vocab .card").addEventListener("click", continueAfterTest);
 document.getElementById("testEndBtn").onclick = endTest;
 
-document.getElementById("vocabResetProgress").onclick = ()=>{
+function resetVocabProgress(){
   [...vocabState.known].forEach(k=>setKnown(k, false));
   // Starting the weak list again picks up which words are weak now.
   if(vocabState.masterMode==="weak"){ vocabState.weakSet = weakSnapshot(); saveSettings(); }
   updateVocabProgress();
   refreshVocabCard();
-};
+}
+document.getElementById("vocabResetProgress").onclick = resetVocabProgress;
+// When every word in the selection is doğru (the rainbow reset button), Enter does the same as clicking it.
+function vocabRestartIfDone(e){
+  if(!vocabState.allDone || vocabState.current || vocabState.test || vocabState.testDone) return false;
+  e.preventDefault(); e.stopPropagation();
+  resetVocabProgress();
+  return true;
+}
 document.getElementById("vocabSpeakBtn").onclick = ()=>{
   if(!vocabState.current) return;
   speak(vocabState.current.tr, "tr-TR");
@@ -5855,6 +5878,7 @@ document.getElementById("vocabAnswerInput").addEventListener("keydown", e=>{
   if(e.key==="Enter"){
     e.preventDefault();
     e.stopPropagation();
+    if(vocabRestartIfDone(e)) return;
     checkVocabAnswer();
   }
 });
@@ -5935,6 +5959,7 @@ document.querySelectorAll("#vocabAnswerModeChips .chip").forEach(chip=>{
 
 document.addEventListener("keydown", e=>{
   if(document.getElementById("tab-vocab").style.display==="none") return;
+  if(e.key==="Enter" && !e.metaKey && !e.ctrlKey && !e.altKey && document.activeElement.tagName!=="INPUT" && document.activeElement.tagName!=="BUTTON" && document.activeElement.tagName!=="TEXTAREA" && vocabRestartIfDone(e)) return;
   if(!vocabState.current) return;
   const tag = document.activeElement.tagName;
   if(tag==="INPUT" || tag==="TEXTAREA") return;
