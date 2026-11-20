@@ -6157,8 +6157,8 @@ function nextTekrarCard(){
   if(!pickWord){
     tekrar.currentEarly = false;
     const next = words.filter(w=>!isDue(w)).sort((a,b)=>a.dueAt-b.dueAt)[0];
-    if(!words.length) showTekrarMessage("Nothing to review yet", "Answer a few words in Vocab first (typing or a test). Every word you've answered at least once shows up here.");
-    else showTekrarMessage("All caught up!", next ? `Next word is due in ${tekrarWaitText(next.dueAt-now)}.` : "");
+    if(!words.length) showTekrarMessage("Nothing to review yet", "Answer a few terms in Vocab first (typing or a test). Every term you've answered at least once shows up here.");
+    else showTekrarMessage("All caught up!", next ? `Next term is due in ${tekrarWaitText(next.dueAt-now)}.` : "");
     stats.textContent = `${words.length} term${words.length===1?"":"s"} in rotation`;
     return;
   }
