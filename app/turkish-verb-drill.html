@@ -6021,6 +6021,10 @@ const TEKRAR_MAX_DAYS = 30;   // the longest wait: a month
 const TEKRAR_RETRY_MS = 10*60*1000;              // wait after a miss
 const TEKRAR_AGAIN_MIN = 3, TEKRAR_AGAIN_MAX = 6;  // a missed word returns after a random number of other cards in this range
 const TEKRAR_KEY = "fiil_tekrar_v1";
+// Tekrar waits for the account's lists and answer history before it shows any count, so it never flashes a partial one.
+var tekrarReady = false, personalLoading = null;
+function markTekrarReady(){ if(tekrarReady) return; tekrarReady = true; if(typeof refreshTekrarData==="function") refreshTekrarData(); }
+setTimeout(markTekrarReady, 8000);   // never stay on "Loading" if the account is slow or unreachable
 const TEKRAR_AHEAD = 50;   // "Practice next 50 terms now"
 const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null, ahead:0, showUpcoming:true, currentEarly:false};
 try{
@@ -6121,6 +6125,11 @@ function showTekrarMessage(title, detail){
 }
 function nextTekrarCard(){
   disarmTags();
+  if(!tekrarReady){
+    showTekrarMessage("Loading your terms…", "");
+    document.getElementById("tekrarStats").textContent = "";
+    return;
+  }
   const words = tekrarWords();
   renderTekrarUpcoming(words);
   const now = Date.now();
@@ -7842,7 +7851,7 @@ function setupExport(db, uid){
     }
   };
 }
-async function initRemote(){
+async function initRemoteInner(){
   if(!window.claude || typeof window.claude.use!=="function") return;
   const [db, user] = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
   if(!db) return;
@@ -7920,7 +7929,7 @@ async function initRemote(){
         progressRef.onSnapshot(onRemoteProgress, ()=>{});
       }catch(e){ remoteProgress = null; syncLost(); }
       const bk = window.turkceBackend;
-      loadPersonal();   // the learner's own lists (a failure just leaves the Personal box empty)
+      personalLoading = loadPersonal();   // the learner's own lists (a failure just leaves the Personal box empty)
       let tableMode = false;
       if(bk && bk.stats){
         // Word history lives in its own table (one row per word); if the database doesn't have it yet, use the old document.
@@ -7991,6 +8000,14 @@ async function initRemote(){
   if(changed) syncSettingsUI();
 }
 lastLocalSettings = collectSettings();
+async function initRemote(){
+  try{ await initRemoteInner(); }
+  catch(e){ throw e; }
+  finally{
+    try{ if(personalLoading) await personalLoading; }catch(e){}
+    markTekrarReady();
+  }
+}
 initRemote();
 </script>
 
