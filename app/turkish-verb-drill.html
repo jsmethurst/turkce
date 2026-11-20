@@ -851,7 +851,7 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
       <div class="bottom-actions">
         <button class="btn btn-primary" id="tekrarNext" style="margin-left:auto;" hidden>Next →</button>
       </div>
-      <div style="text-align:center;margin-top:14px;"><button class="btn btn-ghost" id="tekrarAheadBtn" type="button" disabled>Practice next 50 terms now</button></div>
+      <div style="text-align:center;margin-top:14px;" id="tekrarAheadWrap" hidden><button class="btn btn-ghost" id="tekrarAheadBtn" type="button">Practice next 50 terms now</button></div>
     </div>
     <p class="hint" style="text-align:center;margin-top:14px;" id="tekrarStats"></p>
 
@@ -6030,12 +6030,8 @@ try{
 function saveTekrarSettings(){
   try{ localStorage.setItem(TEKRAR_KEY, JSON.stringify({showUpcoming:tekrar.showUpcoming})); }catch(e){}
 }
-// The practice-ahead button is greyed out while anything is due (or a batch of 50 is under way) and live once nothing is.
-function updateTekrarAheadBtn(words){
-  const now = Date.now();
-  const nothingDue = !!words.length && !words.some(w=>w.dueAt<=now);
-  document.getElementById("tekrarAheadBtn").disabled = !(nothingDue && tekrar.ahead<=0);
-}
+// "Practice next 50 terms now" only appears with the "All caught up!" message, never beside a due question.
+function setTekrarAheadVisible(v){ document.getElementById("tekrarAheadWrap").hidden = !v; }
 function syncTekrarControls(){
   document.getElementById("tekrarUpcomingBox").hidden = !tekrar.showUpcoming;
   document.getElementById("tekrarUpcomingToggle").textContent = tekrar.showUpcoming ? "Hide" : "Show";
@@ -6111,6 +6107,7 @@ function tekrarWaitText(ms){
 function showTekrarMessage(title, detail){
   disarmTags();
   tekrar.current = null;
+  setTekrarAheadVisible(false);
   document.getElementById("tekrarPrompt").textContent = title;
   document.getElementById("tekrarSub").textContent = detail || "";
   document.getElementById("tekrarTag").textContent = "";
@@ -6153,18 +6150,18 @@ function nextTekrarCard(){
   }
   tekrar.currentEarly = early;
   if(!early) tekrar.ahead = 0;   // a batch ends when it is used up, or when something becomes due
-  updateTekrarAheadBtn(words);
   const stats = document.getElementById("tekrarStats");
   if(!pickWord){
     tekrar.currentEarly = false;
     const next = words.filter(w=>!isDue(w)).sort((a,b)=>a.dueAt-b.dueAt)[0];
     if(!words.length) showTekrarMessage("Nothing to review yet", "Answer a few terms in Vocab first (typing or a test). Every term you've answered at least once shows up here.");
-    else showTekrarMessage("All caught up!", next ? `Next term is due in ${tekrarWaitText(next.dueAt-now)}.` : "");
+    else { showTekrarMessage("All caught up!", next ? `Next term is due in ${tekrarWaitText(next.dueAt-now)}.` : ""); setTekrarAheadVisible(true); }
     stats.textContent = `${words.length} term${words.length===1?"":"s"} in rotation`;
     return;
   }
   const item = {...pickWord.item};   // fresh object, so a repeat is recorded again
   tekrar.current = item;
+  setTekrarAheadVisible(false);
   tekrar.flipped = false;
   const detail = vocabItemDetail(item);
   document.getElementById("tekrarPrompt").textContent = tekrar.mode==="tr2en" ? detail.inf : detail.gloss;
@@ -6191,7 +6188,6 @@ function updateTekrarStats(words){
   const now = Date.now();
   const dueCount = words.filter(w=>w.dueAt<=now).length;
   document.getElementById("tekrarStats").textContent = `${dueCount} due now · ${words.length} term${words.length===1?"":"s"} in rotation` + (tekrar.currentEarly ? ` · practicing ahead, ${tekrar.ahead} left` : "");
-  updateTekrarAheadBtn(words);
 }
 // The terms in rotation come from the account's lists and answer history, which arrive a moment after the page opens
 // (and the Personal lists after that): when they land while Tekrar is open, redraw the counts, and if the pane was only
@@ -6241,7 +6237,6 @@ function checkTekrar(){
 }
 syncTekrarControls();
 document.getElementById("tekrarAheadBtn").onclick = ()=>{
-  if(document.getElementById("tekrarAheadBtn").disabled) return;
   tekrar.ahead = TEKRAR_AHEAD;
   nextTekrarCard();
 };
