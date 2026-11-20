@@ -853,18 +853,12 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
       </div>
     </div>
     <p class="hint" style="text-align:center;margin-top:14px;" id="tekrarStats"></p>
+    <div style="text-align:center;margin-top:10px;"><button class="btn btn-ghost" id="tekrarAheadBtn" type="button" disabled>Practice next 50 terms now</button></div>
 
     <div class="section-title">How Tekrar works</div>
     <div class="settings-group">
       <p class="hint" style="margin:0 0 10px;">Tekrar uses spaced repetition to put your weakest words in front of you most often.</p>
       <p class="hint" style="margin:0;">Each word's frequency is derived from your last 25 answers: a long run of right answers pushes it further away (up to 30 days), a miss pulls it back closer, and words you often get wrong keep coming back.</p>
-    </div>
-
-    <div class="section-title">Settings</div>
-    <div class="settings-group">
-      <div class="chip-row">
-        <div class="chip" id="tekrarEarlyChip">Practice ahead when nothing is due</div>
-      </div>
     </div>
 
     <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
@@ -3540,10 +3534,23 @@ function daysAgoText(iso){
   const days = daysSince(iso);
   return days<=0 ? "today" : days===1 ? "1 day ago" : `${days} days ago`;
 }
+// A test result ages from plain (under 5 days) through yellow (day 5) to red (day 10 and later); under 90% is red at any age.
+const TEST_YELLOW_DAY = 5, TEST_RED_DAY = 10;
 function testIsDue(key){
   const r = testResults && testResults[key];
   if(!r || !r.last) return false;
-  return daysSince(r.last.date) >= 8 || r.last.pct < 90;
+  return daysSince(r.last.date) >= TEST_RED_DAY || r.last.pct < 90;
+}
+// The colour for a test result line, or "" for a fresh good one.
+function testAgeColor(key){
+  const r = testResults && testResults[key];
+  if(!r || !r.last) return "";
+  if(r.last.pct < 90) return "var(--tile-red)";
+  const days = daysSince(r.last.date);
+  if(days < TEST_YELLOW_DAY) return "";
+  if(days >= TEST_RED_DAY) return "var(--tile-red)";
+  const red = Math.round((days - TEST_YELLOW_DAY) / (TEST_RED_DAY - TEST_YELLOW_DAY) * 100);   // 0% red at day 5 → 100% at day 10
+  return `color-mix(in srgb, var(--tile-red) ${red}%, var(--tile-gold))`;
 }
 function testSummaryText(key){
   const r = testResults && testResults[key];
@@ -3558,6 +3565,8 @@ function setChipLabel(el, label, testKey){
   const meta = document.createElement("span");
   meta.className = "chip-meta";
   meta.textContent = testSummaryText(testKey);
+  const ageColor = testAgeColor(testKey);
+  if(ageColor){ meta.style.color = ageColor; meta.style.fontWeight = "600"; meta.style.opacity = "1"; }
   el.appendChild(meta);
   el.classList.toggle("chip-due", testIsDue(testKey));
 }
@@ -6011,17 +6020,22 @@ const TEKRAR_MAX_DAYS = 30;   // the longest wait: a month
 const TEKRAR_RETRY_MS = 10*60*1000;              // wait after a miss
 const TEKRAR_AGAIN_MIN = 3, TEKRAR_AGAIN_MAX = 6;  // a missed word returns after a random number of other cards in this range
 const TEKRAR_KEY = "fiil_tekrar_v1";
-const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null, early:false, showUpcoming:true, currentEarly:false};
+const TEKRAR_AHEAD = 50;   // "Practice next 50 terms now"
+const tekrar = {mode:"en2tr", current:null, flipped:false, again:[], last:null, ahead:0, showUpcoming:true, currentEarly:false};
 try{
   const t = JSON.parse(localStorage.getItem(TEKRAR_KEY) || "{}");
-  if(typeof t.early==="boolean") tekrar.early = t.early;
   if(typeof t.showUpcoming==="boolean") tekrar.showUpcoming = t.showUpcoming;
 }catch(e){}
 function saveTekrarSettings(){
-  try{ localStorage.setItem(TEKRAR_KEY, JSON.stringify({early:tekrar.early, showUpcoming:tekrar.showUpcoming})); }catch(e){}
+  try{ localStorage.setItem(TEKRAR_KEY, JSON.stringify({showUpcoming:tekrar.showUpcoming})); }catch(e){}
+}
+// The practice-ahead button is greyed out while anything is due (or a batch of 50 is under way) and live once nothing is.
+function updateTekrarAheadBtn(words){
+  const now = Date.now();
+  const nothingDue = !!words.length && !words.some(w=>w.dueAt<=now);
+  document.getElementById("tekrarAheadBtn").disabled = !(nothingDue && tekrar.ahead<=0);
 }
 function syncTekrarControls(){
-  document.getElementById("tekrarEarlyChip").classList.toggle("on", tekrar.early);
   document.getElementById("tekrarUpcomingBox").hidden = !tekrar.showUpcoming;
   document.getElementById("tekrarUpcomingToggle").textContent = tekrar.showUpcoming ? "Hide" : "Show";
 }
@@ -6120,7 +6134,7 @@ function nextTekrarCard(){
   // A word you just missed comes back after a few other cards, or straight away if nothing else is due.
   let pickWord = null;
   const retry = tekrar.again.findIndex(a=>a.wait<=0);
-  if(retry>=0 || (!due.length && tekrar.again.length && !(tekrar.early && words.length>1))){
+  if(retry>=0 || (!due.length && tekrar.again.length && !(tekrar.ahead>0 && words.length>1))){
     const i = retry>=0 ? retry : 0;
     const a = tekrar.again.splice(i,1)[0];
     pickWord = words.find(w=>w.key===a.key) || null;
@@ -6128,7 +6142,7 @@ function nextTekrarCard(){
   if(!pickWord) pickWord = due[0] || null;
   // "Keep going": with nothing due, take whichever words are due soonest.
   let early = false;
-  if(!pickWord && tekrar.early && words.length){
+  if(!pickWord && tekrar.ahead>0 && words.length){
     // Not a word you answered right in the last hour: its wait is short only because of an old miss.
     const fresh = w=>{ const st = wordStats[w.key]; return st && st.r && st.r.slice(-1)==="1" && now - new Date(st.at).getTime() < 3600e3; };
     const others = words.filter(w=>w.key!==tekrar.last);
@@ -6137,6 +6151,8 @@ function nextTekrarCard(){
     early = true;
   }
   tekrar.currentEarly = early;
+  if(!early) tekrar.ahead = 0;   // a batch ends when it is used up, or when something becomes due
+  updateTekrarAheadBtn(words);
   const stats = document.getElementById("tekrarStats");
   if(!pickWord){
     tekrar.currentEarly = false;
@@ -6173,7 +6189,8 @@ function nextTekrarCard(){
 function updateTekrarStats(words){
   const now = Date.now();
   const dueCount = words.filter(w=>w.dueAt<=now).length;
-  document.getElementById("tekrarStats").textContent = `${dueCount} due now · ${words.length} term${words.length===1?"":"s"} in rotation` + (tekrar.currentEarly ? " · practicing ahead" : "");
+  document.getElementById("tekrarStats").textContent = `${dueCount} due now · ${words.length} term${words.length===1?"":"s"} in rotation` + (tekrar.currentEarly ? ` · practicing ahead, ${tekrar.ahead} left` : "");
+  updateTekrarAheadBtn(words);
 }
 function checkTekrar(){
   if(!tekrar.current || tekrar.flipped) return;
@@ -6186,6 +6203,7 @@ function checkTekrar(){
   if(tekrar.mode==="tr2en") autoPlayEn(tekrar.current.en);
   tekrar.flipped = true;
   tekrar.last = key;
+  if(tekrar.currentEarly && tekrar.ahead>0) tekrar.ahead--;
   tekrar.again.forEach(a=>a.wait--);
   if(!correct) tekrar.again.push({key, wait:TEKRAR_AGAIN_MIN + Math.floor(Math.random()*(TEKRAR_AGAIN_MAX-TEKRAR_AGAIN_MIN+1))});
   const answerText = tekrar.mode==="tr2en" ? detail.gloss : detail.inf;
@@ -6206,14 +6224,10 @@ function checkTekrar(){
   input.blur();
 }
 syncTekrarControls();
-document.getElementById("tekrarEarlyChip").onclick = ()=>{
-  tekrar.early = !tekrar.early;
-  syncTekrarControls(); saveTekrarSettings();
-  if(!tekrar.early && tekrar.currentEarly){
-    // Turned off while practicing ahead: drop that word and go back to what is actually due.
-    tekrar.again = [];
-    nextTekrarCard();
-  } else if(!tekrar.current) nextTekrarCard();   // e.g. from the "All caught up" message
+document.getElementById("tekrarAheadBtn").onclick = ()=>{
+  if(document.getElementById("tekrarAheadBtn").disabled) return;
+  tekrar.ahead = TEKRAR_AHEAD;
+  nextTekrarCard();
 };
 document.getElementById("tekrarUpcomingToggle").onclick = ()=>{
   tekrar.showUpcoming = !tekrar.showUpcoming;
