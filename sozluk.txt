@@ -1,6 +1,6 @@
 TÜRKÇE — SÖZLÜK
 
-458 verbs · 1272 non-verbs · 40 topics
+458 verbs · 1273 non-verbs · 40 topics
 
 ============================================================
 FİİLLER (VERBS)
@@ -2411,7 +2411,7 @@ olasılık                  probability
 faydalı                   useful
 çok bilmiş                know-it-all
 
-A2 DERSTE 101-109
+A2 DERSTE 101-110
 -----------------
 abur cubur                junk food
 atıştırmalık              snacks (generally healthy)
@@ -2422,6 +2422,7 @@ kuraklık                  drought
 yıldırım                  lightning
 terazi                    scale (for weighing)
 puro                      cigar
+dolu                      hail
 
 
 ============================================================
@@ -2558,7 +2559,7 @@ Cities & Countries
 
 Weather
 -------
-hava, güneşli, bulutlu, parçalı bulutlu, yağmurlu, yağmur, rüzgarlı, karlı, sisli, nemli, serin, ılık, sıcak, soğuk, buz, kuru, ıslak, yağmurluk, şemsiye, üşümek, ıslanmak, eksi, felaket, sel, deprem, yangın, kardan adam, kuraklık, yıldırım
+hava, güneşli, bulutlu, parçalı bulutlu, yağmurlu, yağmur, rüzgarlı, karlı, sisli, nemli, serin, ılık, sıcak, soğuk, buz, kuru, ıslak, yağmurluk, şemsiye, üşümek, ıslanmak, eksi, felaket, sel, deprem, yangın, kardan adam, kuraklık, yıldırım, dolu
 
 Films & Genres
 --------------
