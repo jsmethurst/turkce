@@ -851,9 +851,9 @@ kbd{font-family:var(--font);background:var(--paper-2);border-radius:5px;padding:
       <div class="bottom-actions">
         <button class="btn btn-primary" id="tekrarNext" style="margin-left:auto;" hidden>Next →</button>
       </div>
+      <div style="text-align:center;margin-top:14px;"><button class="btn btn-ghost" id="tekrarAheadBtn" type="button" disabled>Practice next 50 terms now</button></div>
     </div>
     <p class="hint" style="text-align:center;margin-top:14px;" id="tekrarStats"></p>
-    <div style="text-align:center;margin-top:10px;"><button class="btn btn-ghost" id="tekrarAheadBtn" type="button" disabled>Practice next 50 terms now</button></div>
 
     <div class="section-title">How Tekrar works</div>
     <div class="settings-group">
@@ -4152,6 +4152,7 @@ function refreshPersonalUI(){
   renderReferencePanel();
   renderNonverbReferencePanel();
   if(typeof refreshTestDisplays==="function") try{ refreshTestDisplays(); }catch(e){}
+  if(typeof refreshTekrarData==="function") refreshTekrarData();
 }
 async function loadPersonal(){
   const bk = window.turkceBackend;
@@ -6192,6 +6193,21 @@ function updateTekrarStats(words){
   document.getElementById("tekrarStats").textContent = `${dueCount} due now · ${words.length} term${words.length===1?"":"s"} in rotation` + (tekrar.currentEarly ? ` · practicing ahead, ${tekrar.ahead} left` : "");
   updateTekrarAheadBtn(words);
 }
+// The terms in rotation come from the account's lists and answer history, which arrive a moment after the page opens
+// (and the Personal lists after that): when they land while Tekrar is open, redraw the counts, and if the pane was only
+// showing a message ("Nothing to review yet"), pick a card. A question being answered is never swapped out.
+let tekrarRefreshTimer = null;
+function refreshTekrarData(){
+  clearTimeout(tekrarRefreshTimer);
+  tekrarRefreshTimer = setTimeout(()=>{
+    if(document.getElementById("tab-tekrar").style.display==="none") return;
+    if(tekrar.current){
+      const words = tekrarWords();
+      renderTekrarUpcoming(words);
+      updateTekrarStats(words);
+    } else nextTekrarCard();
+  }, 150);
+}
 function checkTekrar(){
   if(!tekrar.current || tekrar.flipped) return;
   const input = document.getElementById("tekrarInput");
@@ -7552,6 +7568,7 @@ function syncSettingsUI(){
   updateSelectionCount();
   refreshCurrentQuestion();
   refreshVocabCard();
+  if(typeof refreshTekrarData==="function") refreshTekrarData();
   voiceSync();
 }
 
@@ -7919,6 +7936,7 @@ async function initRemote(){
           applyServerStats(rows);
           updateVocabScoreTag();
           updateVocabProgress();
+          refreshTekrarData();
         };
         try{
           await loadRows();
@@ -7927,6 +7945,7 @@ async function initRemote(){
             applyServerStats({[row.key]:{r:row.r, at:row.at}});
             updateVocabScoreTag();
             updateVocabProgress();
+            refreshTekrarData();
           });
           scheduleAnswerFlush(300);
         }catch(e){
@@ -7957,6 +7976,7 @@ async function initRemote(){
           statsFromRemote(snap.data());
           updateVocabScoreTag();
           updateVocabProgress();
+          refreshTekrarData();
         }, ()=>{});
         updateVocabScoreTag();
       }catch(e){ remoteStats = null; }
